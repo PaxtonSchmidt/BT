@@ -2,10 +2,9 @@
 
 # dependencies
 /server/node_modules
-/client-app/node_modules
 /.pnp
 .pnp.js
-.env
+db_settings.json
 
 # testing
 /coverage
