@@ -4,7 +4,7 @@
 /server/node_modules
 /.pnp
 .pnp.js
-db_settings.json
+.env
 
 # testing
 /coverage
