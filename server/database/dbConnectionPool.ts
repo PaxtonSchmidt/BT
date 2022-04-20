@@ -1,6 +1,5 @@
 const mysql = require('mysql');
-const env = require('dotenv').config();
-console.log(env);
+require('dotenv').config();
 
 function createConnectionPool() {
     return mysql.createPool({
@@ -13,7 +12,7 @@ function createConnectionPool() {
     });
 }
 
-export const pool = createConnectionPool();
+export const connectionPool = createConnectionPool();
 
 // function createdb(req: any, res: any) {
 //     let sql = "CREATE DATABASE bug_tracker_db";
