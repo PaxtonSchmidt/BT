@@ -5,13 +5,13 @@ function Users() {
 
     useEffect(() => {
         fetch('/users/getUsers')
-            .then((res => {
-                if(res.ok) {
-                    return res.json();
-                }
-            }))
-            .then(jsonRes => setUsers(jsonRes));
-    }, []) //empty array passed as second argument to useEffect can be used to tell the hook to run at least once
+        .then((res => {
+            if(res.ok) {
+                return res.json();
+            }
+        }))
+        .then(jsonRes => setUsers(jsonRes));
+    }, []) //empty array passed as second argument to useEffect can be used to tell the hook to run at least once without causing infinite loop
     console.log(users);
 
  
