@@ -17,11 +17,11 @@ function Users() {
  
      
     return (
-        <>
+        <div className='testScss'>
             {users.map((user) =>
                 <li key={user.user_id}>{user.username}</li>
             )}
-        </>
+        </div>
     )
 }
 
