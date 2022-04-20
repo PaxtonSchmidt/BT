@@ -1,5 +1,4 @@
-import './App.css';
-import Users from './testComponent';
+import Users from './Components/testComponent';
 
 function App() {
   return (
