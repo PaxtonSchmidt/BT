@@ -1,0 +1,58 @@
+@import "./Sass_imports//library.scss";
+.testScss {
+    color: $blue;
+}
+
+.circleIcon{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.body{
+    background-color: $black;
+}
+
+.navPicture{
+    background-color: $black;
+}
+.navComponent{
+    background-color: #222222;
+    display: flex;
+}
+.navBar{
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    top: 0;
+    height: 60px;
+    width: 100%;
+    align-items: center;
+    border-bottom: 1px solid $black;
+}
+.hamburger{
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+.bell{
+    margin-top: 5px;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+.sideBar{
+    width: 60px;
+    height: 100vh;
+}
+.outerNavElement {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Bootstrap Sass overrides */
+
+/* Import bootstrap scss only for things you need */
+

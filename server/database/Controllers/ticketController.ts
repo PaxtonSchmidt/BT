@@ -10,4 +10,15 @@ function createTicketsTable(req: any, res: any) {
     });
 }
 
-module.exports = {createTicketsTable}
+function addTicket(req: any, res: any) {
+    let ticket = {}
+    let sql = "INSERT INTO tickets SET ?"; 
+    
+    connectionPool.query(sql, ticket, (err: any, result: any) => {
+        if (err) result.send(err);
+        console.log(result)
+        res.send('Ticket added to db...');
+    })
+}
+
+module.exports = {createTicketsTable, addTicket}

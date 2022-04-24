@@ -1,0 +1,77 @@
+.testScss {
+  color: #21b0e0;
+}
+
+.circleIcon {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
+.body {
+  background-color: #1a1a1a;
+}
+
+.navPicture {
+  background-color: #1a1a1a;
+}
+
+.navComponent {
+  background-color: #222222;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.navBar {
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  top: 0;
+  height: 60px;
+  width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.hamburger {
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+
+.bell {
+  margin-top: 5px;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.sideBar {
+  width: 60px;
+  height: 100vh;
+}
+
+.outerNavElement {
+  width: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+/* Bootstrap Sass overrides */
+/* Import bootstrap scss only for things you need */
+/*# sourceMappingURL=styles.css.map */

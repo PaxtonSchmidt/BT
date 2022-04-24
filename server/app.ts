@@ -9,15 +9,13 @@ const app = express();
 
 app.use(cors());
 app.use("/users/", require("./database/Routes/userRoute"));
+app.use("/tickets/", require("./database/Routes/ticketRoute"));
 
-//userTable queries
-app.get('/createUserTable', usersTableQueries.createUsersTable);
-app.get('/addUser', usersTableQueries.addUser);
-app.get('/getUsers', usersTableQueries.getUsers);
-app.get('/getUserByID', usersTableQueries.getUserByID);
+
 
 //ticketsTable queries
 app.get('/createTicketsTable', ticketsTableQueries.createTicketsTable);
+app.get('/addTicket', )
 
 //teamsTable qeuries
 app.get('/createTeamsTable', teamsTableQueries.createTeamsTable);

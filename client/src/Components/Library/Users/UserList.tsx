@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Container } from 'react-bootstrap';
 
 function Users() {
     const [users, setUsers] = useState<any[]>([]);
@@ -17,11 +18,13 @@ function Users() {
  
      
     return (
-        <div className='testScss'>
-            {users.map((user) =>
-                <li key={user.user_id}>{user.username}</li>
-            )}
-        </div>
+        <Container>
+            <div className='testScss'>
+                {users.map((user) =>
+                    <li key={user.user_id}>{user.username}</li>
+                )}
+            </div>
+        </Container>
     )
 }
 
