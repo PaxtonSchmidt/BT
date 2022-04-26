@@ -11,7 +11,7 @@ function createUsersTable(req: any, res: any) {
 }
 
 function addUser(req: any, res: any) {
-    let user = {username: 'tom', password: '981623712', date_created: '2022-04-14', bio: 'loves bill'}
+    let user = {username: 'frank', password: '981623712', date_created: '2022-04-24', bio: 'killin it'};
     let sql = "INSERT INTO users SET ?"; 
     
     connectionPool.query(sql, user, (err: any, result: any) => {

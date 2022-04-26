@@ -1,12 +1,12 @@
 import React from 'react';
-import HamburgerAndTeam from './HamburgerAndTeam/HamburgerAndTeam';
-import BugIcon from './HeaderIcon';
-import ProfileAndBell from './ProfileAndBell/ProfileAndBell';
+import TeamPic from './NavbarComponents/TeamPic';
+import BugIcon from './NavbarComponents/HeaderIcon';
+import ProfileAndBell from './NavbarComponents/ProfileAndBell/ProfileAndBell';
 
 export default function Navbar() {
     return (
         <div className='navBar navComponent'>
-            <HamburgerAndTeam />
+            <TeamPic />
             <BugIcon />
             <ProfileAndBell />
         </div>

@@ -1,0 +1,90 @@
+.circleIcon{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+.navPicture{
+    background-color: $black;
+}
+.navComponent{
+    background-color: $darkGrey;
+    display: flex;
+    transition: $transition;
+}
+.navBar{
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    top: 0;
+    height: 60px;
+    width: calc(100vw - 60px);
+    align-items: center;
+    margin-left: 60px;
+    border-bottom: 1px solid $black;
+}
+.hamburger{
+    position: fixed;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+.hamburgerContainer {
+    z-index: 2;
+    position: fixed;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $darkGrey;
+    border-right: 1px solid $darkGrey;
+    border-bottom: 1px solid $black; 
+    transition: $transition;
+}
+.hamburgerContainer:hover + .sideBar{
+    box-shadow: 1px 0 0 #efff0a6b;
+}
+.bell{
+    margin-top: 5px;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+.teamPic{
+    margin-left: 3px;
+}
+.sideBar{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin-top: 60px;
+    min-width: 60px;
+    height: calc(100vh - 60px);
+    transition: $transition;
+}
+.sideBarItem{
+    margin: 13px 0px;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.scaleYonHover {
+    transition: $transition;
+}
+.scaleYonHover:hover {
+    transform: translateY(-1px);
+}
+.sidebarIcon{
+    height: 25px;
+    width: 25px;
+}
+.outerNavElement {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    margin-left: 3px;
+}

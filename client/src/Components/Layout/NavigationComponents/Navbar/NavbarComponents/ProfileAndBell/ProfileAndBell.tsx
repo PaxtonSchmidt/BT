@@ -5,7 +5,7 @@ import ProfilePic from './ProfilePic';
 export default function ProfileAndBell() {
     
     return(
-        <div className='navComponent' style={{marginRight: '3px'}}>
+        <div className='navComponent' style={{marginRight: '10px'}}>
             <NotiBell />
             <ProfilePic />
         </div>

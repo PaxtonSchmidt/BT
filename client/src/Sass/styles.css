@@ -1,15 +1,7 @@
-.testScss {
-  color: #21b0e0;
-}
-
 .circleIcon {
   border-radius: 50%;
   width: 30px;
   height: 30px;
-}
-
-.body {
-  background-color: #1a1a1a;
 }
 
 .navPicture {
@@ -21,6 +13,8 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
 }
 
 .navBar {
@@ -37,17 +31,45 @@
           justify-content: space-between;
   top: 0;
   height: 60px;
-  width: 100%;
+  width: calc(100vw - 60px);
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-left: 60px;
   border-bottom: 1px solid #1a1a1a;
 }
 
 .hamburger {
-  height: 100%;
-  width: 100%;
+  position: fixed;
+  height: 30px;
+  width: 30px;
   cursor: pointer;
+}
+
+.hamburgerContainer {
+  z-index: 2;
+  position: fixed;
+  height: 60px;
+  width: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #222222;
+  border-right: 1px solid #222222;
+  border-bottom: 1px solid #1a1a1a;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.hamburgerContainer:hover + .sideBar {
+  -webkit-box-shadow: 1px 0 0 #efff0a6b;
+          box-shadow: 1px 0 0 #efff0a6b;
 }
 
 .bell {
@@ -57,9 +79,57 @@
   cursor: pointer;
 }
 
+.teamPic {
+  margin-left: 3px;
+}
+
 .sideBar {
-  width: 60px;
-  height: 100vh;
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-top: 60px;
+  min-width: 60px;
+  height: calc(100vh - 60px);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.sideBarItem {
+  margin: 13px 0px;
+  height: 60px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.scaleYonHover {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.scaleYonHover:hover {
+  -webkit-transform: translateY(-1px);
+          transform: translateY(-1px);
+}
+
+.sidebarIcon {
+  height: 25px;
+  width: 25px;
 }
 
 .outerNavElement {
@@ -70,6 +140,111 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin-left: 3px;
+}
+
+.tabsHeader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  width: 80%;
+  margin: auto;
+}
+
+.tab {
+  margin-bottom: 0px;
+  margin-right: 20px;
+  color: white;
+}
+
+.body {
+  background-color: #1a1a1a;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  position: absolute;
+  overflow: hidden;
+}
+
+.pageContentContainer {
+  height: calc(100vh - 60px);
+  margin-top: 60px;
+  height: calc(100vh - 60px);
+  width: 100vw;
+  text-align: center;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.pageBodyContainer1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+}
+
+.pageHeader {
+  font-size: 100px;
+  margin: 0px;
+  background-image: linear-gradient(1deg, #1a1a1a 10%, #222222 90%);
+  background-clip: text;
+  color: transparent;
+}
+
+.pageHeaderContainer {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.list {
+  width: 80%;
+  margin: auto;
+  color: white;
+}
+
+.listItemContainer {
+  background-color: #222222;
+  border-radius: 0px 0px 25px 25px;
+  padding: 5px 10px;
+}
+
+.listHeader {
+  margin-top: 0px;
+  margin-bottom: 1px;
+}
+
+.listItem {
+  background-color: #222222;
+  margin: 10px 0px;
+  border-bottom: 1px solid #1a1a1a;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.listColumnNames {
+  width: 20%;
 }
 
 /* Bootstrap Sass overrides */

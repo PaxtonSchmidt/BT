@@ -1,5 +1,5 @@
 import React from 'react';
-import bug from '../../../Images/Icons/bug.svg';
+import bug from '../../../../Images/Icons/bug.svg';
 
 export default function BugIcon() {
     return(
