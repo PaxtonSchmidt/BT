@@ -11,23 +11,6 @@ app.use(cors());
 app.use("/users/", require("./database/Routes/userRoute"));
 app.use("/tickets/", require("./database/Routes/ticketRoute"));
 
-
-
-//ticketsTable queries
-app.get('/createTicketsTable', ticketsTableQueries.createTicketsTable);
-app.get('/addTicket', )
-
-//teamsTable qeuries
-app.get('/createTeamsTable', teamsTableQueries.createTeamsTable);
-
-//userTeamsTable qeuries
-app.get('/createUserTeamsTable', userTeamsTableQueries.createUserTeamsTable);
-
-//ticketCommentsTable qeuries
-app.get('/createTicketCommentsTable', TicketCommentsTableQueries.createTicketCommentsTable);
-
-
-
 app.listen('4000', () => {
     console.log('server started on port 4000');
 })

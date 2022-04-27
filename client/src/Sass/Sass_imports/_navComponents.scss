@@ -43,7 +43,7 @@
     transition: $transition;
 }
 .hamburgerContainer:hover + .sideBar{
-    box-shadow: 1px 0 0 #efff0a6b;
+    box-shadow: 1px 0 0 $dimYellow;
 }
 .bell{
     margin-top: 5px;
