@@ -1,3 +1,6 @@
+import { rejects } from 'assert';
+import { userInfo } from 'os';
+import { User } from '../../interfaces/User';
 import {connectionPool} from '../dbConnectionPool';
 let bcrypt = require('bcrypt');
 
@@ -6,7 +9,7 @@ let bcrypt = require('bcrypt');
 async function addUser(req: any, res: any) {
     try{
         //user is req body
-        let user = {username: 'frank', password: 'test', date_created: '2022-04-24', bio: 'killin it'};
+        let user = {username: 'frank', password: 'test', email: 'test@test.com', date_created: '2022-04-24', bio: 'killin it'};
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(user.password, salt);
         user.password = hashedPassword;
@@ -23,15 +26,37 @@ async function addUser(req: any, res: any) {
     }
 }
 
-async function loginUser(req: any, res: any) {
-    let requestUsername = 'frank';
-    let sql = "Select * from users WHERE username = ?";
+function loginUser(req: any, res: any) {
+    let clientUserPassword = 'test';
+    let clientUserEmail = 'test2@test.com';
+    let sql = "Select * from users WHERE email = ?";
+    let targetUser: User; 
+    
 
-    connectionPool.query(sql, requestUsername, (err: any, result: any) => {
-        if (err) throw(err);
-        console.log('User found in database...');
-        res.send(result);
-    })
+    function fetchUser(queryEmail: string) {
+        return new Promise<any>((resolve, reject) => {
+            connectionPool.query(sql, queryEmail, (err: any, result: any) => {
+                return err ? reject(err) : resolve(result[0]);
+            });
+        })
+    }
+
+    async function authenticatePass() {
+        targetUser = await fetchUser(clientUserEmail);
+        console.log(targetUser);
+    
+        try{
+            if(await bcrypt.compare(clientUserPassword, targetUser.password)) {
+                res.send('Success');
+            } else {
+                res.send('Not allowed');
+            }
+        } catch {
+            res.status(500).send();
+        }
+    }
+
+    authenticatePass();
 }
 
 function getUsers(req: any, res: any) {
