@@ -21,8 +21,8 @@ function Tickets() {
     return (
     <Container className='pageBodyContainer1'>
         <div className='tabsHeader'>
-            <h4 className='tab'>Tickets assigned to you</h4>
-            <h4 className='tab'>Tickets written by you</h4>
+            <h4 className='tab'>Assigned to you</h4>
+            <h4 className='tab'>Written by you</h4>
         </div>
         <div className='list' style={{textAlign: 'left'}}>
             <div className='listItemContainer'>
