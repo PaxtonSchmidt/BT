@@ -1,6 +1,6 @@
 @import "./Sass_imports/_library.scss";
 @import "./Sass_imports/_navComponents.scss";
-@import "./Sass_imports/_tabs.scss";
+@import "./Sass_imports/_buttons.scss";
 
 .body{
     background-color: $black;
@@ -40,7 +40,7 @@
 }
 .listItemContainer{
     background-color: $darkGrey;
-    border-radius: 0px 0px 25px 25px;
+    border-radius: 0px 25px 0px 25px;
     padding: 5px 10px 30px 10px;
 }
 .listHeader{

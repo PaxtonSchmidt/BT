@@ -20,9 +20,9 @@ function Tickets() {
      
     return (
     <Container className='pageBodyContainer1'>
-        <div className='tabsHeader'>
-            <h4 className='tab'>Assigned to you</h4>
-            <h4 className='tab'>Written by you</h4>
+        <div className='buttonsContainer topButtons'>
+            <h4 className='button' style={{borderRadius: '10px 10px 10px 0px'}}>Assigned</h4>
+            <h4 className='button'>Written</h4>
         </div>
         <div className='list' style={{textAlign: 'left'}}>
             <div className='listItemContainer'>
@@ -45,6 +45,9 @@ function Tickets() {
                     <span className='listColumnNames'>
                         Created
                     </span>
+                    <span className='listColumnNames'>
+                        
+                    </span>
                 </div>
                 
                     {tickets.map((ticket) =>
@@ -63,6 +66,9 @@ function Tickets() {
                 )}
             </div>
         </div> 
+        <div className='buttonsContainer bottomButtons'>
+            <h4 className='button' style={{borderRadius: '10px 0px 10px 10px', margin: '2px 0px 0px 0px'}}>New</h4>
+        </div>
     </Container>
         
     )

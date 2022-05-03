@@ -27,6 +27,9 @@ export default function ticketListItem(props: ticket) {
             <span className='listColumnNames'>
                 {date}
             </span>
+            <span className='listColumnNames'>
+                details-btn
+            </span>
         </div>
     )
 }

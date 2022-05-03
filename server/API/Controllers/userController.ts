@@ -2,7 +2,8 @@ import { rejects } from 'assert';
 import { userInfo } from 'os';
 import { User } from '../../interfaces/User';
 import {connectionPool} from '../dbConnectionPool';
-let bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 
 
@@ -28,36 +29,43 @@ async function addUser(req: any, res: any) {
 
 function loginUser(req: any, res: any) {
     let clientUserPassword = 'test';
-    let clientUserEmail = 'test2@test.com';
+    let clientUserEmail = 'test3@test.com';
     let sql = "Select * from users WHERE email = ?";
     let targetUser: User; 
     
-
     function fetchUser(queryEmail: string) {
         return new Promise<any>((resolve, reject) => {
             connectionPool.query(sql, queryEmail, (err: any, result: any) => {
+                console.log('3')
                 return err ? reject(err) : resolve(result[0]);
             });
         })
     }
-
-    async function authenticatePass() {
-        targetUser = await fetchUser(clientUserEmail);
-        console.log(targetUser);
     
+    async function ifPassIsAuthenticSignAndSendJWT() {
+        targetUser = await fetchUser(clientUserEmail);
+        
         try{
-            if(await bcrypt.compare(clientUserPassword, targetUser.password)) {
-                res.send('Success');
+            let isValidPassword: boolean = await bcrypt.compare(clientUserPassword, targetUser.password);
+            console.log(isValidPassword);
+            if(isValidPassword) {
+                console.log(isValidPassword)
+                let accessToken = await jwt.sign(
+                        {user_id: targetUser.user_id},//cannot be a string because it breaks jwt.Sign()->{expiresIn}
+                        process.env.ACCESS_TOKEN_SECRET, 
+                        {expiresIn: '1500ms'});
+                console.log(accessToken);
+                res.send({ accessToken: accessToken });
             } else {
-                res.send('Not allowed');
+                res.send('Could not sign in...')
             }
         } catch {
             res.status(500).send();
         }
     }
-
-    authenticatePass();
+    ifPassIsAuthenticSignAndSendJWT();
 }
+    
 
 function getUsers(req: any, res: any) {
     let sql = "SELECT * FROM users"; 

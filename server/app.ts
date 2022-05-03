@@ -1,15 +1,12 @@
 const express = require('express');
 const cors = require('cors');
-const usersTableQueries = require('./database/Controllers/userController');
-const ticketsTableQueries = require('./database/Controllers/ticketController');
-const teamsTableQueries = require('./database/Controllers/teamController');
-const userTeamsTableQueries = require('./database/Controllers/user_teamsController');
-const TicketCommentsTableQueries = require('./database/Controllers/ticket_commentController');
 const app = express();
+const jwt = require('jsonwebtoken');
 
+app.use(express.json());
 app.use(cors());
-app.use("/users/", require("./database/Routes/userRoute"));
-app.use("/tickets/", require("./database/Routes/ticketRoute"));
+app.use("/users/", require("./API/Routes/userRoute"));
+app.use("/tickets/", require("./API/Routes/ticketRoute"));
 
 app.listen('4000', () => {
     console.log('server started on port 4000');

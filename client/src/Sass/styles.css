@@ -143,37 +143,43 @@
   margin-left: 3px;
 }
 
-.tabsHeader {
+.buttonsContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: left;
-      -ms-flex-pack: left;
-          justify-content: left;
   width: 80%;
   margin: auto;
 }
 
-.tab {
-  margin: 0px 10px 0px 0px;
+.topButtons {
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+}
+
+.bottomButtons {
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
+}
+
+.button {
+  min-width: 90px;
+  margin: 0px 10px 2px 0px;
   color: white;
   background-color: #222222;
   padding: 5px 10px;
-  border-radius: 10px 10px 0px 0px;
-  border-top: 1px solid #222222;
-  border-left: 1px solid #222222;
-  border-right: 1px solid #222222;
+  border: 1px solid #222222;
+  border-radius: 10px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }
 
-h4.tab:hover {
+h4.button:hover {
   -webkit-transition: 0.5s;
   transition: 0.5s;
   cursor: pointer;
-  border-top: 1px solid #efff0a6b;
-  border-left: 1px solid #efff0a6b;
-  border-right: 1px solid #efff0a6b;
+  border-color: #efff0a6b;
 }
 
 .body {
@@ -236,7 +242,7 @@ h4.tab:hover {
 
 .listItemContainer {
   background-color: #222222;
-  border-radius: 0px 0px 25px 25px;
+  border-radius: 0px 25px 0px 25px;
   padding: 5px 10px 30px 10px;
 }
 
