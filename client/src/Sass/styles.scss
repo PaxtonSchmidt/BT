@@ -1,13 +1,19 @@
 @import "./Sass_imports/_library.scss";
 @import "./Sass_imports/_navComponents.scss";
 @import "./Sass_imports/_buttons.scss";
+@import "./Sass_imports/_forms.scss";
+@import "./Sass_imports/_lists.scss";
 
+html, body{
+    max-width: 100%;
+    overflow-x: hidden;
+}
 .body{
     background-color: $black;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     display: inline-flex;
     position: absolute;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 .pageContentContainer{
     height: calc(100vh - 60px);
@@ -21,44 +27,35 @@
 .pageBodyContainer1{
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
+}
+.pageBodyContainer2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 100px;
 }
 .pageHeader{
     font-size: 100px;
     margin: 0px;
-    background-image: linear-gradient(1deg, $black 10%, $darkGrey 90%);
+    background-image: linear-gradient(1deg, $black 20%, #222222 80%);
     background-clip: text;
     color: transparent;
 }
 .pageHeaderContainer{
     height: fit-content;
 }
-.list{
+.formAndManage{
+    margin: 50px auto 0px auto;
     width: 80%;
-    margin: auto;
-    color: white;
-}
-.listItemContainer{
-    background-color: $darkGrey;
-    border-radius: 0px 25px 0px 25px;
-    padding: 5px 10px 30px 10px;
-}
-.listHeader{
-    margin-top: 0px;
-    margin-bottom: 1px;
-}
-.listItem{
-    background-color: $darkGrey;
-    margin: 10px 0px;
-    border-bottom: 1px solid $black;
     display: flex;
-    justify-content: space-between;
-    white-space: nowrap;
-    text-align: center;
-    
+    justify-content: center;
+    border-radius: 10px;
 }
-.listColumnNames{
-    width: 20%;
+.header{
+    color: white;
+    font-size: 20px;
+    margin: 0px;
 }
 
 

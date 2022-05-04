@@ -170,7 +170,7 @@
   background-color: #222222;
   padding: 5px 10px;
   border: 1px solid #222222;
-  border-radius: 10px;
+  border-radius: 5px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }
@@ -182,6 +182,87 @@ h4.button:hover {
   border-color: #efff0a6b;
 }
 
+.formContainer {
+  background-color: #222222;
+  border-radius: 10px;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  margin: 10px auto;
+}
+
+.formInput {
+  margin: 20px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 200px;
+}
+
+.formTextArea {
+  width: 100%;
+}
+
+.css-1x51dt5-MuiInputBase-input-MuiInput-input {
+  color: white !important;
+}
+
+.css-66dh3a-MuiInputBase-input-MuiInput-input {
+  color: white !important;
+}
+
+.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input {
+  color: white !important;
+}
+
+.list {
+  width: 80%;
+  margin: auto;
+  color: white;
+}
+
+.listItemContainer {
+  background-color: #222222;
+  border-radius: 0px 10px 0px 10px;
+  padding: 5px 10px 30px 10px;
+}
+
+.listHeader {
+  margin-top: 0px;
+  margin-bottom: 1px;
+}
+
+.listItem {
+  background-color: #222222;
+  margin: 10px 0px;
+  border-bottom: 1px solid #1a1a1a;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.listColumnNames {
+  width: 20%;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 .body {
   background-color: #1a1a1a;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -189,7 +270,7 @@ h4.button:hover {
   display: -ms-inline-flexbox;
   display: inline-flex;
   position: absolute;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .pageContentContainer {
@@ -217,13 +298,27 @@ h4.button:hover {
           flex-direction: column;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
-          justify-content: start;
+          justify-content: flex-start;
+}
+
+.pageBodyContainer2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-bottom: 100px;
 }
 
 .pageHeader {
   font-size: 100px;
   margin: 0px;
-  background-image: linear-gradient(1deg, #1a1a1a 10%, #222222 90%);
+  background-image: linear-gradient(1deg, #1a1a1a 20%, #222222 80%);
   background-clip: text;
   color: transparent;
 }
@@ -234,39 +329,22 @@ h4.button:hover {
   height: fit-content;
 }
 
-.list {
+.formAndManage {
+  margin: 50px auto 0px auto;
   width: 80%;
-  margin: auto;
-  color: white;
-}
-
-.listItemContainer {
-  background-color: #222222;
-  border-radius: 0px 25px 0px 25px;
-  padding: 5px 10px 30px 10px;
-}
-
-.listHeader {
-  margin-top: 0px;
-  margin-bottom: 1px;
-}
-
-.listItem {
-  background-color: #222222;
-  margin: 10px 0px;
-  border-bottom: 1px solid #1a1a1a;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  white-space: nowrap;
-  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 10px;
 }
 
-.listColumnNames {
-  width: 20%;
+.header {
+  color: white;
+  font-size: 20px;
+  margin: 0px;
 }
 
 /* Bootstrap Sass overrides */

@@ -1,0 +1,26 @@
+.formContainer{
+    background-color: $darkGrey;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin: 10px auto;
+}
+.formInput{
+    margin: 20px;
+    height: fit-content;
+    width: 200px;
+}
+.formTextArea{
+    width: 100%;
+}
+.css-1x51dt5-MuiInputBase-input-MuiInput-input{
+    color: white !important;
+}
+.css-66dh3a-MuiInputBase-input-MuiInput-input{
+    color: white !important;
+}
+.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input {
+    color: white !important;
+}

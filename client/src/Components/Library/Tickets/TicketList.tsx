@@ -21,7 +21,7 @@ function Tickets() {
     return (
     <Container className='pageBodyContainer1'>
         <div className='buttonsContainer topButtons'>
-            <h4 className='button' style={{borderRadius: '10px 10px 10px 0px'}}>Assigned</h4>
+            <h4 className='button' style={{borderRadius: '5px 5px 5px 0px'}}>Assigned</h4>
             <h4 className='button'>Written</h4>
         </div>
         <div className='list' style={{textAlign: 'left'}}>
@@ -34,7 +34,7 @@ function Tickets() {
                         Project
                     </span>
                     <span className='listColumnNames'>
-                        Assigned to
+                        Assigned
                     </span>
                     <span className='listColumnNames'>
                         Priority
@@ -67,13 +67,12 @@ function Tickets() {
             </div>
         </div> 
         <div className='buttonsContainer bottomButtons'>
-            <h4 className='button' style={{borderRadius: '10px 0px 10px 10px', margin: '2px 0px 0px 0px'}}>New</h4>
+            <h4 className='button' style={{borderRadius: '5px 0px 5px 5px', margin: '2px 0px 0px 0px'}}>New</h4>
         </div>
     </Container>
         
     )
 }
-{/* <li key={ticket.ticket_id}>{ticket.ticket_id}</li> */}
     
 
 export default Tickets;

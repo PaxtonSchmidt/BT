@@ -1,0 +1,27 @@
+.list{
+    width: 80%;
+    margin: auto;
+    color: white;
+}
+.listItemContainer{
+    background-color: $darkGrey;
+    border-radius: 0px 10px 0px 10px;
+    padding: 5px 10px 30px 10px;
+}
+.listHeader{
+    margin-top: 0px;
+    margin-bottom: 1px;
+}
+.listItem{
+    background-color: $darkGrey;
+    margin: 10px 0px;
+    border-bottom: 1px solid $black;
+    display: flex;
+    justify-content: space-between;
+    white-space: nowrap;
+    text-align: center;
+    
+}
+.listColumnNames{
+    width: 20%;
+}

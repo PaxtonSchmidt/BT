@@ -1,6 +1,6 @@
 import { rejects } from 'assert';
 import { userInfo } from 'os';
-import { User } from '../../interfaces/User';
+import { User } from '../interfaces/User';
 import {connectionPool} from '../dbConnectionPool';
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
