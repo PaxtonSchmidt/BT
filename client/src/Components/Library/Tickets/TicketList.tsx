@@ -65,9 +65,6 @@ function Tickets() {
                     priority={ticket.priority} />
                 )}
             </div>
-        </div> 
-        <div className='buttonsContainer bottomButtons'>
-            <h4 className='button' style={{borderRadius: '5px 0px 5px 5px', margin: '2px 0px 0px 0px'}}>New</h4>
         </div>
     </Container>
         
