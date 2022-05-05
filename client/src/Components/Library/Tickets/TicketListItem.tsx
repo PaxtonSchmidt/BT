@@ -1,4 +1,3 @@
-import { stringify } from 'querystring';
 import React from 'react';
 import { ticket } from '../../../interfaces/Props/ticket';
 
@@ -28,7 +27,7 @@ export default function ticketListItem(props: ticket) {
                 {date}
             </span>
             <span className='listColumnNames'>
-                details-btn
+                details/edit btns
             </span>
         </div>
     )
