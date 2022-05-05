@@ -4,8 +4,10 @@ import { InputLabel, MenuItem, Select, TextField, ThemeProvider } from '@mui/mat
 import { theme } from '../../../theme';
 
 export default function TicketForm() {
-    const users = ['self user', 'user', 'user 2', 'Users 3']
+    const projects = ['project 1', 'project 2', 'project 3', 'project 4', 'project 5'] //an array of all projects belonging to the team you're currently working for
+    const users = ['self', 'user', 'user 2', 'Users 3'] //an array of users on your team that are assigned to the currently selected project
 
+    const priority = ['high', 'medium', 'low']
     return( 
         <ThemeProvider theme={theme}> 
             <div>
@@ -14,46 +16,62 @@ export default function TicketForm() {
                     initialValues={{title: '',
                                     description: '',
                                     project: '',
-                                    user: ''}}
+                                    user: '',
+                                    priority: ''}}
                     onSubmit={data => {
                         console.log(data);
                     }}
                 >
                 {({values, handleChange, handleBlur, handleSubmit}) => (
-                    <form onSubmit={handleSubmit} onBlur={handleBlur} className='formContainer'>
-                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                            <div className='formInput'>   
-                                    <TextField
-                                    label='Title' 
-                                    type='text' 
-                                    value={values.title}     
-                                    onChange={handleChange} 
-                                    onBlur={handleBlur}
-                                    className='formInput' 
-                                    name='title'
-                                    variant='standard'
-                                    color='info'
-                                    required
-                                    />
-                            </div>
-                            <div className='formInput' id='user' >
-                                <TextField name='user' defaultValue={''} label='Assign' className='formInput' select color='info' variant='standard' onChange={handleChange} onBlur={handleBlur} sx={{width: '100%'}}>
-                                {users.map((user, index) => {
-                                return(
-                                    <MenuItem key={index} value={user} id='user' >{user}</MenuItem>
-                                );
-                                })}
-                                </TextField>
-                            </div>  
+                    <form onSubmit={handleSubmit} onBlur={handleBlur}>
+                        <div  className='formContainer'>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}} >
+
+                            <TextField
+                            label='Title' 
+                            type='text' 
+                            value={values.title}     
+                            onChange={handleChange} 
+                            onBlur={handleBlur}
+                            className='formComponent' 
+                            name='title'
+                            variant='standard'
+                            color='info'
+                            required
+                            />
+
+                            <TextField name='project' defaultValue={''} label='Project' className='formComponent' select color='info' variant='standard' onChange={handleChange} onBlur={handleBlur} sx={{width: '200px'}}>
+                            {projects.map((project, index) => {
+                            return(
+                                <MenuItem key={index} value={project} id='project' >{project}</MenuItem>
+                            );
+                            })}
+                            </TextField>
+
+                            <TextField name='user' defaultValue={''} label='Assign' className='formComponent' select color='info' variant='standard' onChange={handleChange} onBlur={handleBlur} sx={{width: '200px'}}>
+                            {users.map((user, index) => {
+                            return(
+                                <MenuItem key={index} value={user} id='user' >{user}</MenuItem>
+                            );
+                            })}
+                            </TextField>
+
+                            <TextField name='priority' defaultValue={''} label='Priority' className='formComponent' select color='info' variant='standard' onChange={handleChange} onBlur={handleBlur} sx={{width: '200px'}}>
+                            {priority.map((priority, index) => {
+                            return(
+                                <MenuItem key={index} value={priority} id='priority' >{priority}</MenuItem>
+                            );
+                            })}
+                            </TextField>
                         </div>
-                        <div className='formInput' style={{width: '90%'}}>
+                        <div className='formSection' >
                             <TextField
                                 label='Description' 
                                 type='text' 
                                 value={values.description} 
                                 onChange={handleChange} 
                                 onBlur={handleBlur} 
-                                className='formInput formTextArea' 
+                                className='formComponent formTextArea' 
                                 sx={{ color: '#ffffff' }}
                                 name='description'
                                 variant='standard'
@@ -61,7 +79,8 @@ export default function TicketForm() {
                                 multiline
                                 required/>
                         </div>
-                        <button type='submit' name='submit'>submit</button>
+                        </div>
+                            <button type='submit' name='submit' className='button bottomButtons' style={{borderRadius: '5px 0px 5px 5px', margin: '2px 0px 0px 0px', float: 'right'}}>Submit</button>
                     </form>
                 )}
                 </Formik>
@@ -71,35 +90,3 @@ export default function TicketForm() {
 }
 
 //title, description, project, assigned user,  priority 
-
-{/* <div className='formInput'>
-                                <Field
-                                    className='formInput'
-                                    sx={{minWidth: '120px'}}
-                                    variant='standard'
-                                    as={Select}
-                                    type="select"
-                                    name='projects'
-                                    color='info'
-                                    >
-                                    <MenuItem value='project 1' >Project 1</MenuItem>
-                                    <MenuItem value='project 2' >Project 2</MenuItem>
-                                </Field>
-                            </div> */}
-                            {/* <div className='formInput'>
-                                <Field
-                                    className='formInput'
-                                    sx={{minWidth: '120px'}}
-                                    variant='standard'
-                                    as={Select}
-                                    type='select'
-                                    name='assigned'
-                                    color='info'
-                                    defaultValue=''
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    >
-                                    <MenuItem value='user 1' >user 1</MenuItem>
-                                    <MenuItem value='user 2' >user 2</MenuItem>
-                                </Field>
-                            </div> */}
