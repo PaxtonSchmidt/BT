@@ -1,16 +1,27 @@
 .formContainer{
     background-color: $darkGrey;
-    border-radius: 10px;
+    border-radius: 10px 10px 0px 10px;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: left;
-    margin: 10px auto;
+    margin: 10px auto 0px auto;
+    padding: 20px;
 }
 .formInput{
     margin: 20px;
     height: fit-content;
     width: 200px;
+}
+.formComponent{
+    width: 20%;
+    text-align: left;
+}
+.formSection{
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 .formTextArea{
     width: 100%;

@@ -19,7 +19,7 @@
     border-radius: 5px;
     transition: $transition;
 }
-h4.button:hover {
+.button:hover {
     transition: $transition;
     cursor: pointer;
     border-color: $dimYellow;

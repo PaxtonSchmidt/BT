@@ -175,7 +175,7 @@
   transition: 0.5s;
 }
 
-h4.button:hover {
+.button:hover {
   -webkit-transition: 0.5s;
   transition: 0.5s;
   cursor: pointer;
@@ -184,7 +184,7 @@ h4.button:hover {
 
 .formContainer {
   background-color: #222222;
-  border-radius: 10px;
+  border-radius: 10px 10px 0px 10px;
   color: white;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -196,7 +196,8 @@ h4.button:hover {
   -webkit-box-pack: left;
       -ms-flex-pack: left;
           justify-content: left;
-  margin: 10px auto;
+  margin: 10px auto 0px auto;
+  padding: 20px;
 }
 
 .formInput {
@@ -205,6 +206,22 @@ h4.button:hover {
   height: -moz-fit-content;
   height: fit-content;
   width: 200px;
+}
+
+.formComponent {
+  width: 20%;
+  text-align: left;
+}
+
+.formSection {
+  height: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .formTextArea {
