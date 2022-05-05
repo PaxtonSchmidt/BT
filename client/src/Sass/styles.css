@@ -151,6 +151,15 @@
   margin: auto;
 }
 
+.submitButton:hover {
+  border-color: rgba(0, 209, 0, 0.219) !important;
+}
+
+.cancelButton:hover {
+  background-color: red;
+  border-color: red !important;
+}
+
 .topButtons {
   -webkit-box-pack: left;
       -ms-flex-pack: left;
@@ -165,7 +174,7 @@
 
 .button {
   min-width: 90px;
-  margin: 0px 10px 2px 0px;
+  margin: 0px 2px 2px 0px;
   color: white;
   background-color: #222222;
   padding: 5px 10px;
@@ -173,6 +182,7 @@
   border-radius: 5px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  font-size: small;
 }
 
 .button:hover {
@@ -238,6 +248,14 @@
 
 .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input {
   color: white !important;
+}
+
+.css-wgizgc-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled)::before {
+  border-bottom: 1px solid #efff0a6b !important;
+}
+
+.css-1bck7qi-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled):before {
+  border-bottom: 1px solid #efff0a6b !important;
 }
 
 .list {
