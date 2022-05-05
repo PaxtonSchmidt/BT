@@ -3,6 +3,6 @@ export interface User {
     username: string;
     password: string;
     email: string;
-    date_creat: Date;
+    date_created: Date;
     bio: string;
 }
