@@ -7,8 +7,8 @@ export default function TicketsPage() {
         <div className='pageContentContainer'>
             <div className='pageHeaderContainer'>
                 <h1 className='pageHeader'>TICKETS</h1>
-                <TicketList />
                 <FormAndManage />
+                <TicketList />
             </div>
         </div>
     )

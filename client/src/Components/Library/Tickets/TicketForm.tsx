@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, Formik } from 'formik';
 import { InputLabel, MenuItem, Select, TextField, ThemeProvider } from '@mui/material';
 import { theme } from '../../../theme';
+import postTicket from '../../../API/TicketRequests/PostTicket';
 
 export default function TicketForm() {
     const projects = ['project 1', 'project 2', 'project 3', 'project 4', 'project 5'] //an array of all projects belonging to the team you're currently working for
@@ -16,10 +17,11 @@ export default function TicketForm() {
                     initialValues={{title: '',
                                     description: '',
                                     project: '',
-                                    user: '',
+                                    assignee: '',
                                     priority: ''}}
                     onSubmit={data => {
-                        console.log(data);
+                        console.log(data) 
+                        postTicket(data)
                     }}
                 >
                 {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
@@ -74,9 +76,9 @@ export default function TicketForm() {
                                         })}
                                     </TextField>
                                     <TextField select  
-                                        name='user' 
+                                        name='assignee' 
                                         defaultValue={''} 
-                                        value={values.user} 
+                                        value={values.assignee} 
                                         label='Assignee' 
                                         className='formComponent' 
                                         color='info' 

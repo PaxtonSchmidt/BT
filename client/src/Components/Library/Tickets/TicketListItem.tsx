@@ -1,5 +1,5 @@
 import React from 'react';
-import { ticket } from '../../../interfaces/Props/ticket';
+import { ticket } from '../../../PropsInterfaces/ticket';
 
 export default function ticketListItem(props: ticket) {
     //going to need some code that translates numerical indicators to meaning
