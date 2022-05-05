@@ -266,7 +266,7 @@
 
 .listItemContainer {
   background-color: #222222;
-  border-radius: 0px 10px 0px 10px;
+  border-radius: 0px 10px 10px 10px;
   padding: 5px 10px 30px 10px;
 }
 
@@ -334,6 +334,7 @@ html, body {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
+  margin-bottom: 100px;
 }
 
 .pageBodyContainer2 {
@@ -347,7 +348,7 @@ html, body {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .pageHeader {
