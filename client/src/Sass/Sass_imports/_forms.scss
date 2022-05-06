@@ -17,6 +17,10 @@
     width: 20%;
     text-align: left;
 }
+.loginFormComponent{
+    width: 100%;
+    text-align: left;
+}
 .formSection{
     height: 50%;
     display: flex;
@@ -28,16 +32,21 @@
 }
 .css-1x51dt5-MuiInputBase-input-MuiInput-input{
     color: white !important;
+    transition: $transition !important;
 }
 .css-66dh3a-MuiInputBase-input-MuiInput-input{
     color: white !important;
+    transition: $transition !important;
 }
 .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input {
     color: white !important;
+    transition: $transition !important;
 }
 .css-wgizgc-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled)::before {
     border-bottom: 1px solid $dimYellow !important;
+    transition: $transition !important;
 }
 .css-1bck7qi-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled):before{
     border-bottom: 1px solid $dimYellow !important;
+    transition: $transition !important;
 }

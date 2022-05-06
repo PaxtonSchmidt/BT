@@ -223,6 +223,11 @@
   text-align: left;
 }
 
+.loginFormComponent {
+  width: 100%;
+  text-align: left;
+}
+
 .formSection {
   height: 50%;
   display: -webkit-box;
@@ -240,22 +245,32 @@
 
 .css-1x51dt5-MuiInputBase-input-MuiInput-input {
   color: white !important;
+  -webkit-transition: 0.5s !important;
+  transition: 0.5s !important;
 }
 
 .css-66dh3a-MuiInputBase-input-MuiInput-input {
   color: white !important;
+  -webkit-transition: 0.5s !important;
+  transition: 0.5s !important;
 }
 
 .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input {
   color: white !important;
+  -webkit-transition: 0.5s !important;
+  transition: 0.5s !important;
 }
 
 .css-wgizgc-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled)::before {
   border-bottom: 1px solid #efff0a6b !important;
+  -webkit-transition: 0.5s !important;
+  transition: 0.5s !important;
 }
 
 .css-1bck7qi-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled):before {
   border-bottom: 1px solid #efff0a6b !important;
+  -webkit-transition: 0.5s !important;
+  transition: 0.5s !important;
 }
 
 .list {
@@ -348,6 +363,16 @@ html, body {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
+  margin-bottom: 50px;
+}
+
+.pageBodyContainer3 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin-bottom: 50px;
 }
 
