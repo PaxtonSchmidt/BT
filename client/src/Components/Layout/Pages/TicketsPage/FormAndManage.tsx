@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import TicketForm from '../../../Library/Tickets/TicketForm';
+import TicketForm from '../../../Library/Forms/TicketForm';
 
 export default function FormAndManage() {
     return(
