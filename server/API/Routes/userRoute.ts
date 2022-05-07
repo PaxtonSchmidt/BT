@@ -6,7 +6,6 @@ let usersRoute = require("../Controllers/userController");
 router.get("/getUsers", usersRoute.getUsers);
 router.get("/addUser", usersRoute.addUser);
 router.get("/getUserByID", usersRoute.getUserByID);
-router.post("/login", usersRoute.loginUser);
 
 // //userTable queries
 // app.get('/createUserTable', usersTableQueries.createUsersTable);
