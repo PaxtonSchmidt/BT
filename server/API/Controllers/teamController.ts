@@ -10,4 +10,17 @@ function createTeamsTable(req: any, res: any) {
     });
 }
 
-module.exports = {createTeamsTable}
+function addTeam(req: any, res: any) {
+    console.log('got to add team endpoint')
+    let team = {name: 'Good Dev Company', date_created: '2022-05-07', creator_user_id: '1'}
+
+    //eventually these queries will be parameterized 
+    let sql = "INSERT INTO teams SET ?"; 
+    
+    connectionPool.query(sql, team, (err: any, result: any) => {
+        if (err) result.send(err);
+        res.send(result.status);
+    })
+}
+
+module.exports = { addTeam }
