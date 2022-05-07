@@ -1,52 +1,6 @@
-import { User } from '../interfaces/User';
 import {connectionPool} from '../dbConnectionPool';
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-function loginUser(req: any, res: any) {
-    console.log('got here')
-    let claimsEmail = req.body.email;
-    let claimsPassword = req.body.password;
-    let sql = "Select * from users WHERE email = ?";
-    let targetUser: User; 
-    
-    function fetchUser(queryEmail: string) {
-        return new Promise<any>((resolve, reject) => {
-            connectionPool.query(sql, queryEmail, (err: any, result: any) => {
-                console.log('3')
-                return err ? reject(err) : resolve(result[0]);
-            });
-        })
-    }
-    
-    async function ifPassIsAuthenticSignAndSendJWT() {
-        targetUser = await fetchUser(claimsEmail);
-        
-        try{
-            let isValidPassword: boolean = await bcrypt.compare(claimsPassword, targetUser.password);
-            console.log(isValidPassword);
-            if(isValidPassword) {
-                console.log(isValidPassword);
-
-                let accessToken = await jwt.sign(
-                        {user_id: targetUser.user_id},//cannot be a string because it breaks jwt.Sign()->{expiresIn}
-                        process.env.ACCESS_TOKEN_SECRET, 
-                        {expiresIn: '1500ms'});
-                console.log(accessToken);
-
-                res.cookie('token', accessToken, {
-                    httpOnly: true
-                }).send();
-
-            } else {
-                res.status(401).send();
-            }
-        } catch {
-            res.status(500).send();
-        }
-    }
-    ifPassIsAuthenticSignAndSendJWT();
-}
 
 async function addUser(req: any, res: any) {
     try{
@@ -101,4 +55,4 @@ function getUserByID(req: any, res: any) {
 
 
 
-module.exports = {addUser, getUsers, getUserByID, loginUser};
+module.exports = {addUser, getUsers, getUserByID};
