@@ -8,7 +8,8 @@ app.use('/', require('./API/Routes/AuthRoutes/authenticationRoute'));
 app.use('/users/', require('./API/Routes/userRoute'));
 app.use('/tickets/', require('./API/Routes/ticketRoute'));
 app.use('/teams/', require('./API/Routes/teamRoute'));
-app.use('/projects/', require('./API/Routes/projectRoute'))
+app.use('/projects/', require('./API/Routes/projectRoute'));
+app.use('/manageTeam/', require('./API/Routes/user_teamsRoute'));
 
 app.listen('4000', () => {
     console.log('server started on port 4000');
