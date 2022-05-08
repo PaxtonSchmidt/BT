@@ -3,6 +3,6 @@ let router = express.Router();
 
 let projectRoute = require("../Controllers/projectController");
 
-router.get("/addProject", projectRoute.addProject);
+router.post("/addProject", projectRoute.addProject);
 
 module.exports = router;
