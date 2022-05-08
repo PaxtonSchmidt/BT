@@ -8,7 +8,7 @@ export default function DashboardPage() {
                 <h1 className='pageHeader'>DASHBOARD</h1>
             </div>
             <Container className='pageBodyContainer3'>
-            <LoginForm />
+                <LoginForm />
             </Container>
                 
         </div>
