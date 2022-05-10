@@ -8,6 +8,6 @@ export default async function postLogin(claims: Claims) {
         },
         body: JSON.stringify(claims)
     })
-    console.log(response.status);
+    console.log(response);
     // return response.json().then((response) => console.log(response));
 }
