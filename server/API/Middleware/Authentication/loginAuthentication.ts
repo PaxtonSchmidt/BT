@@ -1,4 +1,5 @@
 import { User } from "../../Interfaces/User";
+import consumeCookie from "../../Services/consumeCookie";
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const authenticationQueries = require('../../Controllers/AuthControllers/authenticationController');
@@ -10,24 +11,23 @@ function login(req: any, res: any) {
     let targetUser: User; 
     
     async function ifPassIsAuthenticSignAndSendJWT() {
-        targetUser = await authenticationQueries.fetchUser(claimsEmail);
+        targetUser = await authenticationQueries.fetchTargetUser(claimsEmail);
         
         try{
             let isValidPassword: boolean = await bcrypt.compare(claimsPassword, targetUser.password);
-            console.log(isValidPassword);
-            if(isValidPassword) {
-                console.log(isValidPassword);
+            if(isValidPassword) {                
 
-                let accessToken = await jwt.sign(
-                        {user_id: targetUser.user_id},//cannot be a string because it breaks jwt.Sign()->{expiresIn}
-                        process.env.ACCESS_TOKEN_SECRET, 
-                        {expiresIn: '1500ms'});
+                let accessToken = 
+                    await jwt.sign(
+                    {user_id: targetUser.user_id},//cannot be a string because it breaks jwt.Sign()->{expiresIn}
+                    process.env.ACCESS_TOKEN_SECRET, 
+                    {expiresIn: '1500ms'});
                 console.log(accessToken);
 
                 res.cookie('token', accessToken, {
                     httpOnly: true
                 }).send();
-
+                
             } else {
                 res.status(401).send();
             }
