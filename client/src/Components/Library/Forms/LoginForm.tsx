@@ -2,6 +2,8 @@ import React from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
 import postLogin from '../../../API/Requests/PostLogin';
+import { auth } from '../../../API/Services/Auth';
+import { Claims } from '../../../API/interfaces/claims';
 
 export default function LoginForm() {
 return(
@@ -9,9 +11,9 @@ return(
             <Formik 
                 initialValues={{email: '',
                                 password: ''}}
-                onSubmit={data => {
-                    console.log(data) 
-                    postLogin(data)
+                onSubmit={(data: Claims) => {
+                    console.log(data);
+                    auth.signIn(data);
                 }}
             >
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {

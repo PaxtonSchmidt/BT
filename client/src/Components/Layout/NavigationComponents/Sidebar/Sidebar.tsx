@@ -11,7 +11,7 @@ export default function Sidebar() {
         <div className='sideBar navComponent'>
             <div >
                 <div className='navItem sideBarItem'>
-                    <Link to='/'>
+                    <Link to='dashboard'>
                     <img src={house} alt='go to dashboard' className='sidebarIcon scaleYonHover'/>
                     </Link>
                 </div>
