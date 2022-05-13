@@ -410,8 +410,8 @@ html, body {
 .pageHeader {
   font-size: 70px;
   margin: 0px;
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(10%, #1a1a1a), color-stop(40%, white));
-  background-image: linear-gradient(0deg, #1a1a1a 10%, white 40%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(10%, #1a1a1a), color-stop(40%, #222222));
+  background-image: linear-gradient(0deg, #1a1a1a 10%, #222222 40%);
   background-clip: text;
   color: transparent;
 }
