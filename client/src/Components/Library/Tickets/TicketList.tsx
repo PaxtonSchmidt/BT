@@ -14,7 +14,7 @@ function Tickets() {
         }))
         .then(jsonRes => setTickets(jsonRes));
     }, []) //empty array passed as second argument to useEffect can be used to tell the hook to run at least once without causing infinite loop
-    console.log(tickets);
+
 
  
      //needs pagination
