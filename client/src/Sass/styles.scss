@@ -3,17 +3,19 @@
 @import "./Sass_imports/_buttons.scss";
 @import "./Sass_imports/_forms.scss";
 @import "./Sass_imports/_lists.scss";
+@import "./Sass_imports/_scrollbar.scss";
 
 html, body{
     max-width: 100%;
-    overflow-x: hidden;
+    background-color: $black;
 }
 .app{
     background-color: $black;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     display: inline-flex;
     position: absolute;
-    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
 }
 .pageContentContainer{
     height: calc(100vh - 60px);
@@ -44,7 +46,7 @@ html, body{
 .pageHeader{
     font-size: 70px;
     margin: 0px;
-    background-image: linear-gradient(1deg, $black 15%, $yellow 60%);
+    background-image: linear-gradient(0deg, $black 10%, white 40%);
     background-clip: text;
     color: transparent;
 }
