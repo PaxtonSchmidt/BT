@@ -4,7 +4,10 @@ export default async function getCurrentUser() {
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(res => console.log(res.json()))
-    
-    // return response.json().then((response) => console.log(response));
+    }).then(res => res.json()).then(data => {return data[0].username});
+
+    let currentUser = response;
+
+    console.log(currentUser)
+    return currentUser
 }
