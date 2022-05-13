@@ -2,19 +2,31 @@ import React from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
 import postLogin from '../../../API/Requests/PostLogin';
-import { auth } from '../../../API/Services/Auth';
+import { authService } from '../../../API/Services/AuthService';
 import { Claims } from '../../../API/interfaces/claims';
+import { Dispatch } from 'react';
+import { SetStateAction } from 'react';
+import { Navigate } from 'react-router-dom';
 
-export default function LoginForm() {
+interface Props {
+    setIsAuth: Dispatch<SetStateAction<boolean>>
+}
+
+export default function LoginForm({ setIsAuth }: Props) {
+    async function handleSubmit(data: Claims) {
+            console.log(data); 
+            let attemptResult = await authService.signIn(data);
+            console.log(attemptResult)
+            if(attemptResult === 200){
+                setIsAuth(true)
+            }
+    }
 return(
         <div style={{width: '700px'}}>
             <Formik 
                 initialValues={{email: '',
                                 password: ''}}
-                onSubmit={(data: Claims) => {
-                    console.log(data);
-                    auth.signIn(data);
-                }}
+                onSubmit={handleSubmit}
             >
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
                     return (
