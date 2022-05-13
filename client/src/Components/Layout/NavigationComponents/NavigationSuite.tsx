@@ -1,16 +1,25 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+import { boolean } from 'yup';
 import Hamburger from './Hamburger';
 import Navbar from './Navbar/Navbar';
 import Sidebar from './Sidebar/Sidebar';
 
-export default function NavigationSuite() {
-    return (
-        <>
-            <Navbar />
-            <Hamburger />
-            <Sidebar />
-            <Outlet />
-        </>
-    )
+interface Props {
+    isAuth: boolean;
+}
+
+export default function NavigationSuite(isAuth: Props) {
+    if(isAuth) {
+        return (
+            <>
+                <Navbar />
+                <Hamburger />
+                <Sidebar />
+                <Outlet />
+            </>
+        )
+    }
+    return <Navigate to='/login' />
+    
 }

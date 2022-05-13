@@ -1,14 +1,25 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
 import LoginForm from '../../../Library/Forms/LoginForm';
-export default function DashboardPage() {
-    return(
-        <div className='pageContentContainer'>
-            <div className='pageHeaderContainer'>
-                <h1 className='pageHeader'>DASHBOARD</h1>
+
+interface Props {
+    isAuth: boolean;
+}
+
+export default function DashboardPage(isAuth: Props) {
+    if(isAuth.isAuth === true){
+        return(
+            <div className='pageContentContainer'>
+                <div className='pageHeaderContainer'>
+                    <h1 className='pageHeader'>DASHBOARD</h1>
+                </div>      
             </div>
-            
-                
-        </div>
-    )
+        )
+    }
+    return <Navigate to='/login' />
+    
+
+    
+    
 }

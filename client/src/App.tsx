@@ -1,6 +1,7 @@
 import { ThemeProvider } from '@mui/material';
 import { Dispatch } from 'react';
 import { SetStateAction } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { boolean } from 'yup';
@@ -18,50 +19,65 @@ import { theme } from './theme';
 // interface setIsAuth {
 //   setIsAuth: Dispatch<SetStateAction<boolean>>
 // }
+function isLoggedIn() {
+  if(localStorage.getItem('user') !== null){
+    console.log('got here')
+    return true
+  }
+  return false;
+}
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false);
-  console.log('', isAuth);
+  const [isAuth, setIsAuth] = useState(isLoggedIn() === true);
 
+  useEffect(() => {
+    console.log('ran it')
+    setIsAuth(isLoggedIn());
+  }, [])
+
+  console.log(isAuth)
+  
   return (
     <ThemeProvider theme={theme}>
       <div className='app'>
         <Routes>
           <Route path='login' element={<LoginPage setIsAuth={setIsAuth} />} />
           
-          <Route path='/' element={ <NavigationSuite /> }>
-            <Route path='/dashboard' 
+          <Route path='/' element={ //still allows users to directly render nav suite and no subcomponents
+            <NavigationSuite isAuth={isAuth}/>
+          }
+          >
+            <Route path='dashboard' //protected
               element={ 
-              <ProtectedRoute isAuth={isAuth}>
-                <DashboardPage />
-              </ProtectedRoute>
+              <DashboardPage isAuth={isAuth}/>
             }/>
 
-            <Route path='/tickets' 
+            <Route path='tickets' //protected
               element={
-              <ProtectedRoute isAuth={isAuth}> 
-                <TicketsPage />
-              </ProtectedRoute> 
+                <TicketsPage isAuth={isAuth} />
             }/>
 
-            <Route path='/projects' 
+            <Route path='projects' //protected
               element={ 
-              <ProtectedRoute isAuth={isAuth}>
-                <ProjectsPage />
-              </ProtectedRoute> 
+                <ProjectsPage isAuth={isAuth} />
             }/>
 
-            <Route path='/team' 
+            <Route path='team' //protected
               element={ 
-              <ProtectedRoute isAuth={isAuth}>
-                <ManageTeamPage />
-              </ProtectedRoute> 
+                <ManageTeamPage isAuth={isAuth} />
             }/>
+
           </Route>
         </Routes>
+        
       </div>
     </ThemeProvider>
   );
 }
 
 export default App;
+
+//maybe this works for protecting wrapper route in element render prop?
+{/* <ProtectedRoute isAuth={isAuth}>
+  <NavigationSuite />
+</ProtectedRoute> }> */}
