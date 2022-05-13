@@ -5,10 +5,10 @@ import { boolean } from 'yup';
 import LoginForm from '../../../Library/Forms/LoginForm';
 
 interface Props {
-    setIsAuth: Dispatch<SetStateAction<boolean>>
+    setIsLoggedIn: Dispatch<SetStateAction<boolean>>
 }
 
-export default function LoginPage({ setIsAuth }: Props) {
+export default function LoginPage({ setIsLoggedIn }: Props) {
     return(
         <Container  className='pageBodyContainer3' 
                     style={{width: '100%', 
@@ -17,7 +17,7 @@ export default function LoginPage({ setIsAuth }: Props) {
                         paddingTop: '10%'}}
                     >
 
-            <LoginForm setIsAuth={setIsAuth}/>
+            <LoginForm setIsLoggedIn={setIsLoggedIn}/>
 
         </Container>
     )

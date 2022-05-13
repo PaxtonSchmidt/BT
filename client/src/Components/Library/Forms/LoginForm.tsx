@@ -9,16 +9,16 @@ import { SetStateAction } from 'react';
 import { Navigate } from 'react-router-dom';
 
 interface Props {
-    setIsAuth: Dispatch<SetStateAction<boolean>>
+    setIsLoggedIn: Dispatch<SetStateAction<boolean>>
 }
 
-export default function LoginForm({ setIsAuth }: Props) {
+export default function LoginForm({ setIsLoggedIn }: Props) {
     async function handleSubmit(data: Claims) {
             console.log(data); 
             let attemptResult = await authService.signIn(data);
             console.log(attemptResult)
             if(attemptResult === 200){
-                setIsAuth(true)
+                setIsLoggedIn(true)
             }
     }
 return(

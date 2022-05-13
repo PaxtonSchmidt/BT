@@ -9,7 +9,7 @@ export const authService = {
         if(responseCode === 200) {
             let username = await getCurrentUser();
 
-            localStorage.setItem('user', 'frank');
+            sessionStorage.setItem('username', 'frank');
 
             return responseCode
             //currentUser undefined, figure out how to return the res.body.username 

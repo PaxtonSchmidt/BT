@@ -4,11 +4,11 @@ import { Navigate } from 'react-router-dom';
 import LoginForm from '../../../Library/Forms/LoginForm';
 
 interface Props {
-    isAuth: boolean;
+    isLoggedIn: boolean;
 }
 
-export default function DashboardPage(isAuth: Props) {
-    if(isAuth.isAuth === true){
+export default function DashboardPage(isLoggedIn: Props) {
+    if(isLoggedIn.isLoggedIn === true){
         return(
             <div className='pageContentContainer'>
                 <div className='pageHeaderContainer'>

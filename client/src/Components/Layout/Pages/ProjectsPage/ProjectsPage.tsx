@@ -4,11 +4,11 @@ import { Navigate } from 'react-router-dom';
 import ProjectForm from '../../../Library/Forms/ProjectForm';
 
 interface Props {
-    isAuth: boolean;
+    isLoggedIn: boolean;
 }
 
-export default function ProjectsPage(isAuth: Props) {
-    if(isAuth.isAuth === true) {
+export default function ProjectsPage(isLoggedIn: Props) {
+    if(isLoggedIn.isLoggedIn === true) {
         return(
             <div className='pageContentContainer'>
                 <div className='pageHeaderContainer'>

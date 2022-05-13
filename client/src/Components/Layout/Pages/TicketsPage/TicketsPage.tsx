@@ -4,11 +4,11 @@ import TicketList from '../../../Library/Tickets/TicketList';
 import FormAndManage from './FormAndManage';
 
 interface Props {
-    isAuth: boolean;
+    isLoggedIn: boolean;
 }
 
-export default function TicketsPage(isAuth: Props) {
-    if(isAuth.isAuth === true) {
+export default function TicketsPage(isLoggedIn: Props) {
+    if(isLoggedIn.isLoggedIn === true) {
         return(
             <div className='pageContentContainer'>
                 <div className='pageHeaderContainer'>

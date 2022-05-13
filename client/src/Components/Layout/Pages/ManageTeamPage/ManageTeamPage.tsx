@@ -4,11 +4,11 @@ import { Navigate } from 'react-router-dom';
 import InviteToTeamForm from '../../../Library/Forms/inviteToTeamForm';
 
 interface Props {
-    isAuth: boolean;
+    isLoggedIn: boolean;
 }
 
-export default function Dashboard(isAuth: Props) {
-    if(isAuth.isAuth === true) {
+export default function Dashboard(isLoggedIn: Props) {
+    if(isLoggedIn.isLoggedIn === true) {
         return(
             <div className='pageContentContainer'>
                 <div className='pageHeaderContainer'>

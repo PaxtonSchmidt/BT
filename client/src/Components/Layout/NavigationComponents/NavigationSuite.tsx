@@ -6,11 +6,11 @@ import Navbar from './Navbar/Navbar';
 import Sidebar from './Sidebar/Sidebar';
 
 interface Props {
-    isAuth: boolean;
+    isLoggedIn: boolean;
 }
 
-export default function NavigationSuite(isAuth: Props) {
-    if(isAuth) {
+export default function NavigationSuite(isLoggedIn: Props) {
+    if(isLoggedIn.isLoggedIn === true) {
         return (
             <>
                 <Navbar />

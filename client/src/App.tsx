@@ -19,8 +19,8 @@ import { theme } from './theme';
 // interface setIsAuth {
 //   setIsAuth: Dispatch<SetStateAction<boolean>>
 // }
-function isLoggedIn() {
-  if(localStorage.getItem('user') !== null){
+function checkIsLoggedIn() {
+  if(sessionStorage.getItem('username') !== null){
     console.log('got here')
     return true
   }
@@ -28,43 +28,43 @@ function isLoggedIn() {
 }
 
 function App() {
-  const [isAuth, setIsAuth] = useState(isLoggedIn() === true);
+  const [isLoggedIn, setIsLoggedIn] = useState(checkIsLoggedIn() === true);
 
   useEffect(() => {
     console.log('ran it')
-    setIsAuth(isLoggedIn());
+    setIsLoggedIn(checkIsLoggedIn());
   }, [])
 
-  console.log(isAuth)
+  console.log(isLoggedIn)
   
   return (
     <ThemeProvider theme={theme}>
       <div className='app'>
         <Routes>
-          <Route path='login' element={<LoginPage setIsAuth={setIsAuth} />} />
+          <Route path='login' element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
           
           <Route path='/' element={ //still allows users to directly render nav suite and no subcomponents
-            <NavigationSuite isAuth={isAuth}/>
+            <NavigationSuite isLoggedIn={isLoggedIn}/>
           }
           >
             <Route path='dashboard' //protected
               element={ 
-              <DashboardPage isAuth={isAuth}/>
+              <DashboardPage isLoggedIn={isLoggedIn}/>
             }/>
 
             <Route path='tickets' //protected
               element={
-                <TicketsPage isAuth={isAuth} />
+                <TicketsPage isLoggedIn={isLoggedIn} />
             }/>
 
             <Route path='projects' //protected
               element={ 
-                <ProjectsPage isAuth={isAuth} />
+                <ProjectsPage isLoggedIn={isLoggedIn} />
             }/>
 
             <Route path='team' //protected
               element={ 
-                <ManageTeamPage isAuth={isAuth} />
+                <ManageTeamPage isLoggedIn={isLoggedIn} />
             }/>
 
           </Route>
