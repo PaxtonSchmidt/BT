@@ -2,10 +2,9 @@ import * as express from 'express';
 let router = express.Router();
 
 let teamRoute = require("../Controllers/teamController");
-let userTeamsRoute = require("../Controllers/user_teamsController");
+let teamSelectRoute = require("../Models/TeamSelect");
 
 router.get("/addTeam", teamRoute.addTeam);
-
-router.get("/addUserToTeam", userTeamsRoute.addUserToTeam);
+router.get("/getTeams", teamSelectRoute.getCurrentUserTeams);
 
 module.exports = router;
