@@ -5,6 +5,7 @@ import ticket from '../../../Images/Icons/ticket.svg';
 import people from '../../../Images/Icons/people.svg';
 import swap from '../../../Images/Icons/arrow-left-right.svg';
 import { Link } from 'react-router-dom';
+import { authService } from '../../../../API/Services/AuthService';
 
 export default function Sidebar() {
     return (
@@ -38,7 +39,7 @@ export default function Sidebar() {
             
             {/* This component will be a quick switch between teams the current user belongs to. Requires re-login by expiring token? */}
             <div className='navItem sideBarItem' style={{marginTop: 'auto'}}>
-                <Link to='/'>
+                <Link to='/selectTeam' onClick={authService.deselectTeam}>
                     <img src={swap} alt='Work for a different team' className='sidebarIcon scaleYonHover'/>
                 </Link>
             </div>
