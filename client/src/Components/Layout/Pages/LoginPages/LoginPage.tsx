@@ -11,10 +11,10 @@ interface Props {
 export default function LoginPage({ setIsLoggedIn }: Props) {
     return(
         <Container  className='pageBodyContainer3' 
-                    style={{width: '100%', 
-                        marginBottom: '0px', 
+                    style={{width: '100%',  
                         textAlign: 'center',
-                        paddingTop: '10%'}}
+                        marginTop: '15%',
+                        marginBottom: 'auto'}}
                     >
 
             <LoginForm setIsLoggedIn={setIsLoggedIn}/>
