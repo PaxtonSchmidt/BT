@@ -9,26 +9,37 @@ import { authService } from './API/Services/AuthService';
 import NavigationSuite from './Components/Layout/NavigationComponents/NavigationSuite';
 import DashboardPage from './Components/Layout/Pages/DashboardPage/DashboardPage';
 import LoginPage from './Components/Layout/Pages/LoginPages/LoginPage';
+import SignUpPage from './Components/Layout/Pages/LoginPages/SignUpPage';
+import TeamSelectPage from './Components/Layout/Pages/LoginPages/SelectTeamPage';
 import ManageTeamPage from './Components/Layout/Pages/ManageTeamPage/ManageTeamPage';
 import ProjectsPage from './Components/Layout/Pages/ProjectsPage/ProjectsPage';
 import TicketsPage from './Components/Layout/Pages/TicketsPage/TicketsPage';
-import ProtectedRoute from './Components/Layout/Routes/ProtectedRoutes';
 import './Sass/styles.css';
 import { theme } from './theme';
+import SelectTeamPage from './Components/Layout/Pages/LoginPages/SelectTeamPage';
 
 // interface setIsAuth {
 //   setIsAuth: Dispatch<SetStateAction<boolean>>
 // }
 function checkIsLoggedIn() {
-  if(sessionStorage.getItem('username') !== null){
+  if(sessionStorage.getItem('isLoggedIn') === 'true'){
+    console.log('got here')
+    return true
+  }
+  return false;
+}
+function checkIsTeamSelected() {
+  if(sessionStorage.getItem('isTeamSelected') === 'true'){
     console.log('got here')
     return true
   }
   return false;
 }
 
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(checkIsLoggedIn() === true);
+  const [isTeamSelected, setIsTeamSelected] = useState(checkIsTeamSelected() === true);
 
   useEffect(() => {
     console.log('ran it')
@@ -41,30 +52,32 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className='app'>
         <Routes>
+          <Route path='selectTeam' element={<SelectTeamPage isLoggedIn={isLoggedIn} setIsTeamSelected={setIsTeamSelected}/>}/>
+          <Route path='signUp' element={<SignUpPage /> }/>
           <Route path='login' element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
           
-          <Route path='/' element={ //still allows users to directly render nav suite and no subcomponents
-            <NavigationSuite isLoggedIn={isLoggedIn}/>
+          <Route path='/' element={
+            <NavigationSuite isLoggedIn={isLoggedIn} isTeamSelected={isTeamSelected}/>
           }
           >
             <Route path='dashboard' //protected
               element={ 
-              <DashboardPage isLoggedIn={isLoggedIn}/>
+                <DashboardPage isLoggedIn={isLoggedIn} isTeamSelected={isTeamSelected}/>
             }/>
 
             <Route path='tickets' //protected
               element={
-                <TicketsPage isLoggedIn={isLoggedIn} />
+                <TicketsPage isLoggedIn={isLoggedIn} isTeamSelected={isTeamSelected}/>
             }/>
 
             <Route path='projects' //protected
               element={ 
-                <ProjectsPage isLoggedIn={isLoggedIn} />
+                <ProjectsPage isLoggedIn={isLoggedIn} isTeamSelected={isTeamSelected}/>
             }/>
 
             <Route path='team' //protected
               element={ 
-                <ManageTeamPage isLoggedIn={isLoggedIn} />
+                <ManageTeamPage isLoggedIn={isLoggedIn} isTeamSelected={isTeamSelected}/>
             }/>
 
           </Route>
@@ -76,8 +89,3 @@ function App() {
 }
 
 export default App;
-
-//maybe this works for protecting wrapper route in element render prop?
-{/* <ProtectedRoute isAuth={isAuth}>
-  <NavigationSuite />
-</ProtectedRoute> }> */}
