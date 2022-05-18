@@ -7,19 +7,22 @@ import Sidebar from './Sidebar/Sidebar';
 
 interface Props {
     isLoggedIn: boolean;
+    isTeamSelected: boolean;
 }
 
-export default function NavigationSuite(isLoggedIn: Props) {
-    if(isLoggedIn.isLoggedIn === true) {
-        return (
-            <>
-                <Navbar />
-                <Hamburger />
-                <Sidebar />
-                <Outlet />
-            </>
-        )
+export default function NavigationSuite({ isLoggedIn, isTeamSelected }: Props) {
+    if(isLoggedIn === true) {
+        if(isTeamSelected === true){
+            return (
+                <>
+                    <Navbar />
+                    <Hamburger />
+                    <Sidebar />
+                    <Outlet />
+                </>
+            )
+        } return <Navigate to='/selectTeam' />
     }
+
     return <Navigate to='/login' />
-    
 }

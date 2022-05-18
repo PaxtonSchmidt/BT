@@ -5,19 +5,22 @@ import FormAndManage from './FormAndManage';
 
 interface Props {
     isLoggedIn: boolean;
+    isTeamSelected: boolean;
 }
 
-export default function TicketsPage(isLoggedIn: Props) {
-    if(isLoggedIn.isLoggedIn === true) {
-        return(
-            <div className='pageContentContainer'>
-                <div className='pageHeaderContainer'>
-                    <h1 className='pageHeader'>TICKETS</h1>
-                    <FormAndManage />
-                    <TicketList />
+export default function TicketsPage({ isLoggedIn, isTeamSelected } : Props) {
+    if(isLoggedIn === true) {
+        if(isTeamSelected === true){
+            return(
+                <div className='pageContentContainer'>
+                    <div className='pageHeaderContainer'>
+                        <h1 className='pageHeader'>TICKETS</h1>
+                        <FormAndManage />
+                        <TicketList />
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        } return <Navigate to='/selectTeam' />
     }
     return <Navigate to='/login' />
     

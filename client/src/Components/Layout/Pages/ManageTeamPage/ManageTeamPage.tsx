@@ -5,12 +5,14 @@ import InviteToTeamForm from '../../../Library/Forms/inviteToTeamForm';
 
 interface Props {
     isLoggedIn: boolean;
+    isTeamSelected: boolean;
 }
 
-export default function Dashboard(isLoggedIn: Props) {
-    if(isLoggedIn.isLoggedIn === true) {
-        return(
-            <div className='pageContentContainer'>
+export default function ManageTeamPage( {isLoggedIn, isTeamSelected} : Props) {
+    if(isLoggedIn === true) {
+        if(isTeamSelected === true) {
+            return(
+                <div className='pageContentContainer'>
                 <div className='pageHeaderContainer'>
                     <h1 className='pageHeader'>TEAM</h1>
                     <Container className='pageBodyContainer3'>
@@ -18,8 +20,10 @@ export default function Dashboard(isLoggedIn: Props) {
                     </Container>
                 </div>
             </div>
-        )
+            )
+        } return <Navigate to='/selectTeam' />
     }
+    
     return <Navigate to='/login' />
     
 }

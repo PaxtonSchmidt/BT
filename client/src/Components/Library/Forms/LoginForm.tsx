@@ -13,8 +13,6 @@ interface Props {
     setIsLoggedIn: Dispatch<SetStateAction<boolean>>
 }
 
-
-
 export default function LoginForm({ setIsLoggedIn }: Props) {
     let navigate = useNavigate();
 
@@ -34,11 +32,11 @@ export default function LoginForm({ setIsLoggedIn }: Props) {
             console.log(attemptResult)
             if(attemptResult === 200){
                 setIsLoggedIn(true)
-                navigate('/dashboard')
+                navigate('/selectTeam')
             }
     }
 return(
-        <div style={{width: '700px'}}>
+        <div style={{width: '550px'}}>
             <Formik 
                 initialValues={{email: '',
                                 password: ''}}
@@ -48,7 +46,7 @@ return(
                     return (
                         <form onSubmit={handleSubmit} onBlur={handleBlur}>
                             
-                        <div className='formContainer' >
+                        <div className='formContainer' style={{borderRadius: '10px 10px 0px 0px'}} >
                             <h4 className='header'>Login</h4>
                             <TextField
                                 label='Email'
@@ -78,7 +76,7 @@ return(
                             <div>
                                 <button type='submit'
                                     name='login'
-                                    className='button bottomButtons submitButton scaleYonHover' 
+                                    className='button bottomButtons submitButton' 
                                     style={{
                                         borderRadius: '5px 0px 5px 5px',
                                         margin: '2px 0px 0px 0px',
@@ -96,19 +94,19 @@ return(
             <div style={{float: 'left'}}>
                 <button 
                     onClick={handleSignUpClick}
-                    className='button bottomButtons scaleYonHover' 
+                    className='button bottomButtons' 
                     style={{margin: '2px 2px 0px 0px', borderRadius: '0px 5px 5px 5px'}}>
                     Sign Up
                 </button>
                 <button 
                     onClick={handleDemoClick}
-                    className='button bottomButtons scaleYonHover' 
+                    className='button bottomButtons' 
                     style={{margin: '2px 2px 0px 0px'}}>
                     Demo
                 </button>
                 <button 
                     onClick={handleGitHubClick}
-                    className='button bottomButtons scaleYonHover' 
+                    className='button bottomButtons' 
                     style={{margin: '2px 2px 0px 0px'}}>
                     <img src={gitHub} alt='go to code'/>
                 </button>

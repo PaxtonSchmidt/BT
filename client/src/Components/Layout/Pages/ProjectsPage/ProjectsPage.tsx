@@ -5,20 +5,23 @@ import ProjectForm from '../../../Library/Forms/ProjectForm';
 
 interface Props {
     isLoggedIn: boolean;
+    isTeamSelected: boolean;
 }
 
-export default function ProjectsPage(isLoggedIn: Props) {
-    if(isLoggedIn.isLoggedIn === true) {
-        return(
-            <div className='pageContentContainer'>
-                <div className='pageHeaderContainer'>
-                    <h1 className='pageHeader'>PROJECTS</h1>
-                    <Container className='pageBodyContainer3'>
-                    <ProjectForm />
-                    </Container>
+export default function ProjectsPage({ isLoggedIn, isTeamSelected }: Props) {
+    if(isLoggedIn === true) {
+        if(isTeamSelected === true) {
+            return(
+                <div className='pageContentContainer'>
+                    <div className='pageHeaderContainer'>
+                        <h1 className='pageHeader'>PROJECTS</h1>
+                        <Container className='pageBodyContainer3'>
+                        <ProjectForm />
+                        </Container>
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        } return <Navigate to='/selectTeam' />
     }
     return <Navigate to='/login' />
 }
