@@ -4,8 +4,7 @@ const bcrypt = require('bcrypt');
 
 async function addUser(req: any, res: any) {
     try{
-        //user is req body
-        let user = {username: 'frank', password: 'test', email: 'test@test.com', date_created: '2022-04-24', bio: 'killin it'};
+        let user = {username: req.body.username, password: req.body.password, email: req.body.email, date_created: '2022-05-16', bio: ''};
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(user.password, salt);
         user.password = hashedPassword;
