@@ -1,27 +1,47 @@
 import { Claims } from "../interfaces/claims";
-import getCurrentUser from "../Requests/GetCurrentUser";
+import { NewUser } from "../interfaces/NewUser";
 import postLogin from "../Requests/PostLogin";
+import postSignUp from "../Requests/PostSignUp";
 
 export const authService = {
     async signIn(data: Claims) {
         let responseCode = await postLogin(data);
         
         if(responseCode === 200) {
-            let username = await getCurrentUser();
 
-            sessionStorage.setItem('username', 'frank');
+            sessionStorage.setItem('isLoggedIn', 'true');
 
             return responseCode
             //currentUser undefined, figure out how to return the res.body.username 
             // setGlobalStateUser(currentUser);
             //clear cookie maybe?
         }
-        return 'Something went wrong...'
+        return responseCode
     },
 
     signOut() {
         
         // setGlobalStateUser(null);
         //clear cookie maybe?
+    }, 
+
+    async signUp(data: NewUser) {
+        let responseCode = await postSignUp(data);
+        
+        if(responseCode === 200) {
+            return responseCode
+            //currentUser undefined, figure out how to return the res.body.username 
+            // setGlobalStateUser(currentUser);
+            //clear cookie maybe?
+        }
+        return responseCode
+    },
+
+    async selectTeam() {
+        sessionStorage.setItem('isTeamSelected', 'true');
+    },
+
+    async deselectTeam() {
+        sessionStorage.setItem('isTeamSelected', 'false');
     }
 }
