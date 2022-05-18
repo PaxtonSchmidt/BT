@@ -1,4 +1,5 @@
 import {connectionPool} from '../dbConnectionPool';
+import consumeCookie from '../Services/consumeCookie';
 
 function createUserTeamsTable(req: any, res: any) {
     
@@ -24,4 +25,15 @@ function addUserToTeam(req: any, res: any) {
     });
 }
 
-module.exports = { createUserTeamsTable, addUserToTeam }
+function getCurrentUserTeams(current_user_id: number) {
+    let sql = "SELECT team_id FROM user_teams WHERE user_id = ?";
+
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, current_user_id, (err: any, result: any) => {
+            console.log('server got user teams...')
+            return err ? reject(err) : resolve(result);
+        });
+    })
+}
+
+module.exports = { createUserTeamsTable, addUserToTeam, getCurrentUserTeams }
