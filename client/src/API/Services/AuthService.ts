@@ -20,9 +20,7 @@ export const authService = {
     },
 
     signOut() {
-        
-        // setGlobalStateUser(null);
-        //clear cookie maybe?
+        sessionStorage.setItem('isLoggedIn', 'false');
     }, 
 
     async signUp(data: NewUser) {
