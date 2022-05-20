@@ -35,7 +35,7 @@ export default function LoginForm({ setIsLoggedIn }: Props) {
                 navigate('/selectTeam')
             }
     }
-return(
+    return(
         <div style={{width: '550px'}}>
             <Formik 
                 initialValues={{email: '',
