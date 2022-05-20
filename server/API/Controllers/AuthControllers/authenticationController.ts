@@ -13,7 +13,7 @@ function fetchTargetUser(queryEmail: string) {
 }
 
 async function fetchCurrentUser(req: any, res: any) {
-    let currentUserId = consumeCookie(req.headers.cookie)
+    let currentUserId = consumeCookie(req.headers.cookie, 'needTokenUser_id')
     console.log(currentUserId)
 
     let sql = 'SELECT username FROM users WHERE user_id = ?'
