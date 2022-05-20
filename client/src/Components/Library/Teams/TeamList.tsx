@@ -18,7 +18,10 @@ function TeamList(setIsTeamSelected: Props) {
             if(res.ok) {         
                 console.log('a') 
                 return res.json();
-            } else {
+            } else if(res.status === 401){
+                window.location.assign('/login')
+            }
+                else {
                 console.log('b')
                 return res.json();
             }
@@ -26,17 +29,24 @@ function TeamList(setIsTeamSelected: Props) {
         .then(jsonRes => setTeams(jsonRes));
     }, [])  
 
-     //needs pagination
+    function handleSelect(team: string) {
+        console.log(team)
+        setIsTeamSelected.setIsTeamSelected(true);
+    }  
+ 
+     //needs pagination 
     return (
     <Container className='pageBodyContainer3'>
         <div className='list' style={{textAlign: 'left', height: 'fit-content', width: '50%'}}>
             {teams.map((team) =>
-            <TeamCard 
-                key={team.team_name}
-                name={team.team_name}
-                ownerName={team.owner_name}
-                dateJoined={team.date_joined.slice(0, 10)}
-            />
+            <div onClick={() => handleSelect(team.team_name)}>
+                <TeamCard 
+                    key={team.team_name}
+                    name={team.team_name}
+                    ownerName={team.owner_name}
+                    dateJoined={team.date_joined.slice(0, 10)}
+                />
+            </div>
         )}
         </div>
         <div>
