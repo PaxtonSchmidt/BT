@@ -11,6 +11,9 @@ function Tickets() {
             if(res.ok) {
                 return res.json();
             }
+            if(res.status === 401){
+                window.location.assign('/login')
+            }
         }))
         .then(jsonRes => setTickets(jsonRes));
     }, []) //empty array passed as second argument to useEffect can be used to tell the hook to run at least once without causing infinite loop
