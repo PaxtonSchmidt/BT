@@ -34,7 +34,6 @@ function getTickets(req: any, res: any) {
 
     connectionPool.query(sql, (err: any, result: any) => {
         if (err) throw(err);
-        console.log('Server got tickets from database...');
         res.send(result);
     })
 }

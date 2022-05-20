@@ -26,7 +26,6 @@ function getUsers(req: any, res: any) {
 
     connectionPool.query(sql, (err: any, result: any) => {
         if (err) throw(err);
-        console.log('Server got users from database...');
         res.send(result);
     })
 }
@@ -37,7 +36,6 @@ function getUserByID(req: any, res: any) {
     
     connectionPool.query(sql, userID, (err: any, result: any) => {
         if (err) result.send(err);
-        console.log(result)
         res.send('User retrieved...');
     })
 }

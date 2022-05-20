@@ -30,7 +30,6 @@ function getUserTeams(current_user_id: number) {
 
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, current_user_id, (err: any, result: any) => {
-            console.log('server got user teams...')
             return err ? reject(err) : resolve(result);
         });
     })
