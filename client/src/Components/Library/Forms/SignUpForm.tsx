@@ -10,7 +10,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import gitHub from '../../Images/Icons/github.svg';
 import { NewUser } from '../../../API/interfaces/NewUser';
 
-export default function LoginForm() {
+export default function SignUpForm() {
     let navigate = useNavigate();
     function oops() {
         return <h1>oops</h1>
