@@ -25,8 +25,8 @@ function addUserToTeam(req: any, res: any) {
     });
 }
 
-function getCurrentUserTeams(current_user_id: number) {
-    let sql = "SELECT team_id FROM user_teams WHERE user_id = ?";
+function getUserTeams(current_user_id: number) {
+    let sql = "SELECT  t.name AS team_name, u.username AS owner_name, ut.date_joined FROM user_teams ut LEFT JOIN teams t ON ut.team_id = t.team_id LEFT JOIN users u ON t.owner_user_id = u.user_id WHERE ut.user_id = ?";
 
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, current_user_id, (err: any, result: any) => {
@@ -36,4 +36,4 @@ function getCurrentUserTeams(current_user_id: number) {
     })
 }
 
-module.exports = { createUserTeamsTable, addUserToTeam, getCurrentUserTeams }
+module.exports = { createUserTeamsTable, addUserToTeam, getUserTeams }
