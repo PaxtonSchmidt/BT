@@ -17,6 +17,7 @@ import TicketsPage from './Components/Layout/Pages/TicketsPage/TicketsPage';
 import './Sass/styles.css';
 import { theme } from './theme';
 import SelectTeamPage from './Components/Layout/Pages/LoginPages/SelectTeamPage';
+import NewTeamPage from './Components/Layout/Pages/LoginPages/NewTeamPage';
 
 // interface setIsAuth {
 //   setIsAuth: Dispatch<SetStateAction<boolean>>
@@ -44,6 +45,7 @@ function App() {
   useEffect(() => {
     console.log('ran it')
     setIsLoggedIn(checkIsLoggedIn());
+    authService.deselectTeam();
   }, [])
 
   console.log(isLoggedIn)
@@ -52,6 +54,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className='app'>
         <Routes>
+          <Route path='newTeam' element={<NewTeamPage isLoggedIn={isLoggedIn} />}/>
           <Route path='selectTeam' element={<SelectTeamPage isLoggedIn={isLoggedIn} setIsTeamSelected={setIsTeamSelected}/>}/>
           <Route path='signUp' element={<SignUpPage /> }/>
           <Route path='login' element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
