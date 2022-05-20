@@ -45,7 +45,6 @@ function App() {
   useEffect(() => {
     console.log('ran it')
     setIsLoggedIn(checkIsLoggedIn());
-    authService.deselectTeam();
   }, [])
 
   console.log(isLoggedIn)
