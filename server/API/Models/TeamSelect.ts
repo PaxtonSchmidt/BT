@@ -1,10 +1,15 @@
 import consumeCookie from "../Services/consumeCookie"
-// const userTeamsController = require('../Controllers/user_teamsController')
+const userTeamsController = require('../Controllers/user_teamsController')
 
 async function getCurrentUserTeams(req: any, res: any) {
-    let currentUserID = consumeCookie(req.headers.cookie);
-    console.log(currentUserID)
-    res.send('ok')
+    let currentUserID = consumeCookie(req.headers.cookie, 'needTokenUser_id');
+    let userTeams = await userTeamsController.getUserTeams(currentUserID);
+    console.log(userTeams);
+    if(userTeams.length < 1){
+        return res.sendStatus(404)
+    } else {
+        res.send(userTeams)
+    }
 }
 
 module.exports =  { getCurrentUserTeams }
