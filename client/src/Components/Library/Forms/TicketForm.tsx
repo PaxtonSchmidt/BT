@@ -11,7 +11,7 @@ export default function TicketForm() {
     const priority = ['high', 'medium', 'low']
 return( 
         <div>
-            <h4 className='header'>Create Ticket</h4>
+            
             <Formik 
                 initialValues={{title: '',
                                 description: '',
@@ -27,6 +27,7 @@ return(
                     return (
                         <form onSubmit={handleSubmit} onBlur={handleBlur}>
                         <div className='formContainer'>
+                        <h4 className='header'>Create Ticket</h4>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <TextField
                                     label='Title'
