@@ -11,7 +11,7 @@ export default function NewTeamPage(isLoggedIn: Props) {
     if(isLoggedIn.isLoggedIn) {
         return(
             <Container  className='pageBodyContainer3' 
-                        style={{width: '100%',
+                        style={{width: '100vw',
                             marginTop: '15%',
                             marginBottom: 'auto',
                             alignItems: 'center',

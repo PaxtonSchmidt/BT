@@ -10,7 +10,7 @@ import SignUpForm from '../../../Library/Forms/SignUpForm';
 export default function SignUpPage() {
     return(
         <Container  className='pageBodyContainer3' 
-                    style={{width: '100%',
+                    style={{width: '100vw',
                         marginTop: '15%',
                         marginBottom: 'auto',
                         alignItems: 'center',

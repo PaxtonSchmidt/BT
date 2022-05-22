@@ -17,7 +17,7 @@ export default function LoginPage({ setIsLoggedIn }: Props) {
     , [])
     return(
         <Container  className='pageBodyContainer3' 
-                    style={{width: '100%',  
+                    style={{width: '100vw',  
                         textAlign: 'center',
                         marginTop: '15%',
                         marginBottom: 'auto'}}

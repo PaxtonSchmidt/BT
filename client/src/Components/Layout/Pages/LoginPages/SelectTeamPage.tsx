@@ -18,11 +18,16 @@ export default function SelectTeamPage({ setIsTeamSelected, isLoggedIn }: Props)
 
     if(isLoggedIn === true) {
         return(
-            <div className='pageContentContainer'>
-                <div className='pageHeaderContainer'>
-                    <h1 style={{color: 'white'}}>Which team would you like to work for?</h1>
-                    <TeamList setIsTeamSelected={setIsTeamSelected} />
-                </div>
+            <div className='pageBodyContainer3' 
+                style={{width: '100vw',  
+                textAlign: 'center',
+                marginTop: '15%',
+                marginBottom: 'auto', 
+                flexDirection:'column', 
+                flexWrap: 'wrap'}}>
+
+                <h1 style={{color: 'white'}}>Which team would you like to work for?</h1>
+                <TeamList setIsTeamSelected={setIsTeamSelected} />
             </div>
         )
     }
