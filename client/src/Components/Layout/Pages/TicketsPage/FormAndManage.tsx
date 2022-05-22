@@ -6,9 +6,7 @@ export default function FormAndManage() {
     return(
         <Container className='pageBodyContainer2'>
             <div className='formAndManage'>
-                <div style={{width: '80%'}}>
-                    <TicketForm />
-                </div>
+                <TicketForm />
             </div>   
         </Container>
     )

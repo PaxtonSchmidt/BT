@@ -13,8 +13,7 @@ export default function TicketsPage({ isLoggedIn, isTeamSelected } : Props) {
         if(isTeamSelected === true){
             return(
                 <div className='pageContentContainer'>
-                    <div className='pageHeaderContainer'>
-                        <h1 className='pageHeader'>TICKETS</h1>
+                    <div>
                         <FormAndManage />
                         <TicketList />
                     </div>

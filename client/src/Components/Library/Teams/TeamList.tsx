@@ -16,7 +16,6 @@ function TeamList(setIsTeamSelected: Props) {
         fetch('/teams/getTeams')
         .then((res => {
             if(res.ok) {         
-                console.log('a') 
                 return res.json();
             } else if(res.status === 401){
                 window.location.assign('/login')
@@ -36,12 +35,11 @@ function TeamList(setIsTeamSelected: Props) {
  
      //needs pagination 
     return (
-    <Container className='pageBodyContainer3'>
+    <>
         <div className='list' style={{textAlign: 'left', height: 'fit-content', width: '50%'}}>
             {teams.map((team) =>
-            <div onClick={() => handleSelect(team.team_name)}>
+            <div key={team.team_name} onClick={() => handleSelect(team.team_name)}>
                 <TeamCard 
-                    key={team.team_name}
                     name={team.team_name}
                     ownerName={team.owner_name}
                     dateJoined={team.date_joined.slice(0, 10)}
@@ -53,7 +51,8 @@ function TeamList(setIsTeamSelected: Props) {
             <h3>Need to start a team?</h3>
             <button onClick={() =>  navigate('../newTeam')}>Create Team</button>
         </div>
-    </Container>   
+        
+    </>  
     )
 }
     
