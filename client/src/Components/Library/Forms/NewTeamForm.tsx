@@ -14,7 +14,10 @@ export default function NewTeamForm() {
         if(attemptResult === 200){
             navigate('/selectTeam')
         }
-}
+    }
+    function handleGoBack() {
+        navigate('/selectTeam')
+    }
     
 return( 
         <div>
@@ -26,7 +29,7 @@ return(
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
                     return (
                         <form onSubmit={handleSubmit} onBlur={handleBlur}>
-                        <div className='formContainer'>
+                        <div className='formContainer' style={{borderRadius: '10px 10px 0px 0px'}}>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <TextField
                                     label='Team Name'
@@ -40,14 +43,14 @@ return(
                                     variant='standard'
                                     color='info'
                                     required />
+                            </div>
                         </div>
-                        </div>
-                        <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
+                        <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
                             <button type='reset'
-                                onClick={handleReset}
-                                className='button bottomButtons cancelButton'
-                                style={{ margin: '2px 2px 0px 0px' }}>
-                                X
+                                onClick={handleGoBack}
+                                className='button bottomButtons'
+                                style={{ margin: '2px 2px 0px 0px', borderRadius: '0px 5px 5px 5px' }}>
+                                Go Back
                             </button>
                             <button type='submit'
                                 name='submit'
