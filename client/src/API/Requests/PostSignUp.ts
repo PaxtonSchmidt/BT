@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { NewUser } from "../interfaces/NewUser";
 
 export default async function postSignUp(data: NewUser) {
