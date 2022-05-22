@@ -4,27 +4,26 @@
 @import "./Sass_imports/_forms.scss";
 @import "./Sass_imports/_lists.scss";
 @import "./Sass_imports/_scrollbar.scss";
+@import "./Sass_imports/_teamSelect.scss";
 
 html, body{
-    max-width: 100%;
-    background-color: $black;
-}
-.app{
     background-color: $black;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    display: inline-flex;
+}
+.bugLogo{
     position: absolute;
-    width: 100%;
-    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 .pageContentContainer{
-    height: calc(100vh - 60px);
-    margin-top: 60px;
-    height: calc(100vh - 60px);
-    width: 100vw;
+    height: calc(100vh - 50px);
+    margin-top: 50px;
+    margin-left: 50px;
+    width: calc(100vw - 50px);
     text-align: center;
     display: inline-flex;
     flex-direction: column;
+    align-items: center;
 }
 .pageBodyContainer1{
     display: flex;
@@ -53,8 +52,6 @@ html, body{
     height: fit-content;
 }
 .formAndManage{
-    margin: 50px auto 0px auto;
-    width: 80%;
     display: flex;
     justify-content: center;
     border-radius: 10px;
@@ -63,6 +60,7 @@ html, body{
     color: white;
     font-size: 20px;
     margin: 0px;
+    margin-bottom: 20px;
 }
 
 
@@ -73,10 +71,19 @@ html, body{
 @media (max-width: 1024px) {
 }
 @media (max-width: 768px) {  
+    .pageHeader{
+        font-size: 60px;
+    }
 }
 @media (max-width: 480px) {   
+    .pageHeader{
+        font-size: 40px;
+    }
 }
 @media (max-width: 320px) { 
+    .pageHeader{
+        font-size: 30px;
+    }
 }
 
 
