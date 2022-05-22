@@ -29,6 +29,11 @@ export default function SignUpForm() {
                 console.log(attemptResult);
             }
     }
+
+    
+    function handleGoBack() {
+        navigate('/selectTeam')
+    }
 return(
         <div style={{width: '550px'}}>
             <Formik 
@@ -42,7 +47,7 @@ return(
                     return (
                         <form onSubmit={handleSubmit} onBlur={handleBlur}>
                             
-                        <div className='formContainer' style={{borderRadius: '10px 10px 0px 10px'}} >
+                        <div className='formContainer' style={{borderRadius: '10px 10px 0px 0px'}} >
                             <h4 className='header'>Sign Up</h4>
                             <TextField
                                 label='Email'
@@ -88,20 +93,23 @@ return(
                                 required />
                             
                         </div>
-                        <div style={{ width: 'fit-content', display: 'inline-flex', float: 'right' }}>
-                            
-                            <div>
-                                <button type='submit'
-                                    name='login'
-                                    className='button bottomButtons submitButton scaleYonHover' 
-                                    style={{
-                                        borderRadius: '5px 0px 5px 5px',
-                                        margin: '2px 0px 0px 0px',
-                                        justifySelf: 'right'
-                                    }}>
-                                    Sign Up
-                                </button>
-                            </div>
+                        <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+                            <button type='reset'
+                                onClick={handleGoBack}
+                                className='button bottomButtons'
+                                style={{ margin: '2px 2px 0px 0px', borderRadius: '0px 5px 5px 5px'}}>
+                                Go Back
+                            </button>
+                            <button type='submit'
+                                name='login'
+                                className='button bottomButtons submitButton' 
+                                style={{
+                                    borderRadius: '5px 0px 5px 5px',
+                                    margin: '2px 0px 0px 0px',
+                                    justifySelf: 'right'
+                                }}>
+                                Sign Up
+                            </button>
                         </div>
                         </form>
                         
