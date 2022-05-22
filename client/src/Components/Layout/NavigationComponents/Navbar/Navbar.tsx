@@ -7,7 +7,6 @@ export default function Navbar() {
     return (
         <div className='navBar navComponent'>
             <TeamPic />
-            <BugIcon />
             <ProfileAndBell />
         </div>
     )
