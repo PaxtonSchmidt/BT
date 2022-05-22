@@ -24,14 +24,12 @@ import NewTeamPage from './Components/Layout/Pages/LoginPages/NewTeamPage';
 // }
 function checkIsLoggedIn() {
   if(sessionStorage.getItem('isLoggedIn') === 'true'){
-    console.log('got here')
     return true
   }
   return false;
 }
 function checkIsTeamSelected() {
   if(sessionStorage.getItem('isTeamSelected') === 'true'){
-    console.log('got here')
     return true
   }
   return false;
@@ -43,15 +41,12 @@ function App() {
   const [isTeamSelected, setIsTeamSelected] = useState(checkIsTeamSelected() === true);
 
   useEffect(() => {
-    console.log('ran it')
     setIsLoggedIn(checkIsLoggedIn());
   }, [])
 
-  console.log(isLoggedIn)
   
   return (
     <ThemeProvider theme={theme}>
-      <div className='app'>
         <Routes>
           <Route path='newTeam' element={<NewTeamPage isLoggedIn={isLoggedIn} />}/>
           <Route path='selectTeam' element={<SelectTeamPage isLoggedIn={isLoggedIn} setIsTeamSelected={setIsTeamSelected}/>}/>
@@ -84,8 +79,6 @@ function App() {
 
           </Route>
         </Routes>
-        
-      </div>
     </ThemeProvider>
   );
 }
