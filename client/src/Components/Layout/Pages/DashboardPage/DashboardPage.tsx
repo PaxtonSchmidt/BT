@@ -13,9 +13,7 @@ export default function DashboardPage({ isLoggedIn, isTeamSelected }: Props) {
         if(isTeamSelected === true) {
             return(
                 <div className='pageContentContainer'>
-                    <div className='pageHeaderContainer'>
-                        <h1 className='pageHeader'>DASHBOARD</h1>
-                    </div>      
+                    s
                 </div>
             )
         } return <Navigate to='/selectTeam' />

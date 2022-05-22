@@ -14,7 +14,6 @@ export default function ProjectsPage({ isLoggedIn, isTeamSelected }: Props) {
             return(
                 <div className='pageContentContainer'>
                     <div className='pageHeaderContainer'>
-                        <h1 className='pageHeader'>PROJECTS</h1>
                         <Container className='pageBodyContainer3'>
                         <ProjectForm />
                         </Container>

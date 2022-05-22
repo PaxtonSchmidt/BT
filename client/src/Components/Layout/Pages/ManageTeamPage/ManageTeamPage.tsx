@@ -14,7 +14,6 @@ export default function ManageTeamPage( {isLoggedIn, isTeamSelected} : Props) {
             return(
                 <div className='pageContentContainer'>
                 <div className='pageHeaderContainer'>
-                    <h1 className='pageHeader'>TEAM</h1>
                     <Container className='pageBodyContainer3'>
                         <InviteToTeamForm /> 
                     </Container>
