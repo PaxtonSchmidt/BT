@@ -18,8 +18,7 @@ html, body{
 .pageContentContainer{
     height: calc(100vh - 50px);
     margin-top: 50px;
-    margin-left: 50px;
-    width: calc(100vw - 50px);
+    width: 100vw;
     text-align: center;
     display: inline-flex;
     flex-direction: column;
