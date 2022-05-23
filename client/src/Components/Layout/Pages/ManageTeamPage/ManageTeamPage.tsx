@@ -11,7 +11,6 @@ interface Props {
 
 export default function ManageTeamPage( {isTeamSelected} : Props) {
     const loginState = useSelector((state: State) => state.login)
-    console.log(loginState)
     
     if(loginState === 1) {
         if(isTeamSelected === true) {

@@ -13,7 +13,6 @@ interface Props {
 
 export default function SelectTeamPage({ setIsTeamSelected }: Props) {
     const loginState = useSelector((state: State) => state.login)
-    console.log(loginState)
     
 
     if(loginState === 1) {

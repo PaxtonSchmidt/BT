@@ -11,7 +11,6 @@ interface Props {
 
 export default function ProjectsPage({ isTeamSelected }: Props) {
     const loginState = useSelector((state: State) => state.login)
-    console.log(loginState)
     
     if(loginState === 1) {
         if(isTeamSelected === true) {
@@ -19,7 +18,7 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
                 <div className='pageContentContainer'>
                     <div className='pageHeaderContainer'>
                         <Container className='pageBodyContainer3'>
-                        <ProjectForm />
+                            <ProjectForm />
                         </Container>
                     </div>
                 </div>

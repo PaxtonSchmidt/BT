@@ -8,8 +8,7 @@ return(
         <div style={{width: '700px'}}>
             <Formik 
                 initialValues={{name: '',
-                                description: '',
-                                teamName: 'Good Dev Company'}}
+                                description: ''}}
                 onSubmit={data => {
                     console.log(data) 
                     postProject(data)
