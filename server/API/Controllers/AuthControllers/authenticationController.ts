@@ -1,5 +1,6 @@
 import { connectionPool } from "../../dbConnectionPool";
-import consumeCookie from "../../Services/consumeCookie";
+import consumeCookie from "../../Services/consumeCookies/consumeCookie";
+import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
 
 function fetchTargetUser(queryEmail: string) {
     let sql = "Select user_id, password FROM users WHERE email = ?";
@@ -12,7 +13,7 @@ function fetchTargetUser(queryEmail: string) {
 }
 
 async function fetchCurrentUser(req: any, res: any) {
-    let currentUserId = consumeCookie(req.headers.cookie, 'needTokenUser_id')
+    let currentUserId = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
 
     let sql = 'SELECT username FROM users WHERE user_id = ?'
     

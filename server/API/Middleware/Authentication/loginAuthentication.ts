@@ -1,5 +1,4 @@
 import { User } from "../../Interfaces/User";
-import consumeCookie from "../../Services/consumeCookie";
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const authenticationQueries = require('../../Controllers/AuthControllers/authenticationController');

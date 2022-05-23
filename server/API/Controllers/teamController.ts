@@ -1,7 +1,7 @@
 import {connectionPool} from '../dbConnectionPool';
-import authenticateJWT from '../Services/authenticateJWT';
-import consumeCookie from '../Services/consumeCookie';
-import getCurrentTime from '../Services/getCurrentTime';
+import consumeCookie from '../Services/consumeCookies/consumeCookie';
+import { consumeCookieFlags } from '../Services/consumeCookies/consumeCookieFlags';
+import getCurrentDate from '../Services/getCurrentDate';
 
 function createTeamsTable(req: any, res: any) {
     let sql ="CREATE TABLE teams(team_id INT(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, date_created DATETIME NOT NULL, creator_user_id INT(11), PRIMARY KEY(team_id))";
@@ -14,8 +14,8 @@ function createTeamsTable(req: any, res: any) {
 }
 
 function addTeam(req: any, res: any) {
-    let dateTime = getCurrentTime();
-    let creatorUserId = consumeCookie(req.headers.cookie, 'needTokenUser_id');
+    let dateTime = getCurrentDate();
+    let creatorUserId = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag);
     let newTeamId = ''
 
     //THIS NOW ADDS A FIELD IN USER TEAMS FOR THE OWNER OF THE NEWLY CREATED TEAM

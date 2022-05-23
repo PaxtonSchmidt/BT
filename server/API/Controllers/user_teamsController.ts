@@ -1,5 +1,4 @@
 import {connectionPool} from '../dbConnectionPool';
-import consumeCookie from '../Services/consumeCookie';
 
 function createUserTeamsTable(req: any, res: any) {
     
