@@ -5,16 +5,14 @@ import { boolean } from 'yup';
 import { authService } from '../../../../API/Services/AuthService';
 import LoginForm from '../../../Library/Forms/LoginForm';
 
-interface Props {
-    setIsLoggedIn: Dispatch<SetStateAction<boolean>>
-}
 
-export default function LoginPage({ setIsLoggedIn }: Props) {
+export default function LoginPage() {
     //if(isLoggedIn)return(<h1>we have you logged in</h1><button>log out?</button>) else {->}
-    useEffect(() => {
-        setIsLoggedIn(false); 
-        authService.signOut()}
+    useEffect(() => { 
+        authService.signOut()
+        authService.deselectTeam()}
     , [])
+    
     return(
         <Container  className='pageBodyContainer3' 
                     style={{width: '100vw',  
@@ -23,7 +21,7 @@ export default function LoginPage({ setIsLoggedIn }: Props) {
                         marginBottom: 'auto'}}
                     >
 
-            <LoginForm setIsLoggedIn={setIsLoggedIn}/>
+            <LoginForm />
 
         </Container>
     )

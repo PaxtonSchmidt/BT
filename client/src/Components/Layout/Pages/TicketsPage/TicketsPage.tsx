@@ -1,15 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { State } from '../../../../Redux/reducers';
 import TicketList from '../../../Library/Tickets/TicketList';
 import FormAndManage from './FormAndManage';
 
 interface Props {
-    isLoggedIn: boolean;
     isTeamSelected: boolean;
 }
 
-export default function TicketsPage({ isLoggedIn, isTeamSelected } : Props) {
-    if(isLoggedIn === true) {
+export default function TicketsPage({ isTeamSelected } : Props) {
+    const loginState = useSelector((state: State) => state.login)
+    console.log(loginState)
+    
+    if(loginState === 1) {
         if(isTeamSelected === true){
             return(
                 <div className='pageContentContainer'>

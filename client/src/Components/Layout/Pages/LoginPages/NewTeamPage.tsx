@@ -3,12 +3,8 @@ import { Container } from 'react-bootstrap';
 import { Navigate } from 'react-router-dom';
 import NewTeamForm from '../../../Library/Forms/NewTeamForm';
 
-interface Props {
-    isLoggedIn: boolean;
-}
-
-export default function NewTeamPage(isLoggedIn: Props) {
-    if(isLoggedIn.isLoggedIn) {
+export default function NewTeamPage() {
+    if(1 === 1) {
         return(
             <Container  className='pageBodyContainer3' 
                         style={{width: '100vw',

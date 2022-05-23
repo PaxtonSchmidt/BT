@@ -1,15 +1,19 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { State } from '../../../../Redux/reducers';
 import ProjectForm from '../../../Library/Forms/ProjectForm';
 
 interface Props {
-    isLoggedIn: boolean;
     isTeamSelected: boolean;
 }
 
-export default function ProjectsPage({ isLoggedIn, isTeamSelected }: Props) {
-    if(isLoggedIn === true) {
+export default function ProjectsPage({ isTeamSelected }: Props) {
+    const loginState = useSelector((state: State) => state.login)
+    console.log(loginState)
+    
+    if(loginState === 1) {
         if(isTeamSelected === true) {
             return(
                 <div className='pageContentContainer'>

@@ -1,22 +1,22 @@
 import react, { Dispatch, useEffect } from 'react';
 import { SetStateAction } from 'react';
 import { Container } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { authService } from '../../../../API/Services/AuthService';
+import { State } from '../../../../Redux/reducers';
 import TeamList from '../../../Library/Teams/TeamList';
 
 interface Props {
-    isLoggedIn: boolean;
     setIsTeamSelected: Dispatch<SetStateAction<boolean>>
 }
 
-export default function SelectTeamPage({ setIsTeamSelected, isLoggedIn }: Props) {
-    // useEffect(() => {
-    //     setIsTeamSelected(false); 
-    //     authService.deselectTeam()}
-    // , [])
+export default function SelectTeamPage({ setIsTeamSelected }: Props) {
+    const loginState = useSelector((state: State) => state.login)
+    console.log(loginState)
+    
 
-    if(isLoggedIn === true) {
+    if(loginState === 1) {
         return(
             <div className='pageBodyContainer3' 
                 style={{width: '100vw',  

@@ -8,12 +8,18 @@ import { Dispatch } from 'react';
 import { SetStateAction } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import gitHub from '../../Images/Icons/github.svg';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { LoginActionCreators } from '../../../Redux';
 
 interface Props {
     setIsLoggedIn: Dispatch<SetStateAction<boolean>>
 }
 
-export default function LoginForm({ setIsLoggedIn }: Props) {
+export default function LoginForm() {
+    const dispatch = useDispatch();
+    const { login } = bindActionCreators(LoginActionCreators, dispatch)
+
     let navigate = useNavigate();
 
     function handleSignUpClick() {
@@ -27,11 +33,9 @@ export default function LoginForm({ setIsLoggedIn }: Props) {
     }
 
     async function handleSubmit(data: Claims) {
-            console.log(data); 
             let attemptResult = await authService.signIn(data);
-            console.log(attemptResult)
             if(attemptResult === 200){
-                setIsLoggedIn(true)
+                login();
                 navigate('/selectTeam')
             }
     }
