@@ -1,10 +1,12 @@
 import {connectionPool} from '../dbConnectionPool';
+import getCurrentDate from '../Services/getCurrentDate';
 const bcrypt = require('bcrypt');
 
 
 async function addUser(req: any, res: any) {
     try{
-        let user = {username: req.body.username, password: req.body.password, email: req.body.email, date_created: '2022-05-16', bio: ''};
+        console.log(req.body)
+        let user = {username: req.body.username, discriminator: req.body.discriminator, password: req.body.password, email: req.body.email, date_created: getCurrentDate(), bio: req.body.bio};
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(user.password, salt);
         user.password = hashedPassword;
@@ -41,7 +43,7 @@ function getUserByID(req: any, res: any) {
 }
 
 // function createUsersTable(req: any, res: any) {
-//     let sql ="CREATE TABLE users(user_id INT(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL, password CHAR(60) NOT NULL, date_created DATETIME NOT NULL, bio varchar(255), PRIMARY KEY(user_id))";
+//     let sql ="CREATE TABLE users(user_id INT(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL, discriminator INT(4) NOT NULL, password CHAR(60) NOT NULL, date_created DATETIME NOT NULL, bio varchar(255), PRIMARY KEY(user_id))";
 
 //     connectionPool.query(sql, (err: Error, result: any) => {
 //         if(err) throw err;
