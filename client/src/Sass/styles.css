@@ -180,7 +180,7 @@
   border-radius: 5px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  font-size: small;
+  font-size: 14px;
 }
 
 .button:hover {
@@ -368,6 +368,7 @@ input:-webkit-autofill:active {
 html, body {
   background-color: #1a1a1a;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 14px;
 }
 
 .bugLogo {
