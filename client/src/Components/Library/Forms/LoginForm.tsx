@@ -12,9 +12,6 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { LoginActionCreators } from '../../../Redux';
 
-interface Props {
-    setIsLoggedIn: Dispatch<SetStateAction<boolean>>
-}
 
 export default function LoginForm() {
     const dispatch = useDispatch();
@@ -35,7 +32,7 @@ export default function LoginForm() {
     async function handleSubmit(data: Claims) {
             let attemptResult = await authService.signIn(data);
             if(attemptResult === 200){
-                login();
+                login()
                 navigate('/selectTeam')
             }
     }
