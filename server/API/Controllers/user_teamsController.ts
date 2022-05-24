@@ -25,7 +25,7 @@ function addUserToTeam(req: any, res: any) {
 }
 
 function getUserTeams(current_user_id: number) {
-    let sql = "SELECT  t.name AS team_name, u.username AS owner_name, ut.date_joined FROM user_teams ut LEFT JOIN teams t ON ut.team_id = t.team_id LEFT JOIN users u ON t.owner_user_id = u.user_id WHERE ut.user_id = ?";
+    let sql = "SELECT  t.name AS team_name, t.team_id AS team_id, u.username AS owner_name, ut.date_joined FROM user_teams ut LEFT JOIN teams t ON ut.team_id = t.team_id LEFT JOIN users u ON t.owner_user_id = u.user_id WHERE ut.user_id = ?";
 
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, current_user_id, (err: any, result: any) => {
