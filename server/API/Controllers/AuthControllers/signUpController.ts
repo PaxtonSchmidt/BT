@@ -2,46 +2,59 @@ import { connectionPool } from "../../dbConnectionPool";
 import { consumeRowDataPacket } from "../../Services/consumeRowDataPacket";
 let userController = require('../userController')
 
-function signUp(req: any, res: any) {
-    
-    function ifEmailDoesntExistAddUserToDB(req: any, res: any) {
-        console.log(req.body)
-        let targetEmail = req.body.email;
-        let sql = "SELECT EXISTS(SELECT * FROM users WHERE email = ?)"; 
-        
-        connectionPool.query(sql, targetEmail, (err: any, result: any) => {
-            let isTaken = consumeRowDataPacket(result);
-            console.log(isTaken)
-            if(err) throw err;
-            
-            try{
-                if(!isTaken){
-                    userController.addUser(req, res)
-                } else{
-                    res.sendStatus(400);
-                }
-            } catch{ 
-                res.sendStatus(500)
-            }
+async function signUp(req: any, res: any) {
+    let targetEmail = req.body.email;
+
+    function isEmailTaken(email: string) {
+        return new Promise<any>((resolve, reject) => {
+            let sqlEmail = "SELECT EXISTS(SELECT * FROM users WHERE email = ?)"; 
+            connectionPool.query(sqlEmail, email, (err: any, result: any) => {
+                let isEmailTaken = consumeRowDataPacket(result);
+                console.log(isEmailTaken)
+                return err ? reject(err) : resolve(isEmailTaken);
+            });
         })
     }
 
-    ifEmailDoesntExistAddUserToDB(req, res);
+    function isUsernameAndDiscComboTaken(username: string, discriminator: number) {
+        return new Promise<any>((resolve, reject) => {
+            let variables = [username, discriminator]
+            let sqlUsernameDiscriminator = "SELECT EXISTS(SELECT * FROM users WHERE username= ? AND discriminator= ?)"
+            connectionPool.query(sqlUsernameDiscriminator, variables, (err: any, result: any) => {
+                let res = consumeRowDataPacket(result)
+                console.log(res)
+                return err ? reject(err) : resolve(res);
+            });
+        })
+    }
+
+    if(await isUsernameAndDiscComboTaken(req.body.username, req.body.tag) === false 
+        && await isEmailTaken(targetEmail) === false){
+        userController.addUser(req, res)
+    }
+    
+
+
+    // userController.addUser(req, res, discriminator)
 }
+
+
+            // try{
+            //     if(!isEmailTaken){
+            //         console.log('got here32131')
+            //         console.log(discriminator)
+                                        
+            //     } else{
+            //         res.sendStatus(400);
+            //     }
+            // } catch{ 
+            //     res.sendStatus(500)
+            // }
+
+
+
 
 
 
 module.exports = { signUp }
 
-
-
-// console.log(isTargetEmailTaken);
-// try{
-//     if(isTargetEmailTaken === true) {                
-//         res.send('Email taken')                
-//     } else {
-//         res.status(401).send();
-//     }
-// } catch {
-//     res.status(500).send();
-// }
