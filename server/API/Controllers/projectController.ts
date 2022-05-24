@@ -4,8 +4,8 @@ import { consumeCookieFlags } from '../Services/consumeCookies/consumeCookieFlag
 import getCurrentDate from '../Services/getCurrentDate';
 
 function addProject(req: any, res: any) {
-    let creatorUserId = consumeCookie(req.headers.cookie, consumeCookieFlags.needTokenUser_id);
-    let team_id = consumeCookie(req.headers.cookie, consumeCookieFlags.needTokenTeam_id)
+    let creatorUserId = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag);
+    let team_id = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenTeamIdFlag)
     console.log('got to add project endpoint')
     let project = {team_id: team_id, creator_user_id: creatorUserId, name: req.body.name, description: req.body.description, date_created: getCurrentDate()}
 
