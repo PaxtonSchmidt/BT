@@ -2,6 +2,7 @@ import React, {useState, useEffect, Dispatch} from 'react';
 import { SetStateAction } from 'react';
 import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import postSelectTeam from '../../../API/Requests/PostSelectTeam';
 import TeamCard from './TeamCard';
 
 interface Props {
@@ -21,7 +22,7 @@ function TeamList(setIsTeamSelected: Props) {
                 window.location.assign('/login')
             }
                 else {
-                console.log('b')
+                console.log('couldnt get teams')
                 return res.json();
             }
         }))
@@ -30,6 +31,7 @@ function TeamList(setIsTeamSelected: Props) {
 
     function handleSelect(team: string) {
         console.log(team)
+        postSelectTeam({team})
         setIsTeamSelected.setIsTeamSelected(true);
     }  
  
@@ -38,7 +40,7 @@ function TeamList(setIsTeamSelected: Props) {
     <>
         <div className='list' style={{textAlign: 'left', height: 'fit-content', width: '50%'}}>
             {teams.map((team) =>
-            <div key={team.team_name} onClick={() => handleSelect(team.team_name)}>
+            <div key={team.team_name} onClick={() => handleSelect('1')}>
                 <TeamCard 
                     name={team.team_name}
                     ownerName={team.owner_name}
