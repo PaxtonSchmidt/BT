@@ -12,9 +12,6 @@ import { NewUser } from '../../../API/interfaces/NewUser';
 
 export default function SignUpForm() {
     let navigate = useNavigate();
-    function oops() {
-        return <h1>oops</h1>
-    }
 
     async function handleSubmit(data: NewUser) {
             console.log(data); 
@@ -39,8 +36,10 @@ return(
             <Formik 
                 initialValues={{email: '',
                                 username: '',
+                                discriminator: '',
                                 password: '',
-                                confirmPass: ''}}
+                                confirmPass: '',
+                                bio: ''}}
                 onSubmit={handleSubmit}
             >
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
@@ -71,6 +70,27 @@ return(
                                 variant='standard'
                                 color='info'
                                 required />
+                            <TextField
+                                label='#1-9999'
+                                type='number'
+                                value={values.discriminator}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                className='loginFormComponent'
+                                name='discriminator'
+                                variant='standard'
+                                color='info'
+                                required />
+                            <TextField 
+                                name='bio' 
+                                value={values.bio} 
+                                label='Bio' 
+                                className='loginFormComponent' 
+                                color='info' 
+                                variant='standard' 
+                                onChange={handleChange} 
+                                onBlur={handleBlur} 
+                                />
                             <TextField 
                                 name='password' 
                                 value={values.password} 
@@ -91,7 +111,6 @@ return(
                                 onChange={handleChange} 
                                 onBlur={handleBlur} 
                                 required />
-                            
                         </div>
                         <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between'}}>
                             <button type='reset'
