@@ -40,7 +40,7 @@ function TeamList(setIsTeamSelected: Props) {
     <>
         <div className='list' style={{textAlign: 'left', height: 'fit-content', width: '50%'}}>
             {teams.map((team) =>
-            <div key={team.team_name} onClick={() => handleSelect('1')}>
+            <div key={team.team_name} onClick={() => handleSelect(team.team_id)}>
                 <TeamCard 
                     name={team.team_name}
                     ownerName={team.owner_name}
