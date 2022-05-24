@@ -13,8 +13,19 @@ import { theme } from './theme';
 import SelectTeamPage from './Components/Layout/Pages/LoginPages/SelectTeamPage';
 import NewTeamPage from './Components/Layout/Pages/LoginPages/NewTeamPage';
 import './Sass/styles.css';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { LoginActionCreators } from './Redux';
 
 function App() {
+  const dispatch = useDispatch();
+  const { login } = bindActionCreators(LoginActionCreators, dispatch)
+  
+  let isLogged = sessionStorage.getItem('isLoggedIn')
+  if(isLogged === 'true'){
+    login()
+  }
+
   const [isTeamSelected, setIsTeamSelected] = useState(checkIsTeamSelected() === true);
   function checkIsTeamSelected() {
     if(0 === 0){
