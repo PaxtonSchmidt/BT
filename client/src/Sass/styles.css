@@ -283,6 +283,14 @@
   color: white !important;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #222222 inset !important;
+  -webkit-text-fill-color: white !important;
+}
+
 .list {
   width: 100%;
   margin: auto;
