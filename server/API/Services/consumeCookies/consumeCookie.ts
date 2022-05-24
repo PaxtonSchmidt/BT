@@ -6,6 +6,8 @@ export default function consumeCookie(cookie: any, dataNeeded: string) {
     let lengthOfTokenKeyInCookie = 6;
     let token = cookie.substring(lengthOfTokenKeyInCookie);
     
+    console.log(jwt_decode(token))
+    
     if(dataNeeded === consumeCookieFlags.entireTokenFlag) {
         return token
     } else if(dataNeeded === consumeCookieFlags.tokenUserIdFlag) {
@@ -18,6 +20,6 @@ export default function consumeCookie(cookie: any, dataNeeded: string) {
     }
     else {
         console.log(dataNeeded)
-        console.log(`ERROR: Incorrect use of consumeCookie service function. Use ${consumeCookieFlags.entireTokenFlag} or ${consumeCookieFlags.tokenUserIdFlag} in the second argument`);
+        console.log(`ERROR: Incorrect use of consumeCookie service function. Use entireTokenFlag, tokenUserIdFlag or tokenTeamIdFlag in the second argument`);
     }
 }

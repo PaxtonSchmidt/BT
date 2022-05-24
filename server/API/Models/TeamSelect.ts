@@ -3,6 +3,7 @@ import { consumeCookieFlags } from "../Services/consumeCookies/consumeCookieFlag
 const userTeamsController = require('../Controllers/user_teamsController')
 
 async function getCurrentUserTeams(req: any, res: any) {
+    console.log('wait')
     let currentUserID = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag);
     let userTeams = await userTeamsController.getUserTeams(currentUserID);
     if(userTeams.length < 1){
