@@ -1,4 +1,4 @@
-import authenticateRequest from "./API/Middleware/Authentication/authenticateRequest";
+import authenticateRequest from "./API/Middleware/authenticateRequest";
 
 const express = require('express');
 const cors = require('cors');
@@ -6,12 +6,12 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use('/', require('./API/Routes/AuthRoutes/authenticationRoute'));
+app.use('/', require('./API/Routes/AuthenticationRoutes/authenticationRoute'));
 app.use('/signup/', require('./API/Routes/signUpRoute'));
 
 //Protected routes have Auth/Auth middlewares
-app.use('/selectTeam/', authenticateRequest, 
-    require('./API/Routes/AuthRoutes/teamSelectRoute'))
+app.use('/selectTeam/', authenticateRequest, authenticateRequest,
+    require('./API/Routes/AuthenticationRoutes/teamSelectRoute'))
 
 app.use('/teams/', authenticateRequest,
     require('./API/Routes/teamRoute'));

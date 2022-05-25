@@ -1,6 +1,6 @@
-import consumeCookie from "../Services/consumeCookies/consumeCookie";
-import { consumeCookieFlags } from "../Services/consumeCookies/consumeCookieFlags";
-const userTeamsController = require('../Controllers/user_teamsController')
+import consumeCookie from "../../Services/consumeCookies/consumeCookie";
+import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
+const userTeamsController = require('../../Controllers/user_teamsController')
 
 async function getCurrentUserTeams(req: any, res: any) {
     console.log('wait')

@@ -205,7 +205,7 @@
       -ms-flex-pack: left;
           justify-content: left;
   margin: 10px auto 0px auto;
-  padding: 10px 20px 40px 20px;
+  padding: 10px 20px 20px 20px;
 }
 
 .formInput {
@@ -224,6 +224,7 @@
 .loginFormComponent {
   width: 100%;
   text-align: left;
+  margin-bottom: 10px !important;
 }
 
 .formSection {
@@ -246,7 +247,7 @@
 }
 
 .css-1gmxcjm-MuiFormLabel-root-MuiInputLabel-root {
-  color: #ffffff63 !important;
+  color: #efff0a !important;
 }
 
 .css-1x51dt5-MuiInputBase-input-MuiInput-input {

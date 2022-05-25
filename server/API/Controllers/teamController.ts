@@ -30,7 +30,6 @@ function addTeam(req: any, res: any) {
             if (err) result.send(err);
             res.send(result.status)
         })
-        res.send(result.status);
     })
 
     console.log(newTeamId)

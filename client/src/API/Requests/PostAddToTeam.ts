@@ -1,6 +1,6 @@
 import { PotentialTeammates } from "../interfaces/potentialTeammates";
 
-export default async function postAddToTeam(potentialTeammates: any) {
+export default async function postInviteToTeam(potentialTeammates: any) {
     const response = await fetch('/manageTeam/addUserToTeam', {
         method: 'POST',
         headers: {

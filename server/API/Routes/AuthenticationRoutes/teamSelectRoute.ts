@@ -1,6 +1,6 @@
 import * as express from 'express';
 let router = express.Router();
-let selectTeamRoute = require('../../Controllers/AuthControllers/selectTeamAuthentication');
+let selectTeamRoute = require('../../Authentication/selectTeamAuthentication');
 
 router.post('/selectTeam', selectTeamRoute.selectTeam);
 

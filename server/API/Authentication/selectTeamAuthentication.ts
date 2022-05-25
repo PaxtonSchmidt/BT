@@ -1,5 +1,5 @@
-import consumeCookie from "../../Services/consumeCookies/consumeCookie";
-import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
+import consumeCookie from "../Services/consumeCookies/consumeCookie";
+import { consumeCookieFlags } from "../Services/consumeCookies/consumeCookieFlags";
 const jwt = require('jsonwebtoken');
 
 //this function verifies given token and adds the new team_id to the payload of the jwt

@@ -1,17 +1,17 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
-import postProject from '../../../API/Requests/PostProject';
-import postAddToTeam from '../../../API/Requests/PostAddToTeam';
+import postInviteToTeam from '../../../API/Requests/PostAddToTeam';
 
 export default function InviteToTeamForm() {
 return(
         <div style={{width: '700px'}}>
             <Formik 
-                initialValues={{invitee: ''}}
+                initialValues={{invitee: '',
+                                discriminator: ''}}
                 onSubmit={data => {
                     console.log(data) 
-                    postAddToTeam(data)
+                    postInviteToTeam(data)
                 }}
             >
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
@@ -22,13 +22,24 @@ return(
                         <div className='formContainer' >
                             <h4 className='header'>Add People to Your Team</h4>
                             <TextField
-                                label='invitee'
+                                label='Username'
                                 type='text'
                                 value={values.invitee}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 className='addToTeamFormComponent'
                                 name='invitee'
+                                variant='standard'
+                                color='info'
+                                required />
+                            <TextField
+                                label='#0000'
+                                type='number'
+                                value={values.discriminator}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                className='loginFormComponent'
+                                name='discriminator'
                                 variant='standard'
                                 color='info'
                                 required />

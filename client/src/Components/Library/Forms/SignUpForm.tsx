@@ -14,17 +14,21 @@ export default function SignUpForm() {
     let navigate = useNavigate();
 
     async function handleSubmit(data: NewUser) {
-            console.log(data); 
-            let attemptResult = await authService.signUp(data);
-            console.log(attemptResult)
-            if(attemptResult === 200){
-                navigate('/login')
-            } else if(attemptResult === 400){
-                console.log('Email already taken')
-                // <SomethingWentWrongToast />
-            } else {
-                console.log(attemptResult);
-            }
+        if(data.password !== data.confirmPass){
+            return console.log('passwords dont match') //fire toasts maybe
+        }if(data.discriminator > 9999 || data.discriminator < 1){
+            return console.log('please put a number between 1 and 9999')
+        }
+        let attemptResult = await authService.signUp(data);
+        console.log(attemptResult)
+        if(attemptResult === 200){
+            navigate('/login')
+        } else if(attemptResult === 400){
+            console.log('Email already taken')
+            // <SomethingWentWrongToast />
+        } else {
+            console.log(attemptResult);
+        }
     }
 
     
@@ -36,7 +40,7 @@ return(
             <Formik 
                 initialValues={{email: '',
                                 username: '',
-                                discriminator: '',
+                                discriminator: 0,
                                 password: '',
                                 confirmPass: '',
                                 bio: ''}}
@@ -71,7 +75,7 @@ return(
                                 color='info'
                                 required />
                             <TextField
-                                label='#1-9999'
+                                label='#0000'
                                 type='number'
                                 value={values.discriminator}
                                 onChange={handleChange}
@@ -92,6 +96,7 @@ return(
                                 onBlur={handleBlur} 
                                 />
                             <TextField 
+                                type='password'
                                 name='password' 
                                 value={values.password} 
                                 label='Password' 
@@ -102,6 +107,7 @@ return(
                                 onBlur={handleBlur} 
                                 required />
                             <TextField 
+                                type='password'
                                 name='confirmPass' 
                                 value={values.confirmPass} 
                                 label='Confirm Password' 
