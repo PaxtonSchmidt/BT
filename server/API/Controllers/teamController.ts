@@ -2,16 +2,17 @@ import {connectionPool} from '../dbConnectionPool';
 import consumeCookie from '../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from '../Services/consumeCookies/consumeCookieFlags';
 import getCurrentDate from '../Services/getCurrentDate';
+let users = require('./userController')
 
-function createTeamsTable(req: any, res: any) {
-    let sql ="CREATE TABLE teams(team_id INT(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, date_created DATETIME NOT NULL, creator_user_id INT(11), PRIMARY KEY(team_id))";
+// function createTeamsTable(req: any, res: any) {
+//     let sql ="CREATE TABLE teams(team_id INT(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, date_created DATETIME NOT NULL, creator_user_id INT(11), PRIMARY KEY(team_id))";
 
-    connectionPool.query(sql, (err: Error, result: any) => {
-        if(err) throw err;
-        console.log(result);
-        res.send('Teams table created...');
-    });
-}
+//     connectionPool.query(sql, (err: Error, result: any) => {
+//         if(err) throw err;
+//         console.log(result);
+//         res.send('Teams table created...');
+//     });
+// }
 
 function addTeam(req: any, res: any) {
     let dateTime = getCurrentDate();
@@ -35,6 +36,17 @@ function addTeam(req: any, res: any) {
     console.log(newTeamId)
 }
 
+async function addTeamInvite(req: any, res: any, userTeamIDCombo: any){
+    let recipientID = await users.getUserByNameDiscriminator(req.body.invitee, req.body.discriminator, res)
+    let invite = {recipient_id: recipientID, sender_id: userTeamIDCombo.userID, team_id: userTeamIDCombo.teamID, date_sent: getCurrentDate()}
+    let sql = 'INSERT INTO team_invites SET ?'
+
+    connectionPool.query(sql, invite, (err: any, result: any) => {
+        if (err) res.sendStatus(500)
+        res.sendStatus(200)
+    })
+}
 
 
-module.exports = { addTeam }
+
+module.exports = { addTeam, addTeamInvite }
