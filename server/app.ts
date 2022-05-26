@@ -1,5 +1,4 @@
 import authenticateRequest from "./API/Middleware/authenticateRequest";
-import getRoles from "./API/Models/Request/Authorization/getRoles";
 
 const express = require('express');
 const cors = require('cors');
