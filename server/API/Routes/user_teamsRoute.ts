@@ -1,7 +1,7 @@
 import * as express from 'express';
 let router = express.Router();
-let userTeamsRoute = require("../Controllers/user_teamsController");
+let teamRole = require('../Models/Request/Authorization/teamRoles')
 
-router.post("/addUserToTeam", userTeamsRoute.addUserToTeam);
+router.post("/inviteUserToTeam", teamRole.inviteUserToTeam);
 
 module.exports = router;

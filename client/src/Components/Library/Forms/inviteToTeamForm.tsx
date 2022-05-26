@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
-import postInviteToTeam from '../../../API/Requests/PostAddToTeam';
+import postInviteToTeam from '../../../API/Requests/PostInviteToTeam';
 
 export default function InviteToTeamForm() {
 return(

@@ -1,7 +1,7 @@
 import * as express from 'express';
 let router = express.Router();
 
-let authenticationMiddlewareRoutes = require('../../Authentication/loginAuthentication');
+let authenticationMiddlewareRoutes = require('../../Models/Request/Authentication/loginAuthentication');
 let authenticationController = require('../../Controllers/AuthControllers/authenticationController');
 
 router.post('/login', authenticationMiddlewareRoutes.login);

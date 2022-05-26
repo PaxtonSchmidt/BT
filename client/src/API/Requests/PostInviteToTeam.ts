@@ -1,7 +1,6 @@
-import { PotentialTeammates } from "../interfaces/potentialTeammates";
 
 export default async function postInviteToTeam(potentialTeammates: any) {
-    const response = await fetch('/manageTeam/addUserToTeam', {
+    const response = await fetch('/manageTeam/inviteUserToTeam', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -9,5 +8,4 @@ export default async function postInviteToTeam(potentialTeammates: any) {
         body: JSON.stringify(potentialTeammates)
     })
     console.log(response.status);
-    // return response.json().then((response) => console.log(response));
 }
