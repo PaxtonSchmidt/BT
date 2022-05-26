@@ -5,8 +5,8 @@ const jwt_decode = require('jwt-decode');
 export default function consumeCookie(cookie: any, dataNeeded: string) {
     let lengthOfTokenKeyInCookie = 6;
     let token = cookie.substring(lengthOfTokenKeyInCookie);
-    
-    console.log(jwt_decode(token))
+
+    console.log('consumed cookie')
     
     if(dataNeeded === consumeCookieFlags.entireTokenFlag) {
         return token
@@ -15,8 +15,12 @@ export default function consumeCookie(cookie: any, dataNeeded: string) {
         return decoded.user_id;
     } else if(dataNeeded === consumeCookieFlags.tokenTeamIdFlag){
         let decoded = jwt_decode(token);
-        console.log('yaya')
         return decoded.team_id;
+    } else if(dataNeeded === consumeCookieFlags.tokenUserAndTeamIdFlag){
+        let decoded = jwt_decode(token);
+        let userTeamIDCombo = {userID: decoded.user_id, teamID: decoded.team_id}
+        console.log(userTeamIDCombo)
+        return userTeamIDCombo
     }
     else {
         console.log(dataNeeded)
