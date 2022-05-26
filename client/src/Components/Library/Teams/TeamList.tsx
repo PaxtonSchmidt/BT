@@ -18,7 +18,7 @@ function TeamList(setIsTeamSelected: Props) {
         .then((res => {
             if(res.ok) {         
                 return res.json();
-            } else if(res.status === 401){
+            } else if(res.status === 400){
                 window.location.assign('/login')
             }
                 else {

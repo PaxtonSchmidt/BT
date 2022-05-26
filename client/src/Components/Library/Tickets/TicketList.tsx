@@ -11,7 +11,7 @@ function Tickets() {
             if(res.ok) {
                 return res.json();
             }
-            if(res.status === 401){
+            if(res.status === 400){
                 window.location.assign('/login')
             }
         }))
