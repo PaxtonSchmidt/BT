@@ -14,7 +14,4 @@ export default function authenticateJWT(cookie: any) {
         let isValidJWT: boolean = false;
         return isValidJWT
     }
-    
-    
-    
 }
