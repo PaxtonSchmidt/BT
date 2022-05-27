@@ -30,30 +30,43 @@ function TeamList(setIsTeamSelected: Props) {
     }, [])  
 
     function handleSelect(team: string) {
-        console.log(team)
         postSelectTeam({team})
         setIsTeamSelected.setIsTeamSelected(true);
     }  
+
+    const handleOnMouseMove = (e: any) => {
+        const {currentTarget: target} = e;
+
+        const rect = target.getBoundingClientRect(),
+            x = e.clientX - rect.left,
+            y = e.clientY - rect.top;
+        
+        target.style.setProperty("--mouse-x", `${x}px`)
+        target.style.setProperty("--mouse-y", `${y}px`)
+    }
+
+    for(const card of document.querySelectorAll<HTMLElement>('.card')) {
+        card.onmousemove = (e: any) => handleOnMouseMove(e);
+    }
  
      //needs pagination 
     return (
     <>
-        <div className='list' style={{textAlign: 'left', height: 'fit-content', width: '50%'}}>
-            {teams.map((team) =>
-            <div key={team.team_name} onClick={() => handleSelect(team.team_id)}>
-                <TeamCard 
-                    name={team.team_name}
-                    ownerName={team.owner_name}
-                    dateJoined={team.date_joined.slice(0, 10)}
-                />
-            </div>
-        )}
+        {teams.map((team) =>
+        <div key={team.team_id} onClick={() => handleSelect(team.team_id)}>
+            <TeamCard 
+                name={team.team_name}
+                ownerName={team.owner_name}
+                dateJoined={team.date_joined.slice(0, 10)}
+                ownerDiscriminator={team.owner_discriminator}
+            />
         </div>
-        <div>
+        )}
+        {/* <div>
             <h3>Need to start a team?</h3>
             <button onClick={() =>  navigate('../newTeam')}>Create Team</button>
         </div>
-        
+         */}
     </>  
     )
 }

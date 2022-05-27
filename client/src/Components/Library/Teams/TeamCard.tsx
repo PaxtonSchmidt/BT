@@ -13,16 +13,17 @@ export default function TeamCard(props : Team) {
     }
     
     return(
-        <div className='listItem' onClick={handleClick}>
-            <span className='listColumnNames'>
-                {props.name}
-            </span>
-            <span className='listColumnNames'>
-                {props.dateJoined}
-            </span>
-            <span className='listColumnNames'>
-                {props.ownerName}
-            </span>
+        <div className='card'  onClick={handleClick}>
+            <div className='cardContent' style={{color: 'white'}}>
+                <div style={{fontSize: '18px'}}>
+                    {props.name}
+                </div>
+                <div className='cardTeamOwner'>
+                    <span className='cardTeamOwnerName'>
+                        {props.ownerName} #{props.ownerDiscriminator}
+                    </span>
+                </div>
+            </div>
         </div>
     )
 }
