@@ -33,10 +33,10 @@ export default function SignUpForm() {
 
     
     function handleGoBack() {
-        navigate('/selectTeam')
+        navigate('/login')
     }
 return(
-        <div style={{width: '550px'}}>
+        <div className='loginForm' style={{width: '550px'}}>
             <Formik 
                 initialValues={{email: '',
                                 username: '',
@@ -123,7 +123,7 @@ return(
                                 onClick={handleGoBack}
                                 className='button bottomButtons'
                                 style={{ margin: '2px 2px 0px 0px', borderRadius: '0px 5px 5px 5px'}}>
-                                Go Back
+                                Back to Login
                             </button>
                             <button type='submit'
                                 name='login'
@@ -133,7 +133,7 @@ return(
                                     margin: '2px 0px 0px 0px',
                                     justifySelf: 'right'
                                 }}>
-                                Sign Up
+                                Submit
                             </button>
                         </div>
                         </form>
