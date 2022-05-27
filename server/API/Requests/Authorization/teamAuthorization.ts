@@ -9,8 +9,6 @@ async function inviteUserToTeam(req: any, res: any) {
     let userTeamIDCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserAndTeamIdFlag);
     let currentUserRoleID = await authorizationController.fetchUserTeamRoleID(req, res, userTeamIDCombo);
 
-    console.log(userTeamIDCombo)
-    console.log(currentUserRoleID)
     if(currentUserRoleID === Roles.Legend.owner){
         await teamController.addTeamInvite(req, res, userTeamIDCombo)
     } else {
@@ -18,4 +16,10 @@ async function inviteUserToTeam(req: any, res: any) {
     }
 }
 
-module.exports = { inviteUserToTeam }
+async function acceptInviteToTeam(req: any, res: any){
+    let currentUserID = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
+    let targetInvite = await teamController.getInvite(req, res, currentUserID)
+    console.log(targetInvite)
+}
+
+module.exports = { inviteUserToTeam, acceptInviteToTeam }
