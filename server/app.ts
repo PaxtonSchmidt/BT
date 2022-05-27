@@ -24,10 +24,6 @@ app.use('/tickets/', authenticateRequest,
 
 app.use('/projects/', authenticateRequest,
     require('./API/Routes/projectRoute'));
-
-app.use('/manageTeam/', authenticateRequest,
-    require('./API/Routes/user_teamsRoute'));
-
     
 app.listen('4000', () => {
     console.log('server started on port 4000');
