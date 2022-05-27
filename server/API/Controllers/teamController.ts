@@ -47,6 +47,26 @@ async function addTeamInvite(req: any, res: any, userTeamIDCombo: any){
     })
 }
 
+async function getTeamInvites(req: any, res: any){
+    let recipient_id = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
+    let sql = 'SELECT * FROM team_invites WHERE recipient_id= ?)'
+
+    connectionPool.query(sql, recipient_id, (err: any, result: any) => {
+        if(err) throw err
+        return result
+    })
+}
+
+async function getInvite(req: any, res: any, currentUserId: any){
+    let targetInvite = {recipient_id: currentUserId, team_id: req.body.team_id}
+    let sql = 'SELECT FROM team_invites WHERE recipient_id= ? AND team_id= ?'
+    connectionPool.query(sql, targetInvite, (err: any, result:any) => {
+        if(err) throw err
+        console.log(result)
+        return result
+    })
+}
 
 
-module.exports = { addTeam, addTeamInvite }
+
+module.exports = { addTeam, addTeamInvite, getTeamInvites }
