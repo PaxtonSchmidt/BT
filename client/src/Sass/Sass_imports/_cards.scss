@@ -1,0 +1,75 @@
+.teamCardPageBody{
+    background-image: url('../Components/Images/Pic/black\ sand.jpeg');
+    background-size: cover;
+    background-position: center;
+
+    height: 100vh !important;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: top;
+    text-align: center;
+    overflow-y: auto;
+}
+#cards{
+    display: flex;
+    flex-wrap: wrap;
+    height: fit-content;
+    width: calc(100% - 20px);
+    max-width: 1530px; //makes sure the max amount of cards in a row is 5
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.card{
+    background-color: #2e2e2e;
+    padding: .5px;
+    border-radius: 10px;
+    height: 260px;
+    width: 300px;
+    cursor: pointer;
+    position: relative;
+}
+.card:hover::before{
+    opacity: 1;
+}
+.card::before{
+    background: radial-gradient(
+        900px circle at var(--mouse-x) var(--mouse-y),
+        #d6d6d60c,
+        transparent 40%
+    );
+    opacity: 0;
+    transition: opacity $transition;
+    border-radius: inherit;
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    z-index: 2;
+}
+.card > .cardContent{
+    background-color: $black;
+    margin: .5px;
+    border-radius: inherit;
+    height: calc(100% - 1px);
+    width: calc(100% - 1px);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+}
+.cardTeamOwner{
+    color: #ffffff;
+    opacity: 50%;
+    width: calc(100% - 20px);
+    transition: $transition;
+    display: flex;
+    justify-content: center;
+}

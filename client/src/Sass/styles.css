@@ -227,6 +227,10 @@
   margin-bottom: 10px !important;
 }
 
+.loginForm {
+  margin-top: 10%;
+}
+
 .formSection {
   height: 50%;
   display: -webkit-box;
@@ -328,7 +332,7 @@ input:-webkit-autofill:active {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #efff0a6b #1a1a1a;
+  scrollbar-color: #222222 #1a1a1a;
 }
 
 *::-webkit-scrollbar {
@@ -345,7 +349,7 @@ input:-webkit-autofill:active {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #efff0a;
+  background-color: #474747;
   border-radius: 10px;
   border: 3px solid #1a1a1a;
   -webkit-transition: 0.5s;
@@ -366,10 +370,125 @@ input:-webkit-autofill:active {
   max-width: 1000px;
 }
 
-html, body {
+.teamCardPageBody {
+  background-image: url("../Components/Images/Pic/black sand.jpeg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  -webkit-box-align: top;
+      -ms-flex-align: top;
+          align-items: top;
+  text-align: center;
+  overflow-y: auto;
+}
+
+#cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: calc(100% - 20px);
+  max-width: 1530px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 6px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.card {
+  background-color: #2e2e2e;
+  padding: .5px;
+  border-radius: 10px;
+  height: 260px;
+  width: 300px;
+  cursor: pointer;
+  position: relative;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card::before {
+  background: radial-gradient(900px circle at var(--mouse-x) var(--mouse-y), #d6d6d60c, transparent 40%);
+  opacity: 0;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+  border-radius: inherit;
+  content: '';
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+}
+
+.card > .cardContent {
+  background-color: #1a1a1a;
+  margin: .5px;
+  border-radius: inherit;
+  height: calc(100% - 1px);
+  width: calc(100% - 1px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.cardTeamOwner {
+  color: #ffffff;
+  opacity: 50%;
+  width: calc(100% - 20px);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+html {
   background-color: #1a1a1a;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 14px;
+  margin: 0%;
+  height: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  bottom: 0;
+  height: 100% !important;
 }
 
 .bugLogo {
@@ -423,15 +542,6 @@ html, body {
   margin-bottom: 50px;
 }
 
-.pageBodyContainer3 {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
 .pageHeader {
   font-size: 70px;
   margin: 0px;
@@ -462,6 +572,25 @@ html, body {
   font-size: 20px;
   margin: 0px;
   margin-bottom: 20px;
+}
+
+.loginPage {
+  background-image: url("../Components/Images/Pic/black sand.jpeg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh !important;
+  overflow-y: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  -webkit-box-align: top;
+      -ms-flex-align: top;
+          align-items: top;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
