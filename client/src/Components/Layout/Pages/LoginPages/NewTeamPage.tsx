@@ -10,16 +10,8 @@ export default function NewTeamPage() {
 
     if(loginState === 1) {
         return(
-            <Container  className='pageBodyContainer3' 
-                        style={{width: '100vw',
-                            marginTop: '15%',
-                            marginBottom: 'auto',
-                            alignItems: 'center',
-                            textAlign: 'center'}}
-                        >
-
+            <Container  className='loginPage'>
                 <NewTeamForm />
-                
             </Container>
         )
     } else {

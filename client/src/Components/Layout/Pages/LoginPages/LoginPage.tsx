@@ -14,15 +14,8 @@ export default function LoginPage() {
     , [])
     
     return(
-        <Container  className='pageBodyContainer3' 
-                    style={{width: '100vw',  
-                        textAlign: 'center',
-                        marginTop: '15%',
-                        marginBottom: 'auto'}}
-                    >
-
+        <Container  className='loginPage' >
             <LoginForm />
-
         </Container>
     )
 }

@@ -14,16 +14,8 @@ export default function SignUpPage() {
         authService.deselectTeam()}
     , [])
     return(
-        <Container  className='pageBodyContainer3' 
-                    style={{width: '100vw',
-                        marginTop: '15%',
-                        marginBottom: 'auto',
-                        alignItems: 'center',
-                        textAlign: 'center'}}
-                    >
-
+        <Container  className='loginPage' >
             <SignUpForm />
-
         </Container>
     )
 }

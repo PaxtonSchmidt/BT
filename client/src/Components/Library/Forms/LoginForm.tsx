@@ -37,7 +37,7 @@ export default function LoginForm() {
             }
     }
     return(
-        <div style={{width: '550px'}}>
+        <div className='loginForm' style={{width: '550px'}}>
             <Formik 
                 initialValues={{email: '',
                                 password: ''}}
@@ -83,7 +83,7 @@ export default function LoginForm() {
                                         margin: '2px 0px 0px 0px',
                                         justifySelf: 'right'
                                     }}>
-                                    Sign in
+                                    Submit
                                 </button>
                             </div>
                         </div>
