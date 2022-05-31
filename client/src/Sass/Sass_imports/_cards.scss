@@ -1,8 +1,4 @@
 .teamCardPageBody{
-    background-image: url('../Components/Images/Pic/black\ sand.jpeg');
-    background-size: cover;
-    background-position: center;
-
     height: 100vh !important;
     display: flex;
     justify-content: center;
@@ -11,26 +7,39 @@
     text-align: center;
     overflow-y: auto;
 }
+.selectTeamPageNavbutton{
+    color: #ffffff;
+    opacity: 50%;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    transition: $transition;
+}
+.selectTeamPageNavbutton:hover{
+    opacity: 1;
+    transition: $transition;
+}
 #cards{
-    display: flex;
+    display: inline;
+    text-align: center;
     flex-wrap: wrap;
     height: fit-content;
-    width: calc(100% - 20px);
-    max-width: 1530px; //makes sure the max amount of cards in a row is 5
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    width: 80%;
+    max-width: 1500px; //makes sure the max amount of cards in a row is 5
+    margin: auto;
+    margin-bottom: auto;
 }
 .card{
-    background-color: #2e2e2e;
     padding: .5px;
     border-radius: 10px;
-    height: 260px;
-    width: 300px;
+    height: 40px;
+    width: 100%;
     cursor: pointer;
     position: relative;
+    margin-bottom: 1px;
 }
 .card:hover::before{
     opacity: 1;
@@ -38,11 +47,11 @@
 .card::before{
     background: radial-gradient(
         900px circle at var(--mouse-x) var(--mouse-y),
-        #d6d6d60c,
+        #ffffff60,
         transparent 40%
     );
     opacity: 0;
-    transition: opacity $transition;
+    transition: opacity 800ms;
     border-radius: inherit;
     content: '';
     height: 100%;
@@ -54,22 +63,31 @@
     z-index: 2;
 }
 .card > .cardContent{
-    background-color: $black;
+    background: transparent;
     margin: .5px;
     border-radius: inherit;
     height: calc(100% - 1px);
     width: calc(100% - 1px);
     display: flex;
-    justify-content: center;
+    justify-content: start;
     text-align: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
+    text-shadow: 0 0 5px black;
 }
 .cardTeamOwner{
     color: #ffffff;
     opacity: 50%;
     width: calc(100% - 20px);
-    transition: $transition;
+    transition: 800ms;
     display: flex;
-    justify-content: center;
+    justify-content: left;
+    margin-left: 20px;
+}
+.card:hover > .cardContent > .cardTeamOwner {
+    opacity: 1;
+}
+.invitesNum{
+    opacity: 1 !important;
+    color: $yellow;
 }
