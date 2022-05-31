@@ -44,11 +44,10 @@ function getUserByID(req: any, res: any) {
 
 function getUserByNameDiscriminator(name: string, discriminator: string, res: any){
     let values = [name, discriminator]
-    console.log(values)
     let sql = "SELECT user_id FROM users WHERE username= ? AND discriminator= ?"
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
-            if (err) res.sendStatus(400);
+            if (err) throw err;
             return err ? reject(err) : resolve(result[0].user_id)
         })
     })

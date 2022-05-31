@@ -2,7 +2,6 @@ import {connectionPool} from '../dbConnectionPool';
 import consumeCookie from '../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from '../Services/consumeCookies/consumeCookieFlags';
 import getCurrentDate from '../Services/getCurrentDate';
-let users = require('./userController')
 
 // function createTeamsTable(req: any, res: any) {
 //     let sql ="CREATE TABLE teams(team_id INT(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, date_created DATETIME NOT NULL, creator_user_id INT(11), PRIMARY KEY(team_id))";
@@ -19,7 +18,6 @@ function addTeam(req: any, res: any) {
     let creatorUserId = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag);
     let newTeamId = ''
 
-    //THIS NOW ADDS A FIELD IN USER TEAMS FOR THE OWNER OF THE NEWLY CREATED TEAM
     let team = {name: req.body.name, date_created: dateTime, owner_user_id: creatorUserId}
     let insertTeamSql = "INSERT INTO teams SET ?;"; 
     connectionPool.query(insertTeamSql, team, (err: any, result: any) => {
@@ -36,14 +34,13 @@ function addTeam(req: any, res: any) {
     console.log(newTeamId)
 }
 
-async function addTeamInvite(req: any, res: any, userTeamIDCombo: any){
-    let recipientID = await users.getUserByNameDiscriminator(req.body.invitee, req.body.discriminator, res)
+async function addTeamInvite(req: any, res: any, userTeamIDCombo: any, recipientID: any){
     let invite = {recipient_id: recipientID, sender_id: userTeamIDCombo.userID, team_id: userTeamIDCombo.teamID, date_sent: getCurrentDate()}
     let sql = 'INSERT INTO team_invites SET ?'
 
-    connectionPool.query(sql, invite, (err: any, result: any) => {
-        if (err) res.sendStatus(500)
-        res.sendStatus(200)
+    connectionPool.query(sql, invite, (err: any) => {
+        if (err) throw err
+        return res.status(200).send({message: 'User Invited...'});
     })
 }
 
@@ -67,6 +64,17 @@ async function getInvite(req: any, res: any, currentUserId: any){
     })
 }
 
+function getInviteByUserIDRecipientIDTeamID(senderID: string, recipientID: string, teamID: string, res: any){
+    let values = [senderID, recipientID, teamID]
+    let sql = 'SELECT EXISTS(SELECT * FROM team_invites WHERE sender_id= ? AND recipient_id= ? AND team_id= ?)'
+    
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            if (err) throw err;
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
 
 
-module.exports = { addTeam, addTeamInvite, getTeamInvites }
+module.exports = { addTeam, addTeamInvite, getTeamInvites, getInviteByUserIDRecipientIDTeamID }
