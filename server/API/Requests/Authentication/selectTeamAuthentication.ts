@@ -2,16 +2,13 @@ import consumeCookie from "../../Services/consumeCookies/consumeCookie";
 import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
 const jwt = require('jsonwebtoken');
 
-//this function verifies given token and adds the new team_id to the payload of the jwt
+//this function verifies given token and adds the new team_id and roles ids for the team and projects within to the payload of the jwt
 //needs to also check that the user is in the passed in team_id!!!!!!!!!
 function selectTeam(req: any, res: any) {
-    console.log('tater-tots')
     async function addTeamToJWT() {
         try{
             let user_id = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
             let targetTeam_id = req.body.team;
-            console.log(user_id)
-            console.log(`${targetTeam_id}is team id`)
             
             let accessToken = 
                 await jwt.sign(
