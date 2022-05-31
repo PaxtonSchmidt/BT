@@ -1,4 +1,4 @@
-import consumeCookie from "../../Services/consumeCookies/consumeCookie";
+import consumeCookie from '../../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
 import { consumeRowDataPacket } from "../../Services/consumeRowDataPacket";
 let authorizationController = require('../../Controllers/AuthControllers/authorizationController')
