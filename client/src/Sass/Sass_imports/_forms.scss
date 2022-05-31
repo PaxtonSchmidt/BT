@@ -71,3 +71,10 @@ input:-webkit-autofill:active{
     -webkit-text-fill-color: white !important;
     box-shadow: 0 0 0 30px $darkGrey inset !important;
 }
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}

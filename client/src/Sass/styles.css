@@ -316,6 +316,15 @@ input:-webkit-autofill:active {
   box-shadow: 0 0 0 30px #222222 inset !important;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .list {
   width: 100%;
   margin: auto;
