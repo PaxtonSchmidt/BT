@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
+import invitesReducer from './invitesReducers';
 import loginReducer from './loginReducers'
 
 const reducers = combineReducers({
     login: loginReducer,
+    invites: invitesReducer
     // projects: projectsReducer
 })
 

@@ -3,7 +3,7 @@ import { Action } from "../actions/loginActions";
 
 const initialState = 0; 
 
-const reducer = (state: number = initialState, action: Action) => {
+const loginReducer = (state: number = initialState, action: Action) => {
     switch(action.type){
         case loginActionType.LOGIN:
             if(state === 0){
@@ -24,4 +24,4 @@ const reducer = (state: number = initialState, action: Action) => {
     }
 }
 
-export default reducer
+export default loginReducer
