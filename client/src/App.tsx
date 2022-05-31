@@ -20,7 +20,7 @@ import { LoginActionCreators } from './Redux';
 function App() {
   const dispatch = useDispatch();
   const { login } = bindActionCreators(LoginActionCreators, dispatch)
-  
+
   let isLogged = sessionStorage.getItem('isLoggedIn')
   if(isLogged === 'true'){
     login()
