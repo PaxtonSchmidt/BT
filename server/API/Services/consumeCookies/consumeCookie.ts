@@ -5,8 +5,6 @@ const jwt_decode = require('jwt-decode');
 export default function consumeCookie(cookie: any, dataNeeded: string) {
     let lengthOfTokenKeyInCookie = 6;
     let token = cookie.substring(lengthOfTokenKeyInCookie);
-
-    console.log('consumed cookie')
     
     if(dataNeeded === consumeCookieFlags.entireTokenFlag) {
         return token
@@ -19,7 +17,6 @@ export default function consumeCookie(cookie: any, dataNeeded: string) {
     } else if(dataNeeded === consumeCookieFlags.tokenUserAndTeamIdFlag){
         let decoded = jwt_decode(token);
         let userTeamIDCombo = {userID: decoded.user_id, teamID: decoded.team_id}
-        console.log(userTeamIDCombo)
         return userTeamIDCombo
     }
     else {
