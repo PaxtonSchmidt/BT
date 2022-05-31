@@ -10,7 +10,7 @@ export default function NewTeamPage() {
 
     if(loginState === 1) {
         return(
-            <Container  className='loginPage'>
+            <Container  className='loginPage altBG'>
                 <NewTeamForm />
             </Container>
         )
