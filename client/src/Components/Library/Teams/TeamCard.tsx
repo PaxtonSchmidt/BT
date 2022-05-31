@@ -14,8 +14,8 @@ export default function TeamCard(props : Team) {
     
     return(
         <div className='card'  onClick={handleClick}>
-            <div className='cardContent' style={{color: 'white'}}>
-                <div style={{fontSize: '18px'}}>
+            <div className='cardContent' style={{color: 'white', fontWeight: 'bold'}}>
+                <div style={{fontSize: '18px', whiteSpace: 'nowrap', marginLeft: '10px'}}>
                     {props.name}
                 </div>
                 <div className='cardTeamOwner'>
