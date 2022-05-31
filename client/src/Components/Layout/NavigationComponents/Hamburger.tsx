@@ -5,7 +5,7 @@ export default function Hamburger() {
     
     return(
         <div className='hamburgerContainer'>
-            <img src={cheeburger} alt='open navigation menu' className='hamburger scaleYonHover' />
+            <img src={cheeburger} alt='open navigation menu' className='hamburger' />
         </div> 
     )
 }
