@@ -1,6 +1,4 @@
 import { connectionPool } from "../../dbConnectionPool";
-import consumeCookie from "../../Services/consumeCookies/consumeCookie";
-import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
 
 
 function fetchUserTeamRoleID(req: any, userTeamIDCombo: any) {
