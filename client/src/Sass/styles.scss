@@ -4,7 +4,6 @@
 @import "./Sass_imports/_forms.scss";
 @import "./Sass_imports/_lists.scss";
 @import "./Sass_imports/_scrollbar.scss";
-@import "./Sass_imports/_teamSelect.scss";
 @import "./Sass_imports/_cards.scss";
 @import "./Sass_imports/_invites";
 
@@ -80,6 +79,9 @@ html {
     width: 100%;
     align-items: top;
     text-align: center;
+}
+.altBG{
+    background: linear-gradient(100deg, #1a1a1a, #000000)
 }
 
 

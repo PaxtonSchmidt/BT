@@ -51,6 +51,17 @@
     width: 20px;
     cursor: pointer;
 }
+.bell::before{
+    background-color: red;
+    flex-wrap: nowrap;
+    color: red;
+    border: 1px solid white;
+    border-radius: 10px;
+    height: 50px;
+    width: 50px;
+    display: inline;
+    content: '1';
+}
 .teamPic{
     margin-left: 3px;
 }
