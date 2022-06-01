@@ -9,10 +9,11 @@ import SignUpPage from './Components/Layout/Pages/LoginPages/SignUpPage';
 import ManageTeamPage from './Components/Layout/Pages/ManageTeamPage/ManageTeamPage';
 import ProjectsPage from './Components/Layout/Pages/ProjectsPage/ProjectsPage';
 import TicketsPage from './Components/Layout/Pages/TicketsPage/TicketsPage';
-import { theme } from './theme';
+import TeamInvitesPage from './Components/Layout/Pages/LoginPages/TeamInvitesPage';
 import SelectTeamPage from './Components/Layout/Pages/LoginPages/SelectTeamPage';
 import NewTeamPage from './Components/Layout/Pages/LoginPages/NewTeamPage';
 import './Sass/styles.css';
+import { theme } from './theme';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { LoginActionCreators } from './Redux';
@@ -49,6 +50,8 @@ function App() {
             element={<NewTeamPage />}/>
           <Route path='selectTeam' //must be logged in
             element={<SelectTeamPage setIsTeamSelected={setIsTeamSelected}/>}/>
+          <Route path='teamInvites' //must be logged in 
+            element={<TeamInvitesPage />} />
 
 
           <Route path='/' element={ //must be logged in and and have a selected team
