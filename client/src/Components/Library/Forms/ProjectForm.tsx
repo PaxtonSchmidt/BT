@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
-import postProject from '../../../API/Requests/PostProject';
+import postProject from '../../../API/Requests/Projects/PostProject';
 
 export default function ProjectForm() {
 return(
@@ -48,7 +48,6 @@ return(
                                 name='project'
                                 className='button bottomButtons submitButton' 
                                 style={{
-                                    borderRadius: '5px 0px 5px 5px',
                                     margin: '2px 0px 0px 0px'
                                 }}>
                                 Submit 

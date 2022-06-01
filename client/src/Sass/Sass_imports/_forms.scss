@@ -1,6 +1,5 @@
 .formContainer{
     background-color: $darkGrey;
-    border-radius: 10px 10px 0px 10px;
     color: white;
     display: flex;
     flex-direction: column;
@@ -62,6 +61,20 @@
 }
 .css-1u7je4m-MuiFormLabel-root-MuiInputLabel-root{
     color: white !important;
+}
+.css-6hp17o-MuiList-root-MuiMenu-list{
+    border: 1px solid $dimYellow;
+    background-color:  $darkGrey;
+    color: white;
+}
+.css-1bck7qi-MuiInputBase-root-MuiInput-root:before{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.192) !important;
+}
+.css-wgizgc-MuiInputBase-root-MuiInput-root:before{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.192) !important;
+}
+.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon{
+    color: rgba(255, 255, 255, 0.192) !important;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 

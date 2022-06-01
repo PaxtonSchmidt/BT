@@ -1,10 +1,10 @@
-export default async function postAcceptInviteToTeam(data: any) {
+export default async function postAcceptInvite(team_id: any) {
     const response = await fetch('/teams/acceptInviteToTeam', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({teamID: team_id})
     })
-    console.log(response.status);
+    return response.status
 }

@@ -8,7 +8,7 @@ interface UpdateAction {
 
 interface RemoveAction {
     type: invitesActionType.REMOVE,
-    payload: number
+    payload: Invites
 }
 
 export type Action = UpdateAction | RemoveAction

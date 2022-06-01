@@ -5,7 +5,3 @@ export interface Invite {
     sender_discriminator: number,
     date_sent: string
 }
-
-export interface Invites {
-    invites: Invite[]    
-}

@@ -9,16 +9,36 @@
 }
 .selectTeamPageNavbutton{
     color: #ffffff;
-    opacity: 50%;
-    position: absolute;
-    bottom: 10px;
     left: 10px;
     cursor: pointer;
     background-color: transparent;
     border: none;
     transition: $transition;
 }
+.selectTeamPageNavbuttonExtra{
+    opacity: 20%;
+    transition: $transition;
+}
+.glowsToo{
+    opacity: 20%;
+}
+.selectTeamPageNavContainer:hover > .glowsToo{
+    opacity: 1;
+    transition: $transition;
+}
+.selectTeamPageNavContainer{
+    color: #ffffff;
+    left: 10px;
+    background-color: transparent;
+    border: none;
+    transition: $transition;
+    cursor: default;
+}
 .selectTeamPageNavbutton:hover{
+    opacity: 1;
+    transition: $transition;
+}
+.selectTeamPageNavbutton:hover > .glowsToo{
     opacity: 1;
     transition: $transition;
 }
@@ -34,12 +54,27 @@
 }
 .card{
     padding: .5px;
-    border-radius: 10px;
+    border-radius: 0px 10px 10px 0px;
     height: 40px;
     width: 100%;
-    cursor: pointer;
     position: relative;
     margin-bottom: 1px;
+    transition: $transition;
+}
+.onClick{
+    cursor: pointer;
+    min-width: 90px;
+    margin: 0px 2px 2px 0px;
+    border: none;
+    color: white;
+    background-color: $darkGrey;
+    padding: 5px 10px;
+    font-size: 14px;
+    transition: 1500ms;
+}
+.onClick:active{
+    transition: ease-out;
+    box-shadow: 0 0 50px $yellow;
 }
 .card:hover::before{
     opacity: 1;
@@ -47,7 +82,7 @@
 .card::before{
     background: radial-gradient(
         900px circle at var(--mouse-x) var(--mouse-y),
-        #ffffff60,
+        #ffffff91,
         transparent 40%
     );
     opacity: 0;
@@ -84,10 +119,51 @@
     justify-content: left;
     margin-left: 20px;
 }
+.cardTeamName{
+    font-size: 18px;
+    white-space: nowrap; 
+    margin-left: 10px;
+    opacity: 50%;
+    transition: $transition;
+}
 .card:hover > .cardContent > .cardTeamOwner {
     opacity: 1;
 }
+.card:hover > .cardContent > .cardTeamName {
+    transition: $transition;
+    opacity: 1;
+}
+.card:hover {
+    box-shadow: -1px 0px .5px $dimYellow;
+    transition: $transition;
+}
 .invitesNum{
-    opacity: 1 !important;
+    opacity: 1;
+    font-size: medium;
     color: $yellow;
+}
+.decline{
+    background-color: transparent;
+    border: none;
+    color: white;
+    opacity: .5;
+    transition: $transition;
+}
+.decline:hover{
+    color:rgb(94, 0, 0) !important;
+    opacity: 100%;
+    transition: $transition;
+}
+.cardButton{
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 3;
+    margin-right: 10px;
+    padding: 5px;
+    border: 0px;
+    transition: $transition;
+}
+.cardButton:hover {
+    color: white;
+    transition: $transition;
 }

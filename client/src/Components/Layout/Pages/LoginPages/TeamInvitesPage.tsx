@@ -4,17 +4,19 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { State } from '../../../../Redux/reducers';
 import SelectTeamPageButtons from '../../../Library/Buttons/buttonsDesktop';
-import NewTeamForm from '../../../Library/Forms/NewTeamForm';
+import InviteList from '../../../Library/Invites/InviteList';
 
-export default function NewTeamPage() {
+export default function TeamInvitesPage() {
     const loginState = useSelector((state: State) => state.login)
 
     if(loginState === 1) {
         return(
-            <Container  className='loginPage altBG'>
+            <div className='teamCardPageBody altBG'>
                 <SelectTeamPageButtons />
-                <NewTeamForm />
-            </Container>
+                <div id='cards'>   
+                    <InviteList />              
+                </div>
+            </div>
         )
     } else {
         return <Navigate to='../login' />

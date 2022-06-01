@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
-import postLogin from '../../../API/Requests/PostLogin';
+import postLogin from '../../../API/Requests/Login/PostLogin';
 import { authService } from '../../../API/Services/AuthService';
 import { Claims } from '../../../API/interfaces/claims';
 import { Dispatch } from 'react';
@@ -47,7 +47,7 @@ export default function LoginForm() {
                     return (
                         <form onSubmit={handleSubmit} onBlur={handleBlur}>
                             
-                        <div className='formContainer' style={{borderRadius: '10px 10px 0px 0px'}} >
+                        <div className='formContainer'>
                             <h4 className='header'>Login</h4>
                             <TextField
                                 label='Email'
@@ -79,7 +79,6 @@ export default function LoginForm() {
                                     name='login'
                                     className='button bottomButtons submitButton' 
                                     style={{
-                                        borderRadius: '5px 0px 5px 5px',
                                         margin: '2px 0px 0px 0px',
                                         justifySelf: 'right'
                                     }}>
@@ -96,7 +95,7 @@ export default function LoginForm() {
                 <button 
                     onClick={handleSignUpClick}
                     className='button bottomButtons' 
-                    style={{margin: '2px 2px 0px 0px', borderRadius: '0px 5px 5px 5px'}}>
+                    style={{margin: '2px 2px 0px 0px'}}>
                     Sign Up
                 </button>
                 <button 

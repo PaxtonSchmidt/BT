@@ -11,11 +11,11 @@ export const update = (invites: Invites) => {
         })
     }
 }
-export const remove = () => {
+export const remove = (invites: Invites) => {
     return (dispatch: Dispatch<Action>) => {
         dispatch({
             type: invitesActionType.REMOVE,
-            payload: 1
+            payload: invites
         })
     }
 }

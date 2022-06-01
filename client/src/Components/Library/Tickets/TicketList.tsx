@@ -24,7 +24,7 @@ function Tickets() {
     return (
     <Container className='pageBodyContainer1'>
         <div className='buttonsContainer topButtons'>
-            <h4 className='button' style={{borderRadius: '5px 5px 5px 0px'}}>Assigned</h4>
+            <h4 className='button' >Assigned</h4>
             <h4 className='button'>Written</h4>
         </div>
         <div className='list' style={{textAlign: 'left'}}>

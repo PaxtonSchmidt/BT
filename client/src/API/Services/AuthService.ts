@@ -1,7 +1,7 @@
 import { Claims } from "../interfaces/claims";
 import { NewUser } from "../interfaces/NewUser";
-import postLogin from "../Requests/PostLogin";
-import postSignUp from "../Requests/PostSignUp";
+import postLogin from "../Requests/Login/PostLogin";
+import postSignUp from "../Requests/Login/PostSignUp";
 
 export const authService = {
     async signIn(data: Claims) {

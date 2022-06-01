@@ -4,12 +4,12 @@ import { Invites } from "../interfaces/invites";
 
 const initialState = {invites: []}; 
 
-const invitesReducer = (state: Invites = initialState, action: Action) => {
+const invitesReducer = (state: any = initialState, action: Action) => {
     switch(action.type){
         case invitesActionType.UPDATE:
             return action.payload;
         case invitesActionType.REMOVE: 
-            // return state - action.payload;
+            return state.filter((invite: any) => invite.invite_id !== action.payload)
         default: 
             return state; 
     }

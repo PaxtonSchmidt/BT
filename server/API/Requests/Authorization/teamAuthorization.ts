@@ -12,9 +12,9 @@ async function inviteUserToTeam(req: any, res: any) {
     let currentUserRoleID = await authorizationController.fetchUserTeamRoleID(req, userTeamIDCombo);
 
     let recipientID = await users.getUserByNameDiscriminator(req.body.invitee, req.body.discriminator, res)
-    let isInviteExisting = consumeRowDataPacket(await teams.getInviteByUserIDRecipientIDTeamID(userTeamIDCombo.userID, recipientID, userTeamIDCombo.teamID, res))
+    let isInviteExisting = consumeRowDataPacket(await teams.getInviteBySenderIDRecipientIDTeamID(userTeamIDCombo.userID, recipientID, userTeamIDCombo.teamID, res))
 
-
+    //if user is the owner they can invite others to the team if the invite doesnt already exist
     if(currentUserRoleID !== Roles.Legend.owner){
         return res.status(401).send({message: "You can't invite people to this team..."})
     } if(isInviteExisting){
@@ -24,10 +24,6 @@ async function inviteUserToTeam(req: any, res: any) {
     }
 }
 
-async function acceptInviteToTeam(req: any, res: any){
-    let currentUserID = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
-    let targetInvite = await teamController.getInvite(req, res, currentUserID)
-    console.log(targetInvite)
-}
 
-module.exports = { inviteUserToTeam, acceptInviteToTeam }
+
+module.exports = { inviteUserToTeam }

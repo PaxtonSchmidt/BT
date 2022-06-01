@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, Formik } from 'formik';
 import { InputLabel, MenuItem, Select, TextField, ThemeProvider } from '@mui/material';
 import { theme } from '../../../theme';
-import postTicket from '../../../API/Requests/PostTicket';
+import postTicket from '../../../API/Requests/Tickets/PostTicket';
 
 export default function TicketForm() {
     const projects = ['project 1', 'project 2', 'project 3', 'project 4', 'project 5'] //an array of all projects belonging to the team you're currently working for
@@ -120,7 +120,6 @@ return(
                                 name='submit'
                                 className='button bottomButtons submitButton' 
                                 style={{
-                                    borderRadius: '5px 0px 5px 5px',
                                     margin: '2px 0px 0px 0px'
                                 }}>
                                 Submit

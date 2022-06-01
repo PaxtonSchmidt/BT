@@ -46,15 +46,33 @@ export default function SelectTeamPageButtons(){
         navigate('/newTeam')
     }
     function handleCheckInvites(){
-        //open invite list modal
+        navigate('/teamInvites')
+    }
+    function handleChooseTeam(){
+        navigate('/selectTeam')
     }
     
     return(
         <>
-            <button className='selectTeamPageNavbutton' onClick={handleLogout}>Logout</button>
-            <button className='selectTeamPageNavbutton' style={{bottom: '30px'}} onClick={handleCreateTeam}>Create a Team</button>
-            <button className='selectTeamPageNavbutton' style={{bottom: '50px'}} onClick={handleCheckInvites}>
-                <span className='invitesNum'>{inviteAmount}</span>{plurality}
+            <button className='selectTeamPageNavbutton glowsToo' style={{bottom: '10px', position: 'absolute'}} onClick={handleLogout}>Logout</button>
+
+            <span  className='selectTeamPageNavContainer' style={{bottom: '30px', position: 'absolute'}}>
+                <span>
+                    <button className='selectTeamPageNavbutton glowsToo' style={{paddingRight:'0px'}} onClick={handleCreateTeam} >Create</button>
+                </span>
+                <span className='selectTeamPageNavbuttonExtra'>
+                    /
+                </span>
+                <span>
+                    <button className='selectTeamPageNavbutton glowsToo' style={{paddingLeft:'0px'}}  onClick={handleChooseTeam}>Choose</button>
+                </span>
+                <span className='selectTeamPageNavbuttonExtra glowsToo'>
+                    a team
+                </span>
+            </span>
+
+            <button className='selectTeamPageNavbutton ' style={{bottom: '50px', position: 'absolute'}} onClick={handleCheckInvites}>
+                <span className='invitesNum'>{inviteAmount}</span><span className='glowsToo'>{plurality}</span>
             </button>
         </>
     )

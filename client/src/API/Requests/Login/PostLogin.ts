@@ -1,4 +1,4 @@
-import { Claims } from '../interfaces/claims';
+import { Claims } from '../../interfaces/claims';
 
 export default async function postLogin(claims: Claims) {
     const response = await fetch('/login', {

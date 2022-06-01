@@ -1,7 +1,7 @@
-import { Project } from "../interfaces/project";
+import { Ticket } from '../../interfaces/ticket';
 
-export default async function postProject(data: Project) {
-    const response = await fetch('/projects/addProject', {
+export default async function postTicket(data: Ticket) {
+    const response = await fetch('/tickets/addTicket', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

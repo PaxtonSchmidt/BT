@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
-import postInviteToTeam from '../../../API/Requests/PostInviteToTeam';
+import postInviteToTeam from '../../../API/Requests/Invites/PostInviteToTeam';
 
 export default function InviteToTeamForm() {
 return(
@@ -49,7 +49,6 @@ return(
                                 name='addToTeam'
                                 className='button bottomButtons submitButton' 
                                 style={{
-                                    borderRadius: '5px 0px 5px 5px',
                                     margin: '2px 0px 0px 0px'
                                 }}>
                                 Submit 

@@ -44,30 +44,39 @@ async function addTeamInvite(req: any, res: any, userTeamIDCombo: any, recipient
     })
 }
 
+async function deleteTeamInvite(res: any, invite_id: string){
+     let sql = 'DELETE FROM team_invites WHERE invite_id= ?'
+
+     return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, invite_id, (err: any, result: any) => {
+            if(err) throw err
+            return err ? reject(err) : resolve(res.sendStatus(200));
+        })
+    })
+}
+
 function getTeamInvites(currentUserID: number){
-    let sql = 'SELECT ti.date_sent AS date_sent, t.name AS team_name, u.username AS sender_name, u.discriminator AS sender_discriminator FROM team_invites ti LEFT JOIN teams t ON ti.team_id = t.team_id LEFT JOIN users u ON ti.sender_id = u.user_id WHERE ti.recipient_id= ?'
+    let sql = 'SELECT ti.invite_id, ti.date_sent AS date_sent, t.name AS team_name, u.username AS sender_name, u.discriminator AS sender_discriminator FROM team_invites ti LEFT JOIN teams t ON ti.team_id = t.team_id LEFT JOIN users u ON ti.sender_id = u.user_id WHERE ti.recipient_id= ?'
 
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, currentUserID, (err: any, result: any) => {
             if(err) throw err
-            console.log(result)
             return err ? reject(err) : resolve(result);
         })
     })
-    
 }
 
-async function getInvite(req: any, res: any, currentUserId: any){
-    let targetInvite = {recipient_id: currentUserId, team_id: req.body.team_id}
-    let sql = 'SELECT FROM team_invites WHERE recipient_id= ? AND team_id= ?'
-    connectionPool.query(sql, targetInvite, (err: any, result:any) => {
-        if(err) throw err
-        console.log(result)
-        return result
+async function getInviteById(invite_id: any){
+    let sql = "SELECT sender_id, recipient_id FROM team_invites WHERE invite_id= ?"
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, invite_id, (err: any, result: any) => {
+            if(err) throw err
+            return err ? reject(err) : resolve(result[0]);
+        })
     })
 }
 
-function getInviteByUserIDRecipientIDTeamID(senderID: string, recipientID: string, teamID: string, res: any){
+function getInviteBySenderIDRecipientIDTeamID(senderID: string, recipientID: string, teamID: string, res: any){
     let values = [senderID, recipientID, teamID]
     let sql = 'SELECT EXISTS(SELECT * FROM team_invites WHERE sender_id= ? AND recipient_id= ? AND team_id= ?)'
     
@@ -80,4 +89,4 @@ function getInviteByUserIDRecipientIDTeamID(senderID: string, recipientID: strin
 }
 
 
-module.exports = { addTeam, addTeamInvite, getTeamInvites, getInviteByUserIDRecipientIDTeamID }
+module.exports = { addTeam, addTeamInvite, deleteTeamInvite, getTeamInvites, getInviteBySenderIDRecipientIDTeamID, getInviteById }

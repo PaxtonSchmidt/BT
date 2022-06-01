@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import postNewTeam from '../../../API/Requests/PostNewTeam';
+import postNewTeam from '../../../API/Requests/Teams/PostNewTeam';
 
 export default function NewTeamForm() {
     let navigate = useNavigate();
@@ -15,9 +15,6 @@ export default function NewTeamForm() {
             navigate('/selectTeam')
         }
     }
-    function handleGoBack() {
-        navigate('/selectTeam')
-    }
     
 return( 
         <div className='loginForm' >
@@ -29,7 +26,7 @@ return(
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
                     return (
                         <form onSubmit={handleSubmit} onBlur={handleBlur}>
-                        <div className='formContainer' style={{borderRadius: '10px 10px 0px 0px'}}>
+                        <div className='formContainer' style={{minWidth: '300px'}} >
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <TextField
                                     label='Team Name'
@@ -45,18 +42,11 @@ return(
                                     required />
                             </div>
                         </div>
-                        <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
-                            <button type='reset'
-                                onClick={handleGoBack}
-                                className='button bottomButtons'
-                                style={{ margin: '2px 2px 0px 0px', borderRadius: '0px 5px 5px 5px' }}>
-                                Go Back
-                            </button>
+                        <div style={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
                             <button type='submit'
                                 name='submit'
                                 className='button bottomButtons submitButton' 
                                 style={{
-                                    borderRadius: '5px 0px 5px 5px',
                                     margin: '2px 0px 0px 0px'
                                 }}>
                                 Submit

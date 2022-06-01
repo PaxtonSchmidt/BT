@@ -1,8 +1,6 @@
 import React, {useState, useEffect, Dispatch} from 'react';
 import { SetStateAction } from 'react';
-import { Container } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import postSelectTeam from '../../../API/Requests/PostSelectTeam';
+import postSelectTeam from '../../../API/Requests/Login/PostSelectTeam';
 import TeamCard from './TeamCard';
 
 interface Props {
@@ -11,7 +9,6 @@ interface Props {
 
 function TeamList(setIsTeamSelected: Props) {
     const [teams, setTeams] = useState<any[]>([]);
-    let navigate = useNavigate();
 
     useEffect(() => {
         fetch('/teams/getTeams')
@@ -40,7 +37,6 @@ function TeamList(setIsTeamSelected: Props) {
         const rect = target.getBoundingClientRect(),
             x = e.clientX - rect.left,
             y = e.clientY - rect.top;
-        
         target.style.setProperty("--mouse-x", `${x}px`)
         target.style.setProperty("--mouse-y", `${y}px`)
     }
@@ -49,7 +45,6 @@ function TeamList(setIsTeamSelected: Props) {
         card.onmousemove = (e: any) => handleOnMouseMove(e);
     }
  
-     //needs pagination 
     return (
     <>
         {teams.map((team) =>
@@ -62,11 +57,6 @@ function TeamList(setIsTeamSelected: Props) {
             />
         </div>
         )}
-        {/* <div>
-            <h3>Need to start a team?</h3>
-            <button onClick={() =>  navigate('../newTeam')}>Create Team</button>
-        </div>
-         */}
     </>  
     )
 }

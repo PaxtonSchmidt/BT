@@ -193,7 +193,6 @@
   color: white;
   background-color: #222222;
   padding: 5px 10px;
-  border-radius: 5px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   font-size: 14px;
@@ -211,7 +210,6 @@
 
 .formContainer {
   background-color: #222222;
-  border-radius: 10px 10px 0px 10px;
   color: white;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -307,6 +305,24 @@
   color: white !important;
 }
 
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  border: 1px solid #efff0a6b;
+  background-color: #222222;
+  color: white;
+}
+
+.css-1bck7qi-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.192) !important;
+}
+
+.css-wgizgc-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.192) !important;
+}
+
+.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon {
+  color: rgba(255, 255, 255, 0.192) !important;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -329,7 +345,6 @@ input[type=number] {
   width: 100%;
   margin: auto;
   background-color: #222222;
-  border-radius: 0px 10px 10px 10px;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
@@ -403,9 +418,6 @@ input[type=number] {
 
 .selectTeamPageNavbutton {
   color: #ffffff;
-  opacity: 50%;
-  position: absolute;
-  bottom: 10px;
   left: 10px;
   cursor: pointer;
   background-color: transparent;
@@ -414,7 +426,39 @@ input[type=number] {
   transition: 0.5s;
 }
 
+.selectTeamPageNavbuttonExtra {
+  opacity: 20%;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.glowsToo {
+  opacity: 20%;
+}
+
+.selectTeamPageNavContainer:hover > .glowsToo {
+  opacity: 1;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.selectTeamPageNavContainer {
+  color: #ffffff;
+  left: 10px;
+  background-color: transparent;
+  border: none;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  cursor: default;
+}
+
 .selectTeamPageNavbutton:hover {
+  opacity: 1;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.selectTeamPageNavbutton:hover > .glowsToo {
   opacity: 1;
   -webkit-transition: 0.5s;
   transition: 0.5s;
@@ -436,12 +480,33 @@ input[type=number] {
 
 .card {
   padding: .5px;
-  border-radius: 10px;
+  border-radius: 0px 10px 10px 0px;
   height: 40px;
   width: 100%;
-  cursor: pointer;
   position: relative;
   margin-bottom: 1px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.onClick {
+  cursor: pointer;
+  min-width: 90px;
+  margin: 0px 2px 2px 0px;
+  border: none;
+  color: white;
+  background-color: #222222;
+  padding: 5px 10px;
+  font-size: 14px;
+  -webkit-transition: 1500ms;
+  transition: 1500ms;
+}
+
+.onClick:active {
+  -webkit-transition: ease-out;
+  transition: ease-out;
+  -webkit-box-shadow: 0 0 50px #efff0a;
+          box-shadow: 0 0 50px #efff0a;
 }
 
 .card:hover::before {
@@ -449,7 +514,7 @@ input[type=number] {
 }
 
 .card::before {
-  background: radial-gradient(900px circle at var(--mouse-x) var(--mouse-y), #ffffff60, transparent 40%);
+  background: radial-gradient(900px circle at var(--mouse-x) var(--mouse-y), #ffffff91, transparent 40%);
   opacity: 0;
   -webkit-transition: opacity 800ms;
   transition: opacity 800ms;
@@ -501,13 +566,69 @@ input[type=number] {
   margin-left: 20px;
 }
 
+.cardTeamName {
+  font-size: 18px;
+  white-space: nowrap;
+  margin-left: 10px;
+  opacity: 50%;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
 .card:hover > .cardContent > .cardTeamOwner {
   opacity: 1;
 }
 
+.card:hover > .cardContent > .cardTeamName {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  opacity: 1;
+}
+
+.card:hover {
+  -webkit-box-shadow: -1px 0px 0.5px #efff0a6b;
+          box-shadow: -1px 0px 0.5px #efff0a6b;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
 .invitesNum {
-  opacity: 1 !important;
+  opacity: 1;
+  font-size: medium;
   color: #efff0a;
+}
+
+.decline {
+  background-color: transparent;
+  border: none;
+  color: white;
+  opacity: .5;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.decline:hover {
+  color: #5e0000 !important;
+  opacity: 100%;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.cardButton {
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 3;
+  margin-right: 10px;
+  padding: 5px;
+  border: 0px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.cardButton:hover {
+  color: white;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
 }
 
 html {
