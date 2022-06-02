@@ -14,6 +14,7 @@ export default function InviteCard(props : Invite) {
     async function handleAcceptInvite(invite_id: any, team_name: any){
         if(await postAcceptInvite(invite_id) === 200){
             console.log(`You joined ${team_name}`)
+            remove(invite_id)
         } else{
             console.log('Could not accept invite...')
         }
