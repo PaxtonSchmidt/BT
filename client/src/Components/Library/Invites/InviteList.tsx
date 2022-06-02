@@ -19,8 +19,10 @@ function InviteList() {
             if(res.ok) {         
                 return res.json();
             } else if(res.status === 404){
-                return res.json()
-            } 
+                return console.log('No invites')
+            } else{
+                return console.log('something went wrong...')
+            }
         }))
         .then(jsonRes => update(jsonRes));
     }
