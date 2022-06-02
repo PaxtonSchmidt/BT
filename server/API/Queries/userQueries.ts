@@ -47,10 +47,9 @@ function getUserByNameDiscriminator(name: string, discriminator: string, res: an
     let sql = "SELECT user_id FROM users WHERE username= ? AND discriminator= ?"
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
-            return err ? reject(err) : resolve(result[0].user_id)
+            return err ? reject(err) : resolve(result[0])
         })
     })
-    
 }
 
 // function createUsersTable(req: any, res: any) {
