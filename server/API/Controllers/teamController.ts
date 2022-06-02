@@ -39,7 +39,6 @@ async function addTeamInvite(req: any, res: any, userTeamIDCombo: any, recipient
     let sql = 'INSERT INTO team_invites SET ?'
 
     connectionPool.query(sql, invite, (err: any) => {
-        if (err) throw err
         return res.status(200).send({message: 'User Invited...'});
     })
 }
@@ -49,8 +48,7 @@ async function deleteTeamInvite(res: any, invite_id: string){
 
      return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, invite_id, (err: any, result: any) => {
-            if(err) throw err
-            return err ? reject(err) : resolve(res.sendStatus(200));
+            return err ? reject(err) : resolve(result);
         })
     })
 }
@@ -60,18 +58,26 @@ function getTeamInvites(currentUserID: number){
 
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, currentUserID, (err: any, result: any) => {
-            if(err) throw err
             return err ? reject(err) : resolve(result);
         })
     })
 }
 
 async function getInviteById(invite_id: any){
-    let sql = "SELECT sender_id, recipient_id FROM team_invites WHERE invite_id= ?"
+    let sql = "SELECT * FROM team_invites WHERE invite_id= ?"
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, invite_id, (err: any, result: any) => {
-            if(err) throw err
             return err ? reject(err) : resolve(result[0]);
+        })
+    })
+}
+
+async function fetchIsOnTeam(recipientID: string, teamID: string){
+    let values = [recipientID, teamID]
+    let sql = 'SELECT EXISTS(SELECT * FROM user_teams WHERE user_id= ? AND team_id= ?)'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
         })
     })
 }
@@ -82,11 +88,23 @@ function getInviteBySenderIDRecipientIDTeamID(senderID: string, recipientID: str
     
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
-            if (err) throw err;
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+
+function addUserToTeam(res: any, currentUserID: string, teamID: string, enlistedByUserID: string) {
+    let defaultRole: string = '3' //defaults to dev
+    let user = {user_id: currentUserID, team_id: teamID, role_id: defaultRole, date_joined: getCurrentDate(), enlisted_by_user_id: enlistedByUserID}
+    let sql='INSERT INTO user_teams SET ?'
+
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, user, (err: any, result: any) => {
             return err ? reject(err) : resolve(result)
         })
     })
 }
 
 
-module.exports = { addTeam, addTeamInvite, deleteTeamInvite, getTeamInvites, getInviteBySenderIDRecipientIDTeamID, getInviteById }
+
+module.exports = { addTeam, addTeamInvite, deleteTeamInvite, getTeamInvites, getInviteBySenderIDRecipientIDTeamID, fetchIsOnTeam, getInviteById, addUserToTeam }
