@@ -1,5 +1,6 @@
 import React, { Dispatch } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { Invite } from '../../../PropsInterfaces/invite';
 import { InvitesActionCreators } from '../../../Redux';
@@ -7,11 +8,16 @@ import { Invites } from '../../../Redux/interfaces/invites';
 import InviteCard  from './InviteCard';
 
 function InviteList() {
+    let navigate = useNavigate();
     const dispatch = useDispatch();
     const { update } = bindActionCreators(InvitesActionCreators, dispatch)
     const initial: any = [];
     const invitesState = useSelector((state: Invites) => state.invites)
     let invites = Object.assign(initial, invitesState)
+
+    function handleGoToTeamSelect(){
+        navigate('/selectTeam')
+    }
 
     function handleRefresh() {
         fetch('/teams/getTeamInvites')
@@ -47,6 +53,7 @@ function InviteList() {
             <>
                 <h1 style={{color: 'white'}}>Looks like you don't have any invites...</h1>
                 <button className='onClick' onClick={handleRefresh}>Refresh</button>
+                <button className='onClick' onClick={handleGoToTeamSelect}>Choose a team</button>
             </>
         )
     } else {
