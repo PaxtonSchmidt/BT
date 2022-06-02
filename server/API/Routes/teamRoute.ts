@@ -12,8 +12,8 @@ router.get("/getTeams", teamSelectRoute.getCurrentUserTeams);
 router.get('/getTeamInvites', teamSelectRoute.getTeamInvites)
 
 router.post("/inviteUserToTeam", teamAuthorization.inviteUserToTeam);
-// router.post('/acceptInviteToTeam', teamAuthorization.acceptInviteToTeam);
-router.delete("/deleteInviteToTeam", NoAuthorizationInvites.deleteInviteToTeam)
+router.post('/acceptInvite', NoAuthorizationInvites.acceptInvite);
+router.delete("/deleteInvite", NoAuthorizationInvites.deleteInvite)
 
 
 module.exports = router;
