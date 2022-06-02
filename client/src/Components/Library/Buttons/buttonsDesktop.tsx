@@ -18,7 +18,7 @@ export default function SelectTeamPageButtons(){
             if(res.ok) {         
                 return res.json();
             } else if(res.status === 404){
-                return console.log('No invites')
+                return '';
             } else{
                 return console.log('something went wrong...')
             }

@@ -74,7 +74,7 @@
 }
 .onClick:active{
     transition: ease-out;
-    box-shadow: 0 0 50px $yellow;
+    box-shadow: 0 0 50px white;
 }
 .card:hover::before{
     opacity: 1;

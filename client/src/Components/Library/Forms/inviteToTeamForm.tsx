@@ -20,7 +20,7 @@ return(
                         <form onSubmit={handleSubmit} onBlur={handleBlur}>
                             
                         <div className='formContainer' >
-                            <h4 className='header'>Add People to Your Team</h4>
+                            <h4 className='header'>Invite People to Your Team</h4>
                             <TextField
                                 label='Username'
                                 type='text'

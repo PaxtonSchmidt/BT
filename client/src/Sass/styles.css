@@ -505,8 +505,8 @@ input[type=number] {
 .onClick:active {
   -webkit-transition: ease-out;
   transition: ease-out;
-  -webkit-box-shadow: 0 0 50px #efff0a;
-          box-shadow: 0 0 50px #efff0a;
+  -webkit-box-shadow: 0 0 50px white;
+          box-shadow: 0 0 50px white;
 }
 
 .card:hover::before {

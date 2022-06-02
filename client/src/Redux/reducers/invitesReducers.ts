@@ -1,6 +1,5 @@
 import { invitesActionType } from "../action-types/invitesActionTypes";
 import { Action } from "../actions/invitesActions";
-import { Invites } from "../interfaces/invites";
 
 const initialState = {invites: []}; 
 
