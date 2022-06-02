@@ -39,7 +39,7 @@ async function addTeamInvite(req: any, res: any, userTeamIDCombo: any, recipient
     let sql = 'INSERT INTO team_invites SET ?'
 
     connectionPool.query(sql, invite, (err: any) => {
-        return res.status(200).send({message: 'User Invited...'});
+        return res.ok;
     })
 }
 
