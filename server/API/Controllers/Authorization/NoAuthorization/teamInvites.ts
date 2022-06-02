@@ -9,7 +9,7 @@ async function deleteInvite(req: any, res: any) {
         invite = await teams.getInviteById(req.body.inviteID);
     }catch(e){
         console.log(e)
-        return res.status(500).send({message: 'Server couldnt check invite' })
+        return res.status(500).send({message: 'Server couldnt check invite...' })
     }
 
     //if the user is the sender or recipient of the invite then they can delete the invite
@@ -28,7 +28,13 @@ async function deleteInvite(req: any, res: any) {
 
 async function acceptInvite(req: any, res: any){
     let currentUserID = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
-    let invite = await teams.getInviteById(req.body.inviteID)
+    let invite: any = ''
+    try{
+        invite = await teams.getInviteById(req.body.inviteID)
+    }catch(e){
+        return res.status(500).send({message: 'Server couldnt find this invite...'})
+    }
+
 
     //if the userID is the invite recipient id then add the user to the user_teams table
     if(currentUserID === invite.recipient_id){

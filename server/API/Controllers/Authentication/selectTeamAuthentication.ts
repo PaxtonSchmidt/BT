@@ -17,14 +17,12 @@ function selectTeam(req: any, res: any) {
                     process.env.ACCESS_TOKEN_SECRET, 
                     {expiresIn: '1800s'});
 
-            console.log(accessToken);
-
             res.cookie('token', accessToken, {
                 httpOnly: true
-            }).send();
+            }).status(200).send({message: 'Welcome to your team'});
         
         } catch {
-            res.status(500).send();
+            res.status(500).send({message: 'Server couldnt sign you into your team...'});
         }
     }
     addTeamToJWT();

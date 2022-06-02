@@ -2,9 +2,9 @@ import * as express from 'express';
 let router = express.Router();
 
 let teamRoute = require("../Queries/teamQueries");
-let teamSelectRoute = require("../Requests/Authorization/NoAuthorization/TeamSelect");
-let teamAuthorization = require('../Requests/Authorization/teamAuthorization');
-let NoAuthorizationInvites = require('../Requests/Authorization/NoAuthorization/teamInvites')
+let teamSelectRoute = require("../Controllers/Authorization/NoAuthorization/TeamSelect");
+let teamAuthorization = require('../Controllers/Authorization/teamAuthorization');
+let NoAuthorizationInvites = require('../Controllers/Authorization/NoAuthorization/teamInvites')
 
 
 router.post("/addTeam", teamRoute.addTeam);
