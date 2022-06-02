@@ -1,11 +1,11 @@
 import consumeCookie from '../../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
 import { consumeRowDataPacket } from "../../Services/consumeRowDataPacket";
-let authorizationController = require('../../Controllers/AuthControllers/authorizationController')
-let teamController = require('../../Controllers/teamController')
+let authorizationController = require('../../Queries/AuthQueries/authorizationQueries')
+let teamController = require('../../Queries/teamQueries')
 let Roles = require('./Roles')
-let users = require('../../Controllers/userController')
-let teams = require('../../Controllers/teamController')
+let users = require('../../Queries/userQueries')
+let teams = require('../../Queries/teamQueries')
 
 async function inviteUserToTeam(req: any, res: any) {
     let isAlreadyOnTeam = true;
@@ -26,7 +26,7 @@ async function inviteUserToTeam(req: any, res: any) {
         isInviteExisting = consumeRowDataPacket(await teams.getInviteBySenderIDRecipientIDTeamID(userTeamIDCombo.userID, recipientID, userTeamIDCombo.teamID, res))
         isAlreadyOnTeam = consumeRowDataPacket(await teams.fetchIsOnTeam(recipientID, userTeamIDCombo.teamID))
     }catch(e){
-        return res.status(500).send({message: 'Server couldnt check team information...'})
+        return res.status(500).send({message: 'Server couldnt check invite information...'})
     }
 
     //if user is the owner they can invite others to the team if the recipient isnt already on the 

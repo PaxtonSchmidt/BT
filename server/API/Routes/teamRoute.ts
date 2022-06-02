@@ -1,7 +1,7 @@
 import * as express from 'express';
 let router = express.Router();
 
-let teamRoute = require("../Controllers/teamController");
+let teamRoute = require("../Queries/teamQueries");
 let teamSelectRoute = require("../Requests/Authorization/NoAuthorization/TeamSelect");
 let teamAuthorization = require('../Requests/Authorization/teamAuthorization');
 let NoAuthorizationInvites = require('../Requests/Authorization/NoAuthorization/teamInvites')

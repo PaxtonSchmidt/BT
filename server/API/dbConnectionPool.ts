@@ -13,14 +13,3 @@ function createConnectionPool() {
 }
 
 export const connectionPool = createConnectionPool();
-
-// function createdb(req: any, res: any) {
-//     let sql = "CREATE DATABASE bug_tracker_db";
-//     db.query(sql, (err: Error, result: any) => {
-//         if (err) throw err;
-//         console.log(result)
-//         res.send('Database created...');
-//     })
-// }
-
-

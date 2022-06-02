@@ -1,7 +1,7 @@
 import { User } from "../../Interfaces/User";
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const authenticationQueries = require('../../Controllers/AuthControllers/authenticationController');
+const authenticationQueries = require('../../Queries/AuthQueries/authenticationQueries');
 
 
 function login(req: any, res: any) {

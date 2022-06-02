@@ -1,7 +1,7 @@
 import * as express from 'express';
 let router = express.Router();
 
-let usersRoute = require("../Controllers/userController");
+let usersRoute = require("../Queries/userQueries");
 
 router.get("/getUsers", usersRoute.getUsers);
 router.get("/addUser", usersRoute.addUser);

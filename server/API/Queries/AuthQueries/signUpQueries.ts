@@ -1,6 +1,6 @@
 import { connectionPool } from "../../dbConnectionPool";
 import { consumeRowDataPacket } from "../../Services/consumeRowDataPacket";
-let userController = require('../userController')
+let userController = require('../userQueries')
 
 async function signUp(req: any, res: any) {
     let targetEmail = req.body.email;

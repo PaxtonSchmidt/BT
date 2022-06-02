@@ -1,10 +1,16 @@
 import consumeCookie from "../../../Services/consumeCookies/consumeCookie";
 import { consumeCookieFlags } from "../../../Services/consumeCookies/consumeCookieFlags";
-let teams = require('../../../Controllers/teamController');
+let teams = require('../../../Queries/teamQueries');
 
 async function deleteInvite(req: any, res: any) {
-    let currentUserID = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
-    let invite = await teams.getInviteById(req.body.inviteID);
+    let currentUserID = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag);
+    let invite: any = ''
+    try{
+        invite = await teams.getInviteById(req.body.inviteID);
+    }catch(e){
+        console.log(e)
+        return res.status(500).send({message: 'Server couldnt check invite' })
+    }
 
     //if the user is the sender or recipient of the invite then they can delete the invite
     if(currentUserID === invite.recipient_id || currentUserID === invite.sender_id){
