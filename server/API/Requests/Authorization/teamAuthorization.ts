@@ -8,19 +8,43 @@ let users = require('../../Controllers/userController')
 let teams = require('../../Controllers/teamController')
 
 async function inviteUserToTeam(req: any, res: any) {
-    let userTeamIDCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserAndTeamIdFlag);
-    let currentUserRoleID = await authorizationController.fetchUserTeamRoleID(req, userTeamIDCombo);
+    let isAlreadyOnTeam = true;
+    let isInviteExisting = true; 
+    let userTeamIDCombo: any = [];
+    let currentUserRoleID = ''; 
+    let recipientID = ''; 
+    
+    try{
+        userTeamIDCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserAndTeamIdFlag);
+        currentUserRoleID = await authorizationController.fetchUserTeamRoleID(req, userTeamIDCombo);
+    }catch(e){
+        return res.status(500).send({message: 'Server couldnt find role information...'})
+    }
 
-    let recipientID = await users.getUserByNameDiscriminator(req.body.invitee, req.body.discriminator, res)
-    let isInviteExisting = consumeRowDataPacket(await teams.getInviteBySenderIDRecipientIDTeamID(userTeamIDCombo.userID, recipientID, userTeamIDCombo.teamID, res))
+    try{
+        recipientID = await users.getUserByNameDiscriminator(req.body.invitee, req.body.discriminator, res)
+        isInviteExisting = consumeRowDataPacket(await teams.getInviteBySenderIDRecipientIDTeamID(userTeamIDCombo.userID, recipientID, userTeamIDCombo.teamID, res))
+        isAlreadyOnTeam = consumeRowDataPacket(await teams.fetchIsOnTeam(recipientID, userTeamIDCombo.teamID))
+    }catch(e){
+        return res.status(500).send({message: 'Server couldnt check team information...'})
+    }
 
-    //if user is the owner they can invite others to the team if the invite doesnt already exist
+    //if user is the owner they can invite others to the team if the recipient isnt already on the 
+    //team and the invite doesnt already exist
     if(currentUserRoleID !== Roles.Legend.owner){
         return res.status(401).send({message: "You can't invite people to this team..."})
-    } if(isInviteExisting){
+    } else if(isAlreadyOnTeam === true){
+        return res.status(409).send({message: "That user is already on this team..."})
+    } else if(isInviteExisting === true){
         return res.status(400).send({message: 'Invite already exists...'});
     } else {
-        teamController.addTeamInvite(req, res, userTeamIDCombo, recipientID)
+        try{
+            //now add the invite
+            await teamController.addTeamInvite(req, res, userTeamIDCombo, recipientID)
+            return res.status(200).send({message: 'Invited user'})
+        } catch(e) {
+            return res.status(500).send({message: 'Server couldnt invite user...'})
+        }
     }
 }
 
