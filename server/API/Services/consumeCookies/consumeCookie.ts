@@ -20,7 +20,6 @@ export default function consumeCookie(cookie: any, dataNeeded: string) {
         return userTeamIDCombo
     }
     else {
-        console.log(dataNeeded)
         console.log(`ERROR: Incorrect use of consumeCookie service function. Use entireTokenFlag, tokenUserIdFlag or tokenTeamIdFlag in the second argument`);
     }
 }

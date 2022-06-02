@@ -10,7 +10,6 @@ async function signUp(req: any, res: any) {
             let sqlEmail = "SELECT EXISTS(SELECT * FROM users WHERE email = ?)"; 
             connectionPool.query(sqlEmail, email, (err: any, result: any) => {
                 let isEmailTaken = consumeRowDataPacket(result);
-                console.log(isEmailTaken)
                 return err ? reject(err) : resolve(isEmailTaken);
             });
         })
@@ -22,7 +21,6 @@ async function signUp(req: any, res: any) {
             let sqlUsernameDiscriminator = "SELECT EXISTS(SELECT * FROM users WHERE username= ? AND discriminator= ?)"
             connectionPool.query(sqlUsernameDiscriminator, variables, (err: any, result: any) => {
                 let res = consumeRowDataPacket(result)
-                console.log(res)
                 return err ? reject(err) : resolve(res);
             });
         })
