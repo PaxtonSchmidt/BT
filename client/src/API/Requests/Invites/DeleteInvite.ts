@@ -1,5 +1,5 @@
 export default async function deleteInvite(invite_id: string) {
-    const response = await fetch('/teams/deleteInviteToTeam', {
+    const response = await fetch('/teams/deleteInvite', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
