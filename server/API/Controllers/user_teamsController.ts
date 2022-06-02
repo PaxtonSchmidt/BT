@@ -11,19 +11,6 @@ function createUserTeamsTable(req: any, res: any) {
     });
 }
 
-function addUserToTeam(req: any, res: any) {
-    console.log('got here')
-    let user = {user_id: req.body.invitee, team_id: '1', role_id: '1', date_joined: '2022-05-07', enlisted_by_user_id: '1'}
-
-    let sql='INSERT INTO user_teams SET ?'
-
-    connectionPool.query(sql, user, (err: Error, result: any) => {
-        if(err) throw err;
-        console.log(result);
-        res.send('User added to team...');
-    });
-}
-
 function getUserTeams(current_user_id: number) {
     let sql = "SELECT  t.name AS team_name, t.team_id AS team_id, u.username AS owner_name, u.discriminator AS owner_discriminator, ut.date_joined FROM user_teams ut LEFT JOIN teams t ON ut.team_id = t.team_id LEFT JOIN users u ON t.owner_user_id = u.user_id WHERE ut.user_id = ?";
 
@@ -34,4 +21,4 @@ function getUserTeams(current_user_id: number) {
     })
 }
 
-module.exports = { createUserTeamsTable, addUserToTeam, getUserTeams }
+module.exports = { createUserTeamsTable, getUserTeams }
