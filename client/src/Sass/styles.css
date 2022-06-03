@@ -323,6 +323,10 @@
   color: rgba(255, 255, 255, 0.192) !important;
 }
 
+.css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon {
+  color: #efff0a !important;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
