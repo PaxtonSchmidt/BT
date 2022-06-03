@@ -27,5 +27,16 @@ function addProject(req: any, res: any) {
     })
 }
 
-module.exports = { addProject }
+function getSessionProjectRoles(teamID: string, userID: string){
+    let values = [teamID, userID]
+    let sql ='SELECT p.name AS name, up.role_id AS role_id FROM projects p LEFT JOIN user_projects up ON up.project_id = p.project_id WHERE p.team_id= ? AND up.user_id= ?'
+
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+
+module.exports = { addProject, getSessionProjectRoles }
 
