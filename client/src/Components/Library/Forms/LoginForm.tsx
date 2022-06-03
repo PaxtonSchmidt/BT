@@ -62,6 +62,7 @@ export default function LoginForm() {
                                 required />
                             <TextField 
                                 name='password' 
+                                // type='password'
                                 value={values.password} 
                                 label='Password' 
                                 className='loginFormComponent' 
