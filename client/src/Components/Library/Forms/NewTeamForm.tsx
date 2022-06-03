@@ -17,7 +17,7 @@ export default function NewTeamForm() {
     }
     
 return( 
-        <div className='loginForm' >
+        <div className='loginForm fadeIn' >
             <h4 className='header'>Create Team</h4>
             <Formik 
                 initialValues={{name: ''}}

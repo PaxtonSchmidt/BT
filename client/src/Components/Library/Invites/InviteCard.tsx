@@ -28,7 +28,7 @@ export default function InviteCard(props : Invite) {
         }
     }
     return(
-        <div className='card'>
+        <div className='card fadeIn'>
             <div className='cardContent' style={{color: 'white', fontWeight: 'bold'}}>
                 <div className='cardTeamName' >
                     {props.team_name}

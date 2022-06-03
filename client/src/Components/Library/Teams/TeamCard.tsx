@@ -4,16 +4,9 @@ import { authService } from '../../../API/Services/AuthService';
 import { Team } from '../../../PropsInterfaces/team';
 
 export default function TeamCard(props : Team) {   
-    let navigate = useNavigate();
-    
-    async function handleClick() {
-        authService.selectTeam();
-        console.log(props.name)
-        navigate('/dashboard');
-    }
-    
-    return(
-        <div className='card'  onClick={handleClick}>
+
+    return( 
+        <div className='card fadeIn' >
             <div className='cardContent' style={{color: 'white', fontWeight: 'bold'}}>
                 <div style={{fontSize: '18px', whiteSpace: 'nowrap', marginLeft: '10px'}}>
                     {props.name}
