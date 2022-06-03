@@ -3,7 +3,7 @@ import { invitesActionType } from "../action-types/invitesActionTypes"
 import { Action } from "../actions/invitesActions"
 import { Invites } from "../interfaces/invites"
 
-export const update = (invites: Invites) => {
+export const updateInvites = (invites: Invites) => {
     return (dispatch: Dispatch<Action>) => {
         dispatch({
             type: invitesActionType.UPDATE,

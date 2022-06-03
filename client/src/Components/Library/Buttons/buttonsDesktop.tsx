@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { authService } from '../../../API/Services/AuthService';
 import { Invites } from '../../../Redux/interfaces/invites';
-import { InvitesActionCreators } from '../../../Redux';
+import { InvitesActionCreators, LoginActionCreators } from '../../../Redux';
 
 export default function SelectTeamPageButtons(){
     const invitesState = useSelector((state: Invites) => state.invites)
     const dispatch = useDispatch();
-    const { update } = bindActionCreators(InvitesActionCreators, dispatch)
+    const { updateInvites } = bindActionCreators(InvitesActionCreators, dispatch)
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -23,10 +23,11 @@ export default function SelectTeamPageButtons(){
                 return console.log('something went wrong...')
             }
         }))
-        .then(jsonRes => update(jsonRes));
+        .then(jsonRes => updateInvites(jsonRes));
     }, [])  
 
     let inviteAmount = invitesState.length;
+    console.log(` fuck em ${inviteAmount}`)
 
     let plurality = isPlural(invitesState.length);
     //get the amount of team invites the user has from invite store
@@ -44,7 +45,6 @@ export default function SelectTeamPageButtons(){
         authService.signOut()
         navigate('/login')
         window.location.reload();
-        
     }
     function handleCreateTeam(){
         navigate('/newTeam')
@@ -75,7 +75,7 @@ export default function SelectTeamPageButtons(){
                 </span>
             </span>
 
-            <button className='selectTeamPageNavbutton ' style={{bottom: '50px', position: 'absolute'}} onClick={handleCheckInvites}>
+            <button className='selectTeamPageNavbutton' style={{bottom: '50px', position: 'absolute'}} onClick={handleCheckInvites}>
                 <span className='invitesNum'>{inviteAmount}</span><span className='glowsToo'>{plurality}</span>
             </button>
         </>
