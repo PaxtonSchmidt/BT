@@ -756,6 +756,52 @@ html {
   background: linear-gradient(100deg, #1a1a1a, #000000);
 }
 
+.fadeIn {
+  -webkit-animation: fadeIn 1s;
+          animation: fadeIn 1s;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.longFadeIn {
+  -webkit-animation: longFadeIn 3s;
+          animation: longFadeIn 3s;
+}
+
+@-webkit-keyframes longFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes longFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 768px) {
   .pageHeader {
     font-size: 60px;
