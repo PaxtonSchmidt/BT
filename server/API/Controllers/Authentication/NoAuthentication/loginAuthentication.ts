@@ -28,7 +28,7 @@ function login(req: any, res: any) {
                     await jwt.sign(
                     {user_id: targetUser.user_id},//cannot be a string because it breaks jwt.Sign()->{expiresIn}
                     process.env.ACCESS_TOKEN_SECRET, 
-                    {expiresIn: '100000s'});
+                    {expiresIn: '300s'});
 
                 res.cookie('token', accessToken, {
                     httpOnly: true

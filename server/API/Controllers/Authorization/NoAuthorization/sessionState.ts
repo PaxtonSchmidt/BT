@@ -13,12 +13,13 @@ interface sessionUser {
 
 async function getSessionState(req: any, res: any) {
     let sessionUser: sessionUser = {username: '', discriminator: '', bio: ''};
-    let sessionTeam = {};
+    let sessionTeam = {name: '', date_joined: '', team_role: '', project_roles: []};
     let sessionProjectsRoles: any = [];
     let invites = [{}];
     
     let currentUserID = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag);
     let currentTeamID = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenTeamIdFlag);
+    console.log(currentTeamID);
     
     //get session info from database queries 
     try{
@@ -28,12 +29,11 @@ async function getSessionState(req: any, res: any) {
 
         let currentTeam = await team.getSessionTeam(currentTeamID, currentUserID)
         sessionTeam = Object.assign(sessionTeam, currentTeam)
-        console.log(sessionTeam)
 
         let userRoles = await project.getSessionProjectRoles(currentTeamID, currentUserID)
         userRoles = userRoles.map((project: any) => Object.assign({}, project));
-        sessionProjectsRoles = Object.assign(sessionProjectsRoles, userRoles)
-        console.log(sessionProjectsRoles)
+        sessionTeam.project_roles = userRoles
+        console.log('a')
 
     }catch(e){
         return res.status(500).send({message: 'Server couldnt fetch user information...'})
@@ -42,7 +42,7 @@ async function getSessionState(req: any, res: any) {
     
     //build out sessionState object
     try{
-        console.log('build it')
+        return res.status(200).send({message: 'Oh god i hope this works'})
     }catch(e){
         console.log('catch it')
     }

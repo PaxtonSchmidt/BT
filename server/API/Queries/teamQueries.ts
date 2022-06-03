@@ -106,7 +106,7 @@ function addUserToTeam(res: any, currentUserID: string, teamID: string, enlisted
 }
 
 function getSessionTeam(teamID: string, userID: string){
-    let sql = 'SELECT t.name AS name, ut.date_joined AS date_joined, ut.role_id AS role_id FROM user_teams ut LEFT JOIN teams t ON t.team_id = ut.team_id WHERE t.team_id= ? AND ut.user_id= ?'
+    let sql = 'SELECT t.name AS name, ut.date_joined AS date_joined, ut.role_id AS team_role FROM user_teams ut LEFT JOIN teams t ON t.team_id = ut.team_id WHERE t.team_id= ? AND ut.user_id= ?'
     let values = [teamID, userID]
     
     return new Promise<any>((resolve, reject) => {
