@@ -32,13 +32,13 @@ function getUsers(req: any, res: any) {
     })
 }
 
-function getUserByID(req: any, res: any) {
-    let userID=1;
-    let sql = "SELECT * FROM users WHERE user_id = ?"; 
+function getUserByID(userID: string) {
+    let sql = "SELECT username, discriminator, bio FROM users WHERE user_id = ?"; 
     
-    connectionPool.query(sql, userID, (err: any, result: any) => {
-        if (err) result.send(err);
-        res.send('User retrieved...');
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, userID, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result[0])
+        })
     })
 }
 
@@ -52,6 +52,7 @@ function getUserByNameDiscriminator(name: string, discriminator: string, res: an
     })
 }
 
+
 // function createUsersTable(req: any, res: any) {
 //     let sql ="CREATE TABLE users(user_id INT(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL, discriminator INT(4) NOT NULL, password CHAR(60) NOT NULL, date_created DATETIME NOT NULL, bio varchar(255), PRIMARY KEY(user_id))";
 
@@ -64,5 +65,5 @@ function getUserByNameDiscriminator(name: string, discriminator: string, res: an
 
 
 
-module.exports = {addUser, getUsers, getUserByID, getUserByNameDiscriminator};
+module.exports = {addUser, getUsers, getUserByID, getUserByNameDiscriminator };
 
