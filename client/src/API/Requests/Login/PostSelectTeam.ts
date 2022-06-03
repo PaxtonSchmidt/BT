@@ -10,6 +10,6 @@ export default async function postSelectTeam(team: Team) {
         },
         body: JSON.stringify(team)
     })
-    console.log(response);
+    return response.json()
     // return response.json().then((response) => console.log(response));
 }
