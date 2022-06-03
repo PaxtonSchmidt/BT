@@ -48,8 +48,8 @@ return(
                                     className='formComponent' 
                                     color='info' 
                                     variant='standard' 
+                                    onBlur={handleBlur('priority')} 
                                     onChange={handleChange} 
-                                    onBlur={handleBlur} 
                                     sx={{ width: '200px' }}>
                                     {priority.map((priority, index) => {
                                         return (
