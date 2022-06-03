@@ -7,7 +7,7 @@ const invitesReducer = (state: any = initialState, action: Action) => {
     switch(action.type){
         case invitesActionType.UPDATE:
             if(action.payload === undefined){
-                return state
+                return state + action.payload
             }
             return action.payload;
         case invitesActionType.REMOVE: 
