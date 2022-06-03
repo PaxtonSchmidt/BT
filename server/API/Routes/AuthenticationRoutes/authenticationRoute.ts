@@ -5,6 +5,6 @@ let authenticationMiddlewareRoutes = require('../../Controllers/Authentication/N
 let authenticationQueries = require('../../Queries/AuthQueries/authenticationQueries');
 
 router.post('/login', authenticationMiddlewareRoutes.login);
-router.get('/loginUser', authenticationQueries.fetchCurrentUser)
+router.get('/currentUser', authenticationQueries.fetchCurrentUser)
 
 module.exports = router;

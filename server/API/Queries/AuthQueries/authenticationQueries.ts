@@ -15,7 +15,7 @@ function fetchTargetUser(queryEmail: string) {
 async function fetchCurrentUser(req: any, res: any) {
     let currentUserId = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
 
-    let sql = 'SELECT username FROM users WHERE user_id = ?'
+    let sql = 'SELECT username, discriminator, bio FROM users WHERE user_id = ?'
     
 
     connectionPool.query(sql, currentUserId, (err: any, result: any) => {
