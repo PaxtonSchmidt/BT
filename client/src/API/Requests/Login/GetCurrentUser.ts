@@ -8,6 +8,5 @@ export default async function getCurrentUser() {
 
     let currentUser = response[0];
 
-    console.log(currentUser)
     return currentUser
 }

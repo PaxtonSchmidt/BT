@@ -8,6 +8,5 @@ export default async function postProject(data: Project) {
         },
         body: JSON.stringify(data)
     })
-    console.log(response.status);
     // return response.json().then((response) => console.log(response));
 }

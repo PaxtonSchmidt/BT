@@ -7,7 +7,6 @@ export default async function deleteInvite(invite_id: string) {
         body: JSON.stringify({inviteID: invite_id})
     });
 
-    console.log(response.status)
     
     return response.status
 }

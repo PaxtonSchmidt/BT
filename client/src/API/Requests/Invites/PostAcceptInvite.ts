@@ -7,6 +7,5 @@ export default async function postAcceptInvite(invite_id: string) {
         body: JSON.stringify({inviteID: invite_id})
     })
 
-    console.log(await response.json())
     return response.status
 }

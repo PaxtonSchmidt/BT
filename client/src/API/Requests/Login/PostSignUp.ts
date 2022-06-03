@@ -9,7 +9,6 @@ export default async function postSignUp(data: NewUser) {
         },
         body: JSON.stringify(data)
     })
-    console.log(response.body);
     
     return response.status;
     // return response.json().then((response) => console.log(response));
