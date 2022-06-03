@@ -4,7 +4,7 @@ export default function ProfilePic() {
     
     return(
         <div className='outerNavElement'>
-            <div className='circleIcon navPicture scaleYonHover'>
+            <div className='circleIcon navPicture scaleYonHover longFadeIn'>
             </div>
         </div>
     )

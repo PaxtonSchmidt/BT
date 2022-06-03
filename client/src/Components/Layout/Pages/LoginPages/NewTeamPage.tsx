@@ -11,7 +11,7 @@ export default function NewTeamPage() {
 
     if(loginState === 1) {
         return(
-            <Container  className='loginPage altBG'>
+            <Container  className='loginPage altBG '>
                 <SelectTeamPageButtons />
                 <NewTeamForm />
             </Container>
