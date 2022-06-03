@@ -1,7 +1,9 @@
-import React, {useState, useEffect, Dispatch} from 'react';
+import React, {useState, Dispatch} from 'react';
 import { SetStateAction } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import postSelectTeam from '../../../API/Requests/Login/PostSelectTeam';
+import { Team, Teams } from '../../../Redux/interfaces/teams';
 import TeamCard from './TeamCard';
 
 interface Props {
@@ -10,47 +12,34 @@ interface Props {
 
 function TeamList(setIsTeamSelected: Props) {
     let navigate = useNavigate();
-    const [teams, setTeams] = useState<any[]>([]);
-
-    useEffect(() => {
-        fetch('/teams/getTeams')
-        .then((res => {
-            if(res.ok) {         
-                return res.json();
-            } else if(res.status === 400){
-                window.location.assign('/login')
-            } else if(res.status === 404){
-                return ''
-            } else{
-                return console.log('Something went wrong')
-            }
-        }))
-        .then(jsonRes =>{setTeams(jsonRes)});
-    }, [])  
+    const initial: Team[] = [];
+    const teamsState = useSelector((state: Teams) => state.teams)
+    let teams = Object.assign(initial, teamsState)
 
     async function handleSelect(team: string) {
         console.log(await postSelectTeam({team}))
         setIsTeamSelected.setIsTeamSelected(true);
+        navigate('/dashboard')
     }  
+
     function handleGoToCreateTeam() {
         navigate('/newTeam')
     }
 
     const handleOnMouseMove = (e: any) => {
         const {currentTarget: target} = e;
-
         const rect = target.getBoundingClientRect(),
             x = e.clientX - rect.left,
             y = e.clientY - rect.top;
         target.style.setProperty("--mouse-x", `${x}px`)
         target.style.setProperty("--mouse-y", `${y}px`)
     }
-
+    
     for(const card of document.querySelectorAll<HTMLElement>('.card')) {
         card.onmousemove = (e: any) => handleOnMouseMove(e);
     }
- 
-    if(teams.length < 1){
+
+    if(teams && teams.length < 1){
         return (
             <>
             <h1></h1>
@@ -59,7 +48,6 @@ function TeamList(setIsTeamSelected: Props) {
             </>
         )
     } 
-
     return (
     <>
         {teams.map((team: any) =>
