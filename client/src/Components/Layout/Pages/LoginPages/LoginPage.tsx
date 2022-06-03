@@ -12,6 +12,7 @@ export default function LoginPage() {
         authService.signOut()
         authService.deselectTeam()}
     , [])
+
     
     return(
         <Container  className='loginPage' >
