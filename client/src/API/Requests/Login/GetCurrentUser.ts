@@ -1,12 +1,12 @@
 export default async function getCurrentUser() {
-    const response = await fetch('/loginUser', {
+    const response = await fetch('/currentUser', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(res => res.json()).then(data => {return data[0].username});
+    }).then(res => res.json());
 
-    let currentUser = response;
+    let currentUser = response[0];
 
     console.log(currentUser)
     return currentUser
