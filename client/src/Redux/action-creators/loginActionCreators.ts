@@ -13,7 +13,7 @@ export const login = () => {
 export const logout = () => {
     return (dispatch: Dispatch<Action>) => {
         dispatch({
-            type: loginActionType.LOGIN,
+            type: loginActionType.LOGOUT,
             payload: 1
         })
     }
