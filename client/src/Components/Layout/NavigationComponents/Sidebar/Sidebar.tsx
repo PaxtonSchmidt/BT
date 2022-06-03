@@ -9,29 +9,29 @@ import { authService } from '../../../../API/Services/AuthService';
 
 export default function Sidebar() {
     return (
-        <div className='sideBar navComponent'>
+        <div className='sideBar navComponent fadeIn'>
             <div >
                 <div className='navItem sideBarItem'>
                     <Link to='dashboard'>
-                    <img src={house} alt='go to dashboard' className='sidebarIcon scaleYonHover'/>
+                    <img src={house} alt='go to dashboard' className='sidebarIcon scaleYonHover longFadeIn'/>
                     </Link>
                 </div>
                 
                 <div className='navItem sideBarItem'>
                     <Link to='tickets'>
-                        <img src={ticket} alt='go to dashboard' className='sidebarIcon scaleYonHover'/>
+                        <img src={ticket} alt='go to dashboard' className='sidebarIcon scaleYonHover longFadeIn'/>
                     </Link>
                 </div>
                 
                 <div className='navItem sideBarItem'>
                     <Link to='projects'>
-                    <img src={project} alt='go to dashboard' className='sidebarIcon scaleYonHover'/>
+                    <img src={project} alt='go to dashboard' className='sidebarIcon scaleYonHover longFadeIn'/>
                     </Link>
                 </div>
                 
                 <div className='navItem sideBarItem'>
                     <Link to='team'>
-                    <img src={people} alt='go to dashboard' className='sidebarIcon scaleYonHover'/>
+                    <img src={people} alt='go to dashboard' className='sidebarIcon scaleYonHover longFadeIn'/>
                     </Link>
                 </div>
             </div>
@@ -40,7 +40,7 @@ export default function Sidebar() {
             {/* This component will be a quick switch between teams the current user belongs to. Requires re-login by expiring token? */}
             <div className='navItem sideBarItem' style={{marginTop: 'auto'}}>
                 <Link to='/selectTeam' onClick={authService.deselectTeam}>
-                    <img src={swap} alt='Work for a different team' className='sidebarIcon scaleYonHover'/>
+                    <img src={swap} alt='Work for a different team' className='sidebarIcon scaleYonHover longFadeIn'/>
                 </Link>
             </div>
     
