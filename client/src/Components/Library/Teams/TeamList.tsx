@@ -1,5 +1,6 @@
 import React, {useState, useEffect, Dispatch} from 'react';
 import { SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
 import postSelectTeam from '../../../API/Requests/Login/PostSelectTeam';
 import TeamCard from './TeamCard';
 
@@ -8,6 +9,7 @@ interface Props {
 }
 
 function TeamList(setIsTeamSelected: Props) {
+    let navigate = useNavigate();
     const [teams, setTeams] = useState<any[]>([]);
 
     useEffect(() => {
@@ -17,19 +19,22 @@ function TeamList(setIsTeamSelected: Props) {
                 return res.json();
             } else if(res.status === 400){
                 window.location.assign('/login')
-            }
-                else {
-                console.log('couldnt get teams')
-                return res.json();
+            } else if(res.status === 404){
+                return ''
+            } else{
+                return console.log('Something went wrong')
             }
         }))
-        .then(jsonRes => setTeams(jsonRes));
+        .then(jsonRes =>{setTeams(jsonRes)});
     }, [])  
 
-    function handleSelect(team: string) {
-        postSelectTeam({team})
+    async function handleSelect(team: string) {
+        console.log(await postSelectTeam({team}))
         setIsTeamSelected.setIsTeamSelected(true);
     }  
+    function handleGoToCreateTeam() {
+        navigate('/newTeam')
+    }
 
     const handleOnMouseMove = (e: any) => {
         const {currentTarget: target} = e;
@@ -45,9 +50,19 @@ function TeamList(setIsTeamSelected: Props) {
         card.onmousemove = (e: any) => handleOnMouseMove(e);
     }
  
+    if(teams.length < 1){
+        return (
+            <>
+            <h1></h1>
+            <h1 style={{color: 'white'}}>You don't have any teams</h1>
+            <button className='button' onClick={() => handleGoToCreateTeam()}>Create a team</button>
+            </>
+        )
+    } 
+
     return (
     <>
-        {teams.map((team) =>
+        {teams.map((team: any) =>
         <div key={team.team_id} onClick={() => handleSelect(team.team_id)}>
             <TeamCard 
                 name={team.team_name}
@@ -60,6 +75,7 @@ function TeamList(setIsTeamSelected: Props) {
     </>  
     )
 }
+
     
 
 export default TeamList;
