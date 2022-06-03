@@ -26,12 +26,9 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
             }).then(res => res.json());
             console.log(response)
             
-            // if(response.status === 200){
-
-            // }
         }
         getSessionState();
-    })
+    }, [])
     
 
     if(loginState === 1) {
@@ -46,6 +43,5 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
             )
         } return <Navigate to='/selectTeam' />
     }
-
     return <Navigate to='/login' />
 }
