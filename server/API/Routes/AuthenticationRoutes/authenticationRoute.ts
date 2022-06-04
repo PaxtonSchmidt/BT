@@ -1,10 +1,11 @@
 import * as express from 'express';
 let router = express.Router();
 
-let authenticationMiddlewareRoutes = require('../../Controllers/Authentication/NoAuthentication/loginAuthentication');
+let authenticationRoutes = require('../../Controllers/SessionManagement/NoAuthentication/logAuthentication');
 let authenticationQueries = require('../../Queries/AuthQueries/authenticationQueries');
 
-router.post('/login', authenticationMiddlewareRoutes.login);
+router.post('/login', authenticationRoutes.login);
+router.post('/logout', authenticationRoutes.logout)
 router.get('/currentUser', authenticationQueries.fetchCurrentUser)
 
 module.exports = router;

@@ -10,16 +10,15 @@ function selectTeam(req: any, res: any) {
         try{
             let user_id = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
             let targetTeam_id = req.body.team;
-
-            let token_v = await getV(user_id)
+            let token_v = ''
             
-            async function getV(user_id: string) {
-                try{
-                    await users.getTokenVersion(user_id);
-                } catch(e){
-                    return e
-                }
+            try{
+                let response = await users.getValidTokenVersion(user_id);
+                token_v = response.token_v
+            } catch(e){
+                return e 
             }
+
             
             console.log(token_v)
             let accessToken = 

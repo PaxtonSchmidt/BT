@@ -52,7 +52,7 @@ function getUserByNameDiscriminator(name: string, discriminator: string, res: an
     })
 }
 
-function getTokenV(user_id: string){
+function getValidTokenVersion(user_id: string){
     let sql = 'SELECT token_v FROM users WHERE user_id= ?'
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, user_id, (err: any, result: any) => {
@@ -61,24 +61,22 @@ function getTokenV(user_id: string){
     })
 }
 
+function incrementTokenVersion(user_id: string){
+    let sql = 'UPDATE users SET token_v = token_v + 1 WHERE user_id= ?'
 
-// function createUsersTable(req: any, res: any) {
-//     let sql ="CREATE TABLE users(user_id INT(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL, discriminator INT(4) NOT NULL, password CHAR(60) NOT NULL, date_created DATETIME NOT NULL, bio varchar(255), PRIMARY KEY(user_id))";
-
-//     connectionPool.query(sql, (err: Error, result: any) => {
-//         if(err) throw err;
-//         console.log(result);
-//         res.send('Users table created...');
-//     });
-// }
-
-
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, user_id, (err: any, result: any) => {
+            return err ? reject(err) : resolve('ok')
+        })
+    })
+}
 
 module.exports = {
     addUser,
     getUsers, 
     getUserByID, 
     getUserByNameDiscriminator, 
-    getTokenV
+    getValidTokenVersion,
+    incrementTokenVersion
 };
 
