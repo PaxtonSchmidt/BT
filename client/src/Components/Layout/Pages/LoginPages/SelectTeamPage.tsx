@@ -13,6 +13,7 @@ interface Props {
     setIsTeamSelected: Dispatch<SetStateAction<boolean>>
 }
 
+
 export default function SelectTeamPage({ setIsTeamSelected }: Props) {
     const dispatch = useDispatch();
     const { updateTeams } = bindActionCreators(TeamsActionCreators, dispatch)
@@ -26,7 +27,6 @@ export default function SelectTeamPage({ setIsTeamSelected }: Props) {
             console.log('a')       
             return res.json();
         } else if(res.status === 400){
-            console.log('a')
             return window.location.assign('/login')
         } else if(res.status === 404){
             return []

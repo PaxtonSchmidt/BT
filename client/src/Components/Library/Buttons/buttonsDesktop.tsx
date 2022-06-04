@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { authService } from '../../../API/Services/AuthService';
 import { Invites } from '../../../Redux/interfaces/invites';
 import { InvitesActionCreators, LoginActionCreators } from '../../../Redux';
+import postInvalidateJWT from '../../../API/Requests/Login/PostInvalidateJWT';
 
 export default function SelectTeamPageButtons(){
     const invitesState = useSelector((state: Invites) => state.invites)
@@ -26,8 +27,7 @@ export default function SelectTeamPageButtons(){
         .then(jsonRes => updateInvites(jsonRes));
     }, [])  
 
-    let inviteAmount = invitesState.length;
-    console.log(` fuck em ${inviteAmount}`)
+    let inviteAmount = invitesState.length || 0;
 
     let plurality = isPlural(invitesState.length);
     //get the amount of team invites the user has from invite store
@@ -42,6 +42,7 @@ export default function SelectTeamPageButtons(){
     }
 
     function handleLogout(){
+        postInvalidateJWT();
         authService.signOut()
         navigate('/login')
         window.location.reload();
