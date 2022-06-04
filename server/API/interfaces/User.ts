@@ -5,4 +5,5 @@ export interface User {
     email: string;
     date_created: Date;
     bio: string;
+    token_v: string
 }
