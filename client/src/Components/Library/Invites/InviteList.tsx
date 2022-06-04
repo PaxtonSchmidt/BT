@@ -18,6 +18,9 @@ function InviteList() {
     function handleGoToTeamSelect(){
         navigate('/selectTeam')
     }
+    function handleGoToCreateATeam(){
+        navigate('/newTeam')
+    }
 
     function handleRefresh() {
         fetch('/teams/getTeamInvites')
@@ -48,12 +51,13 @@ function InviteList() {
         card.onmousemove = (e: any) => handleOnMouseMove(e);
     }
  
-    if(invites.length === 0){
+    if(invites.length < 1){
         return (
             <>
-                <h1 className='fadeIn' style={{color: 'white'}}>Looks like you don't have any invites...</h1>
-                <button className='onClick fadeIn' onClick={handleRefresh}>Refresh</button>
-                <button className='onClick fadeIn' onClick={handleGoToTeamSelect}>Choose a team</button>
+                <h1 className='delayedFadeIn' style={{color: 'white'}}>Looks like you don't have any invites...</h1>
+                <button className='onClick delayedFadeIn' onClick={handleRefresh}>Refresh</button>
+                <button className='onClick delayedFadeIn' onClick={handleGoToTeamSelect}>Choose team</button>
+                <button className='onClick delayedFadeIn' onClick={handleGoToCreateATeam}>Create team</button>
             </>
         )
     } else {
