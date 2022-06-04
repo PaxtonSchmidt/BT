@@ -41,11 +41,10 @@ function TeamList(setIsTeamSelected: Props) {
 
     if(teams && teams.length < 1){
         return (
-            <>
-            <h1></h1>
-            <h1 style={{color: 'white'}}>You don't have any teams</h1>
-            <button className='button' onClick={() => handleGoToCreateTeam()}>Create a team</button>
-            </>
+            <div className='delayedFadeIn'>
+                <h1 style={{color: 'white'}}>You don't have any teams</h1>
+                <button className='button' onClick={() => handleGoToCreateTeam()}>Create a team</button>
+            </div>
         )
     } 
     return (
