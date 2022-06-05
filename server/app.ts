@@ -9,7 +9,7 @@ app.use(cors());
 app.use('/', require('./API/Routes/AuthenticationRoutes/authenticationRoute'));
 app.use('/signup/', require('./API/Routes/signUpRoute'));
 
-//Protected routes have Auth/Auth middlewares
+//Protected routes have Auth middleware
 app.use('/selectTeam/', authenticateRequest,
     require('./API/Routes/AuthenticationRoutes/teamSelectRoute'))
 
