@@ -23,23 +23,19 @@ async function getCurrentUserTeams(req: any, res: any) {
 
 async function getTeamInvites(req: any, res: any) {
     let currentUserID = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
+    let queryInvites = []
     
-    async function fetchInvites(user_id: string){
-        try{
-            let queryInvites = await teams.getTeamInvites(currentUserID);
-            return queryInvites
-        } catch(e) {
-            console.log(e)
-            return res.status(500).send({message: 'Couldnt get invites from database...'})
-        }
+    try{
+        queryInvites = await teams.getTeamInvites(currentUserID);
+    } catch(e) {
+        console.log(e)
+        return res.status(500).send({message: 'Couldnt get invites from database...'})
     }
     
-    let invites = await fetchInvites(currentUserID)
-
-    if(invites < 1){
-        return res.sendStatus(404)
+    if(queryInvites.length < 1){
+        return res.send({message: 'No Invites'})
     } else {
-        return res.status(200).send(invites)
+        return res.status(200).send(queryInvites)
     }
 }
 
