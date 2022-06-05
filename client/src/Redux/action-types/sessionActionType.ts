@@ -1,3 +1,3 @@
 export enum sessionActionType {
-    UPDATE = 'update'
+    UPDATE = 'updateSession'
 }

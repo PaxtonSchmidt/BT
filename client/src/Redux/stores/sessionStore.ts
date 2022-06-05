@@ -2,8 +2,8 @@ import { applyMiddleware, legacy_createStore as createStore } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "../reducers/index";
 
-export const loginStore = createStore(
+export const sessionStore = createStore(
     sessionReducer,
-    {session: []},
+    {session: {}},
     applyMiddleware(thunk)
 )

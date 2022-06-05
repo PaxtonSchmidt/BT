@@ -1,8 +1,9 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import { boolean } from 'yup';
+import { bindActionCreators } from 'redux';
+import { SessionActionCreators } from '../../../Redux';
 import { State } from '../../../Redux/reducers';
 import Hamburger from './Hamburger';
 import Navbar from './Navbar/Navbar';
@@ -13,23 +14,27 @@ interface Props {
 }
 
 export default function NavigationSuite({ isTeamSelected }: Props) {
+    const dispatch = useDispatch();
+    const { updateSession } = bindActionCreators(SessionActionCreators, dispatch)
     const loginState = useSelector((state: State) => state.login)
+    const sessionState = useSelector((state: State) => state.session)
     
     useEffect(() => {
         async function getSessionState() {
             console.log(' got here')
-            let response = await fetch('/users/getSessionState', {
+            let response: any = await fetch('/users/getSessionState', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(res => res.json());
-            console.log(response)
-            
+            })
+            updateSession(await response.json());
         }
         getSessionState();
     }, [])
-    
+
+    console.log(sessionState)
+
 
     if(loginState === 1) {
         if(isTeamSelected === true){

@@ -7,7 +7,7 @@ const initialState = {session: {}};
 const sessionReducer = (state: any = initialState, action: Action) => {
     switch(action.type){
         case sessionActionType.UPDATE:
-            return state + action.payload;
+            return action.payload;
         default: 
             return state; 
     }
