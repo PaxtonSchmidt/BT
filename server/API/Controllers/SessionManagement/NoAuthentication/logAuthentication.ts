@@ -50,6 +50,8 @@ function login(req: any, res: any) {
 async function logout(req: any, res: any){
     let userID = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
     let isInvalidated = false
+
+
     try{
         let invalidated = (await users.incrementTokenVersion(userID) === 'ok')
         isInvalidated = (invalidated === true)
