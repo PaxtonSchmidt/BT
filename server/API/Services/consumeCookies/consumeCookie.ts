@@ -4,7 +4,13 @@ const jwt_decode = require('jwt-decode');
 
 export default function consumeCookie(cookie: any, dataNeeded: string) {
     let lengthOfTokenKeyInCookie = 6;
-    let token = cookie.substring(lengthOfTokenKeyInCookie);
+    let token = ''
+
+    try{
+        token = cookie.substring(lengthOfTokenKeyInCookie);
+    }catch(e){
+        return null
+    }
     
     if(dataNeeded === consumeCookieFlags.entireTokenFlag) {
         return token
