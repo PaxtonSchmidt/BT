@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { SessionActionCreators } from '../../../Redux';
 import { State } from '../../../Redux/reducers';
@@ -18,16 +18,19 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
     const { updateSession } = bindActionCreators(SessionActionCreators, dispatch)
     const loginState = useSelector((state: State) => state.login)
     const sessionState = useSelector((state: State) => state.session)
+    let navigate = useNavigate();
     
     useEffect(() => {
         async function getSessionState() {
-            console.log(' got here')
             let response: any = await fetch('/users/getSessionState', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
+            if(response.status === 400){
+                navigate('/login')
+            }
             updateSession(await response.json());
         }
         getSessionState();
