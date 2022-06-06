@@ -29,7 +29,7 @@ function addProject(req: any, res: any) {
 
 function getSessionProjectRoles(teamID: string, userID: string){
     let values = [teamID, userID]
-    let sql ='SELECT p.name AS name, up.role_id AS role_id FROM projects p LEFT JOIN user_projects up ON up.project_id = p.project_id WHERE p.team_id= ? AND up.user_id= ?'
+    let sql ='SELECT p.project_id AS project_id, p.name AS name, up.role_id AS role_id FROM projects p LEFT JOIN user_projects up ON up.project_id = p.project_id WHERE p.team_id= ? AND up.user_id= ?'
 
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
@@ -38,5 +38,16 @@ function getSessionProjectRoles(teamID: string, userID: string){
     })
 }
 
-module.exports = { addProject, getSessionProjectRoles }
+function getProjectMembers(userID: any, teamID: any){
+    let values = [userID, teamID]
+    let sql = 'SELECT up.project_id, up.role_id, u.username, u.discriminator FROM user_projects up LEFT JOIN users u ON u.user_id = up.user_id WHERE up.project_id IN (SELECT project_id from user_projects WHERE user_id= ? AND relevant_team_id= ?)'
+
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+
+module.exports = { addProject, getSessionProjectRoles, getProjectMembers }
 

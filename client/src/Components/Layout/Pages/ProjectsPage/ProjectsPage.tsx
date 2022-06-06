@@ -15,7 +15,7 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
     if(loginState === 1) {
         if(isTeamSelected === true) {
             return(
-                <div className='pageContentContainer'>
+                <div className='pageContentContainer '>
                     <div className='pageHeaderContainer'>
                         <Container className='pageBodyContainer3'>
                             <ProjectForm />

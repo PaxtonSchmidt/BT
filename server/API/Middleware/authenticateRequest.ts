@@ -5,8 +5,7 @@ let users = require('../Queries/userQueries')
 
 export default async function authenticateRequest(req: any, res: any, next: any) {
     if(req.headers.cookie === undefined){
-        console.log('got here')
-        return res.send({message: 'Please sign in...'})
+        return res.status(400).send({message: 'Please sign in...'})
     }
 
 

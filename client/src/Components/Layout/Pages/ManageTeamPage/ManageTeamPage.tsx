@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { State } from '../../../../Redux/reducers';
 import InviteToTeamForm from '../../../Library/Forms/inviteToTeamForm';
+import TeamMemberList from '../../../Library/Teams/TeamMemberList';
 
 interface Props {
     isTeamSelected: boolean;
@@ -15,10 +16,11 @@ export default function ManageTeamPage( {isTeamSelected} : Props) {
     if(loginState === 1) {
         if(isTeamSelected === true) {
             return(
-                <div className='pageContentContainer'>
+            <div className='pageContentContainer fa'>
                 <div className='pageHeaderContainer'>
                     <Container className='pageBodyContainer3'>
                         <InviteToTeamForm /> 
+                        <TeamMemberList />
                     </Container>
                 </div>
             </div>

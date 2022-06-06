@@ -42,10 +42,7 @@ export default function SelectTeamPageButtons(){
     }
 
     function handleLogout(){
-        postInvalidateJWT();
-        authService.signOut()
         navigate('/login')
-        window.location.reload();
     }
     function handleCreateTeam(){
         navigate('/newTeam')

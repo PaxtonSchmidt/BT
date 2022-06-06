@@ -4,7 +4,7 @@ import TicketForm from '../../../Library/Forms/TicketForm';
 
 export default function FormAndManage() {
     return(
-        <Container className='pageBodyContainer2'>
+        <Container className='pageBodyContainer2 '>
             <div className='formAndManage'>
                 <TicketForm />
             </div>   

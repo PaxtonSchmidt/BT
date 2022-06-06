@@ -15,7 +15,7 @@ export default function DashboardPage({ isTeamSelected }: Props) {
     if(loginState === 1){
         if(isTeamSelected === true) {
             return(
-                <div className='pageContentContainer'>
+                <div className='pageContentContainer fadeIn'>
                     s
                 </div>
             )

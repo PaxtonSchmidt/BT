@@ -1,5 +1,5 @@
 import React from 'react';
-import TeamPic from './NavbarComponents/TeamPic';
+import TeamPic from './NavbarComponents/TeamAndName/TeamPic';
 import BugIcon from './NavbarComponents/HeaderIcon';
 import ProfileAndBell from './NavbarComponents/ProfileAndBell/ProfileAndBell';
 

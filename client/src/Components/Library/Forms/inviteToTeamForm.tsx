@@ -2,8 +2,14 @@ import React from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
 import postInviteToTeam from '../../../API/Requests/Invites/PostInviteToTeam';
+import { useSelector } from 'react-redux';
+import { State } from '../../../Redux/reducers';
 
 export default function InviteToTeamForm() {
+    const sessionState = useSelector((state: State) => state.session)
+    let TeamName = sessionState.currentTeam?.name
+    
+
 return(
         <div style={{width: '700px'}}>
             <Formik 
@@ -20,7 +26,7 @@ return(
                         <form onSubmit={handleSubmit} onBlur={handleBlur}>
                             
                         <div className='formContainer' >
-                            <h4 className='header'>Invite People to Your Team</h4>
+                            <h4 className='header'>Invite people to {TeamName}</h4>
                             <TextField
                                 label='Username'
                                 type='text'

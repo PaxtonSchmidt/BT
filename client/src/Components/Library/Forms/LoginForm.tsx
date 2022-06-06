@@ -34,7 +34,6 @@ export default function LoginForm() {
             if(attemptResult === 200){
                 login()
                 navigate('/selectTeam')
-                window.location.reload();
             }
     }
     return(

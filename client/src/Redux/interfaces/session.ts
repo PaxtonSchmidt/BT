@@ -3,7 +3,8 @@ import { Invite } from "./invites";
 
 export interface Project{
     name: string,
-    role: string
+    role: string,
+    teammates: []
 }
 
 export interface currentTeam{
