@@ -1,9 +1,12 @@
 .list{
-    width: 100%;
-    margin: auto;
+    width: calc(100%-40px);
     background-color: $darkGrey;
-    height: fit-content;
     min-height: 100px;
+    max-height: 500px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    overflow-y: scroll;
 }
 .listHeader{
     margin-top: 0px;
@@ -11,14 +14,59 @@
 }
 .listItem{
     background-color: $darkGrey;
-    margin: 10px 0px;
-    border-bottom: 1px solid $black;
+    color: white;
+    position: relative;
+    margin: 10px 0px 10px 0px;
+    border-bottom: 1px solid $accentGrey;
     display: flex;
     justify-content: space-between;
     white-space: nowrap;
     text-align: center;
-    
+    align-items: center;
+    min-height: 40px;
+    width: calc(100%-40px);
+    transition: $transition;
+    cursor: default;
 }
-.listColumnNames{
-    width: 20%;
+.listItem:hover{
+    border-bottom: 1px solid $dimYellow;
+}
+.listColumn{
+    width: fit-content;
+    margin-right: 40px;
+}
+.ticketList{
+    position: relative;
+}
+.ticketListItem{
+    overflow-x: hidden;
+}
+.ticketListItemButton{
+    color: $accentGrey;
+    transition: $transition;
+    cursor: pointer;
+}
+.ticketListItemButtonContainer:hover > .ticketListItemButton{
+    color: $yellow !important;
+}
+.ticketListItem:hover > div > .ticketListItemButtonContainer > .ticketListItemButton{
+    color: #ffffff
+}
+.ticketListItemButtonContainer{
+    align-items: center;
+    height: 100%;
+    display: flex;
+    font-size: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;;
+    padding-top: 0px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.ticketListTitle{
+    color: #ffffff;
+    margin-left: 10px;
+}
+.priority{
+    width: 50px;
 }

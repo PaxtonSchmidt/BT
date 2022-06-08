@@ -39,7 +39,7 @@ export default function Sidebar() {
             
             {/* This component will be a quick switch between teams the current user belongs to. Requires re-login by expiring token? */}
             <div className='navItem sideBarItem' style={{marginTop: 'auto'}}>
-                <Link to='/selectTeam' onClick={authService.deselectTeam}>
+                <Link to='/selectTeam' >
                     <img src={swap} alt='Work for a different team' className='sidebarIcon scaleYonHover longFadeIn'/>
                 </Link>
             </div>

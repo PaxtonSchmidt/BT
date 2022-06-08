@@ -16,11 +16,7 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
         if(isTeamSelected === true) {
             return(
                 <div className='pageContentContainer '>
-                    <div className='pageHeaderContainer'>
-                        <Container className='pageBodyContainer3'>
-                            <ProjectForm />
-                        </Container>
-                    </div>
+                    <ProjectForm />
                 </div>
             )
         } return <Navigate to='/selectTeam' />

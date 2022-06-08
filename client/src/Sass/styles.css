@@ -28,7 +28,7 @@
       -ms-flex-pack: justify;
           justify-content: space-between;
   top: 0;
-  width: calc(100vw - 50px);
+  width: calc(100% - 50px);
   height: 50px;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -66,8 +66,7 @@
 }
 
 .hamburgerContainer:hover + .sideBar {
-  -webkit-box-shadow: 1px 0 0 #efff0a6b;
-          box-shadow: 1px 0 0 #efff0a6b;
+  border-right: 1px solid #efff0a6b;
 }
 
 .bell {
@@ -90,15 +89,8 @@
   content: '1';
 }
 
-.teamPic {
-  margin-left: 3px;
-}
-
 .sideBar {
-  position: fixed;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -107,10 +99,12 @@
   width: -moz-fit-content;
   width: fit-content;
   margin-top: 50px;
+  margin-right: 10px;
   min-width: 50px;
   height: calc(100% - 50px);
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  border-right: 1px solid #ffffff31;
 }
 
 .sideBarItem {
@@ -163,8 +157,8 @@
 }
 
 .submitButton:hover {
-  -webkit-box-shadow: 0 1px 1px white;
-          box-shadow: 0 1px 1px white;
+  -webkit-box-shadow: 0 -1px 1px white;
+          box-shadow: 0 -1px 1px white;
 }
 
 .cancelButton:hover {
@@ -175,20 +169,24 @@
 }
 
 .topButtons {
-  -webkit-box-pack: left;
-      -ms-flex-pack: left;
-          justify-content: left;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
+  -webkit-box-shadow: 0px 1px 1px transparent;
+          box-shadow: 0px 1px 1px transparent;
 }
 
 .bottomButtons {
   -webkit-box-pack: right;
       -ms-flex-pack: right;
           justify-content: right;
+  -webkit-box-shadow: 0px -1px 1px transparent;
+          box-shadow: 0px -1px 1px transparent;
 }
 
 .button {
   min-width: 90px;
-  margin: 0px 2px 2px 0px;
+  margin: 0px 0px 2px 2px;
   border: none;
   color: white;
   background-color: #222222;
@@ -196,16 +194,22 @@
   -webkit-transition: 0.5s;
   transition: 0.5s;
   font-size: 14px;
-  -webkit-box-shadow: 0px 1px 1px transparent;
-          box-shadow: 0px 1px 1px transparent;
 }
 
-.button:hover {
+.topButton:hover {
   cursor: pointer;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   -webkit-box-shadow: 0px 1px 0.5px #efff0a6b;
           box-shadow: 0px 1px 0.5px #efff0a6b;
+}
+
+.bottomButton:hover {
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  -webkit-box-shadow: 0px -1px 0.5px #efff0a6b;
+          box-shadow: 0px -1px 0.5px #efff0a6b;
 }
 
 .formContainer {
@@ -221,8 +225,29 @@
   -webkit-box-pack: left;
       -ms-flex-pack: left;
           justify-content: left;
-  margin: 10px auto 0px auto;
+  margin: 10px auto 0px 0px;
   padding: 10px 20px 20px 20px;
+  width: calc(-webkit-fit-content + 40px);
+  width: calc(-moz-fit-content + 40px);
+  width: calc(fit-content + 40px);
+  min-width: 280px;
+  max-width: 800px;
+  -webkit-transition: -webkit-box-flex 0.5s;
+  transition: -webkit-box-flex 0.5s;
+  transition: flex 0.5s;
+  transition: flex 0.5s, -webkit-box-flex 0.5s, -ms-flex 0.5s;
+}
+
+.formButtonsContainer {
+  min-width: 290px;
+  max-width: 840px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0px auto 0px 0px;
 }
 
 .formInput {
@@ -230,37 +255,35 @@
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  width: 200px;
+  min-width: 150px;
 }
 
-.formComponent {
-  width: 20%;
-  text-align: left;
-}
-
-.loginFormComponent {
-  width: 100%;
-  text-align: left;
-  margin-bottom: 10px !important;
-}
-
-.loginForm {
-  margin-top: 10%;
-}
-
-.formSection {
-  height: 50%;
+.formInputsContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  margin-bottom: 20px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-.formTextArea {
-  width: 100%;
+.formComponent {
+  width: 100% !important;
+  text-align: left;
+  margin-bottom: 5px !important;
+}
+
+.loginFormContainer {
+  min-width: 280px;
+  width: 500px;
+  margin: 10% auto;
+}
+
+.loginForm {
+  width: 100% !important;
 }
 
 .Mui-focused {
@@ -312,15 +335,15 @@
 }
 
 .css-1bck7qi-MuiInputBase-root-MuiInput-root:before {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.192) !important;
+  border-bottom: 1px solid #ffffff31 !important;
 }
 
 .css-wgizgc-MuiInputBase-root-MuiInput-root:before {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.192) !important;
+  border-bottom: 1px solid #ffffff31 !important;
 }
 
 .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon {
-  color: rgba(255, 255, 255, 0.192) !important;
+  color: #ffffff31 !important;
 }
 
 .css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon {
@@ -350,13 +373,14 @@ input[type=number] {
 }
 
 .list {
-  width: 100%;
-  margin: auto;
+  width: calc(100%-40px);
   background-color: #222222;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
   min-height: 100px;
+  max-height: 500px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  overflow-y: scroll;
 }
 
 .listHeader {
@@ -366,8 +390,10 @@ input[type=number] {
 
 .listItem {
   background-color: #222222;
-  margin: 10px 0px;
-  border-bottom: 1px solid #1a1a1a;
+  color: white;
+  position: relative;
+  margin: 10px 0px 10px 0px;
+  border-bottom: 1px solid #ffffff31;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -376,10 +402,73 @@ input[type=number] {
           justify-content: space-between;
   white-space: nowrap;
   text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 40px;
+  width: calc(100%-40px);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  cursor: default;
 }
 
-.listColumnNames {
-  width: 20%;
+.listItem:hover {
+  border-bottom: 1px solid #efff0a6b;
+}
+
+.listColumn {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-right: 40px;
+}
+
+.ticketList {
+  position: relative;
+}
+
+.ticketListItem {
+  overflow-x: hidden;
+}
+
+.ticketListItemButton {
+  color: #ffffff31;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.ticketListItemButtonContainer:hover > .ticketListItemButton {
+  color: #efff0a !important;
+}
+
+.ticketListItem:hover > div > .ticketListItemButtonContainer > .ticketListItemButton {
+  color: #ffffff;
+}
+
+.ticketListItemButtonContainer {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 14px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  padding-top: 0px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.ticketListTitle {
+  color: #ffffff;
+  margin-left: 10px;
+}
+
+.priority {
+  width: 50px;
 }
 
 * {
@@ -388,22 +477,22 @@ input[type=number] {
 }
 
 *::-webkit-scrollbar {
-  width: 9px;
+  width: 5px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   z-index: 3000;
 }
 
 *::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: transparent;
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #474747;
+  background-color: #ffffff31;
   border-radius: 10px;
-  border: 3px solid #1a1a1a;
+  border: 1px solid #1a1a1a;
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }
@@ -495,6 +584,7 @@ input[type=number] {
   margin-bottom: 1px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  cursor: pointer;
 }
 
 .onClick {
@@ -639,20 +729,128 @@ input[type=number] {
   transition: 0.5s;
 }
 
+.ticketDetailsContainer {
+  color: white;
+  background-color: #222222;
+  min-width: 280px;
+  width: 60%;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+
+.detailLabel {
+  color: #ffffff31;
+  margin-right: 5px;
+  font-size: 12px;
+}
+
+.ticketDetailItem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 18px;
+  padding: 5px;
+  min-width: 150px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end;
+  text-align: left;
+  border-bottom: 1px solid #ffffff31;
+  cursor: default;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.ticketDetailItemContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end;
+  height: 45px;
+  margin-bottom: 5px;
+}
+
+.ticketDetailItem:hover {
+  border-bottom: 1px solid #efff0a6b;
+}
+
+.detailDiscriminator {
+  opacity: 0%;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.ticketDetailItem:hover > .detailDiscriminator {
+  opacity: 100%;
+}
+
+.detailsColumn {
+  width: 50%;
+}
+
+.ticketDetailsRow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.ticketDescriptionArea {
+  border-bottom: 1px solid #ffffff31;
+  padding-bottom: 10px;
+  cursor: default;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.ticketDescriptionArea:hover {
+  border-bottom: 1px solid #efff0a6b;
+}
+
 html {
   background-color: #1a1a1a;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 14px;
   margin: 0%;
-  height: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   overflow: hidden;
-  width: 100vw !important;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(150deg, #1a1a1a, #000000);
+}
+
+body {
+  height: 100%;
+  width: 100%;
 }
 
 #root {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   bottom: 0;
   height: 100% !important;
+  width: 100%;
 }
 
 .bugLogo {
@@ -662,13 +860,15 @@ html {
 }
 
 .pageContentContainer {
-  height: calc(100vh - 50px);
+  padding-right: 5px;
+  max-width: 2000px;
+  width: 100%;
+  height: calc(100% - 50px);
   margin-top: 50px;
-  width: 100vw;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: inline-block;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -676,6 +876,12 @@ html {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .pageBodyContainer1 {
@@ -721,21 +927,29 @@ html {
   height: fit-content;
 }
 
-.formAndManage {
+.formAndDetails {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  border-radius: 10px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: left;
+      -ms-flex-align: left;
+          align-items: left;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  min-width: 280px;
 }
 
 .header {
   color: white;
   font-size: 20px;
   margin: 0px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .loginPage {
@@ -759,6 +973,13 @@ html {
 
 .altBG {
   background: linear-gradient(100deg, #1a1a1a, #000000);
+}
+
+.componentGlow {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  -webkit-box-shadow: 0px 1px 1px transparent;
+          box-shadow: 0px 1px 1px transparent;
 }
 
 .fadeIn {
@@ -830,6 +1051,18 @@ html {
   }
   100% {
     opacity: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .detailsColumn {
+    width: 100%;
+  }
+  .ticketDetailItem {
+    width: 100%;
+  }
+  .ticketDetailsContainer {
+    margin-left: 0px;
   }
 }
 

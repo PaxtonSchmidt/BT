@@ -49,5 +49,21 @@ function getProjectMembers(userID: any, teamID: any){
     })
 }
 
-module.exports = { addProject, getSessionProjectRoles, getProjectMembers }
+function isUserOnProject(userID: any, projectID: any){
+    let values = [userID, projectID]
+    let sql = 'SELECT EXISTS(SELECT * FROM user_projects WHERE user_id= ? AND project_id= ?)'
+
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+
+module.exports = { 
+    addProject,
+    getSessionProjectRoles,
+    getProjectMembers,
+    isUserOnProject
+}
 

@@ -37,7 +37,7 @@ export default function LoginForm() {
             }
     }
     return(
-        <div className='loginForm' style={{width: '550px'}}>
+        <>
             <Formik 
                 initialValues={{email: '',
                                 password: ''}}
@@ -45,7 +45,7 @@ export default function LoginForm() {
             >
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
                     return (
-                        <form onSubmit={handleSubmit} onBlur={handleBlur}>
+                        <form className='loginFormContainer' onSubmit={handleSubmit} onBlur={handleBlur}>
                             
                         <div className='formContainer'>
                             <h4 className='header'>Login</h4>
@@ -55,7 +55,7 @@ export default function LoginForm() {
                                 value={values.email}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                className='loginFormComponent'
+                                className='formComponent'
                                 name='email'
                                 variant='standard'
                                 color='info'
@@ -65,7 +65,7 @@ export default function LoginForm() {
                                 // type='password'
                                 value={values.password} 
                                 label='Password' 
-                                className='loginFormComponent' 
+                                className='formComponent' 
                                 color='info' 
                                 variant='standard' 
                                 onChange={handleChange} 
@@ -78,7 +78,7 @@ export default function LoginForm() {
                             <div>
                                 <button type='submit'
                                     name='login'
-                                    className='button bottomButtons submitButton' 
+                                    className='button bottomButton bottomButtons submitButton' 
                                     style={{
                                         margin: '2px 0px 0px 0px',
                                         justifySelf: 'right'
@@ -87,32 +87,33 @@ export default function LoginForm() {
                                 </button>
                             </div>
                         </div>
-                        </form>
-                        
-                    )}
-                }
-            </Formik>
-            <div style={{float: 'left'}}>
+                        <div style={{float: 'left'}}>
                 <button 
                     onClick={handleSignUpClick}
-                    className='button bottomButtons' 
+                    className='button bottomButton bottomButtons' 
                     style={{margin: '2px 2px 0px 0px'}}>
                     Sign Up
                 </button>
                 <button 
                     onClick={handleDemoClick}
-                    className='button bottomButtons' 
+                    className='button bottomButton bottomButtons' 
                     style={{margin: '2px 2px 0px 0px'}}>
                     Demo
                 </button>
                 <button 
                     onClick={handleGitHubClick}
-                    className='button bottomButtons' 
+                    className='button bottomButton bottomButtons' 
                     style={{margin: '2px 2px 0px 0px'}}>
                     <img src={gitHub} alt='go to code'/>
                 </button>
             </div>
-        </div>
+                        </form>
+                        
+                    )}
+                }
+            </Formik>
+            
+        </>
     )
 }
 

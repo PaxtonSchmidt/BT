@@ -5,7 +5,7 @@ import postProject from '../../../API/Requests/Projects/PostProject';
 
 export default function ProjectForm() {
 return(
-        <div style={{width: '700px'}}>
+        <>
             <Formik 
                 initialValues={{name: '',
                                 description: ''}}
@@ -17,7 +17,7 @@ return(
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
                 //need to grab the team name somehow
                     return (
-                        <form onSubmit={handleSubmit} onBlur={handleBlur}>
+                        <form style={{width: 'fit-content'}} onSubmit={handleSubmit} onBlur={handleBlur}>
                             
                         <div className='formContainer' >
                             <h4 className='header'>New Project</h4>
@@ -27,7 +27,7 @@ return(
                                 value={values.name}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                className='projectFormComponent'
+                                className='formComponent'
                                 name='name'
                                 variant='standard'
                                 color='info'
@@ -36,7 +36,7 @@ return(
                                 name='description' 
                                 value={values.description} 
                                 label='Description' 
-                                className='projectFormComponent' 
+                                className='formComponent' 
                                 color='info' 
                                 variant='standard' 
                                 onChange={handleChange} 
@@ -46,7 +46,7 @@ return(
                         <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
                             <button type='submit'
                                 name='project'
-                                className='button bottomButtons submitButton' 
+                                className='button bottomButton bottomButtons submitButton' 
                                 style={{
                                     margin: '2px 0px 0px 0px'
                                 }}>
@@ -57,7 +57,7 @@ return(
                     )}
                 }
             </Formik>
-        </div>
+        </>
     )
 }
 

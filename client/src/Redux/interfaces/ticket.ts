@@ -1,4 +1,4 @@
-export interface ticket{
+export interface focusedTicket{
     title: string;
     ticketID: number;
     description: string;
@@ -12,5 +12,4 @@ export interface ticket{
     dateLastUpdated: Date;
     resolutionStatus: number;
     priority: number;
-    setFocusedTicket: any;
 }

@@ -4,35 +4,45 @@
     display: flex;
     flex-direction: column;
     justify-content: left;
-    margin: 10px auto 0px auto;
+    margin: 10px auto 0px 0px;
     padding: 10px 20px 20px 20px;
+    width: calc(fit-content + 40px);
+    min-width: 280px;
+    max-width: 800px;
+    transition: flex $transition;
+}
+
+.formButtonsContainer{ 
+    min-width: 290px;
+    max-width: 840px; 
+    display: flex; 
+    justify-content: space-between; 
+    margin: 0px auto 0px 0px; 
 }
 .formInput{
     margin: 20px;
     height: fit-content;
-    width: 200px;
+    min-width: 150px;
+}
+.formInputsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 .formComponent{
-    width: 20%;
+    width: 100% !important;
     text-align: left;
+    margin-bottom: 5px !important;
 }
-.loginFormComponent{
-    width: 100%;
-    text-align: left;
-    margin-bottom: 10px !important;
+.loginFormContainer{
+    min-width: 280px;
+    width: 500px;
+    margin: 10% auto;
 }
 .loginForm{
-    margin-top: 10%;
+    width: 100% !important;
 }
-.formSection{
-    height: 50%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-.formTextArea{
-    width: 100%;
-}
+
 .Mui-focused{
     color: $yellow !important;
 }
@@ -68,13 +78,13 @@
     color: white;
 }
 .css-1bck7qi-MuiInputBase-root-MuiInput-root:before{
-    border-bottom: 1px solid rgba(255, 255, 255, 0.192) !important;
+    border-bottom: 1px solid $accentGrey !important;
 }
 .css-wgizgc-MuiInputBase-root-MuiInput-root:before{
-    border-bottom: 1px solid rgba(255, 255, 255, 0.192) !important;
+    border-bottom: 1px solid $accentGrey !important;
 }
 .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon{
-    color: rgba(255, 255, 255, 0.192) !important;
+    color: $accentGrey !important;
 }
 .css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon{
     color: $yellow !important;

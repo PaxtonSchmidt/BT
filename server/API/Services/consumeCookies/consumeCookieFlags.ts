@@ -4,5 +4,6 @@ export const consumeCookieFlags: any = {
     tokenUserIdFlag: 'needTokenUser_id',
     tokenTeamIdFlag: 'needTokenTeam_id',
     tokenUserAndTeamIdFlag: 'needTokenUserAndTeam_Id',
-    tokenValidationFlag: 'tokenValidationFlag'
+    tokenValidationFlag: 'tokenValidationFlag',
+    tokenUserTeamRoleIdFlag: 'tokenUserTeamAndRoleIDFlag'
 }

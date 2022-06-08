@@ -1,6 +1,6 @@
 {
   "short_name": "Bug Tracker",
-  "name": "Create React App Sample",
+  "name": "Bug Tracker App",
   "icons":[
     {
       "src": "bug",

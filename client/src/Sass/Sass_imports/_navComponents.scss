@@ -18,7 +18,7 @@
     flex-direction: row;
     justify-content: space-between;
     top: 0;
-    width: calc(100vw - 50px);
+    width: calc(100% - 50px);
     height: 50px;
     align-items: center;
     margin-left: 50px;
@@ -45,7 +45,7 @@
     transition: $transition;
 }
 .hamburgerContainer:hover + .sideBar{
-    box-shadow: 1px 0 0 $dimYellow;
+    border-right: 1px solid $dimYellow;
 }
 .bell{
     margin-top: 5px;
@@ -64,18 +64,16 @@
     display: inline;
     content: '1';
 }
-.teamPic{
-    margin-left: 3px;
-}
 .sideBar{
-    position: fixed;
-    display: flex;
+    display: none;
     flex-direction: column;
     width: fit-content;
     margin-top: 50px;
+    margin-right: 10px;
     min-width: 50px;
     height: calc(100% - 50px);
     transition: $transition;
+    border-right: 1px solid $accentGrey;
 }
 .sideBarItem{
     margin: 13px 0px;

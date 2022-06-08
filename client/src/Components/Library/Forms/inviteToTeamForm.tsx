@@ -6,34 +6,38 @@ import { useSelector } from 'react-redux';
 import { State } from '../../../Redux/reducers';
 
 export default function InviteToTeamForm() {
-    const sessionState = useSelector((state: State) => state.session)
-    let TeamName = sessionState.currentTeam?.name
     
 
 return(
-        <div style={{width: '700px'}}>
+        <>
             <Formik 
                 initialValues={{invitee: '',
                                 discriminator: ''}}
-                onSubmit={data => {
+                onSubmit={async data => {
                     console.log(data) 
-                    postInviteToTeam(data)
+                    if(await postInviteToTeam(data) === 200){
+                        
+                    }
                 }}
             >
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
                 //need to grab the team name somehow
                     return (
-                        <form onSubmit={handleSubmit} onBlur={handleBlur}>
+                        <form style={{width: 'fit-content'}} onSubmit={(e) => {
+                            handleSubmit(e)
+                            }} 
+                            onBlur={handleBlur}
+                        >
                             
                         <div className='formContainer' >
-                            <h4 className='header'>Invite people to {TeamName}</h4>
+                            <h4 className='header'>Invite people</h4>
                             <TextField
                                 label='Username'
                                 type='text'
                                 value={values.invitee}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                className='addToTeamFormComponent'
+                                className='formComponent'
                                 name='invitee'
                                 variant='standard'
                                 color='info'
@@ -44,16 +48,18 @@ return(
                                 value={values.discriminator}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                className='loginFormComponent'
+                                className='formComponent'
                                 name='discriminator'
                                 variant='standard'
                                 color='info'
                                 required />
                         </div>
                         <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
-                            <button type='submit'
+                            <button 
+
+                                type='submit'
                                 name='addToTeam'
-                                className='button bottomButtons submitButton' 
+                                className='button bottomButton bottomButtons submitButton' 
                                 style={{
                                     margin: '2px 0px 0px 0px'
                                 }}>
@@ -64,7 +70,7 @@ return(
                     )}
                 }
             </Formik>
-        </div>
+        </>
     )
 }
 

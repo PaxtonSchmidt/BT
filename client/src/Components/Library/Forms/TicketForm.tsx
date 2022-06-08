@@ -9,17 +9,20 @@ import { useState } from 'react';
 
 export default function TicketForm() { 
     let [chosenProject, setChosenProject] = useState('');
-    let [isDisabled, setIsDisabled] = useState(true) 
+    let [isDisabled, setIsDisabled] = useState(true);
+    let [isOpen, setIsOpen] = useState(false);
     const sessionState = useSelector((state: State) => state.session)
     let projects = sessionState.currentTeam?.projects;
 
     let intendedProject: any = projects?.filter((project: any) => project.name === chosenProject)[0]
 
     let projectValues = projects?.map((project: any) => project.name)
-    let userValues = intendedProject?.project_members.map((member: any) => member.username)
+    let userValues = intendedProject?.project_members.map((member: any) => member)
     const priority = ['high', 'medium', 'low']
+
+    
 return( 
-        <div>
+        <>
             
             <Formik 
                 initialValues={{title: '',
@@ -28,18 +31,24 @@ return(
                                 assignee: '',
                                 priority: ''}}
                 onSubmit={data => {
-                    console.log(data) 
-                    postTicket(data)
+                    if(data.title.length > 50){
+                        return console.log('Your title is too long...')
+                    } else if (data.description.length > 1000){
+                        return console.log('Your description is too long...')
+                    } else{
+                        console.log(data) 
+                        return postTicket(data)
+                    }
                 }}
                 
             >
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
                     return (
                         
-                        <form onSubmit={handleSubmit} onBlur={handleBlur}>
+                        <form className='fadeIn form' style={{width: 'fit-content'}} onSubmit={handleSubmit} onBlur={handleBlur}>
                         <div className='formContainer'>
                         <h4 className='header'>Create Ticket</h4>
-                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <div className='formSection formInputsContainer'>
                                 <TextField
                                     label='Title'
                                     type='text'
@@ -109,21 +118,21 @@ return(
                                     onBlur={handleBlur} 
                                     sx={{ width: '200px'}}>
                                         <p style={{height: '0px', margin: '0px'}}></p>
-                                    {userValues?.map((name: string, index: any) => {
+                                    {userValues?.map((member: any, index: any) => {
                                         return (
-                                            <MenuItem key={index} value={name} id='user'>{name}</MenuItem>
+                                            <MenuItem key={index} value={member} id='user'>{member.username} #{member.discriminator}</MenuItem>
                                         );
                                     })}
                                 </TextField>
                             </div>
-                            <div className='formSection' >
+                            <div className='formSection formInputsContainer' >
                                 <TextField
                                     label='Description'
                                     type='text'
                                     value={values.description}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    className='formComponent formTextArea'
+                                    className='formComponent'
                                     sx={{ color: '#ffffff' }}
                                     name='description'
                                     variant='standard'
@@ -132,19 +141,19 @@ return(
                                     required />
                             </div>
                         </div>
-                        <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
+                        <div className='formButtonsContainer'>
                             <button type='reset'
                                 onClick={e => {
                                     setIsDisabled(true)
                                     handleReset(e)
                                 }}
-                                className='button bottomButtons cancelButton'
+                                className='button bottomButton bottomButtons cancelButton'
                                 style={{ margin: '2px 2px 0px 0px' }}>
                                 X
                             </button>
                             <button type='submit'
                                 name='submit'
-                                className='button bottomButtons submitButton' 
+                                className='button bottomButton bottomButtons submitButton' 
                                 style={{
                                     margin: '2px 0px 0px 0px'
                                 }}>
@@ -155,7 +164,7 @@ return(
                     );
                 }}
             </Formik>
-        </div>
+        </>
     )
 }
 

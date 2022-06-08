@@ -1,9 +1,9 @@
 import * as express from 'express';
 let router = express.Router();
 
-let ticketRoute = require("../Queries/ticketQueries");
+let projectAuth = require("../Controllers/Authorization/projectAuthorization");
 
-router.get("/getTickets", ticketRoute.getTickets);
-router.post("/addTicket", ticketRoute.addTicket);
+router.get("/getTickets", projectAuth.getTickets);
+router.post("/addTicket", projectAuth.submitNewTicket);
 
 module.exports = router;

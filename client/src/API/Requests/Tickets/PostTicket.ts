@@ -1,6 +1,9 @@
 import { Ticket } from '../../interfaces/ticket';
 
-export default async function postTicket(data: Ticket) {
+export default async function postTicket(data: any) {
+
+    console.log(data.project)
+
     const response = await fetch('/tickets/addTicket', {
         method: 'POST',
         headers: {

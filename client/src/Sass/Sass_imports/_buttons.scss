@@ -3,7 +3,7 @@
     width: 100%;
     margin: auto;
 }.submitButton:hover {
-    box-shadow: 0 1px 1px white;
+    box-shadow: 0 -1px 1px white;
 }
 .cancelButton:hover{
     background-color: red;
@@ -11,24 +11,30 @@
     box-shadow: none !important;
 }
 .topButtons{
-    justify-content: left;
+    justify-content: right;
+    box-shadow: 0px 1px 1px transparent;
 }
 .bottomButtons{
     justify-content: right;
+    box-shadow: 0px -1px 1px transparent;
 }
 .button{
     min-width: 90px;
-    margin: 0px 2px 2px 0px;
+    margin: 0px 0px 2px 2px;
     border: none;
     color: white;
     background-color: $darkGrey;
     padding: 5px 10px;
     transition: $transition;
-    font-size: 14px;
-    box-shadow: 0px 1px 1px transparent;
+    font-size: 14px
 }
-.button:hover {
+.topButton:hover {
     cursor: pointer;
     transition: $transition;
     box-shadow: 0px 1px .5px $dimYellow;
+}
+.bottomButton:hover{
+    cursor: pointer;
+    transition: $transition;
+    box-shadow: 0px -1px .5px $dimYellow;
 }

@@ -7,4 +7,5 @@ export default async function postInviteToTeam(potentialTeammates: any) {
         },
         body: JSON.stringify(potentialTeammates)
     })
+    return response.status
 }

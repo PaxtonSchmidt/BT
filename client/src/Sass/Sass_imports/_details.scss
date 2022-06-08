@@ -1,0 +1,64 @@
+.ticketDetailsContainer{
+    color: white;
+    background-color: $darkGrey;
+    min-width: 280px;
+    width: 60%;
+    margin-top: 10px;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+.detailLabel{
+    color: $accentGrey;
+    margin-right: 5px;
+    font-size: 12px;
+}
+.ticketDetailItem{
+    display: flex;
+    height: 18px;
+    padding: 5px;
+    min-width: 150px;
+    width: fit-content;
+    justify-content: left;
+    align-items: end;
+    text-align: left;
+    border-bottom: 1px solid $accentGrey;
+    cursor: default;
+    transition: $transition;
+}
+.ticketDetailItemContainer{
+    display: flex; 
+    align-items: end; 
+    height: 45px; 
+    margin-bottom: 5px;
+}
+.ticketDetailItem:hover{
+    border-bottom: 1px solid $dimYellow;
+}
+.detailDiscriminator{
+    opacity: 0%;
+    transition: $transition;
+}
+.ticketDetailItem:hover > .detailDiscriminator{
+    opacity: 100%;
+}
+.detailsColumn{
+    width: 50%;
+}
+.ticketDetailsRow{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.ticketDescriptionArea{
+    border-bottom: 1px solid $accentGrey;
+    padding-bottom: 10px;
+    cursor: default;
+    transition: $transition;
+}
+.ticketDescriptionArea:hover{
+    border-bottom: 1px solid $dimYellow;
+}

@@ -36,7 +36,7 @@ export default function SignUpForm() {
         navigate('/login')
     }
 return(
-        <div className='loginForm' style={{width: '550px'}}>
+        <>
             <Formik 
                 initialValues={{email: '',
                                 username: '',
@@ -48,7 +48,7 @@ return(
             >
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
                     return (
-                        <form onSubmit={handleSubmit} onBlur={handleBlur}>
+                        <form  className='loginFormContainer' onSubmit={handleSubmit} onBlur={handleBlur}>
                             
                         <div className='formContainer' >
                             <h4 className='header'>Sign Up</h4>
@@ -58,7 +58,7 @@ return(
                                 value={values.email}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                className='loginFormComponent'
+                                className='formComponent'
                                 name='email'
                                 variant='standard'
                                 color='info'
@@ -69,7 +69,7 @@ return(
                                 value={values.username}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                className='loginFormComponent'
+                                className='formComponent'
                                 name='username'
                                 variant='standard'
                                 color='info'
@@ -80,7 +80,7 @@ return(
                                 value={values.discriminator}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                className='loginFormComponent'
+                                className='formComponent'
                                 name='discriminator'
                                 variant='standard'
                                 color='info'
@@ -89,7 +89,7 @@ return(
                                 name='bio' 
                                 value={values.bio} 
                                 label='Bio' 
-                                className='loginFormComponent' 
+                                className='formComponent' 
                                 color='info' 
                                 variant='standard' 
                                 onChange={handleChange} 
@@ -100,7 +100,7 @@ return(
                                 name='password' 
                                 value={values.password} 
                                 label='Password' 
-                                className='loginFormComponent' 
+                                className='formComponent' 
                                 color='info' 
                                 variant='standard' 
                                 onChange={handleChange} 
@@ -111,7 +111,7 @@ return(
                                 name='confirmPass' 
                                 value={values.confirmPass} 
                                 label='Confirm Password' 
-                                className='loginFormComponent' 
+                                className='formComponent' 
                                 color='info' 
                                 variant='standard' 
                                 onChange={handleChange} 
@@ -121,13 +121,13 @@ return(
                         <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between'}}>
                             <button type='reset'
                                 onClick={handleGoBack}
-                                className='button bottomButtons'
+                                className='button bottomButton bottomButtons'
                                 style={{ margin: '2px 2px 0px 0px'}}>
                                 Back to Login
                             </button>
                             <button type='submit'
                                 name='login'
-                                className='button bottomButtons submitButton' 
+                                className='button bottomButton bottomButtons submitButton' 
                                 style={{
                                     margin: '2px 0px 0px 0px',
                                     justifySelf: 'right'
@@ -140,7 +140,7 @@ return(
                     )}
                 }
             </Formik>
-        </div>
+        </>
     )
 }
 

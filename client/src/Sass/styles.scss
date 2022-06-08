@@ -5,35 +5,53 @@
 @import "./Sass_imports/_lists.scss";
 @import "./Sass_imports/_scrollbar.scss";
 @import "./Sass_imports/_cards.scss";
+@import "./Sass_imports/_details.scss";
 
 html {
     background-color: $black;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 14px;
     margin: 0%;
-    height: 100%;
-    min-height: 100vh;
+    min-height: 100%;
     overflow: hidden;
-    width: 100vw !important;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(150deg, #1a1a1a, #000000)
+}
+
+body{
+    height: 100% ;
+    width: 100%;
+    
 }
 
 #root{
+    display: flex;
     bottom: 0;
     height: 100% !important;
+    width: 100%;
 }
 .bugLogo{
     position: absolute;
     margin-left: auto;
     margin-right: auto;
-}
+} 
 .pageContentContainer{
-    height: calc(100vh - 50px);
+    padding-right: 5px;
+    max-width: 2000px;
+    width: 100%;
+    height: calc(100% - 50px);
     margin-top: 50px;
-    width: 100vw;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
-    display: inline-flex;
+    display: inline-block;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 .pageBodyContainer1{
     display: flex;
@@ -57,16 +75,19 @@ html {
 .pageHeaderContainer{
     height: fit-content;
 }
-.formAndManage{
+.formAndDetails{
     display: flex;
-    justify-content: center;
-    border-radius: 10px;
+    flex-direction: row;
+    align-items: left;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    min-width: 280px;
 }
 .header{
     color: white;
     font-size: 20px;
     margin: 0px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .loginPage{
     background-image: url('../Components/Images/Pic/black\ sand.jpeg');
@@ -84,7 +105,10 @@ html {
 .altBG{
     background: linear-gradient(100deg, #1a1a1a, #000000)
 }
-
+.componentGlow{
+    transition: $transition;
+    box-shadow: 0px 1px 1px transparent;
+}
 
 .fadeIn{
     animation: fadeIn 1s;
@@ -117,8 +141,18 @@ html {
 @media (max-width: 1200px) {
 }
 @media (max-width: 1024px) {
+    .detailsColumn{
+        width: 100%;
+    }
+    .ticketDetailItem{
+        width: 100%;
+    }
+    .ticketDetailsContainer{
+        margin-left: 0px;
+    }
 }
 @media (max-width: 768px) {  
+    
     .pageHeader{
         font-size: 60px;
     }

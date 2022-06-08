@@ -3,6 +3,7 @@ import { SetStateAction } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import postSelectTeam from '../../../API/Requests/Login/PostSelectTeam';
+import { authService } from '../../../API/Services/AuthService';
 import { Team, Teams } from '../../../Redux/interfaces/teams';
 import TeamCard from './TeamCard';
 
@@ -18,6 +19,7 @@ function TeamList(setIsTeamSelected: Props) {
 
     async function handleSelect(team: string) {
         console.log(await postSelectTeam({team}))
+        authService.selectTeam();
         setIsTeamSelected.setIsTeamSelected(true);
         navigate('/dashboard')
     }  

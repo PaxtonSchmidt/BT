@@ -18,6 +18,7 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
     const { updateSession } = bindActionCreators(SessionActionCreators, dispatch)
     const loginState = useSelector((state: State) => state.login)
     const sessionState = useSelector((state: State) => state.session)
+    console.log(sessionState)
     let navigate = useNavigate();
     
     useEffect(() => {
@@ -36,7 +37,6 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
         getSessionState();
     }, [])
 
-    console.log(sessionState)
 
 
     if(loginState === 1) {

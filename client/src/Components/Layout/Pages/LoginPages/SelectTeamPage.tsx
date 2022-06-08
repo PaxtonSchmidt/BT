@@ -4,7 +4,9 @@ import { SetStateAction } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { TeamsActionCreators } from '../../../../Redux';
+import { authService } from '../../../../API/Services/AuthService';
+import { SessionActionCreators, TeamsActionCreators } from '../../../../Redux';
+import { Session } from '../../../../Redux/interfaces/session';
 import { State } from '../../../../Redux/reducers';
 import SelectTeamPageButtons from '../../../Library/Buttons/buttonsDesktop';
 import TeamList from '../../../Library/Teams/TeamList';
@@ -17,8 +19,10 @@ interface Props {
 export default function SelectTeamPage({ setIsTeamSelected }: Props) {
     const dispatch = useDispatch();
     const { updateTeams } = bindActionCreators(TeamsActionCreators, dispatch)
+    const { updateSession } = bindActionCreators(SessionActionCreators, dispatch)
     const loginState = useSelector((state: State) => state.login)
     let [isBusy, setBusy] = useState(true)
+    let nullSession: any = {} 
 
     useEffect(() => {
     fetch('/teams/getTeams')
@@ -27,6 +31,7 @@ export default function SelectTeamPage({ setIsTeamSelected }: Props) {
             console.log('a')       
             return res.json();
         } else if(res.status === 400){
+            console.log(res.json())
             return window.location.assign('/login')
         } else if(res.status === 404){
             return []
@@ -35,7 +40,10 @@ export default function SelectTeamPage({ setIsTeamSelected }: Props) {
         }
     }))
         .then(jsonRes =>{setBusy(false); return updateTeams(jsonRes)});
-    }, []) 
+
+        updateSession(nullSession)
+    }
+    , []) 
 
     if(loginState === 1) {
         return(

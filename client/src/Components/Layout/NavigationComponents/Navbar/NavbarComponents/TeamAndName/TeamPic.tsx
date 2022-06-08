@@ -8,8 +8,7 @@ export default function Team() {
     let TeamName = sessionState.currentTeam?.name
     return(
         <>
-            <div className='navItem circleIcon navPicture teamPic longFadeIn'></div>
-            <h2 style={{color: 'white', whiteSpace: 'nowrap', textAlign: 'center'}}>{TeamName}</h2>
+            <h3 className='delayedFadeIn' style={{color: 'white', whiteSpace: 'nowrap', textAlign: 'left', marginLeft: '10px', fontWeight: 'lighter'}}>{TeamName}</h3>
         </>
     )
 }
