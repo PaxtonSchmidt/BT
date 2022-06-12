@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import postInvalidateJWT from '../../../../API/Requests/Login/PostInvalidateJWT';
-import { authService } from '../../../../API/Services/AuthService';
+import { authService } from '../../../../Services/AuthService';
 import { LoginActionCreators } from '../../../../Redux';
 import LoginForm from '../../../Library/Forms/LoginForm';
 

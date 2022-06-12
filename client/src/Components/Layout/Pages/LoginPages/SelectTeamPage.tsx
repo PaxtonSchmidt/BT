@@ -4,7 +4,7 @@ import { SetStateAction } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { authService } from '../../../../API/Services/AuthService';
+import { authService } from '../../../../Services/AuthService';
 import { SessionActionCreators, TeamsActionCreators } from '../../../../Redux';
 import { Session } from '../../../../Redux/interfaces/session';
 import { State } from '../../../../Redux/reducers';

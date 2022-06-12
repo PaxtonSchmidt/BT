@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
 import postLogin from '../../../API/Requests/Login/PostLogin';
-import { authService } from '../../../API/Services/AuthService';
+import { authService } from '../../../Services/AuthService';
 import { Claims } from '../../../API/interfaces/claims';
 import { Dispatch } from 'react';
 import { SetStateAction } from 'react';

@@ -6,6 +6,8 @@
 @import "./Sass_imports/_scrollbar.scss";
 @import "./Sass_imports/_cards.scss";
 @import "./Sass_imports/_details.scss";
+@import "./Sass_imports/_javascriptApplied.scss";
+@import "./Sass_imports/_sideScrollList.scss";
 
 html {
     background-color: $black;
@@ -38,9 +40,8 @@ body{
 } 
 .pageContentContainer{
     padding-right: 5px;
-    max-width: 2000px;
     width: 100%;
-    height: calc(100% - 50px);
+    height: fit-content;
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
@@ -52,18 +53,25 @@ body{
     scroll-behavior: smooth;
     overflow-y: scroll;
     overflow-x: hidden;
+
+    transition: $transition;
+    margin-top: -290px;
+}
+.projectPageContent{
+    margin-top: -173px;
 }
 .pageBodyContainer1{
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    margin-bottom: 100px;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 .pageBodyContainer2 {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
+    
 }
 .pageHeader{
     font-size: 70px;
@@ -109,6 +117,13 @@ body{
     transition: $transition;
     box-shadow: 0px 1px 1px transparent;
 }
+.overflow{
+    overflow-x: hidden;
+    overflow-y: scroll !important;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
 
 .fadeIn{
     animation: fadeIn 1s;
@@ -141,15 +156,7 @@ body{
 @media (max-width: 1200px) {
 }
 @media (max-width: 1024px) {
-    .detailsColumn{
-        width: 100%;
-    }
-    .ticketDetailItem{
-        width: 100%;
-    }
-    .ticketDetailsContainer{
-        margin-left: 0px;
-    }
+    
 }
 @media (max-width: 768px) {  
     

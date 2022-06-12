@@ -11,52 +11,76 @@ function Tickets() {
     const [tickets, setTickets] = useState<any[]>([]);
 
     useEffect(() => {
-        console.log('a')
         async function getTickets(){
             let response: any = fetch('/tickets/getTickets', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(res => res.json())             
-            setTickets(await response)
+            }).then(res => res.json())
+            let tickets = await response
+            updateFocusedTicket(tickets[0])          
+
+            setTickets(tickets)
             return await response
         }
-        console.log(getTickets())
+        getTickets();
+        
     }, [])//empty array passed as second argument to useEffect can be used to tell the hook to run at least once without causing infinite loop
 
-    console.log(` here ${tickets}`)
- 
-    if(tickets === undefined){
+    if(tickets.length === 0){
         return<></>
     }else{
+        
         //needs pagination
         return (
-        <Container className='pageBodyContainer1 ticketList fadeIn'>
-            <div className='buttonsContainer topButtons'>
-                <h4 className='button topButton' >Assigned</h4>
-                <h4 className='button topButton'>Written</h4>
-            </div>
-            <div className='list componentGlow' style={{textAlign: 'left'}}>
+        <Container className='pageBodyContainer1 fadeIn'>
+            <div className='ticketListContainer'>
+                <div className='listRow'>
+                    <div className='listRowSection leftSection'>
+                        <span className='rowItem' style={{paddingLeft: '30px'}}>
+                            Title
+                        </span>
+                    </div>
+                    <div className='listRowSection rightSection'>
+                        <span className='rowItem'>
+                            Project
+                        </span> 
+                        <span className='rowItem'>
+                            Assignee
+                        </span>
+                        <span className='rowItem'>
+                            Status
+                        </span>
+                        <span className='rowItem'>
+                            Priority
+                        </span>
+                    </div>
+                </div>
+
+
+
+                <div className='list componentGlow' style={{textAlign: 'left'}}>
                     {tickets!.map((ticket) =>
-                    <TicketListItem 
-                    key={ticket.ticket_id}
-                    title={ticket.title}
-                    ticketID= {ticket.ticket_id}
-                    description= {ticket.description}
-                    authorUsername= {ticket.author_username}
-                    authorDiscriminator= {ticket.author_discriminator}
-                    assigneeUsername= {ticket.assignee_username}
-                    assigneeDiscriminator= {ticket.assignee_user_discriminator}
-                    relevantProjectID= {ticket.relevant_project_id}
-                    relevantProjectName= {ticket.project_name}
-                    dateCreated= {ticket.date_created}
-                    dateLastUpdated= {ticket.date_last_updated}
-                    resolutionStatus= {ticket.resolution_status}
-                    priority= {ticket.priority}
-                    setFocusedTicket={updateFocusedTicket}
-                    />
-                )}
+                        <TicketListItem 
+                        key={ticket.ticket_id}
+                        title={ticket.title}
+                        ticket_id= {ticket.ticket_id}
+                        description= {ticket.description}
+                        author_username= {ticket.author_username}
+                        author_discriminator= {ticket.author_discriminator}
+                        assignee_username= {ticket.assignee_username}
+                        assignee_user_discriminator= {ticket.assignee_user_discriminator}
+                        project_id= {ticket.project_id}
+                        project_name= {ticket.project_name}
+                        date_created= {ticket.date_created}
+                        date_last_updated= {ticket.date_last_updated}
+                        resolution_status= {ticket.resolution_status}
+                        priority= {ticket.priority}
+                        setFocusedTicket={updateFocusedTicket}
+                        />
+                        )}
+                </div>
             </div>
         </Container>
             

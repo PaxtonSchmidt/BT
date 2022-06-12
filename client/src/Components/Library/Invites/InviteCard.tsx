@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Invite } from '../../../PropsInterfaces/invite';
+import { Invite } from '../../PropsInterfaces/invite';
 import deleteInvite from '../../../API/Requests/Invites/DeleteInvite'
 import { bindActionCreators } from 'redux';
 import { useDispatch } from 'react-redux';
@@ -28,7 +28,7 @@ export default function InviteCard(props : Invite) {
         }
     }
     return(
-        <div className='card fadeIn'>
+        <div className='card fadeIn' style={{cursor: 'default'}}>
             <div className='cardContent' style={{color: 'white', fontWeight: 'bold'}}>
                 <div className='cardTeamName' >
                     {props.team_name}

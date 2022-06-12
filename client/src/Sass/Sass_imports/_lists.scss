@@ -1,10 +1,9 @@
 .list{
     width: calc(100%-40px);
     background-color: $darkGrey;
-    min-height: 100px;
-    max-height: 500px;
+    height: 380px;
     padding-left: 10px;
-    padding-right: 10px;
+    padding-right: 5px;
     padding-bottom: 10px;
     overflow-y: scroll;
 }
@@ -13,11 +12,10 @@
     margin-bottom: 1px;
 }
 .listItem{
-    background-color: $darkGrey;
+    background-color: transparent;
     color: white;
     position: relative;
     margin: 10px 0px 10px 0px;
-    border-bottom: 1px solid $accentGrey;
     display: flex;
     justify-content: space-between;
     white-space: nowrap;
@@ -28,18 +26,9 @@
     transition: $transition;
     cursor: default;
 }
-.listItem:hover{
-    border-bottom: 1px solid $dimYellow;
-}
-.listColumn{
-    width: fit-content;
-    margin-right: 40px;
-}
-.ticketList{
-    position: relative;
-}
-.ticketListItem{
-    overflow-x: hidden;
+.ticketListContainer{
+    background-color: $darkGrey;
+    margin-right: 10px;
 }
 .ticketListItemButton{
     color: $accentGrey;
@@ -67,6 +56,50 @@
     color: #ffffff;
     margin-left: 10px;
 }
-.priority{
-    width: 50px;
+.rowItem{
+    height: 100%;
+    width: fit-content;
+    display: inline-block;
+}
+.listRow{
+    display: flex;
+    align-items: flex-end;
+    text-align: end;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: space-between;
+    white-space: nowrap;
+    background-color: transparent;
+    color: white;
+    position: relative;
+    border-bottom: 1px solid white;
+    min-height: 40px;
+    width: calc(100%-40px);
+    transition: $transition;
+    cursor: default;
+}
+.listItem.listRow{
+    padding-left: 0px;
+    padding-right: 0px;
+    border-bottom: 1px solid $accentGrey;
+}
+.listItem.listRow:hover{
+    border-bottom: 1px solid $dimYellow;
+}
+.listRowSection{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    max-width: 600px;
+}
+.leftSection{
+    width: 30%;
+}
+.rightSection{
+    width: 70%;
+}
+.rightSection > .rowItem{
+    width: 25%;
+    text-align: center;
 }

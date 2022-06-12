@@ -3,7 +3,7 @@ import { SetStateAction } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import postSelectTeam from '../../../API/Requests/Login/PostSelectTeam';
-import { authService } from '../../../API/Services/AuthService';
+import { authService } from '../../../Services/AuthService';
 import { Team, Teams } from '../../../Redux/interfaces/teams';
 import TeamCard from './TeamCard';
 

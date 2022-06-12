@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { authService } from '../../../API/Services/AuthService';
+import { authService } from '../../../Services/AuthService';
 import { Invites } from '../../../Redux/interfaces/invites';
 import { InvitesActionCreators, LoginActionCreators } from '../../../Redux';
 import postInvalidateJWT from '../../../API/Requests/Login/PostInvalidateJWT';

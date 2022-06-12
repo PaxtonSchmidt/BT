@@ -90,7 +90,6 @@
 }
 
 .sideBar {
-  display: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -174,6 +173,7 @@
           justify-content: right;
   -webkit-box-shadow: 0px 1px 1px transparent;
           box-shadow: 0px 1px 1px transparent;
+  text-align: center;
 }
 
 .bottomButtons {
@@ -212,6 +212,12 @@
           box-shadow: 0px -1px 0.5px #efff0a6b;
 }
 
+.buttonsContainerList {
+  margin-top: 20px;
+  margin-left: 0px;
+  width: calc(100% - 10px);
+}
+
 .formContainer {
   background-color: #222222;
   color: white;
@@ -227,15 +233,20 @@
           justify-content: left;
   margin: 10px auto 0px 0px;
   padding: 10px 20px 20px 20px;
-  width: calc(-webkit-fit-content + 40px);
-  width: calc(-moz-fit-content + 40px);
-  width: calc(fit-content + 40px);
+  width: calc(-webkit-fit-content);
+  width: calc(-moz-fit-content);
+  width: calc(fit-content);
   min-width: 280px;
   max-width: 800px;
   -webkit-transition: -webkit-box-flex 0.5s;
   transition: -webkit-box-flex 0.5s;
   transition: flex 0.5s;
   transition: flex 0.5s, -webkit-box-flex 0.5s, -ms-flex 0.5s;
+}
+
+.form {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
 }
 
 .formButtonsContainer {
@@ -247,7 +258,7 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin: 0px auto 0px 0px;
+  margin: 0px auto 20px 0px;
 }
 
 .formInput {
@@ -284,6 +295,60 @@
 
 .loginForm {
   width: 100% !important;
+}
+
+.FormContainer {
+  border-bottom: 1px solid #222222;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.twist {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+  fill: #efff0a;
+}
+
+.twist:hover {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+  fill: #efff0a;
+}
+
+.FormContainer:hover {
+  border-bottom: 1px solid #efff0a6b;
+}
+
+.svgSibling:hover ~ .bi-arrow-bar-down {
+  fill: #efff0a;
+}
+
+.formLoadAnim {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.bi-arrow-bar-down {
+  cursor: pointer;
+  color: #ffffff31;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.bi-arrow-bar-down:hover {
+  color: #efff0a;
 }
 
 .Mui-focused {
@@ -375,10 +440,9 @@ input[type=number] {
 .list {
   width: calc(100%-40px);
   background-color: #222222;
-  min-height: 100px;
-  max-height: 500px;
+  height: 380px;
   padding-left: 10px;
-  padding-right: 10px;
+  padding-right: 5px;
   padding-bottom: 10px;
   overflow-y: scroll;
 }
@@ -389,11 +453,10 @@ input[type=number] {
 }
 
 .listItem {
-  background-color: #222222;
+  background-color: transparent;
   color: white;
   position: relative;
   margin: 10px 0px 10px 0px;
-  border-bottom: 1px solid #ffffff31;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -412,23 +475,9 @@ input[type=number] {
   cursor: default;
 }
 
-.listItem:hover {
-  border-bottom: 1px solid #efff0a6b;
-}
-
-.listColumn {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin-right: 40px;
-}
-
-.ticketList {
-  position: relative;
-}
-
-.ticketListItem {
-  overflow-x: hidden;
+.ticketListContainer {
+  background-color: #222222;
+  margin-right: 10px;
 }
 
 .ticketListItemButton {
@@ -467,8 +516,72 @@ input[type=number] {
   margin-left: 10px;
 }
 
-.priority {
-  width: 50px;
+.rowItem {
+  height: 100%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: inline-block;
+}
+
+.listRow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  text-align: end;
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  white-space: nowrap;
+  background-color: transparent;
+  color: white;
+  position: relative;
+  border-bottom: 1px solid white;
+  min-height: 40px;
+  width: calc(100%-40px);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  cursor: default;
+}
+
+.listItem.listRow {
+  padding-left: 0px;
+  padding-right: 0px;
+  border-bottom: 1px solid #ffffff31;
+}
+
+.listItem.listRow:hover {
+  border-bottom: 1px solid #efff0a6b;
+}
+
+.listRowSection {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 10px;
+  max-width: 600px;
+}
+
+.leftSection {
+  width: 30%;
+}
+
+.rightSection {
+  width: 70%;
+}
+
+.rightSection > .rowItem {
+  width: 25%;
+  text-align: center;
 }
 
 * {
@@ -733,13 +846,20 @@ input[type=number] {
   color: white;
   background-color: #222222;
   min-width: 280px;
+  min-height: 310px;
+  max-height: 310px;
   width: 60%;
   margin-top: 10px;
-  margin-left: 10px;
   padding-top: 10px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.openFormDetailsHeight {
+  min-height: 380px;
 }
 
 .detailLabel {
@@ -755,9 +875,7 @@ input[type=number] {
   height: 18px;
   padding: 5px;
   min-width: 150px;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: 100%;
   -webkit-box-pack: left;
       -ms-flex-pack: left;
           justify-content: left;
@@ -787,7 +905,8 @@ input[type=number] {
 }
 
 .detailDiscriminator {
-  opacity: 0%;
+  font-size: 11px;
+  opacity: 30%;
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }
@@ -797,10 +916,66 @@ input[type=number] {
 }
 
 .detailsColumn {
-  width: 50%;
+  width: 100%;
 }
 
 .ticketDetailsRow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: calc(100% - 30px);
+}
+
+.detailsDescription {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-bottom: 1px solid #ffffff31;
+  padding-bottom: 10px;
+  cursor: default;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  overflow-y: scroll;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  max-height: 200px;
+}
+
+.detailsDescription:hover {
+  border-bottom: 1px solid #efff0a6b;
+}
+
+.ticketDescriptionArea {
+  margin: auto 0px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  vertical-align: middle;
+}
+
+.FormContainerTransition {
+  margin-top: 100px !important;
+}
+
+.FormTransition {
+  margin-bottom: 70px !important;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.sideScrollList {
+  color: white;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -808,23 +983,66 @@ input[type=number] {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #222222;
+  height: 50px;
+  width: 400px;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  -ms-scroll-snap-type: x mandatory;
+      scroll-snap-type: x mandatory;
+  text-align: center;
+  background-color: transparent;
+  border-bottom: 1px solid #222222;
 }
 
-.ticketDescriptionArea {
-  border-bottom: 1px solid #ffffff31;
-  padding-bottom: 10px;
-  cursor: default;
+.sideScrollList:hover {
+  border-bottom: 1px solid #efff0a6b;
+}
+
+.sideScrollList::-webkit-scrollbar {
+  display: none;
+}
+
+.sideScrollListItem {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #222222;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 20px;
+  margin: 0px 10px;
+  padding: 10px;
+  padding-top: auto;
+  border: 1px solid #ffffff31;
+  border-radius: 20px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }
 
-.ticketDescriptionArea:hover {
-  border-bottom: 1px solid #efff0a6b;
+.sideScrollListItem:hover {
+  background-color: #ffffff31;
+}
+
+.sideScrollListItem h5 {
+  white-space: nowrap;
+  font-size: 14px;
+  display: inline-block;
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin: 0px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 html {
@@ -861,9 +1079,10 @@ body {
 
 .pageContentContainer {
   padding-right: 5px;
-  max-width: 2000px;
   width: 100%;
-  height: calc(100% - 50px);
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
@@ -882,6 +1101,13 @@ body {
   scroll-behavior: smooth;
   overflow-y: scroll;
   overflow-x: hidden;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  margin-top: -290px;
+}
+
+.projectPageContent {
+  margin-top: -173px;
 }
 
 .pageBodyContainer1 {
@@ -892,10 +1118,10 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  margin-bottom: 100px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 10px;
 }
 
 .pageBodyContainer2 {
@@ -909,7 +1135,7 @@ body {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  margin-bottom: 50px;
+  margin-bottom: 15px;
 }
 
 .pageHeader {
@@ -982,6 +1208,16 @@ body {
           box-shadow: 0px 1px 1px transparent;
 }
 
+.overflow {
+  overflow-x: hidden;
+  overflow-y: scroll !important;
+  height: 100%;
+  width: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .fadeIn {
   -webkit-animation: fadeIn 1s;
           animation: fadeIn 1s;
@@ -1051,18 +1287,6 @@ body {
   }
   100% {
     opacity: 1;
-  }
-}
-
-@media (max-width: 1024px) {
-  .detailsColumn {
-    width: 100%;
-  }
-  .ticketDetailItem {
-    width: 100%;
-  }
-  .ticketDetailsContainer {
-    margin-left: 0px;
   }
 }
 

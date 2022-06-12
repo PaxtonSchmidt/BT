@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authService } from '../../../API/Services/AuthService';
-import { Team } from '../../../PropsInterfaces/team';
+import { authService } from '../../../Services/AuthService';
+import { Team } from '../../PropsInterfaces/team';
 
 export default function TeamCard(props : Team) {   
 

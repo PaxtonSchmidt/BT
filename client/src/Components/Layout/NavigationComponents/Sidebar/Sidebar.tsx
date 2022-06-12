@@ -5,7 +5,7 @@ import ticket from '../../../Images/Icons/ticket.svg';
 import people from '../../../Images/Icons/people.svg';
 import swap from '../../../Images/Icons/arrow-left-right.svg';
 import { Link } from 'react-router-dom';
-import { authService } from '../../../../API/Services/AuthService';
+import { authService } from '../../../../Services/AuthService';
 
 export default function Sidebar() {
     return (

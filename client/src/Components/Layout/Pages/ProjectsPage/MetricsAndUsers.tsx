@@ -1,15 +1,12 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import TicketForm from '../../../Library/Forms/TicketForm';
-import TicketDetails from './TicketDetails';
-
-export default function FormAndDetails() {
+export default function MetricsAndUsers() {
     
     return(
         <Container className='pageBodyContainer2 '>
-            <div className='formAndDetails'>
-                <TicketForm />
-                <TicketDetails />
+            <div className='formAndDetails' style={{color: 'white'}}>
+                sdajhdasl;djhkas
             </div>   
         </Container>
     )

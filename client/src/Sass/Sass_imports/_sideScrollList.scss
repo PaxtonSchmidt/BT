@@ -1,0 +1,59 @@
+.sideScrollList{
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: $darkGrey;
+    height: 50px;
+    width: 400px;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    text-align: center;
+    background-color: transparent;
+    border-bottom: 1px solid $darkGrey;
+}
+.sideScrollList:hover{
+    border-bottom: 1px solid $dimYellow;
+}
+.sideScrollList::-webkit-scrollbar{
+    display: none;
+}
+.sideScrollListItem{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color: $darkGrey;
+    width: fit-content;
+    height: 20px;
+    margin: 0px 10px;
+    padding: 10px;
+    padding-top: auto;
+    border: 1px solid $accentGrey;
+    border-radius: 20px;
+    transition: $transition;
+}
+.sideScrollListItem:hover {
+    background-color: $accentGrey;
+}
+.sideScrollListItem h5{
+    white-space: nowrap;
+    font-size: 14px;
+    display: inline-block;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin: 0px;
+    height: fit-content;
+}
+// .sideScrollList::after{
+//     color: white;
+//     background-color: red;
+//     content: 'titties';
+// }
+// .sideScrollList::before{
+//     height: 100%;
+//     color: white;
+//     background: linear-gradient(270deg, transparent, red);
+//     content: 'titties';
+// }

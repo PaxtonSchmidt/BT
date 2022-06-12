@@ -1,9 +1,21 @@
-import React from 'react';
-import { Formik } from 'formik';
+import React, { useRef } from 'react';
+import { Formik, FormikValues } from 'formik';
 import { TextField } from '@mui/material';
 import postProject from '../../../API/Requests/Projects/PostProject';
 
-export default function ProjectForm() {
+interface Props{
+    isExtended: boolean
+}
+
+export default function ProjectForm(props: Props) {
+    const formRef = useRef<FormikValues>() as any;
+
+    const handleReset = () => {
+        if(formRef.current ){
+            formRef.current.handleReset()
+        }
+    }
+    props.isExtended ? console.log('all g') : handleReset()
 return(
         <>
             <Formik 
@@ -13,11 +25,11 @@ return(
                     console.log(data) 
                     postProject(data)
                 }}
+                innerRef={formRef}
             >
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
-                //need to grab the team name somehow
                     return (
-                        <form style={{width: 'fit-content'}} onSubmit={handleSubmit} onBlur={handleBlur}>
+                        <form className='delayedFadeIn form' style={{width: 'fit-content'}} onSubmit={handleSubmit} onBlur={handleBlur}>
                             
                         <div className='formContainer' >
                             <h4 className='header'>New Project</h4>
@@ -43,14 +55,22 @@ return(
                                 onBlur={handleBlur} 
                                 required />
                         </div>
-                        <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
+                        <div className='formButtonsContainer'>
+                            <button type='reset'
+                                onClick={e => {
+                                    handleReset(e)
+                                }}
+                                className='button bottomButton bottomButtons cancelButton'
+                                style={{ margin: '2px 2px 0px 0px' }}>
+                                X
+                            </button>
                             <button type='submit'
-                                name='project'
+                                name='submit'
                                 className='button bottomButton bottomButtons submitButton' 
                                 style={{
                                     margin: '2px 0px 0px 0px'
                                 }}>
-                                Submit 
+                                Submit
                             </button>
                         </div>
                         </form>

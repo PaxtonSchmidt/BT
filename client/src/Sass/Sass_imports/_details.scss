@@ -2,13 +2,18 @@
     color: white;
     background-color: $darkGrey;
     min-width: 280px;
+    min-height: 310px;
+    max-height: 310px;
     width: 60%;
     margin-top: 10px;
-    margin-left: 10px;
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
+    transition: $transition;
+}
+.openFormDetailsHeight{
+    min-height: 380px;
 }
 .detailLabel{
     color: $accentGrey;
@@ -20,7 +25,7 @@
     height: 18px;
     padding: 5px;
     min-width: 150px;
-    width: fit-content;
+    width: 100%;
     justify-content: left;
     align-items: end;
     text-align: left;
@@ -38,27 +43,38 @@
     border-bottom: 1px solid $dimYellow;
 }
 .detailDiscriminator{
-    opacity: 0%;
+    font-size: 11px;
+    opacity: 30%;
     transition: $transition;
 }
 .ticketDetailItem:hover > .detailDiscriminator{
     opacity: 100%;
 }
 .detailsColumn{
-    width: 50%;
+    width: 100%;
 }
 .ticketDetailsRow{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
-    flex-wrap: wrap;
+    height: calc(100% - 30px);
 }
-.ticketDescriptionArea{
+.detailsDescription{
+    display: flex;
+    justify-content: center;
     border-bottom: 1px solid $accentGrey;
     padding-bottom: 10px;
     cursor: default;
     transition: $transition;
+    overflow-y: scroll;
+    flex-grow: 1;
+    max-height: 200px;
 }
-.ticketDescriptionArea:hover{
+.detailsDescription:hover{
     border-bottom: 1px solid $dimYellow;
+}
+.ticketDescriptionArea{
+    margin: auto 0px;
+    height: fit-content;
+    vertical-align: middle;
 }

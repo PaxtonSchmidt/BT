@@ -60,10 +60,22 @@ function isUserOnProject(userID: any, projectID: any){
     })
 }
 
+function getProjectIdByTeamIdAndProjectName(teamID: any, projectName: any){
+    let values = [teamID, projectName]
+    let sql = 'SELECT project_id FROM projects WHERE team_id= ? AND name= ?'
+
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result[0])
+        })
+    })
+}
+
 module.exports = { 
     addProject,
     getSessionProjectRoles,
     getProjectMembers,
-    isUserOnProject
+    isUserOnProject,
+    getProjectIdByTeamIdAndProjectName
 }
 

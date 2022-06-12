@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import TranslateTeamRole from '../../../../../../API/Services/RoleTranslator';
+import TranslateTeamRole from '../../../../../../Services/RoleTranslator';
 import { State } from '../../../../../../Redux/reducers';
 
 export default function Team() {
     const sessionState = useSelector((state: State) => state.session)
+    console.log(sessionState)
     let TeamName = sessionState.currentTeam?.name
     return(
         <>

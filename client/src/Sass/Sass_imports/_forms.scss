@@ -6,18 +6,20 @@
     justify-content: left;
     margin: 10px auto 0px 0px;
     padding: 10px 20px 20px 20px;
-    width: calc(fit-content + 40px);
+    width: calc(fit-content);
     min-width: 280px;
     max-width: 800px;
     transition: flex $transition;
 }
-
+.form{
+    transition: $transition;
+}
 .formButtonsContainer{ 
     min-width: 290px;
     max-width: 840px; 
     display: flex; 
     justify-content: space-between; 
-    margin: 0px auto 0px 0px; 
+    margin: 0px auto 20px 0px; 
 }
 .formInput{
     margin: 20px;
@@ -41,6 +43,38 @@
 }
 .loginForm{
     width: 100% !important;
+}
+.FormContainer{
+    border-bottom: 1px solid $darkGrey;
+    flex-direction: column;
+    transition: $transition;
+}
+.twist{
+    transform: rotate(180deg);
+    fill: $yellow;
+}
+.twist:hover{
+    transform: rotate(180deg);
+    fill: $yellow;
+}
+.FormContainer:hover{
+    border-bottom: 1px solid $dimYellow;
+}
+.svgSibling:hover ~ .bi-arrow-bar-down{
+    fill: $yellow;
+}
+.formLoadAnim{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.bi-arrow-bar-down{
+    cursor: pointer;
+    color: $accentGrey;
+    transition: $transition;
+}
+.bi-arrow-bar-down:hover{
+    color: $yellow;
 }
 
 .Mui-focused{
