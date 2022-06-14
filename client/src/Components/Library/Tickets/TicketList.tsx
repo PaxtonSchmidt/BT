@@ -35,7 +35,7 @@ function Tickets() {
         //needs pagination
         return (
         <Container className='pageBodyContainer1 fadeIn'>
-            <div className='ticketListContainer'>
+            <div className='listContainer'>
                 <div className='listRow'>
                     <div className='listRowSection leftSection'>
                         <span className='rowItem' style={{paddingLeft: '30px'}}>
