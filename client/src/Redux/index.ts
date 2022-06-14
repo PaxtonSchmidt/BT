@@ -4,3 +4,4 @@ export * as CurrentUserActionCreators from './action-creators/currentUserActionC
 export * as TeamsActionCreators from './action-creators/teamsActionCreators'
 export * as SessionActionCreators from './action-creators/sessionActionCreators'
 export * as FocusedTicketActionCreators from './action-creators/focusedTicketActionCreator'
+export * as FocusedProjectActionCreators from './action-creators/focusedProjectActionCreator'
