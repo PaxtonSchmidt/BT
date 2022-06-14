@@ -6,8 +6,17 @@ import people from '../../../Images/Icons/people.svg';
 import swap from '../../../Images/Icons/arrow-left-right.svg';
 import { Link } from 'react-router-dom';
 import { authService } from '../../../../Services/AuthService';
+import { useSelector } from 'react-redux';
+import { State } from '../../../../Redux/reducers';
 
-export default function Sidebar() {
+interface Props{
+    teamRole: number;
+}
+
+export default function Sidebar(props: Props) {
+    let isTeamOwner = props.teamRole === 1
+    let isProjectLeader = props.teamRole === 2 || props.teamRole === 1
+    
     return (
         <div className='sideBar navComponent fadeIn'>
             <div >
@@ -19,21 +28,26 @@ export default function Sidebar() {
                 
                 <div className='navItem sideBarItem'>
                     <Link to='tickets'>
-                        <img src={ticket} alt='go to dashboard' className='sidebarIcon scaleYonHover longFadeIn'/>
+                        <img src={ticket} alt='go to tickets' className='sidebarIcon scaleYonHover longFadeIn'/>
                     </Link>
                 </div>
                 
+                {isProjectLeader ? 
                 <div className='navItem sideBarItem'>
                     <Link to='projects'>
-                    <img src={project} alt='go to dashboard' className='sidebarIcon scaleYonHover longFadeIn'/>
+                    <img src={project} alt='go to projects' className='sidebarIcon scaleYonHover longFadeIn'/>
                     </Link>
                 </div>
+                : <></>}
                 
+                {isTeamOwner ?
                 <div className='navItem sideBarItem'>
                     <Link to='team'>
-                    <img src={people} alt='go to dashboard' className='sidebarIcon scaleYonHover longFadeIn'/>
+                    <img src={people} alt='go to team' className='sidebarIcon scaleYonHover longFadeIn'/>
                     </Link>
                 </div>
+                : <></>}
+                
             </div>
             
             

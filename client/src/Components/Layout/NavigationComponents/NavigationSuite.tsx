@@ -18,9 +18,9 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
     const { updateSession } = bindActionCreators(SessionActionCreators, dispatch)
     const loginState = useSelector((state: State) => state.login)
     const sessionState = useSelector((state: State) => state.session)
-    console.log(sessionState)
     let navigate = useNavigate();
     
+
     useEffect(() => {
         async function getSessionState() {
             let response: any = await fetch('/users/getSessionState', {
@@ -28,16 +28,17 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })
+            }).then(res => res.json())
             if(response.status === 400){
                 navigate('/login')
             }
-            updateSession(await response.json());
+            updateSession(await response);
         }
         getSessionState();
     }, [])
 
-
+    let role = 3 //defaults to dev, sets to actual role when the sessionState arrives
+    role = sessionState.currentTeam?.team_role;
 
     if(loginState === 1) {
         if(isTeamSelected === true){
@@ -45,7 +46,7 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
                 <>
                     <Navbar />
                     <Hamburger />
-                    <Sidebar />
+                    <Sidebar teamRole={role}/>
                     <Outlet />
                 </>
             )

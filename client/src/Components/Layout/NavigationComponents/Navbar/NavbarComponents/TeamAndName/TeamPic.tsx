@@ -5,7 +5,7 @@ import { State } from '../../../../../../Redux/reducers';
 
 export default function Team() {
     const sessionState = useSelector((state: State) => state.session)
-    console.log(sessionState)
+    
     let TeamName = sessionState.currentTeam?.name
     return(
         <>
