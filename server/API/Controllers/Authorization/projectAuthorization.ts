@@ -1,8 +1,8 @@
+import composeProjectStatistics from '../../Services/composeProjectStatistics';
 import consumeCookie from '../../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
 import { consumeRowDataPacket } from '../../Services/consumeRowDataPacket';
 import {translateTicketPriority} from '../../Services/translateTicketPriority';
-let authorizationQueries = require('../../Queries/AuthQueries/authorizationQueries')
 let Roles = require('./Roles')
 let tickets = require('../../Queries/ticketQueries')
 let projects = require('../../Queries/projectQueries')
@@ -85,23 +85,7 @@ async function getTickets(req: any, res: any){
 
 async function getProjectsStatistics(req: any, res: any){
     let userTeamRoleCombo: any = []
-
-    let projectsStats = {
-        ticketStatusStats: {
-            Unassigned: 0,
-            Open: 0,
-            SolutionProposed: 0,
-            SolutionRejected: 0,
-            Closed: 0
-        },
-        ticketPriorityStats: {
-            Low: 0,
-            Medium: 0,
-            High: 0
-        },
-        ticketAssigneeStats: [] //
-    }
-
+    
     try{
         userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
     }catch(e){
@@ -112,21 +96,23 @@ async function getProjectsStatistics(req: any, res: any){
     //if they are a dev or project lead, send them only their assigned projects
     if(userTeamRoleCombo.roleID === Roles.Legend.owner){
         try{
-            let projectTicketsList = await tickets.getTeamTickets(userTeamRoleCombo.teamID)
-            console.log(projectTicketsList)
-            
-            
+            let projectTicketsList = await tickets.getTeamTickets(userTeamRoleCombo.teamID)   
+           
+            let stats = composeProjectStatistics(projectTicketsList);
+            console.log(stats)
 
-            return res.status(200).send(projectsStats)
+            return res.status(200).send(stats)
         }catch(e){
-            return res.status(500).send({message: 'Server couldnt get Projects...'})
+            return res.status(500).send({message: 'Server couldnt get Projects... '})
         }
     } else if(userTeamRoleCombo.roleID === Roles.Legend.lead || userTeamRoleCombo.roleID === Roles.Legend.dev){
         try{
             let projectTicketsList = await tickets.getAssignedProjectTickets(userTeamRoleCombo.userID, userTeamRoleCombo.teamID)
 
-            let projectsStats: any = []
-            return res.status(200).send(projectsStats)
+            let stats = composeProjectStatistics(projectTicketsList);
+            console.log(stats)
+
+            return res.status(200).send(stats)
         }catch(e){
             return res.status(500).send({message: 'Server couldnt get Projects...'})
         }

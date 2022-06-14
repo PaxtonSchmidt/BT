@@ -5,6 +5,6 @@ let projectRoute = require("../Queries/projectQueries");
 let projectAuthorization = require('../Controllers/Authorization/projectAuthorization')
 
 router.post("/addProject", projectRoute.addProject);
-router.get('/getProjects', projectAuthorization.getProjectsStatistics)
+router.get('/getProjectsStatistics', projectAuthorization.getProjectsStatistics)
 
 module.exports = router;

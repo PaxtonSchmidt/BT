@@ -15,7 +15,7 @@ export default function ProjectForm(props: Props) {
             formRef.current.handleReset()
         }
     }
-    props.isExtended ? console.log('all g') : handleReset()
+    if(props.isExtended){handleReset()}
 return(
         <>
             <Formik 
