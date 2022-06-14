@@ -8,8 +8,6 @@ import { State } from '../../../../Redux/reducers';
 export default function TicketDetails() {
     const focusedTicketState = useSelector((state: State) => state.focusedTicket)
 
-    console.log(focusedTicketState)
-
     let dateCreated = focusedTicketState.date_created?.toString().substring(0, 10);
     let priority = priorityTranslation.translateTicketPriorityBack(focusedTicketState.priority)    
 
