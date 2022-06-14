@@ -8,6 +8,7 @@
 @import "./Sass_imports/_details.scss";
 @import "./Sass_imports/_javascriptApplied.scss";
 @import "./Sass_imports/_sideScrollList.scss";
+@import "./Sass_imports/_manageMembersWidget.scss";
 
 html {
     background-color: $black;
@@ -60,6 +61,18 @@ body{
 .projectPageContent{
     margin-top: -173px;
 }
+.projectPageBodyContainer1{
+    width: 100%;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-bottom: 1px solid $accentGrey;
+}
+.projectPageBodyQuadrant{
+    display: flex;
+    width: 50%;
+    border-right: 1px solid $accentGrey;
+    justify-content: left;
+}
 .pageBodyContainer1{
     display: flex;
     flex-direction: column;
@@ -70,8 +83,15 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-bottom: 15px;
-    
+    margin-bottom: 5px;   
+}
+.pageBodyContainer4{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 5px;
+    margin-bottom: 10px;
 }
 .pageHeader{
     font-size: 70px;

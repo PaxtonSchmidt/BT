@@ -26,7 +26,7 @@
     transition: $transition;
     cursor: default;
 }
-.ticketListContainer{
+.listContainer{
     background-color: $darkGrey;
     margin-right: 10px;
 }
@@ -102,4 +102,8 @@
 .rightSection > .rowItem{
     width: 25%;
     text-align: center;
+}
+.memberListRowSection{
+    width: fit-content;
+    margin-bottom: 10px;
 }
