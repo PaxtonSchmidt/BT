@@ -1,7 +1,14 @@
 import React from 'react';
 
-export default function ProjectListItem() {
+interface Props{
+    name: string;
+    isSelected: boolean;
+}
+
+export default function ProjectListItem(props: Props) {
     return (
-        <h4>Titties</h4>
+        <div className='sideScrollListItem scaleYonHover' >
+            {props.name}
+        </div>
     )
 }
