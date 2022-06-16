@@ -15,7 +15,6 @@ interface Props{
 
 export default function Sidebar(props: Props) {
     let isTeamOwner = props.teamRole === 1
-    let isProjectLeader = props.teamRole === 2 || props.teamRole === 1
     
     return (
         <div className='sideBar navComponent fadeIn'>
@@ -32,13 +31,11 @@ export default function Sidebar(props: Props) {
                     </Link>
                 </div>
                 
-                {isProjectLeader ? 
                 <div className='navItem sideBarItem'>
                     <Link to='projects'>
                     <img src={project} alt='go to projects' className='sidebarIcon scaleYonHover longFadeIn'/>
                     </Link>
                 </div>
-                : <></>}
                 
                 {isTeamOwner ?
                 <div className='navItem sideBarItem'>
