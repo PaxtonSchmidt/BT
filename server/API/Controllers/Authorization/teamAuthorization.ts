@@ -7,6 +7,7 @@ let teamQueries = require('../../Queries/teamQueries')
 let Roles = require('./Roles')
 let users = require('../../Queries/userQueries')
 let teams = require('../../Queries/teamQueries')
+let projects = require('../../Queries/projectQueries')
 
 async function inviteUserToTeam(req: any, res: any) {
     let isAlreadyOnTeam = true;
@@ -58,6 +59,35 @@ async function inviteUserToTeam(req: any, res: any) {
     }
 }
 
+async function addProject(req: any, res: any){
+    let projectIdAtAttemptedProjectName = {project_id: ''};
+    let userTeamRoleCombo: any = [];
+    let projectName = req.body.name; 
+    let isProjectNameTakenOnTeam = true;
+        
+    try{
+        userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+        projectIdAtAttemptedProjectName = await projects.getProjectIdByTeamIdAndProjectName(userTeamRoleCombo.teamID, projectName)
+    }catch(e){
+        return res.status(500).send({message: 'Server couldnt check invite information...'})
+    }
 
+    projectIdAtAttemptedProjectName ? isProjectNameTakenOnTeam = true : isProjectNameTakenOnTeam = false
+    let currentUserRoleID = userTeamRoleCombo.roleID; 
+    //if the user is the owner of the team and there isnt a project for this team with this name already
+    //then add project
+    if(currentUserRoleID !== Roles.Legend.owner){
+        return res.status(403).send({message: 'You are not allowed to create projects for this team...'})
+    } else if(isProjectNameTakenOnTeam === true){
+        return res.status(400).send({message: 'That name is already used by a project in this team...'})
+    } else{
+        try{
+            await projects.addProject(userTeamRoleCombo.userID, userTeamRoleCombo.teamID, req.body.name, req.body.description)
+        }catch(e){
+            return res.status(500).send({message: 'Server couldnt add the project to this team...'})
+        }
+        return res.status(200).send({message: 'Added Project'})
+    }
+}
 
-module.exports = { inviteUserToTeam }
+module.exports = { inviteUserToTeam, addProject }
