@@ -13,7 +13,8 @@ export default function TeamCard(props : Team) {
                 </div>
                 <div className='cardTeamOwner'>
                     <span className='cardTeamOwnerName'>
-                        {props.ownerName} #{props.ownerDiscriminator}
+                        <span className='username'>{props.ownerName}</span>
+                        <span className='discriminator' style={{opacity: '100%'}}>#{props.ownerDiscriminator}</span>
                     </span>
                 </div>
             </div>
