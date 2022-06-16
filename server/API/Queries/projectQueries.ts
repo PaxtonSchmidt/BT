@@ -1,28 +1,19 @@
 import {connectionPool} from '../dbConnectionPool';
-import consumeCookie from '../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../Services/consumeCookies/consumeCookieFlags';
 import getCurrentDate from '../Services/getCurrentDate';
 
-function addProject(req: any, res: any) {
-    let creatorUserId = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag);
-    let team_id = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenTeamIdFlag)
+function addProject(creatorId: any, teamID: any, name: string, description: string) {
     let date = getCurrentDate()
     console.log('got to add project endpoint')
-    let project = {team_id: team_id, creator_user_id: creatorUserId, name: req.body.name, description: req.body.description, date_created: date}
+    let project = {team_id: teamID, creator_user_id: creatorId, name: name, description: description, date_created: date}
 
-    //eventually these queries will be parameterized 
-    let sql = "INSERT INTO projects SET ?"; 
     
+    let sql = "INSERT INTO projects SET ?"; 
     connectionPool.query(sql, project, (err: any, result: any) => {
-        console.log('project add')
         if (err) result.send(err);
-        console.log(result.insertId)
-        let user_projectValues = {user_id: creatorUserId, project_id: result.insertId, role_id: 1, relevant_team_id: team_id, enlisted_by_user_id: creatorUserId, date_joined: date}
+        let user_projectValues = {user_id: creatorId, project_id: result.insertId, role_id: 1, relevant_team_id: teamID, enlisted_by_user_id: creatorId, date_joined: date}
         let user_projectSQL = "INSERT INTO user_projects SET ?"
         connectionPool.query(user_projectSQL, user_projectValues, (err: any, result: any) => {
-            console.log('user_project add')
             if(err) result.send(err)
-            res.send(result.status)
         })
     })
 }
@@ -71,11 +62,26 @@ function getProjectIdByTeamIdAndProjectName(teamID: any, projectName: any){
     })
 }
 
+function getRelatedMemberDetails(userId: string, teamID: any){
+    let values = [userId, teamID]
+    let sql = 'SELECT uA.username, uA.discriminator, up.project_id, up.role_id, up.date_joined AS dateAssigned, uB.username AS assignedByUsername, uB.discriminator AS assignedByUserDiscriminator, p.name AS project_name FROM user_projects up LEFT JOIN users uA ON up.user_id = uA.user_id LEFT JOIN users uB ON up.enlisted_by_user_id = uB.user_id LEFT JOIN projects p ON up.project_id = p.project_id WHERE up.project_id IN (SELECT project_id from user_projects WHERE user_id= ? AND relevant_team_id= ?) '
+
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+
+
+
+
 module.exports = { 
     addProject,
     getSessionProjectRoles,
     getProjectMembers,
     isUserOnProject,
-    getProjectIdByTeamIdAndProjectName
+    getProjectIdByTeamIdAndProjectName,
+    getRelatedMemberDetails
 }
 
