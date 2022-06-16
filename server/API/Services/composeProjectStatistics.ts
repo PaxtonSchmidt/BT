@@ -15,8 +15,6 @@ export default function composeProjectStatistics(ticketList: any){
         ticketAssigneeStats: [] 
     }
 
-    console.log(ticketList)
-
     for(let i = 0; i < ticketList.length; i++){
         let ticket = ticketList[i]
 
@@ -69,6 +67,5 @@ export default function composeProjectStatistics(ticketList: any){
         }
 
     };
-    console.log(projectsStats)
     return projectsStats  
 }
