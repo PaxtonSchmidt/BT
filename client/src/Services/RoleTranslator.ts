@@ -1,16 +1,14 @@
 export default function TranslateTeamRole(team_role: number){
+    if(team_role === undefined) return null
     switch(team_role){
         case 1:
             return 'Team Owner'
-            break;
         case 2:     
             return 'Project Lead'
-            break;
         case 3: 
-            return 'Dev'
-            break;
+            return 'Developer'
         default:
-            console.log('What are you?')
+            console.log('Something broke the role translator...')
     }
 
 }
