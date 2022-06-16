@@ -4,9 +4,6 @@ import { Navigate } from 'react-router-dom';
 import { State } from '../../../../Redux/reducers';
 import ProjectList from '../../../Library/Projects/ProjectList';
 import ProjectFormContainer from './ProjectFormContainer';
-import ProjectMetrics from './ProjectAssigneeChart';
-import ProjectAssigneeChart from './ProjectAssigneeChart';
-import ProjectMembersList from '../../../Library/Projects/ProjectMembersList';
 import ProjectMembersManage from './ProjectMembersManage';
 
 interface Props {
@@ -16,7 +13,6 @@ interface Props {
 export default function ProjectsPage({ isTeamSelected }: Props) {
     const loginState = useSelector((state: State) => state.login)
     const sessionState = useSelector((state: State) => state.session)
-    console.log(sessionState)
     let [projectStats, setProjectStats] = useState({ticketAssigneeStats: [], ticketPriorityStats: {}, ticketStatusStats: {}});
     
     
@@ -37,35 +33,26 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
     
     if(sessionState.currentTeam === undefined){return <></>}
     let teamRole = sessionState?.currentTeam.team_role
-    //if not logged in go to login, if team isnt selected go to select team, if role isnt team owner or project lead go to tickets
+    //if not logged in go to login, if team isnt selected go to select team
     if(loginState === 1) {
         if(isTeamSelected === true) {
-            if(teamRole === 1 || teamRole === 2){
-                return(
-                    <div className='overflow'>
-                        <div id='pageContentContainer' className='pageContentContainer  projectPageContent' >
-                            <ProjectFormContainer/>
-                        </div>
-                        
-                        <div className='pageBodyContainer4  fadeIn ' style={{flexDirection: 'row'}}>
-                            <ProjectList />
-                            <div className='projectPageBodyContainer1'>
-                                <div className='projectPageBodyQuadrant'>
-                                    <ProjectMembersManage />
-                                </div>
-                                {/* <ProjectAssigneeChart data={assigneeStats} /> */}
+            return(
+                <div className='overflow'>
+                    <div id='pageContentContainer' className='pageContentContainer  projectPageContent' >
+                        <ProjectFormContainer/>
+                    </div>
+                    
+                    <div className='pageBodyContainer4  fadeIn ' style={{flexDirection: 'row'}}>
+                        <ProjectList />
+                        <div className='projectPageBodyContainer1'>
+                            <div className='projectPageBodyQuadrant'>
+                                <ProjectMembersManage />
                             </div>
-                            <div className='projectPageBodyContainer1'>
-                                <div className='projectPageBodyQuadrant'>
-                                    <ProjectMembersManage />
-                                </div>
-                                {/* <ProjectAssigneeChart data={assigneeStats} /> */}
-                            </div>
+                            {/* <ProjectAssigneeChart data={assigneeStats} /> */}
                         </div>
                     </div>
-                )
-            } return <Navigate to='/tickets' />
-           
+                </div>
+            )
         } return <Navigate to='/selectTeam' />
     }
     return <Navigate to='/login' />
