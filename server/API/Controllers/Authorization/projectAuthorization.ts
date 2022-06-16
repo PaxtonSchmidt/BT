@@ -1,3 +1,4 @@
+import composeMemberDetails from '../../Services/composeMemberDetails';
 import composeProjectStatistics from '../../Services/composeProjectStatistics';
 import consumeCookie from '../../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
@@ -52,8 +53,6 @@ async function submitNewTicket(req: any, res: any) {
     }
 }
 
- 
-
 async function getTickets(req: any, res: any){
     let userTeamRoleCombo: any = [];
     try{
@@ -99,7 +98,6 @@ async function getProjectsStatistics(req: any, res: any){
             let projectTicketsList = await tickets.getTeamTickets(userTeamRoleCombo.teamID)   
            
             let stats = composeProjectStatistics(projectTicketsList);
-            console.log(stats)
 
             return res.status(200).send(stats)
         }catch(e){
@@ -110,7 +108,6 @@ async function getProjectsStatistics(req: any, res: any){
             let projectTicketsList = await tickets.getAssignedProjectTickets(userTeamRoleCombo.userID, userTeamRoleCombo.teamID)
 
             let stats = composeProjectStatistics(projectTicketsList);
-            console.log(stats)
 
             return res.status(200).send(stats)
         }catch(e){
@@ -121,7 +118,30 @@ async function getProjectsStatistics(req: any, res: any){
     }
 }
 
+async function getRelatedMemberDetails(req: any, res: any){
+    let userTeamRoleCombo: any = []
+    
+    try{
+        userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+    }catch(e){
+        return res.status(500).send({message: 'Server couldnt find role information...'})
+    }
+
+    //Send everyone all the project member details for projects they are in. 
+    //The owner is already in every project so additional logic is not needed
+    try{
+        let relatedMemberDetailsList = await projects.getRelatedMemberDetails(userTeamRoleCombo.userID, userTeamRoleCombo.teamID)
+        let details = composeMemberDetails(relatedMemberDetailsList)
+        return res.status(200).send(details)
+    }catch(e){
+        return res.status(500).send({message: 'Server couldnt get Projects...'})
+    }
+}
 
 
-
-module.exports = { submitNewTicket, getTickets, getProjectsStatistics }
+module.exports = { 
+    submitNewTicket,
+    getTickets, 
+    getProjectsStatistics, 
+    getRelatedMemberDetails 
+}
