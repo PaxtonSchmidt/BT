@@ -28,11 +28,11 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(res => res.json())
+            }).then(res => res)
             if(response.status === 400){
-                navigate('/login')
+                navigate('login')
             }
-            updateSession(await response);
+            updateSession(await response.json());
         }
         getSessionState();
     }, [])
