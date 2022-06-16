@@ -6,6 +6,7 @@
     padding-right: 5px;
     padding-bottom: 10px;
     overflow-y: scroll;
+    overscroll-behavior: none;
 }
 .listHeader{
     margin-top: 0px;
@@ -104,6 +105,24 @@
     text-align: center;
 }
 .memberListRowSection{
-    width: fit-content;
+    width: 100px;
     margin-bottom: 10px;
+}
+.userDetailsRow{
+    cursor: pointer;
+}
+.userDetailsRow:hover{
+    border-bottom: 1px solid $dimYellow;
+}
+.memberRow{
+    cursor: pointer;
+}
+.memberRow:hover > .memberListRowSection > .discriminator {
+    opacity: 100%;
+}
+.manageMemberListRow{
+    cursor: default;
+}
+.manageMemberListRow:hover{
+    border-bottom: 1px solid $accentGrey !important;
 }

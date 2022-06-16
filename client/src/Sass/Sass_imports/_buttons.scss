@@ -29,6 +29,19 @@
     transition: $transition;
     font-size: 14px
 }
+.userDetailsButton{
+    cursor: default;
+    border-bottom: 1px solid $yellow;
+    color: $accentGrey;
+    opacity: 0%;
+}
+.active{
+    cursor: pointer;
+    opacity: 100%;
+}
+.active:hover{
+    border-color: $yellow;
+}
 .topButton:hover {
     cursor: pointer;
     transition: $transition;
@@ -43,4 +56,21 @@
     margin-top: 20px;
     margin-left: 0px;
     width: calc(100% - 10px)
+}
+.filterProjectsToggle{
+    width: fit-content !important;
+    background-color: $darkGrey;
+    border: none;
+    color: white;
+    height: 25px;
+    margin-left: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.updateRoleButton{
+    background-color: $accentGrey;
+    padding: 3px 5px 3px 5px;
+    border-radius: 10px;
+    cursor: pointer;
 }

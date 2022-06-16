@@ -3,3 +3,13 @@
     background-color: $darkGrey;
     width: calc(100% - 10px);
 }
+.showDetailsHighlight{
+    color: $dimYellow;
+    transition: $transition;
+    font-size: 12px;
+    margin-left: 15px;
+    opacity: 0%;
+}
+.memberRow:hover > .memberListRowSection > .showDetailsHighlight{
+    opacity: 100%;
+}

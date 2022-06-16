@@ -196,6 +196,22 @@
   font-size: 14px;
 }
 
+.userDetailsButton {
+  cursor: default;
+  border-bottom: 1px solid #efff0a;
+  color: #ffffff31;
+  opacity: 0%;
+}
+
+.active {
+  cursor: pointer;
+  opacity: 100%;
+}
+
+.active:hover {
+  border-color: #efff0a;
+}
+
 .topButton:hover {
   cursor: pointer;
   -webkit-transition: 0.5s;
@@ -216,6 +232,27 @@
   margin-top: 20px;
   margin-left: 0px;
   width: calc(100% - 10px);
+}
+
+.filterProjectsToggle {
+  width: -webkit-fit-content !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+  background-color: #222222;
+  border: none;
+  color: white;
+  height: 25px;
+  margin-left: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.updateRoleButton {
+  background-color: #ffffff31;
+  padding: 3px 5px 3px 5px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .formContainer {
@@ -445,6 +482,7 @@ input[type=number] {
   padding-right: 5px;
   padding-bottom: 10px;
   overflow-y: scroll;
+  overscroll-behavior: none;
 }
 
 .listHeader {
@@ -585,10 +623,32 @@ input[type=number] {
 }
 
 .memberListRowSection {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: 100px;
   margin-bottom: 10px;
+}
+
+.userDetailsRow {
+  cursor: pointer;
+}
+
+.userDetailsRow:hover {
+  border-bottom: 1px solid #efff0a6b;
+}
+
+.memberRow {
+  cursor: pointer;
+}
+
+.memberRow:hover > .memberListRowSection > .discriminator {
+  opacity: 100%;
+}
+
+.manageMemberListRow {
+  cursor: default;
+}
+
+.manageMemberListRow:hover {
+  border-bottom: 1px solid #ffffff31 !important;
 }
 
 * {
@@ -912,7 +972,7 @@ input[type=number] {
   border-bottom: 1px solid #efff0a6b;
 }
 
-.detailDiscriminator {
+.discriminator {
   font-size: 11px;
   opacity: 30%;
   -webkit-transition: 0.5s;
@@ -1037,10 +1097,6 @@ input[type=number] {
   transition: 0.5s;
 }
 
-.sideScrollListItem:hover {
-  background-color: #ffffff31;
-}
-
 .sideScrollListItem h5 {
   white-space: nowrap;
   font-size: 14px;
@@ -1054,10 +1110,29 @@ input[type=number] {
   height: fit-content;
 }
 
+.selectedProjectInList {
+  background-color: #ffffff31;
+  -webkit-transform: translateY(-2px);
+          transform: translateY(-2px);
+}
+
 .ManageMembersWidget {
   color: red;
   background-color: #222222;
   width: calc(100% - 10px);
+}
+
+.showDetailsHighlight {
+  color: #efff0a6b;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  font-size: 12px;
+  margin-left: 15px;
+  opacity: 0%;
+}
+
+.memberRow:hover > .memberListRowSection > .showDetailsHighlight {
+  opacity: 100%;
 }
 
 html {

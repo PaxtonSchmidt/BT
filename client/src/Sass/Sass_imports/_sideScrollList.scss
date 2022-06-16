@@ -34,9 +34,6 @@
     border-radius: 15px;
     transition: $transition;
 }
-.sideScrollListItem:hover {
-    background-color: $accentGrey;
-}
 .sideScrollListItem h5{
     white-space: nowrap;
     font-size: 14px;
@@ -46,6 +43,10 @@
     margin-bottom: auto;
     margin: 0px;
     height: fit-content;
+}
+.selectedProjectInList{
+    background-color: $accentGrey;
+    transform: translateY(-2px);
 }
 // .sideScrollList::after{
 //     color: white;
