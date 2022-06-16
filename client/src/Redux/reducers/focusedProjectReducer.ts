@@ -1,7 +1,7 @@
 import { focusedProjectActionType } from "../action-types/focusedProjectActionType";
 import { Action } from "../actions/focusedProjectAction";
 
-const initialState = {project: {}}; 
+const initialState = {name: 'All'}
 
 const focusedProjectReducer = (state: any = initialState, action: Action) => {
     switch(action.type){

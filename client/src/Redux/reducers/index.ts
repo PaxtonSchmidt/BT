@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import currentUserReducer from './currentUserReducer';
+import focusedMemberReducer from './focusedMemberReducer';
 import focusedProjectReducer from './focusedProjectReducer';
 import focusedTicketReducer from './focusedTicketReducer';
 import invitesReducer from './invitesReducers';
@@ -14,7 +15,8 @@ const reducers = combineReducers({
     session: sessionReducer,
     teams: teamsReducer,
     focusedTicket: focusedTicketReducer,
-    focusedProject: focusedProjectReducer
+    focusedProject: focusedProjectReducer,
+    focusedMember: focusedMemberReducer
 })
 
 export default reducers
