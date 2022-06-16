@@ -20,7 +20,7 @@ export default function TicketDetails() {
                     <div className='ticketDetailItem'>
                         <span className='detailLabel'>Submitter:</span>
                         <span className='detailUsername'>{`${focusedTicketState.author_username}`} </span>
-                        <span className='detailDiscriminator'>#{focusedTicketState.author_discriminator}</span>
+                        <span className='detailDiscriminator discriminator'>#{focusedTicketState.author_discriminator}</span>
                         <span className='detailLabel' style={{marginLeft: '10px'}}>Created:</span>
                         <span>{dateCreated}</span>
                     </div>
@@ -31,7 +31,7 @@ export default function TicketDetails() {
                         <span>{focusedTicketState.project_name}</span>
                         <span className='detailLabel'  style={{marginLeft: '20px'}}>Assignee:</span>
                         <span className='detailUsername'>{`${focusedTicketState.assignee_username}`} </span>
-                        <span className='detailDiscriminator'>#{focusedTicketState.assignee_user_discriminator}</span>
+                        <span className='detailDiscriminator discriminator'>#{focusedTicketState.assignee_user_discriminator}</span>
                     </div>
                 </div>    
                 <div className='ticketDetailItemContainer'>

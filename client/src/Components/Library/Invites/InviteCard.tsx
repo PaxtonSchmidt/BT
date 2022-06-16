@@ -35,7 +35,8 @@ export default function InviteCard(props : Invite) {
                 </div>
                 <div className='cardTeamOwner'>
                     <span className='cardTeamOwnerName'>
-                        {props.sender_name}#{props.sender_discriminator}
+                        <span className='username'>{props.sender_name}</span>
+                        <span className='discriminator' style={{opacity: '100%'}}>#{props.sender_discriminator}</span>
                     </span>
                 </div>
                 <button className='cardButton decline' onClick={()=>handleDeleteInvite(props.invite_id)}>Decline</button>
