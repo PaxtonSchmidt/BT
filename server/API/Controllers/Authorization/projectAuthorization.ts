@@ -8,6 +8,7 @@ let Roles = require('./Roles')
 let tickets = require('../../Queries/ticketQueries')
 let projects = require('../../Queries/projectQueries')
 let users = require('../../Queries/userQueries')
+let teams = require('../../Queries/teamQueries')
 
 async function submitNewTicket(req: any, res: any) {
     console.log(req.body.project)
@@ -84,7 +85,6 @@ async function getTickets(req: any, res: any){
 
 async function getProjectsStatistics(req: any, res: any){
     let userTeamRoleCombo: any = []
-    
     try{
         userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
     }catch(e){
@@ -120,7 +120,6 @@ async function getProjectsStatistics(req: any, res: any){
 
 async function getRelatedMemberDetails(req: any, res: any){
     let userTeamRoleCombo: any = []
-    
     try{
         userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
     }catch(e){
@@ -138,10 +137,57 @@ async function getRelatedMemberDetails(req: any, res: any){
     }
 }
 
+async function updateMemberRole(req: any, res: any){
+    let userTeamRoleCombo: any = []
+    let targetUser: any = null;
+    let targetProjectID: any = null;
+    let currentUserProjectRole: any = null;
+    let targetUserProjectRole: any = null;
+
+    try{
+        userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+        targetUser = await users.getUserByNameDiscriminator(req.body.username, req.body.discriminator)
+        targetProjectID = await projects.getProjectIdByTeamIdAndProjectName(userTeamRoleCombo.teamID, req.body.targetProjectName)
+        currentUserProjectRole = await projects.getRoleByUserIdProjectId(userTeamRoleCombo.userID, targetProjectID.project_id)
+        targetUserProjectRole = await projects.getRoleByUserIdProjectId(targetUser.user_id, targetProjectID.project_id)
+    }catch(e){
+        return res.status(500).send({message: 'Server couldnt find role information...'})
+    }
+
+    //if the currentUser has higher perms than the targetUser, then edit the target user's role as requested
+    if(currentUserProjectRole[0].role_id < targetUserProjectRole[0].role_id){
+        try{
+            await projects.updateMemberRole(targetUser.user_id, targetProjectID.project_id, req.body.newRoleId)
+            return res.status(200).send({message: 'Role updated'})
+        }catch(e){
+            return res.status(500).send({message: 'Server couldnt update role...'})
+        }
+    } else {
+        return res.status(400).send({message: 'You dont have the ability to edit that users role on this project'})
+    }
+}
+async function getUsersOnTeam(req: any, res: any){
+    let userTeamRoleCombo: any = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+    try{
+        let potentialProjectMembers = await teams.getUsersOnTeam(userTeamRoleCombo.teamID)
+        return res.status(200).send(potentialProjectMembers)
+    } catch(e){
+        return res.status(500).send({message: 'Couldnt get team information from database...'})
+    }
+}
+async function removeMember(req: any, res: any) {
+    console.log(req.body)
+
+    //if the user is 
+}
+
 
 module.exports = { 
     submitNewTicket,
     getTickets, 
     getProjectsStatistics, 
-    getRelatedMemberDetails 
+    getRelatedMemberDetails,
+    updateMemberRole,
+    getUsersOnTeam,
+    removeMember
 }
