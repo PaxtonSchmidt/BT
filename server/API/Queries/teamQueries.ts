@@ -16,7 +16,6 @@ import getCurrentDate from '../Services/getCurrentDate';
 function addTeam(req: any, res: any) {
     let dateTime = getCurrentDate();
     let creatorUserId = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag);
-    let newTeamId = ''
 
     let team = {name: req.body.name, date_created: dateTime, owner_user_id: creatorUserId}
     let insertTeamSql = "INSERT INTO teams SET ?;"; 
@@ -30,10 +29,7 @@ function addTeam(req: any, res: any) {
             res.send(result.status)
         })
     })
-
-    console.log(newTeamId)
 }
-
 async function addTeamInvite(req: any, res: any, userTeamIDCombo: any, recipientID: any){
     let invite = {recipient_id: recipientID, sender_id: userTeamIDCombo.userID, team_id: userTeamIDCombo.teamID, date_sent: getCurrentDate()}
     let sql = 'INSERT INTO team_invites SET ?'
@@ -42,7 +38,6 @@ async function addTeamInvite(req: any, res: any, userTeamIDCombo: any, recipient
         return res.ok;
     })
 }
-
 async function deleteTeamInvite(res: any, invite_id: string){
      let sql = 'DELETE FROM team_invites WHERE invite_id= ?'
 
@@ -52,7 +47,6 @@ async function deleteTeamInvite(res: any, invite_id: string){
         })
     })
 }
-
 function getTeamInvites(currentUserID: number){
     let sql = 'SELECT ti.invite_id, ti.date_sent AS date_sent, t.name AS team_name, u.username AS sender_name, u.discriminator AS sender_discriminator FROM team_invites ti LEFT JOIN teams t ON ti.team_id = t.team_id LEFT JOIN users u ON ti.sender_id = u.user_id WHERE ti.recipient_id= ?'
 
@@ -62,7 +56,6 @@ function getTeamInvites(currentUserID: number){
         })
     })
 }
-
 async function getInviteById(invite_id: any){
     let sql = "SELECT * FROM team_invites WHERE invite_id= ?"
     return new Promise<any>((resolve, reject) => {
@@ -71,7 +64,6 @@ async function getInviteById(invite_id: any){
         })
     })
 }
-
 async function fetchIsOnTeam(recipientID: string, teamID: string){
     let values = [recipientID, teamID]
     let sql = 'SELECT EXISTS(SELECT * FROM user_teams WHERE user_id= ? AND team_id= ?)'
@@ -81,7 +73,6 @@ async function fetchIsOnTeam(recipientID: string, teamID: string){
         })
     })
 }
-
 function getInviteBySenderIDRecipientIDTeamID(senderID: string, recipientID: string, teamID: string, res: any){
     let values = [senderID, recipientID, teamID]
     let sql = 'SELECT EXISTS(SELECT * FROM team_invites WHERE sender_id= ? AND recipient_id= ? AND team_id= ?)'
@@ -92,7 +83,6 @@ function getInviteBySenderIDRecipientIDTeamID(senderID: string, recipientID: str
         })
     })
 }
-
 function addUserToTeam(res: any, currentUserID: string, teamID: string, enlistedByUserID: string) {
     let defaultRole: string = '3' //defaults to dev
     let user = {user_id: currentUserID, team_id: teamID, role_id: defaultRole, date_joined: getCurrentDate(), enlisted_by_user_id: enlistedByUserID}
@@ -104,7 +94,6 @@ function addUserToTeam(res: any, currentUserID: string, teamID: string, enlisted
         })
     })
 }
-
 function getSessionTeam(teamID: string, userID: string){
     let sql = 'SELECT t.name AS name, ut.date_joined AS date_joined, ut.role_id AS team_role FROM user_teams ut LEFT JOIN teams t ON t.team_id = ut.team_id WHERE t.team_id= ? AND ut.user_id= ?'
     let values = [teamID, userID]
@@ -112,6 +101,16 @@ function getSessionTeam(teamID: string, userID: string){
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
             return err ? reject(err) : resolve(result[0])
+        })
+    })
+}
+function getUsersOnTeam(teamID: string){
+    let sql = 'SELECT u.username, u.discriminator, ut.role_id AS team_role FROM users u LEFT JOIN user_teams ut ON u.user_id = ut.user_id WHERE ut.team_id= ?'
+    let values = [teamID]
+    
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
         })
     })
 }
@@ -128,5 +127,6 @@ module.exports =
     fetchIsOnTeam, 
     getInviteById, 
     addUserToTeam,
-    getSessionTeam 
+    getSessionTeam,
+    getUsersOnTeam
 }
