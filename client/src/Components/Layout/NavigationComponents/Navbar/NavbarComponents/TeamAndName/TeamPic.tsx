@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import TranslateTeamRole from '../../../../../../Services/RoleTranslator';
 import { State } from '../../../../../../Redux/reducers';
 
 export default function Team() {
