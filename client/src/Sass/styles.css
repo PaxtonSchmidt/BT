@@ -199,8 +199,10 @@
 .userDetailsButton {
   cursor: default;
   border-bottom: 1px solid #efff0a;
-  color: #ffffff31;
+  color: white;
   opacity: 0%;
+  float: right;
+  margin-right: 20px;
 }
 
 .active {
@@ -253,6 +255,100 @@
   padding: 3px 5px 3px 5px;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.roleUpdatePending {
+  border: 1px solid #efff0a6b;
+  -webkit-transform: translateY(-1px);
+          transform: translateY(-1px);
+}
+
+.resetRolesButton {
+  border-radius: 5px;
+  margin-left: 2px;
+  background-color: rgba(255, 0, 0, 0.459);
+}
+
+.addMemberButton {
+  color: white;
+  border-radius: 10px;
+  background-color: #ffffff31;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  bottom: 10px;
+  left: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.removeMemberButton {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #ff000075;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.bi-x-square {
+  cursor: pointer;
+}
+
+.removeMemberButton:hover {
+  color: Red;
+}
+
+.modalButton {
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+}
+
+.modalButtonCancel:hover {
+  border-color: red;
+}
+
+.modalButtonConfirm:hover {
+  border-color: #efff0a;
+}
+
+.selectFromListButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+  background-color: #ffffff31;
+  width: 50px;
+  font-size: 12px;
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+.scaleY {
+  -webkit-transform: translateY(-2px);
+          transform: translateY(-2px);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
 }
 
 .formContainer {
@@ -623,16 +719,17 @@ input[type=number] {
 }
 
 .memberListRowSection {
-  width: 100px;
+  width: 150px;
   margin-bottom: 10px;
 }
 
 .userDetailsRow {
   cursor: pointer;
+  border-color: #efff0a6b;
 }
 
 .userDetailsRow:hover {
-  border-bottom: 1px solid #efff0a6b;
+  border-bottom: 1px solid #efff0a;
 }
 
 .memberRow {
@@ -649,6 +746,11 @@ input[type=number] {
 
 .manageMemberListRow:hover {
   border-bottom: 1px solid #ffffff31 !important;
+}
+
+.projectMembersList {
+  height: 320px;
+  padding-bottom: 0px;
 }
 
 * {
@@ -1120,6 +1222,7 @@ input[type=number] {
   color: red;
   background-color: #222222;
   width: calc(100% - 10px);
+  height: 410px;
 }
 
 .showDetailsHighlight {
@@ -1133,6 +1236,35 @@ input[type=number] {
 
 .memberRow:hover > .memberListRowSection > .showDetailsHighlight {
   opacity: 100%;
+}
+
+.modalBoxContainer {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  max-width: 500px;
+  width: 100%;
+  background-color: #1a1a1a;
+  -webkit-box-shadow: 0px 0px 5px #ffffff31;
+          box-shadow: 0px 0px 5px #ffffff31;
+}
+
+.modalBox {
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
+
+.modalList {
+  color: white;
+  text-align: left;
 }
 
 html {

@@ -2,6 +2,7 @@
     color: red;
     background-color: $darkGrey;
     width: calc(100% - 10px);
+    height: 410px;
 }
 .showDetailsHighlight{
     color: $dimYellow;
@@ -12,4 +13,23 @@
 }
 .memberRow:hover > .memberListRowSection > .showDetailsHighlight{
     opacity: 100%;
+}
+.modalBoxContainer{
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    max-width: 500px;
+    width: 100%;
+    background-color: $black;
+    box-shadow: 0px 0px 5px $accentGrey;
+}
+.modalBox{
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+}
+.modalList{
+    color: white;
+    text-align: left;
 }

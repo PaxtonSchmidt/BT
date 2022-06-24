@@ -105,14 +105,15 @@
     text-align: center;
 }
 .memberListRowSection{
-    width: 100px;
+    width: 150px;
     margin-bottom: 10px;
 }
 .userDetailsRow{
     cursor: pointer;
+    border-color: $dimYellow;
 }
 .userDetailsRow:hover{
-    border-bottom: 1px solid $dimYellow;
+    border-bottom: 1px solid $yellow;
 }
 .memberRow{
     cursor: pointer;
@@ -125,4 +126,8 @@
 }
 .manageMemberListRow:hover{
     border-bottom: 1px solid $accentGrey !important;
+}
+.projectMembersList{
+    height: 320px;
+    padding-bottom: 0px;
 }
