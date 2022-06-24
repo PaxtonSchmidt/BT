@@ -1,5 +1,4 @@
 export const priorityTranslation = {
-
     translateTicketPriority(word:  string){
         switch (word){
             case 'high':
