@@ -38,7 +38,7 @@ function ProjectList() {
         if(filterToLeadingOnly === true){
             return 'Viewing Projects You Lead'
         } else {
-            return 'Viewing Assigned Projects'
+            return 'Viewing Projects You Are In'
         }
     }
     let WhichView = checkView()
