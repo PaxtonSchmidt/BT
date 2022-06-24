@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FocusedMemberActionCreators } from '../../../Redux';
 import { State } from '../../../Redux/reducers';
-import RoleTranslator from '../../../Services/RoleTranslator'
+import {translateRole} from '../../../Services/translateRole'
 
 interface Props{
     member: any;
@@ -12,7 +12,7 @@ interface Props{
 export default function ProjectMembersListItem(props: Props) {
     const dispatch = useDispatch();
     const { updateFocusedMember } = bindActionCreators(FocusedMemberActionCreators, dispatch)
-    let role = RoleTranslator(props.member.role_id)
+    let role = translateRole.TranslateProjectRole(props.member.role_id)
     
     return (
         <div className='ListContainer' onClick={() => updateFocusedMember(props.member)}>
