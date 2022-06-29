@@ -52,4 +52,45 @@ function getAssignedProjectTickets(userID: any, teamID: any){
     })
 }
 
-module.exports = {createTicketsTable, addTicket, getTeamTickets, getAssignedProjectTickets}
+function getAssignedProjectTicketNotes(userID: any, teamID: any){
+    let values = [teamID, userID]
+    let sql = "SELECT tc.comment_id, u.username AS author_username, u.discriminator AS author_discriminator, tc.comment_body AS body, tc.ticket_id AS relevant_ticket_id, tc.date_created FROM ticket_comment tc LEFT JOIN users u ON tc.author_user_id = u.user_id WHERE tc.ticket_id IN (SELECT ticket_id from tickets WHERE relevant_project_id IN(SELECT project_id FROM user_projects WHERE relevant_team_id= ? AND user_id= ?))"
+
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result);
+        });
+    })
+}
+
+function getAllTicketNotes(teamID: any){
+    let values = [teamID]
+    let sql = "SELECT tc.comment_id, u.username AS author_username, u.discriminator AS author_discriminator, tc.comment_body AS body, tc.ticket_id AS relevant_ticket_id, tc.date_created FROM ticket_comment tc LEFT JOIN users u ON tc.author_user_id = u.user_id WHERE tc.ticket_id IN (SELECT ticket_id from tickets WHERE relevant_project_id IN(SELECT project_id FROM projects WHERE team_id= ?))"
+
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result);
+        });
+    })
+}
+
+function getTicketByID(ticketID: number){
+    let sql = 'SELECT * FROM tickets WHERE ticket_id= ?'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, ticketID, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result);
+        });
+    })
+}
+
+function addTicketComment(ticketID: number, authorId: number, comment: string){
+    let values = [ticketID, authorId, getCurrentDate(), comment]
+    let sql = 'INSERT INTO ticket_comment SET ticket_id= ?, author_user_id= ?, date_created= ?, comment_body= ?'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result);
+        });
+    })
+}
+
+module.exports = {createTicketsTable, addTicket, getTeamTickets, getAssignedProjectTickets, getTicketByID, addTicketComment, getAssignedProjectTicketNotes, getAllTicketNotes}
