@@ -1,4 +1,5 @@
 import {connectionPool} from '../dbConnectionPool';
+import { Teammate } from '../Interfaces/teammate';
 import getCurrentDate from '../Services/getCurrentDate';
 const bcrypt = require('bcrypt');
 
@@ -85,6 +86,17 @@ function incrementTokenVersion(user_id: string){
     })
 }
 
+function getIdsForUsernameDiscriminatorList(teammates: Teammate){
+    let sql = 'SELECT user_id FROM users WHERE user_id IN (SELECT user_id FROM users WHERE username= ? AND discriminator= ?)'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, teammates, (err: any, result: any) => {
+            if(err) throw err
+            console.log(result)
+            return err ? reject(err) : resolve('ok')
+        })
+    })
+}
+
 module.exports = {
     addUser,
     getUsers, 
@@ -92,6 +104,7 @@ module.exports = {
     getUserByNameDiscriminator, 
     getValidTokenVersion,
     incrementTokenVersion,
-    checkUserTeam
+    checkUserTeam,
+    getIdsForUsernameDiscriminatorList
 };
 
