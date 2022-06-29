@@ -25,11 +25,12 @@ export const translateRole = {
                 console.log('Something broke the role translator...')
         }
     },
+
     TranslateProjectRole(team_role: number){
         if(team_role === undefined) return null
         switch(team_role){
             case 1:
-                return 'Team Owner'
+                return 'Project Lead'
             case 2:     
                 return 'Project Lead'
             case 3: 
