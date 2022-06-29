@@ -1,5 +1,7 @@
 import {connectionPool} from '../dbConnectionPool';
+import { Teammate } from '../Interfaces/teammate';
 import getCurrentDate from '../Services/getCurrentDate';
+let mysql = require('mysql');
 
 function addProject(creatorId: any, teamID: any, name: string, description: string) {
     let date = getCurrentDate()
@@ -33,6 +35,15 @@ function getProjectMembers(userID: any, teamID: any){
         })
     })
 }
+function getProjectMembersByProjectId(projectId: number){
+    let values = [projectId]
+    let sql = 'SELECT u.username, u.discriminator, up.role_id FROM users u LEFT JOIN user_projects up ON u.user_id = up.user_id WHERE project_id= ?'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
 function isUserOnProject(userID: any, projectID: any){
     let values = [userID, projectID]
     let sql = 'SELECT EXISTS(SELECT * FROM user_projects WHERE user_id= ? AND project_id= ?)'
@@ -42,13 +53,11 @@ function isUserOnProject(userID: any, projectID: any){
         })
     })
 }
-function getProjectIdByTeamIdAndProjectName(teamID: any, projectName: any){
+function getProjectIdByTeamIdAndProjectName(teamID: number, projectName: string){
     let values = [teamID, projectName]
-    console.log(values)
     let sql = 'SELECT project_id FROM projects WHERE team_id= ? AND name= ?'
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
-            console.log(result)
             return err ? reject(err) : resolve(result[0])
         })
     })
@@ -62,9 +71,19 @@ function getRelatedMemberDetails(userId: string, teamID: any){
         })
     })
 }
-function getRoleByUserIdProjectId(userID: any, projectID: any){
+function getRoleByUserIdProjectId(userID: number, projectID: number){
     let values = [userID, projectID]
     let sql = 'SELECT role_id FROM user_projects WHERE user_id= ? AND project_id= ?'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            if(err) throw err
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+function getRoleByUsernameDiscriminatorProjectId(username: string, discriminator: number, projectID: number){
+    let values = [username, discriminator, projectID]
+    let sql = 'SELECT up.role_id FROM user_projects up LEFT JOIN users u ON up.user_id = u.user_id WHERE username= ? AND discriminator= ? AND project_id= ?'
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
             if(err) throw err
@@ -81,17 +100,69 @@ function updateMemberRole(targetUserID: any, projectID: any, newRoleId: any){
         })
     })
 }
+function addListOfUsersToProject(newMemberIds: number[], project_id: number, team_id: number, currentUserId: number){
+    let values: any[] = []
+    let roleIdOfDev = 3
+    newMemberIds.forEach((member: number) => {
+        values.push([member, project_id, roleIdOfDev, team_id, currentUserId, getCurrentDate()])
+    })
+    let sql='INSERT INTO user_projects (user_id, project_id, role_id, relevant_team_id, enlisted_by_user_id, date_joined) VALUES ?'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, [values], (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+function projectMembersIdsByProjectId(projectID: number){
+    let sql = 'SELECT user_id FROM user_projects WHERE project_id= ?'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, projectID, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+//transactions
+async function transactionRemoveTargetUserFromProject(targetUserId: number, projectId: number){
+    let values = [targetUserId, projectId]
+    let deleteSql = 'DELETE FROM user_projects WHERE user_id= ? AND project_id= ?'
+    let unassignSql = 'UPDATE tickets SET assigned_user_id = NULL, resolution_status = 1 WHERE assigned_user_id= ? AND relevant_project_id= ?'
 
-// function getTeamMembersNotOnTargetProject(team_id: any, project_id: any){
-//     let values = [team_id, project_id]
-//     let sql = 'SELECT u.user_id FROM users u LEFT JOIN user_teams ut ON ut.user_id = u.user_id WHERE ut.team_id= ? AND u.user_id NOT IN (SELECT u.user_id FROM users u LEFT JOIN user_projects up ON up.user_id = u.user_id WHERE up.project_id= ?)'
-//     return new Promise<any>((resolve, reject) => {
-//         connectionPool.query(sql, values, (err: any, result: any) => {
-//             console.log(result)
-//             return err ? reject(err) : resolve(result)
-//         })
-//     })
-// } DOESNT WORK BECAUSE YOU CANT PASS DATA IN A GET REQUEST FOR WHATEVER REASON
+    connectionPool.getConnection(function(err: any, connection: any){
+        if(err) throw err;
+
+        try{
+            connection.beginTransaction(function(err: any){
+                if(err) throw err
+                    //unassign tickets
+                connection.query(deleteSql, values, (err: any) => {
+                    if (err) { 
+                        connection.rollback(function() {
+                            throw err;
+                        });
+                    }
+                })
+                //delete user_project
+                connection.query(unassignSql, values, (err: any) => {
+                    if (err) { 
+                        connection.rollback(function() {
+                            throw err;
+                        });
+                    }
+                })
+                //commit changes
+                connection.commit(function(err: any) {
+                    if (err) { 
+                        connection.rollback(function() {
+                        throw err;
+                        });
+                    }
+                })
+            })
+        } catch(e){
+            return console.log(e)
+        }
+    })
+}
 
 module.exports = { 
     addProject,
@@ -101,6 +172,11 @@ module.exports = {
     getProjectIdByTeamIdAndProjectName,
     getRelatedMemberDetails,
     getRoleByUserIdProjectId,
-    updateMemberRole
+    updateMemberRole,
+    getRoleByUsernameDiscriminatorProjectId,
+    transactionRemoveTargetUserFromProject,
+    getProjectMembersByProjectId,
+    addListOfUsersToProject,
+    projectMembersIdsByProjectId
 }
 
