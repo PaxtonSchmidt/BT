@@ -1,7 +1,7 @@
 .list{
     width: calc(100%-40px);
     background-color: $darkGrey;
-    height: 380px;
+    height: 395px;
     padding-left: 10px;
     padding-right: 5px;
     padding-bottom: 10px;
@@ -29,7 +29,7 @@
 }
 .listContainer{
     background-color: $darkGrey;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 .ticketListItemButton{
     color: $accentGrey;
@@ -130,4 +130,20 @@
 .projectMembersList{
     height: 320px;
     padding-bottom: 0px;
+}
+.ticketNoteListContainer{
+    background-color: $darkGrey;
+    flex-grow: 1;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+.ticketNoteList{
+    height: 268px;
+    border-bottom: 1px solid white;
+    display: flex;
+    flex-direction: column-reverse;
+}
+.ticketNoteList:hover{
+    border-bottom: 1px solid $dimYellow;
 }

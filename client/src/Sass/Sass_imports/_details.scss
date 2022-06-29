@@ -5,8 +5,8 @@
     min-height: 310px;
     max-height: 310px;
     width: 60%;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 5px;
+    margin-bottom: 10px;
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
@@ -40,9 +40,6 @@
     height: 45px; 
     margin-bottom: 5px;
 }
-.ticketDetailItem:hover{
-    border-bottom: 1px solid $dimYellow;
-}
 .discriminator{
     font-size: 11px;
     opacity: 30%;
@@ -70,9 +67,6 @@
     overflow-y: scroll;
     flex-grow: 1;
     max-height: 200px;
-}
-.detailsDescription:hover{
-    border-bottom: 1px solid $dimYellow;
 }
 .ticketDescriptionArea{
     margin: auto 0px;

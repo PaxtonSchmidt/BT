@@ -76,7 +76,14 @@
 .bi-arrow-bar-down:hover{
     color: $yellow;
 }
-
+.ticketNoteForm{
+    width: calc(100%-20px);
+    padding: 0px 10px 0px 10px;
+    transition: $transition;
+}
+.ticketNoteInput{
+    width: 100%;
+}
 .Mui-focused{
     color: $yellow !important;
 }

@@ -77,7 +77,6 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 10px;
 }
 .pageBodyContainer2 {
     display: flex;
@@ -108,8 +107,9 @@ body{
     flex-direction: row;
     align-items: left;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     min-width: 280px;
+    border-bottom: 1px solid $accentGrey;
 }
 .header{
     color: white;
