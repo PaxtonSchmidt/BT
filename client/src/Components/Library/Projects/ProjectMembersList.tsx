@@ -5,6 +5,7 @@ import ProjectMembersListItem from './ProjectMembersListItem'
 import plus from '../../Images/Icons/plus-lg.svg';
 import ProjectPotentialMembersListItem from './ProjectPotentialMembersListItem';
 import { Teammate } from '../../../API/interfaces/teammate';
+import postNewProjectMembers from '../../../API/Requests/Projects/PostNewProjectMembers';
 let deepClone = require('lodash.clonedeep')
 
 export default function ProjectMembersList() {
@@ -22,40 +23,38 @@ export default function ProjectMembersList() {
     let isPotentialProjectMembersEmpty: boolean = potentialProjectMembers.length < 1
 
     //this useEffect populates the membersList depending on which project option is selected
-    useEffect(() => {
-        function createProjectMembersList(projects: any){
-            //focusedProjectState defaults to All
-            if(focusedProjectState.name === 'All'){
-                let newMembersList: any = [];
-                projects.forEach((project: any) => project.project_members.forEach((member: any) => {
-                    let index = newMembersList.findIndex((object: any) => {
-                        return object.username === member.username
-                    })
-                    if(index !== -1){
-                        if(member.role_id < newMembersList[index].role_id){
-                            newMembersList[index].role_id = member.role_id 
-                        }
-                    } else {
-                        newMembersList.push(member)
+    function createProjectMembersList(projects: any){
+        //focusedProjectState defaults to All
+        if(focusedProjectState.name === 'All'){
+            let newMembersList: any = [];
+            projects.forEach((project: any) => project.project_members.forEach((member: any) => {
+                let index = newMembersList.findIndex((object: any) => {
+                    return object.username === member.username
+                })
+                if(index !== -1){
+                    if(member.role_id < newMembersList[index].role_id){
+                        newMembersList[index].role_id = member.role_id 
                     }
-                }))
-                return setMembers(newMembersList)
-            } else {
-                let newMembersList: any = [];
-                let project = projects.find((project: any) => project.name === focusedProjectState.name)
-                project?.project_members.forEach((member: any) => newMembersList.push(member))
-
-                if(project.role_id === 2 || project.role_id === 1){
-                    setCanUserManageMembers(true);
                 } else {
-                    setCanUserManageMembers(false);
+                    newMembersList.push(member)
                 }
-                setIsAddingMembers(false)
-                return setMembers(newMembersList)
+            }))
+            return setMembers(newMembersList)
+        } else {
+            let newMembersList: any = [];
+            let project = projects.find((project: any) => project.name === focusedProjectState.name)
+            project?.project_members.forEach((member: any) => newMembersList.push(member))
+
+            if(project.role_id === 2 || project.role_id === 1){
+                setCanUserManageMembers(true);
+            } else {
+                setCanUserManageMembers(false);
             }
+            setIsAddingMembers(false)
+            return setMembers(newMembersList)
         }
-        createProjectMembersList(projects)
-    }, [focusedProjectState])
+    }
+    useEffect(() => {createProjectMembersList(projects)}, [focusedProjectState])
 
     //This function and useEffect hook handle the process of opening the menu for Adding Members to project 
     async function setIsAddMemberMenuOpen(){
@@ -126,8 +125,8 @@ export default function ProjectMembersList() {
         }
     }
 
-    function handleSubmitAddedMembers(){
-        console.log('tittie')
+    async function handleSubmitAddedMembers(){
+        let response = await postNewProjectMembers(addedMembers, focusedProjectState.name)
     }
 
     return (
@@ -152,7 +151,7 @@ export default function ProjectMembersList() {
                 </div>
 
                 {isDirty ? 
-                <button className='button userDetailsButton fadeIn' onClick={handleSubmitAddedMembers} style={{opacity: '100%'}}>
+                <button className='button userDetailsButton fadeIn' onClick={handleSubmitAddedMembers} style={{opacity: '100%', cursor: 'pointer'}}>
                     Submit Changes
                 </button>       
                 :<></>}
@@ -180,12 +179,12 @@ export default function ProjectMembersList() {
                 </div>
 
                 {manageableProjectMembers ? 
-                <div className='addMemberButton scaleYonHover' onClick={setIsAddMemberMenuOpen}>
+                <div className='addItemButton scaleYonHover' onClick={setIsAddMemberMenuOpen}>
                     <img src={plus} style={{marginLeft: '10px', marginRight: '10px'}}/>
                     <p style={{margin: '5px 10px 5px 0px'}}>{`Add Teammates to ${focusedProjectState.name}`}</p>
                 </div>
                 :
-                <div className='addMemberButton scaleYonHover' style={{height: '27px'}}></div>
+                <div className='addItemButton scaleYonHover' style={{height: '27px'}}></div>
                 }
                 </>
             }   
