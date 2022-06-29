@@ -19,6 +19,7 @@ function Tickets() {
                 }
             }).then(res => res.json())
             let tickets = await response
+            console.log(tickets)
             updateFocusedTicket(tickets[0])          
 
             setTickets(tickets)
