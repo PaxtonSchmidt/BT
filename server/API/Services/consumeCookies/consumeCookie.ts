@@ -37,3 +37,9 @@ export default function consumeCookie(cookie: any, dataNeeded: string) {
         console.log(`ERROR: Incorrect use of consumeCookie service function. Use entireTokenFlag, tokenUserIdFlag or tokenTeamIdFlag in the second argument`);
     }
 }
+
+export interface userTeamRoleCombo {
+    userID: number,
+    teamID: number,
+    roleID: number
+}
