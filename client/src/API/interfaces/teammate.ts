@@ -1,4 +1,5 @@
 export interface Teammate {
     username: string,
-    discriminator: number
+    discriminator: number,
+    team_role: number
 }
