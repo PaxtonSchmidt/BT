@@ -64,7 +64,7 @@ export default function ProjectMembersManage(){
     if(focusedMemberDetails !== undefined){
         if(isFocusedProjectAll){
             //since team_role is determined by your highest project_role, this works
-            role = translateRole.TranslateRole(focusedMemberState.role_id)
+            role = translateRole.TranslateProjectRole(focusedMemberState.role_id)
             enlistedByUsername = ''
             enlistedByDiscriminator = ''
         } else {
@@ -158,6 +158,7 @@ export default function ProjectMembersManage(){
                                 </span>
                             </div>
                         </div>
+                        {focusedProjectState.name !== 'All' && 
                         <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between'}}>
                             <div className='memberListRowSection' style={{textAlign: 'left'}}>
                                 <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content'}}>
@@ -167,7 +168,7 @@ export default function ProjectMembersManage(){
                             {isUserAllowedToEditRole ? 
                             <UpdateUserProjectRole setIsFormDirty={setIsDirty} isFormDirty={isDirty} word={word} setWord={setWord}/>
                             :<></>}
-                        </div>
+                        </div>}
 
                         {isFocusedMemberProjectAllOrUndefined ? <></> : 
                         <>
@@ -187,7 +188,7 @@ export default function ProjectMembersManage(){
                             <div className='listItem listRow memberRow manageMemberListRow ' style={{justifyContent: 'space-between'}}>
                             <div className='memberListRowSection' style={{textAlign: 'left'}}>
                                 <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content'}}>
-                                    Joined the {focusedProjectState.name} project
+                                    Joined this project 
                                 </span>
                                 <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content'}}>
                                     {`\u00A0on\u00A0${date}`}
