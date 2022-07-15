@@ -12,7 +12,6 @@ let users = require('../../Queries/userQueries')
 let teams = require('../../Queries/teamQueries')
 
 async function submitNewTicket(req: any, res: any) {
-    console.log(req.body.project)
     let isUserOnProject = false;
     let isAssigneeOnProject = false;
     let userTeamRoleIds = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
