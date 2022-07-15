@@ -1,7 +1,11 @@
 import e from 'express';
-import consumeCookie from '../../Services/consumeCookies/consumeCookie';
+import * as Express from 'express'
+import consumeCookie, { userTeamRoleCombo } from '../../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
 import { consumeRowDataPacket } from "../../Services/consumeRowDataPacket";
+import { TeammateDetail } from '../../Interfaces/teammate';
+import composeTeammateInfo, { TeammatesInformation } from '../../Services/composeTeammateInfo';
+import composeTeamDetails from '../../Services/composeTeamDetails';
 let authorizationQueries = require('../../Queries/AuthQueries/authorizationQueries')
 let teamQueries = require('../../Queries/teamQueries')
 let Roles = require('./Roles')
@@ -10,19 +14,11 @@ let teams = require('../../Queries/teamQueries')
 let projects = require('../../Queries/projectQueries')
 
 async function inviteUserToTeam(req: any, res: any) {
+    let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
     let isAlreadyOnTeam = true;
     let isInviteExisting = true; 
-    let userTeamIDCombo: any = [];
-    let currentUserRoleID = ''; 
     let recipientID = ''; 
-    
-    try{
-        userTeamIDCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserAndTeamIdFlag);
-        currentUserRoleID = await authorizationQueries.fetchUserTeamRoleID(req, userTeamIDCombo);
-    }catch(e){
-        return res.status(500).send({message: 'Server couldnt find role information...'})
-    }
-
+    console.log('got here')
     try{
         let recipient = await users.getUserByNameDiscriminator(req.body.invitee, req.body.discriminator, res)
         recipientID = recipient.user_id
@@ -32,17 +28,15 @@ async function inviteUserToTeam(req: any, res: any) {
     }catch(e){
         return res.status(400).send({message: 'That user doesnt exist...'})
     }
-
     try{
-        isInviteExisting = consumeRowDataPacket(await teams.getInviteBySenderIDRecipientIDTeamID(userTeamIDCombo.userID, recipientID, userTeamIDCombo.teamID, res))
-        isAlreadyOnTeam = consumeRowDataPacket(await teams.fetchIsOnTeam(recipientID, userTeamIDCombo.teamID));
+        isInviteExisting = consumeRowDataPacket(await teams.getInviteBySenderIDRecipientIDTeamID(userTeamRoleCombo.userID, recipientID, userTeamRoleCombo.teamID, res))
+        isAlreadyOnTeam = consumeRowDataPacket(await teams.fetchIsOnTeam(recipientID, userTeamRoleCombo.teamID));
     }catch(e){
         return res.status(500).send({message: 'Server couldnt check invite information...'})
     }
-
     //if user is the owner they can invite others to the team if the recipient isnt already on the 
     //team, the recipient exists and the invite doesnt already exist
-    if(currentUserRoleID !== Roles.Legend.owner){
+    if(userTeamRoleCombo.roleID !== Roles.Legend.owner){
         return res.status(401).send({message: "You can't invite people to this team..."})
     } else if(isAlreadyOnTeam === true){
         return res.status(409).send({message: "That user is already on this team..."})
@@ -50,6 +44,7 @@ async function inviteUserToTeam(req: any, res: any) {
         return res.status(400).send({message: 'Invite already exists...'});
     } else {
         try{
+            let userTeamIDCombo = {userID: userTeamRoleCombo.userID, teamID: userTeamRoleCombo.teamID}
             //now add the invite
             await teamQueries.addTeamInvite(req, res, userTeamIDCombo, recipientID)
             return res.status(200).send({message: 'Invited user'})
@@ -58,7 +53,6 @@ async function inviteUserToTeam(req: any, res: any) {
         }
     }
 }
-
 async function addProject(req: any, res: any){
     let projectIdAtAttemptedProjectName = {project_id: ''};
     let userTeamRoleCombo: any = [];
@@ -89,5 +83,56 @@ async function addProject(req: any, res: any){
         return res.status(200).send({message: 'Added Project'})
     }
 }
+async function getTeammates(req: Express.Request, res: Express.Response){
+    let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+    let teammateList: TeammateDetail[] = []
+    if(userTeamRoleCombo.roleID === 1){
+        try{
+            let teammateDetailsPacket = await teamQueries.getUserDetailsOnTeam(userTeamRoleCombo.teamID)
+            teammateDetailsPacket.forEach((teammate: any) => {
+                let teammateItem: TeammateDetail = {username: teammate.username, discriminator: teammate.discriminator, team_role: teammate.team_role, email: teammate.email}
+                teammateList.push(teammateItem)    
+            });
+        }catch(e){
+            return res.status(500).send({message: 'Server couldnt get teammates information...'})
+        }
+    } else {
+        return res.status(403).send({message: 'You do not have the ability to see all the members on this team...'})
+    }
+    return res.status(200).send(teammateList)
+}
+async function getTeammatesInformation(req: Express.Request, res: Express.Response){
+    let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+    let teammatesInformation: TeammatesInformation[] = []
+    if(userTeamRoleCombo.roleID === 1){
+        try{
+            let teammateInfoPacket: any = await teams.getTeammatesInfo(userTeamRoleCombo.teamID)
+            let teammateAssignedProjectsPacket: any = await teams.getTeammatesAssignedProjects(userTeamRoleCombo.teamID)       
+            teammatesInformation = composeTeammateInfo(teammateInfoPacket, teammateAssignedProjectsPacket)
+            return res.status(200).send(teammatesInformation)
+        }catch(e){
+            return res.status(500).send({message: 'Server couldnt get teammates information...'})
+        }
+    }else{
+        return res.status(403).send({message: "You do not have the ability to see all of your teammates' information..."})
+    }
+}
 
-module.exports = { inviteUserToTeam, addProject }
+async function getTeamDetails(req: Express.Request, res: Express.Response){
+    let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+    if(userTeamRoleCombo.roleID === 1){
+        try{
+            let ticketCount = await teams.getTicketCount(userTeamRoleCombo.teamID)
+            let teamDetailsPacket = await teams.getTeamDetailsPacket(userTeamRoleCombo.teamID)
+            let teamMemberCount = await teams.getTeammateCount(userTeamRoleCombo.teamID)
+            let teamDetails =  composeTeamDetails(ticketCount[0], teamMemberCount[0], teamDetailsPacket[0])
+            return res.status(200).send(teamDetails)
+        }catch(e){
+            return res.status(500).send({message: 'Server couldnt get team details...'})
+        }
+    }else {
+        return res.status(403).send({message:'You do not have permission to acccess this information...'})
+    }
+}
+
+module.exports = { inviteUserToTeam, addProject, getTeammates, getTeammatesInformation, getTeamDetails }
