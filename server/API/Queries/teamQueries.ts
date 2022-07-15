@@ -114,6 +114,56 @@ function getUsersOnTeam(teamID: string){
         })
     })
 }
+function getUserDetailsOnTeam(teamID: string){
+    let sql = 'SELECT u.username, u.discriminator, u.email, ut.role_id AS team_role FROM users u LEFT JOIN user_teams ut ON u.user_id = ut.user_id WHERE ut.team_id= ?'
+    let values = [teamID]
+    
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+function getTeammatesInfo(teamID: number){
+    let sql='SELECT uA.username, uA.discriminator, ut.role_id, ut.date_joined, uB.username AS enlisted_by_username, uB.discriminator AS enlisted_by_discriminator FROM user_teams ut LEFT JOIN users uA ON ut.user_id = uA.user_id LEFT JOIN users uB ON ut.enlisted_by_user_id = uB.user_id WHERE team_id= ?;'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, teamID, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+function getTeammatesAssignedProjects(teamID: number){
+    let sql='SELECT u.username, u.discriminator, p.name, up.role_id FROM users u LEFT JOIN user_projects up ON u.user_id = up.user_id LEFT JOIN projects p ON up.project_id = p.project_id WHERE up.project_id IN (SELECT project_id FROM projects WHERE team_id= ?)'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, teamID, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+} 
+function getTicketCount(teamID: number){
+    let sql='SELECT COUNT(*) FROM tickets WHERE relevant_project_id IN (SELECT project_id FROM projects WHERE team_id= ?)'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, teamID, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+function getTeamDetailsPacket(team_id: number){
+    let sql = 'SELECT u.username AS owner_username, u.discriminator AS owner_discriminator, t.date_created FROM teams t LEFT JOIN users u ON t.owner_user_id = u.user_id where t.team_id= ?;'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, team_id, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+function getTeammateCount(teamID: number){
+    let sql='SELECT COUNT(*) FROM user_teams WHERE team_id= ?'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, teamID, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
 
 
 
@@ -128,5 +178,11 @@ module.exports =
     getInviteById, 
     addUserToTeam,
     getSessionTeam,
-    getUsersOnTeam
+    getUsersOnTeam,
+    getUserDetailsOnTeam,
+    getTeammatesInfo,
+    getTeammatesAssignedProjects,
+    getTicketCount,
+    getTeamDetailsPacket,
+    getTeammateCount
 }
