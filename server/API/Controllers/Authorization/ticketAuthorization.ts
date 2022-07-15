@@ -12,10 +12,8 @@ async function getTicketNotes(req: Express.Request, res: Express.Response){
     if(userTeamRoleCombo.roleID === 1){
         try{
             allNotes = await tickets.getAllTicketNotes(userTeamRoleCombo.teamID)
-            console.log(allNotes)
             return res.status(200).send(allNotes)
         } catch(e){
-            console.log(e)
             return res.status(500).send({message: 'Server couldnt fetch the notes...'})
         }
     } else if(userTeamRoleCombo.roleID === 2 || userTeamRoleCombo.roleID === 3){
@@ -42,7 +40,6 @@ async function submitTicketComment(req: Express.Request, res: Express.Response){
         let isUserIDInMembersList = projectMembersIds?.findIndex((member: any)=>{if(member.user_id === userTeamRoleCombo.userID){return true}}) !== -1
         isUserAllowedToComment = isUserIDInMembersList
     }catch(e){
-        console.log(e)
         return res.status(500).send({message: 'Server couldnt get the ticket information...'})
     }
 
