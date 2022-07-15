@@ -3,11 +3,13 @@ import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FocusedTicketActionCreators } from '../../../Redux';
+import { State } from '../../../Redux/reducers';
 import TicketListItem from './TicketListItem';
 
 function Tickets() {
     let dispatch = useDispatch();
     const { updateFocusedTicket } = bindActionCreators(FocusedTicketActionCreators, dispatch)
+    const focusedTicketState = useSelector((state: State) => state.focusedTicket)
     const [tickets, setTickets] = useState<any[]>([]);
 
     useEffect(() => {
@@ -18,21 +20,48 @@ function Tickets() {
                     'Content-Type': 'application/json'
                 }
             }).then(res => res.json())
-            let tickets = await response
-            console.log(tickets)
-            updateFocusedTicket(tickets[0])          
-
+            let tickets = await response    
+            if(focusedTicketState.ticket_id === undefined){
+                updateFocusedTicket(tickets[0])
+            }     
             setTickets(tickets)
             return await response
         }
         getTickets();
-        
-    }, [])//empty array passed as second argument to useEffect can be used to tell the hook to run at least once without causing infinite loop
+    }, [])
 
     if(tickets.length === 0){
-        return<></>
+        return(
+        <Container className='pageBodyContainer1 fadeIn'>
+            <div className='listContainer'>
+                <div className='listRow'>
+                    <div className='listRowSection leftSection'>
+                        <span className='rowItem' style={{paddingLeft: '30px'}}>
+                            Title
+                        </span>
+                    </div>
+                    <div className='listRowSection rightSection'>
+                        <span className='rowItem'>
+                            Project
+                        </span> 
+                        <span className='rowItem'>
+                            Assignee
+                        </span>
+                        <span className='rowItem'>
+                            Status
+                        </span>
+                        <span className='rowItem'>
+                            Priority
+                        </span>
+                    </div>
+                </div>
+                <div className='list componentGlow delayedFadeIn' style={{textAlign: 'center', color: 'white'}}>
+                    <p style={{paddingTop: '10px'}}>No tickets</p>
+                </div>
+            </div>
+        </Container>
+        )
     }else{
-        
         //needs pagination
         return (
         <Container className='pageBodyContainer1 fadeIn'>
