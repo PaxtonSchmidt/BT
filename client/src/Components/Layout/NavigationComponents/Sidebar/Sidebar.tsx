@@ -19,11 +19,11 @@ export default function Sidebar(props: Props) {
     return (
         <div className='sideBar navComponent fadeIn'>
             <div >
-                <div className='navItem sideBarItem'>
+                {/* <div className='navItem sideBarItem'>
                     <Link to='dashboard'>
                     <img src={house} alt='go to dashboard' className='sidebarIcon scaleYonHover longFadeIn'/>
                     </Link>
-                </div>
+                </div> */}
                 
                 <div className='navItem sideBarItem'>
                     <Link to='tickets'>
