@@ -55,10 +55,10 @@ function App() {
             <NavigationSuite isTeamSelected={isTeamSelected}/>
           }
           >
-            <Route path='dashboard' //must be logged in and and have a selected team
+            {/* <Route path='dashboard' //must be logged in and and have a selected team
               element={ 
                 <DashboardPage isTeamSelected={isTeamSelected}/>
-            }/>
+            }/> */}
 
             <Route path='tickets' //must be logged in and and have a selected team
               element={
