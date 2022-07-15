@@ -21,7 +21,7 @@ function TeamList(setIsTeamSelected: Props) {
         console.log(await postSelectTeam({team}))
         authService.selectTeam();
         setIsTeamSelected.setIsTeamSelected(true);
-        navigate('/dashboard')
+        navigate('/tickets')
     }  
 
     function handleGoToCreateTeam() {
