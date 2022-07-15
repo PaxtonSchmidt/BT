@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
 import postInviteToTeam from '../../../API/Requests/Invites/PostInviteToTeam';
@@ -27,6 +27,7 @@ return(
                             handleSubmit(e)
                             }} 
                             onBlur={handleBlur}
+                            className='fadeIn'
                         >
                             
                         <div className='formContainer' >
@@ -70,6 +71,7 @@ return(
                     )}
                 }
             </Formik>
+            
         </>
     )
 }
