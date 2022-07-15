@@ -27,7 +27,7 @@ export default function ProjectListItem(props: Props) {
     }
 
     return (
-        <div onClick={() => handleSelect(name)} className='sideScrollListItem scaleYonHover fadeIn' id={name}>
+        <div onClick={() => handleSelect(name)} className='sideScrollListItem scaleYonHover fadeIn' style={{whiteSpace: 'nowrap'}} id={name}>
             {name}
         </div>
     )
