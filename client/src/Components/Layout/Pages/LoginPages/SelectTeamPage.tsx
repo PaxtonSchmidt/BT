@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { authService } from '../../../../Services/AuthService';
-import { SessionActionCreators, TeamsActionCreators } from '../../../../Redux';
+import { FocusedTicketActionCreators, SessionActionCreators, TeamsActionCreators } from '../../../../Redux';
 import { Session } from '../../../../Redux/interfaces/session';
 import { State } from '../../../../Redux/reducers';
 import SelectTeamPageButtons from '../../../Library/Buttons/buttonsDesktop';
@@ -20,9 +20,11 @@ export default function SelectTeamPage({ setIsTeamSelected }: Props) {
     const dispatch = useDispatch();
     const { updateTeams } = bindActionCreators(TeamsActionCreators, dispatch)
     const { updateSession } = bindActionCreators(SessionActionCreators, dispatch)
+    const { updateFocusedTicket } = bindActionCreators(FocusedTicketActionCreators, dispatch)
     const loginState = useSelector((state: State) => state.login)
     let [isBusy, setBusy] = useState(true)
     let nullSession: any = {} 
+    let nullTicket: any = {} 
 
     useEffect(() => {
     fetch('/teams/getTeams')
@@ -42,8 +44,10 @@ export default function SelectTeamPage({ setIsTeamSelected }: Props) {
         .then(jsonRes =>{setBusy(false); return updateTeams(jsonRes)});
 
         updateSession(nullSession)
+        updateFocusedTicket(nullTicket)
     }
     , []) 
+
 
     if(loginState === 1) {
         return(
