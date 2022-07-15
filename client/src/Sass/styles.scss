@@ -9,6 +9,7 @@
 @import "./Sass_imports/_javascriptApplied.scss";
 @import "./Sass_imports/_sideScrollList.scss";
 @import "./Sass_imports/_manageMembersWidget.scss";
+@import "./Sass_imports/_dataVis.scss";
 
 html {
     background-color: $black;
@@ -40,7 +41,7 @@ body{
     margin-right: auto;
 } 
 .pageContentContainer{
-    padding-right: 5px;
+    padding-right: 15px;
     width: 100%;
     height: fit-content;
     margin-top: 50px;
@@ -61,17 +62,22 @@ body{
 .projectPageContent{
     margin-top: -173px;
 }
-.projectPageBodyContainer1{
+.manageTeamPageContent{
+    margin-top: -153px;
+}
+.pageBodyContainer5{
+    display: flex;
+    flex-direction: row;
     width: 100%;
     padding-bottom: 10px;
     padding-top: 10px;
     border-bottom: 1px solid $accentGrey;
 }
-.projectPageBodyQuadrant{
+.pageBodyQuadrant{
     display: flex;
     width: 50%;
     border-right: 1px solid $accentGrey;
-    justify-content: left;
+    justify-content: space-between;
 }
 .pageBodyContainer1{
     display: flex;
@@ -108,14 +114,16 @@ body{
     align-items: left;
     flex-wrap: wrap;
     justify-content: space-between;
+    gap: 10px;
     min-width: 280px;
     border-bottom: 1px solid $accentGrey;
 }
 .header{
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     margin: 0px;
     margin-bottom: 10px;
+    height: 20px;
 }
 .loginPage{
     background-image: url('../Components/Images/Pic/black\ sand.jpeg');
@@ -144,7 +152,12 @@ body{
     width: 100%;
     justify-content: center;
 }
-
+.defaultCursor{
+    cursor: default !important;
+}
+.noPadding{
+    padding-left: 0px !important;
+}
 .fadeIn{
     animation: fadeIn 1s;
 }

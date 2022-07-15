@@ -250,11 +250,12 @@
   white-space: nowrap;
 }
 
-.updateRoleButton {
+.inComponentButton {
   background-color: #ffffff31;
   padding: 3px 5px 3px 5px;
   border-radius: 10px;
   cursor: pointer;
+  color: white;
 }
 
 .roleUpdatePending {
@@ -284,8 +285,8 @@
   left: 10px;
   cursor: pointer;
   margin-top: 15px;
-  margin-right: auto;
   margin-left: auto;
+  margin-right: auto;
 }
 
 .removeMemberButton {
@@ -349,6 +350,33 @@
           transform: translateY(-2px);
   -webkit-transition: 0.5s;
   transition: 0.5s;
+}
+
+.chartTypeButton {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #222222;
+  border: 1px solid #ffffff31;
+}
+
+.selectedChartTypeButton {
+  background-color: #ffffff31;
+  -webkit-transform: translateY(-1px);
+          transform: translateY(-1px);
+}
+
+.teammateProjectButton {
+  background-color: #222222;
+  border: 1px solid #ffffff31;
+  border-radius: 10px;
+  padding: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  cursor: pointer;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 .formContainer {
@@ -443,6 +471,8 @@
 .twist {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
+  padding-left: 20px;
+  padding-right: 0px;
   fill: #efff0a;
 }
 
@@ -454,6 +484,10 @@
 
 .FormContainer:hover {
   border-bottom: 1px solid #efff0a6b;
+}
+
+.svgSibling {
+  margin-right: 10px;
 }
 
 .svgSibling:hover ~ .bi-arrow-bar-down {
@@ -474,6 +508,7 @@
 }
 
 .bi-arrow-bar-down {
+  padding-right: 10px;
   cursor: pointer;
   color: #ffffff31;
   -webkit-transition: 0.5s;
@@ -485,6 +520,9 @@
 }
 
 .ticketNoteForm {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   width: calc(100%-20px);
   padding: 0px 10px 0px 10px;
   -webkit-transition: 0.5s;
@@ -584,7 +622,7 @@ input[type=number] {
 .list {
   width: calc(100%-40px);
   background-color: #222222;
-  height: 395px;
+  height: 385px;
   padding-left: 10px;
   padding-right: 5px;
   padding-bottom: 10px;
@@ -730,7 +768,9 @@ input[type=number] {
 }
 
 .memberListRowSection {
-  width: 150px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   margin-bottom: 10px;
 }
 
@@ -766,28 +806,82 @@ input[type=number] {
 
 .ticketNoteListContainer {
   background-color: #222222;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  margin-left: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   margin-bottom: 10px;
   margin-top: 5px;
+  width: 50%;
+  min-width: 250px;
+  height: 340px;
+  padding-bottom: 10px;
 }
 
 .ticketNoteList {
-  height: 268px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   border-bottom: 1px solid white;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   -webkit-box-orient: vertical;
   -webkit-box-direction: reverse;
       -ms-flex-direction: column-reverse;
           flex-direction: column-reverse;
+  padding-bottom: 0px;
+  padding-left: 10px;
+  padding-right: 5px;
+  overflow-y: scroll;
+  overscroll-behavior: none;
+  width: calc(100%-20px);
 }
 
 .ticketNoteList:hover {
   border-bottom: 1px solid #efff0a6b;
+}
+
+.noteListItem {
+  background-color: transparent;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: left;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  cursor: default;
+  margin-bottom: 5px;
+  height: -webkit-fit-content !important;
+  height: -moz-fit-content !important;
+  height: fit-content !important;
+  width: 100%;
+}
+
+.teammateProjectList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  height: 70px;
+  width: 100%;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  overflow-y: scroll;
 }
 
 * {
@@ -1051,18 +1145,19 @@ input[type=number] {
 .ticketDetailsContainer {
   color: white;
   background-color: #222222;
-  min-width: 280px;
-  min-height: 310px;
-  max-height: 310px;
-  width: 60%;
+  height: 320px;
+  min-width: 250px;
   margin-top: 5px;
-  margin-bottom: 10px;
   padding-top: 10px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  width: 10%;
 }
 
 .openFormDetailsHeight {
@@ -1112,6 +1207,7 @@ input[type=number] {
   opacity: 30%;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  margin-bottom: 2px;
 }
 
 .ticketDetailItem:hover > .detailDiscriminator {
@@ -1133,7 +1229,6 @@ input[type=number] {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  height: calc(100% - 30px);
 }
 
 .detailsDescription {
@@ -1144,15 +1239,13 @@ input[type=number] {
       -ms-flex-pack: center;
           justify-content: center;
   border-bottom: 1px solid #ffffff31;
-  padding-bottom: 10px;
   cursor: default;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   overflow-y: scroll;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  max-height: 200px;
+  height: 149px;
+  margin-top: auto;
+  margin-bottom: 10px;
 }
 
 .ticketDescriptionArea {
@@ -1161,6 +1254,38 @@ input[type=number] {
   height: -moz-fit-content;
   height: fit-content;
   vertical-align: middle;
+}
+
+.teamDetails {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #222222;
+  height: 100px;
+}
+
+.teamDetailsBodyContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.teamDetailSection {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 33%;
+}
+
+.teamDetailItem {
+  cursor: default;
+  text-align: center;
 }
 
 .FormContainerTransition {
@@ -1296,6 +1421,44 @@ input[type=number] {
   text-align: left;
 }
 
+.pieChart {
+  height: 325px;
+  padding: 10px;
+}
+
+.chartLabel {
+  fill: #ffffff;
+  font-size: 4px;
+}
+
+.chartValue {
+  font-size: 5px;
+  fill: #efff0a;
+}
+
+.noDataChartWarning {
+  color: #ffffff;
+  width: 100%;
+  text-align: center;
+  margin-bottom: auto;
+}
+
+.selectChartButtons {
+  width: 100%;
+  height: 45px;
+  border-bottom: 1px solid white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 html {
   background-color: #1a1a1a;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -1329,7 +1492,7 @@ body {
 }
 
 .pageContentContainer {
-  padding-right: 5px;
+  padding-right: 15px;
   width: 100%;
   height: -webkit-fit-content;
   height: -moz-fit-content;
@@ -1361,22 +1524,33 @@ body {
   margin-top: -173px;
 }
 
-.projectPageBodyContainer1 {
+.manageTeamPageContent {
+  margin-top: -153px;
+}
+
+.pageBodyContainer5 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   width: 100%;
   padding-bottom: 10px;
   padding-top: 10px;
   border-bottom: 1px solid #ffffff31;
 }
 
-.projectPageBodyQuadrant {
+.pageBodyQuadrant {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   width: 50%;
   border-right: 1px solid #ffffff31;
-  -webkit-box-pack: left;
-      -ms-flex-pack: left;
-          justify-content: left;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .pageBodyContainer1 {
@@ -1454,15 +1628,17 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  gap: 10px;
   min-width: 280px;
   border-bottom: 1px solid #ffffff31;
 }
 
 .header {
   color: white;
-  font-size: 20px;
+  font-size: 18px;
   margin: 0px;
   margin-bottom: 10px;
+  height: 20px;
 }
 
 .loginPage {
@@ -1503,6 +1679,14 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.defaultCursor {
+  cursor: default !important;
+}
+
+.noPadding {
+  padding-left: 0px !important;
 }
 
 .fadeIn {

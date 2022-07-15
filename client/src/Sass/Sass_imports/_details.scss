@@ -1,17 +1,16 @@
 .ticketDetailsContainer{
     color: white;
     background-color: $darkGrey;
-    min-width: 280px;
-    min-height: 310px;
-    max-height: 310px;
-    width: 60%;
+    height: 320px;
+    min-width: 250px;
     margin-top: 5px;
-    margin-bottom: 10px;
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
     transition: $transition;
+    flex-grow: 1;
+    width: 10%;
 }
 .openFormDetailsHeight{
     min-height: 380px;
@@ -44,6 +43,7 @@
     font-size: 11px;
     opacity: 30%;
     transition: $transition;
+    margin-bottom: 2px;
 }
 .ticketDetailItem:hover > .detailDiscriminator{
     opacity: 100%;
@@ -55,21 +55,40 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: calc(100% - 30px);
 }
 .detailsDescription{
     display: flex;
     justify-content: center;
     border-bottom: 1px solid $accentGrey;
-    padding-bottom: 10px;
     cursor: default;
     transition: $transition;
     overflow-y: scroll;
-    flex-grow: 1;
-    max-height: 200px;
+    height: 149px;
+    margin-top: auto;
+    margin-bottom: 10px;
 }
 .ticketDescriptionArea{
     margin: auto 0px;
     height: fit-content;
     vertical-align: middle;
+}
+.teamDetails{
+    flex-grow: 1;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: $darkGrey;
+    height: 100px;
+}
+.teamDetailsBodyContainer{
+    display: flex;
+    justify-content: space-around;
+}
+.teamDetailSection{
+    display: flex;
+    justify-content: space-around;
+    width: 33%;
+}
+.teamDetailItem{
+    cursor: default;
+    text-align: center;
 }

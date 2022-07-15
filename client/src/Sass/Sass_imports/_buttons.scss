@@ -70,11 +70,12 @@
     cursor: pointer;
     white-space: nowrap;
 }
-.updateRoleButton{
+.inComponentButton{
     background-color: $accentGrey;
     padding: 3px 5px 3px 5px;
     border-radius: 10px;
     cursor: pointer;
+    color: white;
 }
 .roleUpdatePending{
     border: 1px solid $dimYellow;
@@ -96,8 +97,8 @@
     left: 10px;
     cursor: pointer;
     margin-top: 15px;
-    margin-right: auto;
     margin-left: auto;
+    margin-right: auto;
 }
 .removeMemberButton{
     position: relative;
@@ -138,4 +139,23 @@
 .scaleY{
     transform: translateY(-2px);
     transition: $transition;
+}
+.chartTypeButton{
+    height: fit-content; 
+    background-color: $darkGrey;
+    border: 1px solid #ffffff31;
+}
+.selectedChartTypeButton{
+    background-color: $accentGrey;
+    transform: translateY(-1px);
+}
+.teammateProjectButton{
+    background-color: $darkGrey;
+    border: 1px solid $accentGrey;
+    border-radius: 10px;
+    padding: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+    height: fit-content;
 }

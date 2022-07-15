@@ -51,6 +51,8 @@
 }
 .twist{
     transform: rotate(180deg);
+    padding-left: 20px;
+    padding-right: 0px;
     fill: $yellow;
 }
 .twist:hover{
@@ -59,6 +61,9 @@
 }
 .FormContainer:hover{
     border-bottom: 1px solid $dimYellow;
+}
+.svgSibling{
+    margin-right: 10px;
 }
 .svgSibling:hover ~ .bi-arrow-bar-down{
     fill: $yellow;
@@ -69,6 +74,7 @@
     align-items: center;
 }
 .bi-arrow-bar-down{
+    padding-right: 10px;
     cursor: pointer;
     color: $accentGrey;
     transition: $transition;
@@ -77,6 +83,7 @@
     color: $yellow;
 }
 .ticketNoteForm{
+    height: fit-content;
     width: calc(100%-20px);
     padding: 0px 10px 0px 10px;
     transition: $transition;
