@@ -35,23 +35,23 @@ export default function UpdateUserProjectRole(props: Props) {
         <>
             {isOpen ? 
             <div style={{marginBottom: '10px'}}>
-                <span id='RoleUpdate' className='fadeIn updateRoleButton scaleYonHover' onClick={() => handleClick('Project Lead')} style={{display: 'inline-block', width: 'fit-content'}}>
+                <span id='RoleUpdate' className='fadeIn inComponentButton scaleYonHover' onClick={() => handleClick('Project Lead')} style={{display: 'inline-block', width: 'fit-content'}}>
                     <div>Project Lead</div>
                 </span>
-                <span id='RoleUpdate' className='fadeIn updateRoleButton scaleYonHover' onClick={() => handleClick('Developer')} style={{display: 'inline-block', width: 'fit-content', marginLeft: '2px'}}>
+                <span id='RoleUpdate' className='fadeIn inComponentButton scaleYonHover' onClick={() => handleClick('Developer')} style={{display: 'inline-block', width: 'fit-content', marginLeft: '2px'}}>
                     <div>Developer</div>
                 </span>
-                <span id='RoleUpdate' className='fadeIn updateRoleButton scaleYonHover resetRolesButton' onClick={handleReset} style={{display: 'inline-block', width: 'fit-content'}}>
+                <span id='RoleUpdate' className='fadeIn inComponentButton scaleYonHover resetRolesButton' onClick={handleReset} style={{display: 'inline-block', width: 'fit-content'}}>
                     <div>X</div>
                 </span>
             </div>
             :
             <div className='memberListRowSection'>
-                <span id='RoleUpdate' className='rowItem fadeIn updateRoleButton scaleYonHover' onClick={handleClick} style={{display: 'inline-block', width: 'fit-content', textAlign: 'center'}}>
+                <span id='RoleUpdate' className='rowItem fadeIn inComponentButton scaleYonHover' onClick={handleClick} style={{display: 'inline-block', width: 'fit-content', textAlign: 'center'}}>
                     {props.word}
                 </span>
                 {props.isFormDirty ? 
-                <span id='RoleUpdate' className='updateRoleButton scaleYonHover resetRolesButton' onClick={handleReset} style={{display: 'inline-block', width: 'fit-content'}}>
+                <span id='RoleUpdate' className='inComponentButton scaleYonHover resetRolesButton' onClick={handleReset} style={{display: 'inline-block', width: 'fit-content'}}>
                     <div>X</div>
                 </span>
                 :<></>}
