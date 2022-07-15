@@ -12,11 +12,17 @@ interface Props{
 export default function ProjectMembersListItem(props: Props) {
     const dispatch = useDispatch();
     const { updateFocusedMember } = bindActionCreators(FocusedMemberActionCreators, dispatch)
+    const focusedProjectState = useSelector((state: State) => state.focusedProject)
     let role = translateRole.TranslateProjectRole(props.member.role_id)
     
+    function handleSelect(){
+        if(focusedProjectState.name !== 'All'){
+            return updateFocusedMember(props.member)
+        }
+    }
     return (
-        <div className='ListContainer' onClick={() => updateFocusedMember(props.member)}>
-            <div className='listItem listRow memberRow' style={{justifyContent: 'space-between'}}>
+        <div className='ListContainer' onClick={handleSelect}>
+            <div  className={`listItem listRow memberRow ${focusedProjectState.name === 'All' && 'defaultCursor'}`} style={{justifyContent: 'space-between'}}>
                 <div className='memberListRowSection' style={{textAlign: 'center'}}>
                     <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content'}}>
                         {props.member.username } 
@@ -24,13 +30,13 @@ export default function ProjectMembersListItem(props: Props) {
                     <span className='rowItem discriminator' style={{display: 'inline-block', width: 'fit-content'}}>
                       #{props.member.discriminator}
                     </span>
-                    <span className='showDetailsHighlight'>
-                        {`Show details`}
-                    </span>
+                    {focusedProjectState.name !== 'All' && <span className='showDetailsHighlight'>{`Show details`}</span>}
                 </div>
-                <div className='memberListRowSection' style={{textAlign: 'center'}}>
+                
+                <div className='memberListRowSection' style={{textAlign: 'center', width: '100px'}}>
                     <span className='rowItem'>
-                        {role}
+                        {focusedProjectState.name === 'All' ? <></> :
+                        <>{role}</>}
                     </span>
                 </div>
             </div>
