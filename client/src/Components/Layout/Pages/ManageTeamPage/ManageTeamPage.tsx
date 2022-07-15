@@ -3,8 +3,10 @@ import { Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { State } from '../../../../Redux/reducers';
-import InviteToTeamForm from '../../../Library/Forms/inviteToTeamForm';
-import TeamMemberList from '../../../Library/Teams/TeamMemberList';
+import TeammateList from '../../../Library/Teams/TeamMemberList';
+import InviteToTeamFormContainer from './inviteToTeamFormContainer';
+import TeamDetails from './TeamDetails';
+import TeammateDetails from './TeammateDetails';
 
 interface Props {
     isTeamSelected: boolean;
@@ -20,15 +22,24 @@ if(sessionState.currentTeam === undefined){return <></>}
         if(isTeamSelected === true) {
             if(sessionState.currentTeam.team_role === 1){
                 return(
-                    <div className='pageContentContainer fa' style={{marginTop: '300px'}}>
-                        <div className='pageHeaderContainer'>
-                            <Container className='pageBodyContainer3'>
-                                <InviteToTeamForm /> 
-                                <p style={{color: 'white'}}>maybe show team overall ticket stats, team members list with a manage roles widget and invites or remove from team</p>
-                                <TeamMemberList />
-        
-                            </Container>
+                    <div className='overflow' >
+                        <div id='pageContentContainer'  className='pageContentContainer manageTeamPageContent'>
+                            <InviteToTeamFormContainer /> 
                         </div>
+                        <div className='pageBodyContainer4'>
+                            <div className='pageBodyContaine4' style={{color: 'white', borderBottom: '1px solid #ffffff31', paddingBottom:'10px'}}>
+                                <TeamDetails />
+                            </div>
+                            <div className='pageBodyContainer5' style={{color: 'white'}}>
+                                <div className='pageBodyQuadrant' style={{flexDirection: 'column', paddingRight: '10px'}}>
+                                    <TeammateList />
+                                </div>
+                                <div className='pageBodyQuadrant fadeIn' style={{borderRight: 'none', flexDirection: 'column', paddingLeft: '10px'}}>
+                                    <TeammateDetails />
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 )
             } return <Navigate to='/tickets' />
