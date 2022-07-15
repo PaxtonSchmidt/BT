@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { TicketNote } from '../../../API/interfaces/TicketNote';
 import postTicketComment from '../../../API/Requests/Tickets/PostTicketComment';
 import { State } from '../../../Redux/reducers';
+import TicketNoteListItem from './TicketNoteListItem';
 
 export default function TicketNoteList() {
     const focusedTicketState = useSelector((state: State) => state.focusedTicket)
@@ -19,23 +20,23 @@ export default function TicketNoteList() {
                 'Content-Type': 'application/json'
             }
         }).then(res => res.json())
+        console.log('got here')
         let notes = await response
         return setAllNotes(notes)
     }
-    useEffect(() => {getTicketNotes()}, [])
+    useEffect(() => {getTicketNotes()}, [focusedTicketState])
+
     function createChosenNotesArray(){
         let newChosenNotes: TicketNote[] = []
         allNotes.forEach((note: TicketNote) => {
             if(note.relevant_ticket_id === focusedTicketState.ticket_id){
-                newChosenNotes.push(note)
+                newChosenNotes.unshift(note)
             }
         });
-        console.log(newChosenNotes)
         return newChosenNotes
     } 
-    useEffect(() => {setChosenNotes(createChosenNotesArray())}, [focusedTicketState])
+    useEffect(() => {setChosenNotes(createChosenNotesArray())}, [focusedTicketState, allNotes])
 
-    console.log(chosenNotes)
     async function handleSubmit(note: string){
         if(note.length > 300){return console.log('Too many characters...')}
         if(note.length < 1){return console.log('Empty comments not allowed...')}
@@ -47,49 +48,59 @@ export default function TicketNoteList() {
     if(chosenNotes){
         anyNotes = chosenNotes.length > 0;
     }
-    return (
-    <>
-        {anyNotes ? 
-        <div className='fadeIn ticketNoteListContainer'>
-            <div id='list' className='list ticketNoteList componentGlow fadeIn'>    
-                {
-                    chosenNotes.map((note: TicketNote) => 
-                        <p>{note.body}</p>
-                    )
-                }
+    if(focusedTicketState.ticket_id === undefined){
+        return (
+            <div className='fadeIn ticketNoteListContainer' >
+                <div className='list delayedFadeIn' style={{color: '#ffffff', textAlign: 'center', paddingTop: '10px'}}>
+                    <p>{`Select a ticket to see its notes`}</p>
+                </div>
             </div>
-            <Box component='form' className='ticketNoteForm' onSubmit={(e:  React.FormEvent<HTMLInputElement>)=>{e.preventDefault(); handleSubmit(newNote)}}>
-                <TextField
-                label='Add a note...'
-                type='text'
-                className='ticketNoteInput' 
-                name='title'
-                variant='standard'
-                color='info'
-                onChange={(e)=>setNewNote(e.target.value)}
-                value={newNote}
-                />
-            </Box>
-        </div>
-        :
-        <div className='fadeIn ticketNoteListContainer' >
-            <div className='list ticketNoteList fadeIn'>
-                No notes yet
-            </div>
-            <Box component='form' className='ticketNoteForm' onSubmit={(e:  React.FormEvent<HTMLInputElement>)=>{e.preventDefault(); handleSubmit(newNote)}}>
-                <TextField
-                label='Add a note...'
-                type='text'
-                className='ticketNoteInput' 
-                name='title'
-                variant='standard'
-                color='info'
-                onChange={(e)=>setNewNote(e.target.value)}
-                value={newNote}
-                />
-            </Box>
-        </div>}
-    </>            
-    )
+        )
+    }else {
+        return (
+            <>
+                {anyNotes ? 
+                <div className='fadeIn ticketNoteListContainer'>
+                    <div id='list' className='ticketNoteList componentGlow fadeIn' style={{paddingTop: '10px'}}>    
+                        {
+                            chosenNotes.map((note: TicketNote) => 
+                                <TicketNoteListItem key={note.comment_id} note={note}/>
+                            )
+                        }
+                    </div>
+                    <Box component='form' className='ticketNoteForm' onSubmit={(e:  React.FormEvent<HTMLInputElement>)=>{e.preventDefault(); handleSubmit(newNote)}}>
+                        <TextField
+                        label='Add a note...'
+                        type='text'
+                        className='ticketNoteInput' 
+                        name='title'
+                        variant='standard'
+                        color='info'
+                        onChange={(e)=>setNewNote(e.target.value)}
+                        value={newNote}
+                        />
+                    </Box>
+                </div>
+                :
+                <div className='fadeIn ticketNoteListContainer' >
+                    <div className='list ticketNoteList delayedFadeIn' style={{color: '#ffffff31', textAlign: 'center', paddingBottom: '10px'}}>
+                        <p>{`There are no notes for this ticket yet`}</p>
+                    </div>
+                    <Box component='form' className='ticketNoteForm' onSubmit={(e:  React.FormEvent<HTMLInputElement>)=>{e.preventDefault(); handleSubmit(newNote)}}>
+                        <TextField
+                        label='Add a note...'
+                        type='text'
+                        className='ticketNoteInput' 
+                        name='title'
+                        variant='standard'
+                        color='info'
+                        onChange={(e)=>setNewNote(e.target.value)}
+                        value={newNote}
+                        />
+                    </Box>
+                </div>}
+            </>            
+        )
+    }
 }
 
