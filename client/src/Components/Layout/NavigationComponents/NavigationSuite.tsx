@@ -3,7 +3,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { SessionActionCreators } from '../../../Redux';
+import { SessionActionCreators, TeammatesActionCreators } from '../../../Redux';
+import { updateTeammates } from '../../../Redux/action-creators/teammatesActionCreators';
 import { State } from '../../../Redux/reducers';
 import Hamburger from './Hamburger';
 import Navbar from './Navbar/Navbar';
@@ -16,25 +17,35 @@ interface Props {
 export default function NavigationSuite({ isTeamSelected }: Props) {
     const dispatch = useDispatch();
     const { updateSession } = bindActionCreators(SessionActionCreators, dispatch)
+    const { updateTeammates } = bindActionCreators(TeammatesActionCreators, dispatch)
     const loginState = useSelector((state: State) => state.login)
     const sessionState = useSelector((state: State) => state.session)
     let navigate = useNavigate();
     
-
-    useEffect(() => {
-        async function getSessionState() {
-            let response: any = await fetch('/users/getSessionState', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => res)
-            if(response.status === 400){
-                navigate('login')
+    async function getSessionState() {
+        let response: any = await fetch('/users/getSessionState', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
             }
-            updateSession(await response.json());
+        }).then(res => res)
+        if(response.status === 400){
+            navigate('login')
         }
+        updateSession(await response.json());
+    }
+    async function getTeammates(){
+        let response: any = fetch('/projects/getUsersOnTeam', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+        return updateTeammates(await response)
+    }
+    useEffect(() => {
         getSessionState();
+        getTeammates();
     }, [])
 
     let role = 3 //defaults to dev, sets to actual role when the sessionState arrives
