@@ -8,7 +8,7 @@ export default function Team() {
     let TeamName = sessionState.currentTeam?.name
     return(
         <>
-            <h3 className='delayedFadeIn' style={{color: 'white', whiteSpace: 'nowrap', textAlign: 'left', marginLeft: '10px', fontWeight: 'lighter'}}>{TeamName}</h3>
+            <h3 className='delayedFadeIn' style={{color: 'white', whiteSpace: 'nowrap', textAlign: 'left', marginLeft: '10px', fontWeight: 'lighter', cursor: 'default'}}>{TeamName}</h3>
         </>
     )
 }
