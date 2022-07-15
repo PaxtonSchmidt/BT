@@ -3,7 +3,7 @@ export const translateRole = {
         if(team_role === undefined) return null
         switch(team_role){
             case 1:
-                return 'Team Owner'
+                return 'Owner'
             case 2:     
                 return 'Lead'
             case 3: 
