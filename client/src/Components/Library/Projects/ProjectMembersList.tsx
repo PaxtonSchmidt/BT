@@ -18,10 +18,11 @@ export default function ProjectMembersList() {
     const [isDirty, setIsDirty] = useState<boolean>(false)
     const sessionState = useSelector((state: State) => state.session)
     const focusedProjectState = useSelector((state: State) => state.focusedProject)
+    const teammatesState = useSelector((state: State) => state.teammates)
     //was shallow copying session state so any changes to the copy also changed the state
     let projects = deepClone(sessionState.currentTeam?.projects)
+    let teammates = deepClone(teammatesState)
     let isPotentialProjectMembersEmpty: boolean = potentialProjectMembers.length < 1
-
     //this useEffect populates the membersList depending on which project option is selected
     function createProjectMembersList(projects: any){
         //focusedProjectState defaults to All
@@ -54,18 +55,15 @@ export default function ProjectMembersList() {
             return setMembers(newMembersList)
         }
     }
-    useEffect(() => {createProjectMembersList(projects)}, [focusedProjectState])
+    useEffect(() => {
+        createProjectMembersList(projects)    
+    }
+    ,[focusedProjectState])
 
     //This function and useEffect hook handle the process of opening the menu for Adding Members to project 
     async function setIsAddMemberMenuOpen(){
-        let response: any = fetch('/projects/getUsersOnTeam', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json())
+        setTeamMembers(teammates)
         setIsAddingMembers(true)
-        return setTeamMembers(await response)
     }
     useEffect(() => {
         function createPotentialProjectMembersList(projects: any){
@@ -164,10 +162,11 @@ export default function ProjectMembersList() {
                             Member
                         </span>
                     </div>
-                    <div className='memberListRowSection fadeIn' style={{textAlign: 'center'}}>
+                    <div className='memberListRowSection fadeIn' style={{textAlign: 'center', width: '100px'}}>
+                        {focusedProjectState.name === 'All' ? <></>:
                         <span className='rowItem'>
                             Project Role
-                        </span>
+                        </span>}
                     </div>
                 </div>
                 <div id='list'  className='list projectMembersList componentGlow fadeIn'>
@@ -181,7 +180,7 @@ export default function ProjectMembersList() {
                 {manageableProjectMembers ? 
                 <div className='addItemButton scaleYonHover' onClick={setIsAddMemberMenuOpen}>
                     <img src={plus} style={{marginLeft: '10px', marginRight: '10px'}}/>
-                    <p style={{margin: '5px 10px 5px 0px'}}>{`Add Teammates to ${focusedProjectState.name}`}</p>
+                    <p style={{margin: '5px 10px 5px 0px', overflowX:'hidden', maxWidth: '200px', whiteSpace: 'nowrap'}}>{`Add Members`}</p>
                 </div>
                 :
                 <div className='addItemButton scaleYonHover' style={{height: '27px'}}></div>
