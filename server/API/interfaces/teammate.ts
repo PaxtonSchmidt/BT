@@ -3,3 +3,6 @@ export interface Teammate {
     discriminator: number,
     team_role: number
 }
+export interface TeammateDetail extends Teammate{
+    email: string
+}
