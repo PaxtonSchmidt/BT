@@ -7,13 +7,16 @@ let teamAuthorization = require('../Controllers/Authorization/teamAuthorization'
 let NoAuthorizationInvites = require('../Controllers/Authorization/NoAuthorization/teamInvites')
 
 
-router.post("/addTeam", teamRoute.addTeam);
 router.get("/getTeams", teamSelectRoute.getCurrentUserTeams);
 router.get('/getTeamInvites', teamSelectRoute.getTeamInvites)
+router.get('/getTeammates', teamAuthorization.getTeammates)
+router.get('/getTeammatesInformation', teamAuthorization.getTeammatesInformation)
+router.get('/getTeamDetails', teamAuthorization.getTeamDetails)
 
+router.post("/addTeam", teamRoute.addTeam);
 router.post("/inviteUserToTeam", teamAuthorization.inviteUserToTeam);
 router.post('/acceptInvite', NoAuthorizationInvites.acceptInvite);
-router.delete("/deleteInvite", NoAuthorizationInvites.deleteInvite)
 
+router.delete("/deleteInvite", NoAuthorizationInvites.deleteInvite)
 
 module.exports = router;
