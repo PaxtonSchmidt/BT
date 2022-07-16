@@ -31,7 +31,6 @@ interface ComposedStats {
     allProjectsStats: AllProjectsStats
 }
 export default function composeProjectStatistics(ticketList: any){
-    console.log(ticketList)
     let ComposedStats: ComposedStats = {
         projects: [{
             project_id: null,
