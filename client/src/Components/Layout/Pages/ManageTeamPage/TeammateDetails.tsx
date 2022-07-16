@@ -1,9 +1,12 @@
 import { Box, Modal } from '@mui/material'
+import e from 'express'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Teammate } from '../../../../API/interfaces/teammate'
+import putUpdateTeammateRole from '../../../../API/Requests/Teams/PutUpdateTeamRole'
 import { State } from '../../../../Redux/reducers'
 import { translateRole } from '../../../../Services/translateRole'
+import UpdateUserRole from '../../../Library/Buttons/UpdateUserRole'
 import TeammateProjectButton from './TeammateProjectButton'
 
 interface AssignedProjects{
@@ -27,7 +30,9 @@ export default function TeammateDetails(){
     const [chosenTeammate, setChosenTeammate] = useState<TeammatesInformation>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-   console.log(focusedTeammateState)
+    const [isRoleModalOpen, setIsRoleModalOpen] = useState<boolean>(false);
+    let canUserManageTeammateRole: boolean = false;
+    
     async function getTeamatesInformation(){
         setIsLoading(true)
         let response: any = fetch('/teams/getTeammatesInformation', {
@@ -57,11 +62,44 @@ export default function TeammateDetails(){
 
     let role = null
     let date = ''
+    let roleUpdateType = ''
+    let potentialNewTeamRole: string = 'Null'
     if(chosenTeammate){
         role = translateRole.TranslateRole(chosenTeammate?.team_role);
         date = chosenTeammate.date_joined.toString().substring(0, 10);
+        if((sessionState.currentTeam.team_role === 1 && chosenTeammate.team_role === 2) || (sessionState.currentTeam.team_role === 1 && chosenTeammate.team_role === 3)){
+            canUserManageTeammateRole = true
+        }else{
+            canUserManageTeammateRole = false
+        }
+        if(chosenTeammate.team_role === 2){
+            roleUpdateType = 'Demote'
+        } else if(chosenTeammate.team_role === 3){
+            roleUpdateType = 'Promote'
+        }
     }
+    if(roleUpdateType === 'Demote'){
+        potentialNewTeamRole = 'Developer'
+    } else if(roleUpdateType === 'Promote'){
+        potentialNewTeamRole = 'Lead'
+    }
+
     
+    async function handleUpdateTeammateRole(){
+        if(canUserManageTeammateRole === true && chosenTeammate){
+            let newRoleID = 3;
+            if(roleUpdateType === 'Demote'){
+                newRoleID = 3
+            }else if(roleUpdateType === 'Promote'){
+                newRoleID = 2
+            }else{
+                return
+            }
+            let responseStatus = putUpdateTeammateRole({username: chosenTeammate!.username, discriminator: chosenTeammate!.discriminator}, newRoleID);
+            console.log(responseStatus)
+        }
+    }
+
     if(isLoading){
         return (
             <>
@@ -79,14 +117,26 @@ export default function TeammateDetails(){
             <>
             <div id='list'  className='list componentGlow fadeIn' style={{position: 'relative', height: '350px', overscrollBehavior: 'auto', overflowY: 'hidden', transition: '0s'}}>
                 <div className='ListContainer'>
-                    <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between', marginTop: '0px'}}>
-                        <div className='memberListRowSection' style={{textAlign: 'left'}}>
-                            <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content'}}>
-                                {chosenTeammate.username}
-                            </span>
-                            <span className='rowItem discriminator' style={{display: 'inline-block', width: 'fit-content'}}>
-                                #{chosenTeammate.discriminator}
-                            </span>
+                    <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between', marginTop: 'auto'}}>
+                        <div className='memberListRowSection' style={{textAlign: 'left', display: 'flex', justifyContent:'space-between', width: '100%', marginBottom: '8px'}}>
+                            <div style={{display:'flex', height: 'fit-content'}}>
+                                <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content', height: 'fit-content', marginTop:'6px', marginBottom:'auto'}}>
+                                    {chosenTeammate.username}
+                                </span>
+                                <span className='rowItem discriminator' style={{display: 'inline-block', width: 'fit-content', marginTop:'8px'}}>
+                                    #{chosenTeammate.discriminator}
+                                </span>
+                            </div>
+                            <div style={{display:'flex', height: 'fit-content'}}>
+                                <span className='rowItem' style={{display: 'inline-block', width: 'fit-content', marginLeft:'10px', height:'100%', paddingTop:'6px', marginRight:'10px'}}>
+                                    {role}
+                                </span>
+                                {canUserManageTeammateRole && 
+                                    <span id='RoleUpdate' className='rowItem fadeIn inComponentButton scaleYonHover' onClick={()=>setIsRoleModalOpen(true)} style={{display: 'inline-block', width: 'fit-content', textAlign: 'center', height: 'fit-content'}}>
+                                        {roleUpdateType}
+                                    </span>
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between'}}>
@@ -134,6 +184,7 @@ export default function TeammateDetails(){
                         </div>
                     </div>
                 </div>
+                {canUserManageTeammateRole &&
                 <div className='removeMemberButton ' style={{marginTop:'auto', backgroundColor: '#222222', paddingRight: '10px', flexGrow: '1'}}>
                     <div onClick={()=>setIsModalOpen(true)} style={{cursor: 'pointer', display: 'flex', alignItems: 'center'}}>
                         <p style={{marginRight: '10px', cursor: 'pointer'}}>Remove</p>
@@ -143,11 +194,12 @@ export default function TeammateDetails(){
                         </svg>
                     </div>
                 </div>
+                }
             </div>
             <Modal
             open={isModalOpen}
             style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                <Box className='modalBoxContainer'>
+                <Box className='modalBoxContainer' style={{boxShadow: '0px 0px 5px red'}}>
                     <div className='modalBox'>
                         <p style={{color: 'white'}} onClick={() => setIsModalOpen(false)}>
                             {`Are you sure you want to remove\u00a0`}
@@ -164,6 +216,10 @@ export default function TeammateDetails(){
                         </p>
                         <ul className='modalList'>
                             <p>These effects will occur...</p>
+                            <li>sadasdsa</li>
+                            <li>sadasdsa</li>
+                            <li>sadasdsa</li>
+                            <li>sadasdsa</li>
                             
                             
                             
@@ -174,7 +230,52 @@ export default function TeammateDetails(){
                             <button onClick={() => handleRemoveTeammate()} className='button modalButton modalButtonConfirm' >Confirm</button>
                         </div>
                     </div>
-                    
+                </Box>
+            </Modal>
+            <Modal
+            open={isRoleModalOpen}
+            style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Box className='modalBoxContainer'>
+                    <div className='modalBox'>
+                        <p style={{color: 'white'}} onClick={() => setIsModalOpen(false)}>
+                            {`Are you sure you want to ${roleUpdateType.toLowerCase()}\u00a0`}
+                            <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content', color: '#efff0a'}}>
+                                {focusedTeammateState.username}
+                            </span>
+                            <span className='rowItem discriminator' style={{display: 'inline-block', width: 'fit-content', color: '#efff0a'}}>
+                                #{focusedTeammateState.discriminator}
+                            </span>
+                            <span className='rowItem' style={{display: 'inline-block', width: 'fit-content'}}>
+                                {`\u00a0to a`}
+                            </span>
+                            <span className='rowItem' style={{display: 'inline-block', width: 'fit-content', color: '#efff0a'}}>
+                                {`\u00a0${potentialNewTeamRole}`}
+                            </span>
+                            {`\u00a0role on\u00a0`}
+                            <span className='rowItem' style={{display: 'inline-block', width: 'fit-content', color: '#efff0a'}}>
+                                {sessionState.currentTeam.name}
+                            </span>
+                        </p>
+                        <ul className='modalList'>
+                            <p>These effects will occur...</p>
+                            {roleUpdateType === 'Demote' &&
+                            <>
+                            <li>{focusedTeammateState.username} will no longer be able to invite people to {sessionState.currentTeam.name}</li>
+                            <li>{focusedTeammateState.username} will no longer be able to create projects for {sessionState.currentTeam.name}</li>
+                            <li>{focusedTeammateState.username} will no longer be able to access the information on the team page</li>
+                            </>}
+                            {roleUpdateType === 'Promote' &&
+                            <>
+                            <li>{focusedTeammateState.username} will be able to invite people to {sessionState.currentTeam.name}</li>
+                            <li>{focusedTeammateState.username} will be able to create projects for {sessionState.currentTeam.name}</li>
+                            <li>{focusedTeammateState.username} will be able to access the information on the team page</li>
+                            </>}
+                        </ul>
+                        <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+                            <button onClick={() => setIsRoleModalOpen(false)} className='button modalButton modalButtonCancel' >Cancel</button>
+                            <button onClick={() => handleUpdateTeammateRole()} className='button modalButton modalButtonConfirm' >Confirm</button>
+                        </div>
+                    </div>
                 </Box>
             </Modal>
             </>
