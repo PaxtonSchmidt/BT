@@ -5,7 +5,6 @@ let mysql = require('mysql');
 
 function addProject(creatorId: any, teamID: any, name: string, description: string) {
     let date = getCurrentDate()
-    console.log('got to add project endpoint')
     let project = {team_id: teamID, creator_user_id: creatorId, name: name, description: description, date_created: date}
     let sql = "INSERT INTO projects SET ?"; 
     connectionPool.query(sql, project, (err: any, result: any) => {
@@ -26,9 +25,27 @@ function getSessionProjectRoles(teamID: string, userID: string){
         })
     })
 }
+function getAllProjectsOnTeam(teamID: number, userID: number){
+    let values = [teamID, userID]
+    let sql ='SELECT p.project_id AS project_id, p.name FROM projects p WHERE p.team_id= ?'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
 function getProjectMembers(userID: any, teamID: any){
     let values = [userID, teamID]
     let sql = 'SELECT up.project_id, up.role_id, u.username, u.discriminator FROM user_projects up LEFT JOIN users u ON u.user_id = up.user_id WHERE up.project_id IN (SELECT project_id from user_projects WHERE user_id= ? AND relevant_team_id= ?)'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+function getProjectMembersForLead(teamID: any){
+    let values = [teamID]
+    let sql = 'SELECT up.project_id, up.role_id, u.username, u.discriminator FROM user_projects up LEFT JOIN users u ON u.user_id = up.user_id WHERE up.project_id IN (SELECT project_id from user_projects WHERE relevant_team_id= ?)'
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
             return err ? reject(err) : resolve(result)
@@ -177,6 +194,8 @@ module.exports = {
     transactionRemoveTargetUserFromProject,
     getProjectMembersByProjectId,
     addListOfUsersToProject,
-    projectMembersIdsByProjectId
+    projectMembersIdsByProjectId,
+    getAllProjectsOnTeam,
+    getProjectMembersForLead
 }
 
