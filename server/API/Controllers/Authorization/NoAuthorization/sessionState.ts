@@ -36,10 +36,34 @@ async function getSessionState(req: any, res: any) {
         let currentTeam = await team.getSessionTeam(currentTeamID, currentUserID)
         sessionTeam = Object.assign(sessionTeam, currentTeam)
 
-        let userProjects = await project.getSessionProjectRoles(currentTeamID, currentUserID)
+        let userProjects: any[] = []
+        if(currentTeam.team_role === 1){
+            let projectsUserIsIn = await project.getSessionProjectRoles(currentTeamID, currentUserID)
+            let allProjects = await project.getAllProjectsOnTeam(currentTeamID, currentUserID)
+            allProjects.forEach((projectID: any) => {
+                let projectIDX = projectsUserIsIn.findIndex((project: any)=>{
+                    if(project.project_id === projectID.project_id){
+                        return true
+                    }
+                })
+                if(projectIDX !== -1){
+                    userProjects.push(projectsUserIsIn[projectIDX])
+                } else{
+                    userProjects.push({project_id: projectID.project_id, name: projectID.name, role_id: 0})
+                }
+            })
+        } else{
+            userProjects = await project.getSessionProjectRoles(currentTeamID, currentUserID)
+        }
         userProjects = userProjects.map((project: any) => Object.assign({}, project));
 
-        let projectMembers = await project.getProjectMembers(currentUserID, currentTeamID) ;projectMembers.map((project: any) => Object.assign({}, project))
+        let projectMembers: any[] = [] 
+        if(currentTeam.team_role === 1){
+            projectMembers = await project.getProjectMembersForLead(currentTeamID)
+        }else{
+            projectMembers = await project.getProjectMembers(currentUserID, currentTeamID) 
+        }   
+        projectMembers.map((project: any) => Object.assign({}, project))
         projectMembers = projectMembers.map((project: any) => Object.assign({}, project));
 
         userProjects.forEach((project: any) => {
@@ -52,11 +76,11 @@ async function getSessionState(req: any, res: any) {
             }
             sessionTeam.projects.push(projectInstance as Project);
         })      
-
-        sessionTeam.projects.shift();
-
-        sessionState = {currentUser: sessionUser, currentTeam: sessionTeam, invites: sessionInvites}
         
+        sessionTeam.projects.shift();
+        
+        sessionState = {currentUser: sessionUser, currentTeam: sessionTeam, invites: sessionInvites}
+        console.log(sessionState)
     }catch(e){
         return res.status(500).send({message: 'Server couldnt fetch user information...'})
     }
