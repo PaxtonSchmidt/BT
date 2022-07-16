@@ -11,7 +11,7 @@ export default function TicketNoteList() {
     const focusedTicketState = useSelector((state: State) => state.focusedTicket)
     const [chosenNotes, setChosenNotes] = useState<any[]>([]);
     const [allNotes, setAllNotes] = useState<any[]>([]);
-    const [newNote, setNewNote] = useState<string>('')
+    const [newNote, setNewNote] = useState<string>('');
 
     async function getTicketNotes(){
         let response: any = fetch('/tickets/getTicketNotes', {
@@ -20,7 +20,6 @@ export default function TicketNoteList() {
                 'Content-Type': 'application/json'
             }
         }).then(res => res.json())
-        console.log('got here')
         let notes = await response
         return setAllNotes(notes)
     }
