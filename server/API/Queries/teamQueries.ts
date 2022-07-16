@@ -73,6 +73,25 @@ async function fetchIsOnTeam(recipientID: string, teamID: string){
         })
     })
 }
+async function fetchIsOnTeamByUsernameDiscriminatorTeamID(username: string, discriminator: number, teamID: string){
+    let values = [username, discriminator, teamID]
+    let sql = 'SELECT EXISTS(SELECT * FROM user_teams ut LEFT JOIN users u ON ut.user_id = u.user_id WHERE u.username= ? AND u.discriminator= ? AND team_id= ?)'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
+async function getRoleIDByUsernameDiscriminatorTeamID(username: string, discriminator: number, team_id: number){
+    let values = [username, discriminator, team_id]
+    let sql = "SELECT ut.role_id FROM user_teams ut LEFT JOIN users u ON ut.user_id = u.user_id WHERE u.username= ? AND u.discriminator= ? AND ut.team_id= ?"
+    
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
 function getInviteBySenderIDRecipientIDTeamID(senderID: string, recipientID: string, teamID: string, res: any){
     let values = [senderID, recipientID, teamID]
     let sql = 'SELECT EXISTS(SELECT * FROM team_invites WHERE sender_id= ? AND recipient_id= ? AND team_id= ?)'
@@ -164,6 +183,15 @@ function getTeammateCount(teamID: number){
         })
     })
 }
+function putUpdateTeammateRole(user_id: number, roleID: number, team_id: number){
+    let values = [roleID, user_id, team_id]
+    let sql='UPDATE user_teams SET role_id= ? WHERE user_id= ? AND team_id= ?'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
 
 
 
@@ -184,5 +212,8 @@ module.exports =
     getTeammatesAssignedProjects,
     getTicketCount,
     getTeamDetailsPacket,
-    getTeammateCount
+    getTeammateCount,
+    fetchIsOnTeamByUsernameDiscriminatorTeamID,
+    putUpdateTeammateRole,
+    getRoleIDByUsernameDiscriminatorTeamID
 }
