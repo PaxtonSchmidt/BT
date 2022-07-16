@@ -17,6 +17,8 @@ router.post("/addTeam", teamRoute.addTeam);
 router.post("/inviteUserToTeam", teamAuthorization.inviteUserToTeam);
 router.post('/acceptInvite', NoAuthorizationInvites.acceptInvite);
 
+router.put('/putUpdateTeammateRole', teamAuthorization.putUpdateTeammateRole)
+
 router.delete("/deleteInvite", NoAuthorizationInvites.deleteInvite)
 
 module.exports = router;
