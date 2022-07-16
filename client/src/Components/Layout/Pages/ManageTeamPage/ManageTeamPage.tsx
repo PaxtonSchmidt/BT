@@ -20,7 +20,7 @@ if(sessionState.currentTeam === undefined){return <></>}
 //if you are not logged, go to login, if team is not selected, go to team select, if you are not the team owner, go to tickets
     if(loginState === 1) {
         if(isTeamSelected === true) {
-            if(sessionState.currentTeam.team_role === 1){
+            if(sessionState.currentTeam.team_role === 1 || sessionState.currentTeam.team_role === 2){
                 return(
                     <div className='overflow' >
                         <div id='pageContentContainer'  className='pageContentContainer manageTeamPageContent'>
