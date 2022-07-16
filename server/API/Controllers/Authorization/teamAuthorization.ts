@@ -36,7 +36,7 @@ async function inviteUserToTeam(req: any, res: any) {
     }
     //if user is the owner they can invite others to the team if the recipient isnt already on the 
     //team, the recipient exists and the invite doesnt already exist
-    if(userTeamRoleCombo.roleID !== Roles.Legend.owner){
+    if(userTeamRoleCombo.roleID !== Roles.Legend.owner && userTeamRoleCombo.roleID !== Roles.Legend.lead){
         return res.status(401).send({message: "You can't invite people to this team..."})
     } else if(isAlreadyOnTeam === true){
         return res.status(409).send({message: "That user is already on this team..."})
@@ -70,7 +70,7 @@ async function addProject(req: any, res: any){
     let currentUserRoleID = userTeamRoleCombo.roleID; 
     //if the user is the owner of the team and there isnt a project for this team with this name already
     //then add project
-    if(currentUserRoleID !== Roles.Legend.owner){
+    if(currentUserRoleID !== Roles.Legend.owner && currentUserRoleID !== Roles.Legend.lead){
         return res.status(403).send({message: 'You are not allowed to create projects for this team...'})
     } else if(isProjectNameTakenOnTeam === true){
         return res.status(400).send({message: 'That name is already used by a project in this team...'})
@@ -86,7 +86,7 @@ async function addProject(req: any, res: any){
 async function getTeammates(req: Express.Request, res: Express.Response){
     let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
     let teammateList: TeammateDetail[] = []
-    if(userTeamRoleCombo.roleID === 1){
+    if(userTeamRoleCombo.roleID === 1 || userTeamRoleCombo.roleID === 2){
         try{
             let teammateDetailsPacket = await teamQueries.getUserDetailsOnTeam(userTeamRoleCombo.teamID)
             teammateDetailsPacket.forEach((teammate: any) => {
@@ -104,7 +104,7 @@ async function getTeammates(req: Express.Request, res: Express.Response){
 async function getTeammatesInformation(req: Express.Request, res: Express.Response){
     let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
     let teammatesInformation: TeammatesInformation[] = []
-    if(userTeamRoleCombo.roleID === 1){
+    if(userTeamRoleCombo.roleID === 1 || userTeamRoleCombo.roleID === 2){
         try{
             let teammateInfoPacket: any = await teams.getTeammatesInfo(userTeamRoleCombo.teamID)
             let teammateAssignedProjectsPacket: any = await teams.getTeammatesAssignedProjects(userTeamRoleCombo.teamID)       
@@ -117,10 +117,9 @@ async function getTeammatesInformation(req: Express.Request, res: Express.Respon
         return res.status(403).send({message: "You do not have the ability to see all of your teammates' information..."})
     }
 }
-
 async function getTeamDetails(req: Express.Request, res: Express.Response){
     let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
-    if(userTeamRoleCombo.roleID === 1){
+    if(userTeamRoleCombo.roleID === 1 || userTeamRoleCombo.roleID === 2){
         try{
             let ticketCount = await teams.getTicketCount(userTeamRoleCombo.teamID)
             let teamDetailsPacket = await teams.getTeamDetailsPacket(userTeamRoleCombo.teamID)
@@ -134,5 +133,69 @@ async function getTeamDetails(req: Express.Request, res: Express.Response){
         return res.status(403).send({message:'You do not have permission to acccess this information...'})
     }
 }
+async function putUpdateTeammateRole(req: Express.Request, res: Express.Response){
+    let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+    let isTargetUserOnTeam: boolean = false
+    let isTargetUserValidRole: boolean = false
+    async function checkIsTargetUserOnTeam(targetUsername: string, targetDiscriminator: number, teamID: number): Promise<boolean>{
+        try{
+            let responsePacket = await teams.fetchIsOnTeamByUsernameDiscriminatorTeamID(targetUsername, targetDiscriminator, teamID)
+            if(Object.values(responsePacket[0])[0] === 1){
+                return true
+            } else {
+                return false
+            }
+        } catch(e){
+            return false
+        }
+    }
+    async function getTargetUserID(){
+        try{
+            let targetUserIdPacket: any = await users.getUserByNameDiscriminator(req.body.username, req.body.discriminator, req)
+            return targetUserIdPacket.user_id
+        }catch(e){
+            return e
+        }
+    }
+    async function updateUserTeamRole(targetUserId: number){
+        try{
+            let result = await teams.putUpdateTeammateRole(targetUserId, req.body.newRole, userTeamRoleCombo.teamID)
+            return result
+        } catch(e){
+            return e
+        }
+    }
+    async function getTargetUserRoleID(){
+        try{
+            let targetRolePacket: any = await teams.getRoleIDByUsernameDiscriminatorTeamID(req.body.username, req.body.discriminator, userTeamRoleCombo.teamID).catch(e)
+            return targetRolePacket[0].role_id
+        }catch(e){
+            return e
+        }
+    }
+    let targetRoleId = await getTargetUserRoleID()
+    if(targetRoleId === 2 || targetRoleId === 3){
+        isTargetUserValidRole = true
+    }
+    isTargetUserOnTeam = await checkIsTargetUserOnTeam(req.body.username, req.body.discriminator, userTeamRoleCombo.teamID)
+    if(isTargetUserOnTeam === true && userTeamRoleCombo.roleID === 1 && isTargetUserValidRole){
+        try{
+            let targetUserId: any = await getTargetUserID()
+            updateUserTeamRole(targetUserId)
+            return res.status(200).send({message: 'Server updated target users role'})
+        }catch(e){
+            return res.status(500).send({message: 'Server couldnt update the users role...'})
+        }
+    } else {
+        return res.status(403).send({message: 'You do not have permission to edit this users role...'})
+    }
+}
 
-module.exports = { inviteUserToTeam, addProject, getTeammates, getTeammatesInformation, getTeamDetails }
+module.exports = { 
+    inviteUserToTeam, 
+    addProject, 
+    getTeammates, 
+    getTeammatesInformation, 
+    getTeamDetails, 
+    putUpdateTeammateRole 
+}
