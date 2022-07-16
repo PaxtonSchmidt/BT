@@ -6,7 +6,6 @@ function createTicketsTable(req: any, res: any) {
 
     connectionPool.query(sql, (err: Error, result: any) => {
         if(err) throw err;
-        console.log(result);
         res.send('Tickets table created...');
     });
 }
@@ -21,7 +20,7 @@ function addTicket(req: any, res: any, userTeamIDCombo: any, targetUserId: any, 
 
     let date = getCurrentDate()
     let ticket = {author_id: userTeamIDCombo[0], title: req.body.title, description: req.body.description, date_created: date, date_last_updated: date, assigned_user_id: assigneeId, resolution_status: '1', relevant_project_id: relevantProjectId, priority: ticketPriority}
-    console.log(ticket)
+    
 
     let sql = "INSERT INTO tickets SET ?"; 
     
