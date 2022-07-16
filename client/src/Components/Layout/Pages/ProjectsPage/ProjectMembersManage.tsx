@@ -5,8 +5,8 @@ import { FocusedMemberActionCreators } from '../../../../Redux';
 import { State } from '../../../../Redux/reducers';
 import { translateRole } from '../../../../Services/translateRole';
 import ProjectMembersList from '../../../Library/Projects/ProjectMembersList'
-import UpdateUserProjectRole from '../../../Library/Projects/UpdateUserProjectRole'
 import { Box, Modal } from '@mui/material';
+import UpdateUserRole from '../../../Library/Buttons/UpdateUserRole';
 let deepClone = require('lodash.clonedeep')
 
 export default function ProjectMembersManage(){
@@ -166,7 +166,7 @@ export default function ProjectMembersManage(){
                                 </span>
                             </div>
                             {isUserAllowedToEditRole ? 
-                            <UpdateUserProjectRole setIsFormDirty={setIsDirty} isFormDirty={isDirty} word={word} setWord={setWord}/>
+                            <UpdateUserRole setIsFormDirty={setIsDirty} isFormDirty={isDirty} word={word} setWord={setWord} type={'Project'}/>
                             :<></>}
                         </div>}
 
