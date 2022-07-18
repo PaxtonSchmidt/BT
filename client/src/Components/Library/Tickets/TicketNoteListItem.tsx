@@ -8,20 +8,18 @@ interface Props {
 export default function TicketNoteListItem(props: Props){
     let isPm: boolean = false
     let isSingleDigitMinutes: boolean = false
-    let date = new Date(props.note.date_created)
-    let minutes = date.getMinutes()
-    let hours = date.getHours()
+    let date = props.note.date_created
 
-    if(hours > 12){
-        hours = hours % 12
-        isPm = true
-    }
-    if(hours === 0){
-        hours = 12
-    }
-    if(minutes < 10){
-        isSingleDigitMinutes = true
-    }
+    // if(hours > 12){
+    //     hours = hours % 12
+    //     isPm = true
+    // }
+    // if(hours === 0){
+    //     hours = 12
+    // }
+    // if(minutes < 10){
+    //     isSingleDigitMinutes = true
+    // }
 
     return (
         <div className='noteListItem'>
@@ -33,7 +31,9 @@ export default function TicketNoteListItem(props: Props){
                 <p style={{margin: '0px', height: 'fit-content'}}>
                     {props.note.body}
                     <span className='time'>
-                        {` ${hours}:${isSingleDigitMinutes ? '0' : ''}${minutes}${isPm ? 'pm' : 'am'}`}
+                        {/* {` ${hours}:${isSingleDigitMinutes ? '0' : ''}${minutes}${isPm ? 'pm' : 'am'}`}
+                        {days} */}
+                        {date}
                     </span>
                 </p>
             </div>
