@@ -193,6 +193,58 @@ function putUpdateTeammateRole(user_id: number, roleID: number, team_id: number)
     })
 }
 
+//transactions
+async function transactionRemoveTargetUserFromTeam(targetUserId: number, team_id: number){
+    let values = [targetUserId, team_id]
+    console.log(values)
+    let deleteProjectMembershipSql = 'DELETE FROM user_projects WHERE user_id= ? AND project_id IN(SELECT project_id FROM projects WHERE team_id = ?)'
+    let deleteTeamMembershiptSql = 'DELETE FROM user_teams WHERE user_id= ? AND team_id= ?'
+    let unassignSql = 'UPDATE tickets SET assigned_user_id = null, resolution_status = 1 WHERE assigned_user_id= ? AND relevant_project_id IN (SELECT project_id FROM projects WHERE team_id = ?)'
+
+    connectionPool.getConnection(function(err: any, connection: any){
+        try{
+            connection.beginTransaction(function(err: any){
+                if(err) throw err
+
+                //unassign tickets
+                connection.query(unassignSql, values, (err: any) => {
+                    if (err) { 
+                        connection.rollback(function() {
+                            throw err;
+                        });
+                    }
+                })
+                //delete project membership
+                connection.query(deleteProjectMembershipSql, values, (err: any) => {
+                    if (err) { 
+                        connection.rollback(function() {
+                            throw err;
+                        });
+                    }
+                })
+                //delete team membership
+                connection.query(deleteTeamMembershiptSql, values, (err: any) => {
+                    if (err) { 
+                        connection.rollback(function() {
+                            throw err;
+                        });
+                    }
+                })
+                //commit changes
+                connection.commit(function(err: any) {
+                    if (err) { 
+                        connection.rollback(function() {
+                        throw err;
+                        });
+                    }
+                })
+            })
+        } catch(e){
+            throw e
+        }
+    })
+}
+
 
 
 module.exports = 
@@ -215,5 +267,6 @@ module.exports =
     getTeammateCount,
     fetchIsOnTeamByUsernameDiscriminatorTeamID,
     putUpdateTeammateRole,
-    getRoleIDByUsernameDiscriminatorTeamID
+    getRoleIDByUsernameDiscriminatorTeamID,
+    transactionRemoveTargetUserFromTeam
 }

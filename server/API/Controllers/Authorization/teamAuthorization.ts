@@ -6,7 +6,6 @@ import { consumeRowDataPacket } from "../../Services/consumeRowDataPacket";
 import { TeammateDetail } from '../../Interfaces/teammate';
 import composeTeammateInfo, { TeammatesInformation } from '../../Services/composeTeammateInfo';
 import composeTeamDetails from '../../Services/composeTeamDetails';
-let authorizationQueries = require('../../Queries/AuthQueries/authorizationQueries')
 let teamQueries = require('../../Queries/teamQueries')
 let Roles = require('./Roles')
 let users = require('../../Queries/userQueries')
@@ -191,11 +190,47 @@ async function putUpdateTeammateRole(req: Express.Request, res: Express.Response
     }
 }
 
+
+async function RemoveTeammateFromTeam(req: Express.Request, res: Express.Response){
+    let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+    let targetUserId: number | null = null
+    try{
+        let userIDpacket = await users.getUserByNameDiscriminator(req.body.username, req.body.discriminator)
+        targetUserId = userIDpacket.user_id
+    }catch(e){
+        return res.status(500).send({message: 'Server couldnt check role information...'})
+    }
+
+    async function executeRemoveTeammateTransaction(user_id: number, team_id: number){
+        try{
+            await teams.transactionRemoveTargetUserFromTeam(user_id, team_id).catch(e)
+            return res.status(200).send({message: 'Teammate removed'})
+        } catch(e){
+            return res.status(500).send({message: 'Server couldnt execute the action to remove the teammate from the team...'})
+        }
+    }
+
+    //a user can remove another from a team only if the current user is the team owner
+    //will have to add a way to grant other users team owner status
+    if(userTeamRoleCombo.roleID !== 1){
+        return res.status(403).send({message: 'You dont have permission to remove users from this team...'})
+    } else {
+        if(targetUserId){
+            return executeRemoveTeammateTransaction(targetUserId, userTeamRoleCombo.teamID).catch(e);
+        }else {
+            return res.status(500).send({message: 'Server couldnt get target user information...'})
+        }
+    }
+
+
+}
+
 module.exports = { 
     inviteUserToTeam, 
     addProject, 
     getTeammates, 
     getTeammatesInformation, 
     getTeamDetails, 
-    putUpdateTeammateRole 
+    putUpdateTeammateRole,
+    RemoveTeammateFromTeam 
 }
