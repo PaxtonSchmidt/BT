@@ -16,13 +16,14 @@ import './Sass/styles.css';
 import { theme } from './theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { LoginActionCreators } from './Redux';
+import { LoginActionCreators, SocketActionCreators } from './Redux';
 import { io } from 'socket.io-client';
 import { State } from './Redux/reducers';
 
 function App() {
   const dispatch = useDispatch();
   const { login } = bindActionCreators(LoginActionCreators, dispatch)
+  const { updateSocket } = bindActionCreators(SocketActionCreators, dispatch)
   const [isTeamSelected, setIsTeamSelected] = useState(checkIsTeamSelected() === true);
   const loginState = useSelector((state: State) => state.login)
   const sessionState = useSelector((state: State) => state.session)
@@ -31,11 +32,9 @@ function App() {
   //connect socket.io only if the user is logged in AND theyve selected a team, still need server side security of course
   useEffect(() => {
     if(loginState === 1 && isSessionState === true){
-      const socket = io("http://localhost:4000");
+      const socket = io("http://localhost:4000", {withCredentials: true});
       socket.on("connect", () => {
         const engine = socket.io.engine
-        console.log(engine.transport.name)
-        console.log(socket.id)
         engine.once("upgrade", () => {
           console.log(engine.transport.name)
           console.log('upgraded')
@@ -43,9 +42,10 @@ function App() {
       })
       socket.on("disconnect", () => {
         console.log(
-          'bye bye socket'
+          'socket disconnected'
         )
       })
+      updateSocket(socket)
     }
   }, [login])
   
