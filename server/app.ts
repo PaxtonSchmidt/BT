@@ -1,4 +1,11 @@
+import { TicketNote } from "./API/Interfaces/TicketNote";
 import authenticateRequest from "./API/Middleware/authenticateRequest";
+import authenticateJWT from "./API/Services/authenticateJWT";
+import consumeCookie from "./API/Services/consumeCookies/consumeCookie";
+import { consumeCookieFlags } from "./API/Services/consumeCookies/consumeCookieFlags";
+import { consumeRowDataPacket } from "./API/Services/consumeRowDataPacket";
+let users = require('./API/Queries/userQueries')
+let projects = require('./API/Queries/projectQueries')
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -7,23 +14,8 @@ const { Server } = require('socket.io')
 app.use(cors());
 
 const server = http.createServer(app)
-const io = new Server(server, {
-    cors: {
-        origin: "http://localhost:3000",
-        methods: ['GET', 'POST']
-    }
-})
-
 server.listen('4000', () => {
     console.log('server started on port 4000');
-})
-
-
-io.on("connection", (socket: any) => {
-    console.log(socket.id)
-    socket.conn.on("upgrade", () =>{
-        console.log('upgraded')
-    })
 })
 
 app.use(express.json());
@@ -46,3 +38,53 @@ app.use('/tickets/', authenticateRequest,
 app.use('/projects/', authenticateRequest,
     require('./API/Routes/projectRoute'));
     
+//socketIO
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        credentials: true,
+        methods: ['GET', 'POST']
+    }
+})
+io.on("connection", (socket: any) => {
+    socket.on("upgrade", () =>{
+        console.log('upgraded')
+    })
+    socket.on('joinTicket', async function(ticket_id: number, project_id: number){
+        let tokenInformation = consumeCookie(socket.handshake.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+        let isUserOnProject = consumeRowDataPacket(await projects.isUserOnProject(tokenInformation.userID, project_id));
+        if(isUserOnProject){
+            socket.join(ticket_id)
+        } else if(tokenInformation.roleID === 1){
+        }else{
+            new Error('Cant connect to project chat for lack of perms...')
+        }
+    })
+    socket.on('newTicketNote', (ticketNote: TicketNote) => {
+        socket.to(ticketNote.relevant_ticket_id).emit('newTicketNote', ticketNote)
+    })
+})
+
+io.use(async (socket: any, next: any) => {
+    if(socket.handshake.headers.cookie){
+        let tokenInformation = consumeCookie(socket.handshake.headers.cookie, consumeCookieFlags.tokenSocketIoFlag);
+        let tokenVersion = tokenInformation.tokenV;
+        let userId = tokenInformation.userID;
+        let token = tokenInformation.token;
+        let validTokenVersion = {token_v: ''}
+        try{
+            validTokenVersion = await users.getValidTokenVersion(userId)
+        } catch(e){
+            next(new Error('Couldnt validate user...'))
+        }
+
+        if(tokenVersion !== validTokenVersion.token_v || authenticateJWT(token) !== true){
+            next(new Error('Invalid connection request...'))
+        } else{
+            next();
+        }
+    } else {
+        next(new Error('Please send token...'))
+    }
+})
+
