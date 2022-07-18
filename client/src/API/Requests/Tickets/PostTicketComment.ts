@@ -5,7 +5,11 @@ export default async function postTicketComment(comment: string, ticket: any) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({comment: comment, ticketID: ticket.ticket_id, projectID: ticket.project_id})
-    }).then(response => response.json())
-    
-    return await response
+    }).then(resonse => {if(resonse.status !== 200){
+                            return 'Error'
+                        } else{
+                            return resonse.json()
+                        }})
+
+    return response
 }
