@@ -4,7 +4,8 @@ interface ConsumeCookieFlags {
     tokenTeamIdFlag: string,
     tokenUserAndTeamIdFlag: string,
     tokenValidationFlag: string,
-    tokenUserTeamRoleIdFlag: string
+    tokenUserTeamRoleIdFlag: string,
+    tokenSocketIoFlag: string
 }
 
 export const consumeCookieFlags: ConsumeCookieFlags = {
@@ -13,5 +14,6 @@ export const consumeCookieFlags: ConsumeCookieFlags = {
     tokenTeamIdFlag: 'needTokenTeam_id',
     tokenUserAndTeamIdFlag: 'needTokenUserAndTeam_Id',
     tokenValidationFlag: 'tokenValidationFlag',
-    tokenUserTeamRoleIdFlag: 'tokenUserTeamAndRoleIDFlag'
+    tokenUserTeamRoleIdFlag: 'tokenUserTeamAndRoleIDFlag',
+    tokenSocketIoFlag: 'tockenSocketIoFlag'
 }

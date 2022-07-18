@@ -32,8 +32,11 @@ export default function consumeCookie(cookie: any, dataNeeded: string) {
         let decoded = jwt_decode(token)
         let userTeamRoleId = {userID: decoded.user_id, teamID: decoded.team_id, roleID: decoded.role_id}
         return userTeamRoleId
-    }
-    else {
+    } else if(dataNeeded === consumeCookieFlags.tokenSocketIoFlag){
+        let decoded = jwt_decode(token)
+        let allData = {userID: decoded.user_id, teamID: decoded.team_id, roleID: decoded.role_id, token: token, tokenV: decoded.token_v}
+        return allData
+    }   else {
         console.log(`ERROR: Incorrect use of consumeCookie service function. Use entireTokenFlag, tokenUserIdFlag or tokenTeamIdFlag in the second argument`);
     }
 }
