@@ -2,6 +2,7 @@ import { Box, Modal } from '@mui/material'
 import e from 'express'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { json } from 'stream/consumers'
 import { Teammate } from '../../../../API/interfaces/teammate'
 import putUpdateTeammateRole from '../../../../API/Requests/Teams/PutUpdateTeamRole'
 import { State } from '../../../../Redux/reducers'
@@ -57,7 +58,14 @@ export default function TeammateDetails(){
     useEffect(()=>{if(teammatesInformation !== undefined){handleNewTeammate()}}, [focusedTeammateState, teammatesInformation])
 
     async function handleRemoveTeammate(){
-        return console.log('a')
+        let response: any = fetch('/teams/removeTeammate', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username: focusedTeammateState.username, discriminator: focusedTeammateState.discriminator})
+        }).then(res => res.json())
+        return console.log(await response)
     }
 
     let role = null
@@ -100,8 +108,7 @@ export default function TeammateDetails(){
         }
     }
 
-    if(isLoading){
-        return (
+    if(isLoading){        return (
             <>
             <div className='list delayedFadeIn' style={{height: '100%', textAlign: 'center', paddingTop: '15px'}}>Loading...</div>
             </>
@@ -132,7 +139,8 @@ export default function TeammateDetails(){
                                     {role}
                                 </span>
                                 {canUserManageTeammateRole && 
-                                    <span id='RoleUpdate' className='rowItem fadeIn inComponentButton scaleYonHover' onClick={()=>setIsRoleModalOpen(true)} style={{display: 'inline-block', width: 'fit-content', textAlign: 'center', height: 'fit-content'}}>
+                                    <span id='RoleUpdate' className='rowItem fadeIn inComponentButton scaleYonHover' onClick={()=>setIsRoleModalOpen(true)} 
+                                    style={{display: 'inline-block', width: 'fit-content', textAlign: 'center', height: 'fit-content'}}>
                                         {roleUpdateType}
                                     </span>
                                 }
@@ -216,14 +224,9 @@ export default function TeammateDetails(){
                         </p>
                         <ul className='modalList'>
                             <p>These effects will occur...</p>
-                            <li>sadasdsa</li>
-                            <li>sadasdsa</li>
-                            <li>sadasdsa</li>
-                            <li>sadasdsa</li>
-                            
-                            
-                            
-                            
+                            <li>{`${focusedTeammateState.username} will be removed from all projects of ${sessionState.currentTeam.name}`}</li>
+                            <li>{`Tickets assigned to ${focusedTeammateState.username} in any project of ${sessionState.currentTeam.name} will be set to "Unassigned"`}</li>
+                            <li>{`${focusedTeammateState.username} will not be able to visit the ${sessionState.currentTeam.name} team's page unless they are invited back`}</li>
                         </ul>
                         <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
                             <button onClick={() => setIsModalOpen(false)} className='button modalButton modalButtonCancel' >Cancel</button>
