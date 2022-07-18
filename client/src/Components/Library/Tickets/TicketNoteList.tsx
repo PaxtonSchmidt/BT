@@ -52,7 +52,6 @@ export default function TicketNoteList() {
                 newChosenNotes.unshift(note)
             }
         });
-        newChosenNotes = _.sortBy(newChosenNotes, ['comment_id']).reverse()
         return newChosenNotes
     } 
     useEffect(() => {setChosenNotes(createChosenNotesArray())}, [focusedTicketState, allNotes])
@@ -61,7 +60,7 @@ export default function TicketNoteList() {
         if(note.length > 300){return console.log('Too many characters...')}
         if(note.length < 1){return console.log('Empty comments not allowed...')}
         let response = await postTicketComment(note, focusedTicketState);
-        if(response){
+        if(response !== 'Error'){
             let newTicketNoteToEmit: TicketNote = {
                 comment_id: response.insertID, 
                 author_username: sessionState.currentUser.username, 
@@ -75,10 +74,10 @@ export default function TicketNoteList() {
                 'newTicketNote',
                 newTicketNoteToEmit
             )
+            setNewNote('')
         } else{
             //fire an error toast 
         }
-        setNewNote('')
     }
 
     function ticketNoteListLoop(){
@@ -89,21 +88,22 @@ export default function TicketNoteList() {
         let arrayList = []
         let i = 0
         do{
-            let isSameAuthor: boolean = false
-            if(chosenNotes[i - 1]){
-                let lastNoteDate = Math.floor(chosenNotes[i - 1].date_created.substring(0,10).replace(/-/g, ''))
-                let currentNoteDate = Math.floor(chosenNotes[i].date_created.substring(0,10).replace(/-/g, ''))
-                
-                if(currentNoteDate < lastNoteDate){
-                    arrayList.push(<ChatDateDivider newDate={chosenNotes[i].date_created}/>)
-                }
-            }
-            console.log(chosenNotes[i].author_username)
-            console.log(chosenNotes[i].author_discriminator)
             arrayList.push(<TicketNoteListItem note={chosenNotes[i]} />)
             i++
         } while(i < chosenNotes.length)
-        arrayList.push(<ChatDateDivider newDate={chosenNotes[chosenNotes.length - 1].date_created}/>)
+        
+        // for(let i = 0; i < chosenNotes.length; i++){
+        //     if(chosenNotes[i - 1]){
+        //         let currentNoteDate = chosenNotes[i].date_created.replace(/[^a-zA-Z0-9 ]/g, '').replace('T', ' ').substring(0,8)
+        //         let lastNote = chosenNotes[i - 1].date_created.replace(/[^a-zA-Z0-9 ]/g, '').replace('T', ' ').substring(0,8)
+                
+        //         if(currentNoteDate < lastNote){
+        //             arrayList.splice(i, 0, <ChatDateDivider newDate={chosenNotes[i].date_created}/>)
+        //         }
+        //     }
+        // }
+        // arrayList.push(<ChatDateDivider newDate={chosenNotes[chosenNotes.length - 1].date_created}/>)
+        
         return arrayList
     }
 
