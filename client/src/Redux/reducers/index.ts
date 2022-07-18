@@ -7,6 +7,7 @@ import focusedTicketReducer from './focusedTicketReducer';
 import invitesReducer from './invitesReducers';
 import loginReducer from './loginReducers'
 import sessionReducer from './sessionReducer';
+import socketReducer from './socketReducer';
 import teammatesReducer from './teammatesReducer';
 import teamsReducer from './teamsReducer';
 
@@ -20,7 +21,8 @@ const reducers = combineReducers({
     focusedProject: focusedProjectReducer,
     focusedMember: focusedMemberReducer,
     focusedTeammate: focusedTeammateReducer,
-    teammates: teammatesReducer
+    teammates: teammatesReducer,
+    socket: socketReducer
 })
 
 export default reducers
