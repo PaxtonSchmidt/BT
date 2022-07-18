@@ -9,7 +9,6 @@ import TicketListItem from './TicketListItem';
 function Tickets() {
     let dispatch = useDispatch();
     const { updateFocusedTicket } = bindActionCreators(FocusedTicketActionCreators, dispatch)
-    const focusedTicketState = useSelector((state: State) => state.focusedTicket)
     const [tickets, setTickets] = useState<any[]>([]);
 
     useEffect(() => {
@@ -21,9 +20,6 @@ function Tickets() {
                 }
             }).then(res => res.json())
             let tickets = await response    
-            if(focusedTicketState.ticket_id === undefined){
-                updateFocusedTicket(tickets[0])
-            }     
             setTickets(tickets)
             return await response
         }
@@ -44,9 +40,6 @@ function Tickets() {
                         <span className='rowItem'>
                             Project
                         </span> 
-                        <span className='rowItem'>
-                            Assignee
-                        </span>
                         <span className='rowItem'>
                             Status
                         </span>
@@ -76,9 +69,6 @@ function Tickets() {
                         <span className='rowItem'>
                             Project
                         </span> 
-                        <span className='rowItem'>
-                            Assignee
-                        </span>
                         <span className='rowItem'>
                             Status
                         </span>
