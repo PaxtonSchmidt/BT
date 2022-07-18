@@ -20,6 +20,18 @@ export default function ProjectMembersManage(){
     const { updateFocusedMember } = bindActionCreators(FocusedMemberActionCreators, dispatch)
     const [word, setWord] = useState('Update')
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isRoleModalOpen, setIsRoleModalOpen] = useState<boolean>(false);
+
+    let isUserAllowedToEditRole = false;
+    let roleUpdateType = ''
+    let potentialNewTeamRole: string = 'Null'
+    let currentUserProjects = deepClone(sessionState.currentTeam.projects)
+    let isFocusedProjectAll: boolean = (focusedProjectState.name === 'All')
+    let focusedProjectOfFocusedMember: any = undefined
+    let date: any = ''
+    let role: any= ''
+    let enlistedByUsername: string = '';
+    let enlistedByDiscriminator: string = '';
 
     useEffect(()  => setIsMemberSelected(!isMemberSelected), [focusedMemberState])
     useEffect(() => {  
@@ -40,7 +52,7 @@ export default function ProjectMembersManage(){
         updateFocusedMember({username: '', discriminator: 0}) 
     }
         
-    
+
     if(isDirty === true){
         document.getElementById('manageUsersButton')?.classList.add('active')
     } else {
@@ -55,12 +67,6 @@ export default function ProjectMembersManage(){
         }
     })
     
-    let isFocusedProjectAll: boolean = (focusedProjectState.name === 'All')
-    let focusedProjectOfFocusedMember: any = undefined
-    let date: any = ''
-    let role: any= ''
-    let enlistedByUsername: string = '';
-    let enlistedByDiscriminator: string = '';
     if(focusedMemberDetails !== undefined){
         if(isFocusedProjectAll){
             //since team_role is determined by your highest project_role, this works
@@ -88,23 +94,33 @@ export default function ProjectMembersManage(){
     }
 
     async function handleSubmit(){
-        if(word !== 'Update'){
-            let updateUser = {
+        let updateUser = {}
+        if(roleUpdateType === 'Promote'){
+            updateUser = {
                 username: focusedMemberState.username,
                 discriminator: focusedMemberState.discriminator,
                 targetProjectName: focusedProjectState.name,
-                newRoleId: translateRole.TranslateProjectRoleBack(word)
+                newRoleId: 2
             }
-            let response: any = fetch('/projects/updateMemberRole', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updateUser)
-            }).then(res => res.json())
-            return console.log(await response)
+        } else if(roleUpdateType === 'Demote'){
+            updateUser = {
+                username: focusedMemberState.username,
+                discriminator: focusedMemberState.discriminator,
+                targetProjectName: focusedProjectState.name,
+                newRoleId: 3
+            }
         }
+        let response: any = fetch('/projects/updateMemberRole', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updateUser)
+        }).then(res => res.json())
+        return console.log(await response)
     }
+    
+    
 
     async function handleRemoveMember(){
         let targetUserProject = {
@@ -122,16 +138,30 @@ export default function ProjectMembersManage(){
         return console.log(await response)
     }
 
-    let currentUserProjects = deepClone(sessionState.currentTeam.projects)
     let focusedProject = currentUserProjects.find((project: any)=>{
         if(project.name === focusedProjectState.name){return true}})
 
-    let isUserAllowedToEditRole = false;
     if(focusedProject && focusedProjectOfFocusedMember){
         isUserAllowedToEditRole = focusedProject.role_id < focusedProjectOfFocusedMember.project_role;
     }
-    //if the focused project is all or undefined, we wont render a few of the details rows
-    //because 'all' wouldnt hold relevant info and undefined means the user isnt on that project
+    if(focusedProjectOfFocusedMember){
+        if((sessionState.currentTeam.team_role === 1 && focusedProjectOfFocusedMember.project_role === 2) 
+        || (sessionState.currentTeam.team_role === 1 && focusedProjectOfFocusedMember.project_role === 3)){
+            isUserAllowedToEditRole = true
+        }else{
+            isUserAllowedToEditRole = false
+        }
+        if(focusedProjectOfFocusedMember.project_role === 2){
+            roleUpdateType = 'Demote'
+        } else if(focusedProjectOfFocusedMember.project_role === 3){
+            roleUpdateType = 'Promote'
+        }
+    }
+    if(roleUpdateType === 'Demote'){
+        potentialNewTeamRole = 'Developer'
+    } else if(roleUpdateType === 'Promote'){
+        potentialNewTeamRole = 'Lead'
+    }
     let isFocusedMemberProjectAllOrUndefined = (isFocusedProjectAll === true || focusedProjectOfFocusedMember === undefined)
     return(
         <div className='ManageMembersWidget ' >
@@ -165,9 +195,11 @@ export default function ProjectMembersManage(){
                                     {role}
                                 </span>
                             </div>
-                            {isUserAllowedToEditRole ? 
-                            <UpdateUserRole setIsFormDirty={setIsDirty} isFormDirty={isDirty} word={word} setWord={setWord} type={'Project'}/>
-                            :<></>}
+                            {isUserAllowedToEditRole &&
+                                <span id='RoleUpdate' className='rowItem fadeIn inComponentButton scaleYonHover' onClick={()=>setIsRoleModalOpen(true)} style={{display: 'inline-block', width: 'fit-content', textAlign: 'center', height: 'fit-content', marginBottom:'10px'}}>
+                                    {roleUpdateType}
+                                </span>
+                            }
                         </div>}
 
                         {isFocusedMemberProjectAllOrUndefined ? <></> : 
@@ -236,6 +268,55 @@ export default function ProjectMembersManage(){
                                             </div>
                                         </div>
                                         
+                                    </Box>
+                            </Modal>
+                            <Modal
+                                open={isRoleModalOpen}
+                                style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                    <Box className='modalBoxContainer'>
+                                        <div className='modalBox'>
+                                            <p style={{color: 'white'}} onClick={() => setIsModalOpen(false)}>
+                                                {`Are you sure you want to ${roleUpdateType.toLowerCase()}\u00a0`}
+                                                <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content', color: '#efff0a'}}>
+                                                    {focusedMemberState.username}
+                                                </span>
+                                                <span className='rowItem discriminator' style={{display: 'inline-block', width: 'fit-content', color: '#efff0a'}}>
+                                                    #{focusedMemberState.discriminator}
+                                                </span>
+                                                <span className='rowItem' style={{display: 'inline-block', width: 'fit-content'}}>
+                                                    {`\u00a0to a`}
+                                                </span>
+                                                <span className='rowItem' style={{display: 'inline-block', width: 'fit-content', color: '#efff0a'}}>
+                                                    {`\u00a0${potentialNewTeamRole}`}
+                                                </span>
+                                                {`\u00a0role on the\u00a0`}
+                                                <span className='rowItem' style={{display: 'inline-block', width: 'fit-content', color: '#efff0a'}}>
+                                                    {focusedProject.name}
+                                                </span>
+                                                <span className='rowItem' style={{display: 'inline-block', width: 'fit-content'}}>
+                                                    {`\u00a0project?`}
+                                                </span>
+                                            </p>
+                                            <ul className='modalList'>
+                                                <p>These effects will occur...</p>
+                                                {roleUpdateType === 'Demote' &&
+                                                <>
+                                                <li>{focusedMemberState.username} will no longer be able to add teammates to the {focusedProjectState.name} project</li>
+                                                <li>{focusedMemberState.username} will no longer be able to remove teammates from the {focusedProjectState.name} project</li>
+                                                <li>{focusedMemberState.username} will no longer be able to set any ticket on the {focusedProjectState.name} project to 'Solution Accepted' and 'Closed'</li>
+                                                </>}
+                                                {roleUpdateType === 'Promote' &&
+                                                <>
+                                                <li>{focusedMemberState.username} will be able to add teammates to the {focusedProjectState.name} project</li>
+                                                <li>{focusedMemberState.username} will be able to remove teammates with a dev role from the {focusedProjectState.name} project</li>
+                                                <li>{focusedMemberState.username} will be able to set any ticket on the {focusedProjectState.name} project to 'Solution Accepted' and 'Closed'</li>
+                                                </>}
+                                            </ul>
+                                            <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+                                                <button onClick={() => setIsRoleModalOpen(false)} className='button modalButton modalButtonCancel' >Cancel</button>
+                                                <button onClick={() => handleSubmit()} className='button modalButton modalButtonConfirm' >Confirm</button>
+                                            </div>
+                                        </div>
                                     </Box>
                             </Modal>
                         </>
