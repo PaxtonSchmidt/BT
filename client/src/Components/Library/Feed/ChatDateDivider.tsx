@@ -7,6 +7,7 @@ interface Props {
 
 export default function ChatDateDivider(props: Props){
     let date = dateFormat(props.newDate, "dddd, mmmm dS")
+    console.log(date)
     return(
         <div style={{display:'flex', justifyContent: 'center', marginBottom:'15px'}}>
             <div style={{height: '50%', borderBottom: '1px solid #efff0a', flexGrow: '1', marginRight: '10px'}}></div>
