@@ -46,7 +46,7 @@ export default function ProjectMembersList() {
             let project = projects.find((project: any) => project.name === focusedProjectState.name)
             project?.project_members.forEach((member: any) => newMembersList.push(member))
 
-            if(project.role_id === 2 || project.role_id === 1){
+            if(project.role_id === 2 || project.role_id === 1 || sessionState.currentTeam.team_role === 1){
                 setCanUserManageMembers(true);
             } else {
                 setCanUserManageMembers(false);
