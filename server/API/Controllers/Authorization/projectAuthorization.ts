@@ -137,15 +137,16 @@ async function addListOfMembersToProject(req: any, res: any){
     let targetProjectId: number | null = null;
     let allTeammates: any[] = [];
     let currentProjectMembers: Teammate[] | null = null
+    let userProjectRoleIdPacket = []
     //get a list of all teammates, check that these users are on the list and if they are, add them all to the project with a dev role
     try{
         let targetProjectIdPacket = await projects.getProjectIdByTeamIdAndProjectName(userTeamRoleCombo.teamID, projectName)
         targetProjectId = targetProjectIdPacket.project_id
-        let userProjectRoleIdPacket = await projects.getRoleByUserIdProjectId(userTeamRoleCombo.userID, targetProjectId)
-        userProjectRoleId = userProjectRoleIdPacket[0].role_id
+        userProjectRoleIdPacket = await projects.getRoleByUserIdProjectId(userTeamRoleCombo.userID, targetProjectId)
         allTeammates = await teams.getUsersOnTeam(userTeamRoleCombo.teamID)
         currentProjectMembers = await projects.getProjectMembersByProjectId(targetProjectId)
     }catch(e){
+        console.log(e)
         return res.status(500).send({message: 'Server couldnt check authorization levels...'})
     }
     try{
@@ -165,9 +166,15 @@ async function addListOfMembersToProject(req: any, res: any){
     }
 
     //if the user isnt a project lead, send a 403
-    if(userProjectRoleId !== 1 && userProjectRoleId !== 2){
-        return res.status(403).send({message: `You are not allowed to add users to the ${req.body.projectName} project...`})
-    } 
+    if(userTeamRoleCombo.roleID !== 1){
+
+        userProjectRoleId = userProjectRoleIdPacket[0]
+        console.log(userProjectRoleId)
+        if(userProjectRoleId !== 1 && userProjectRoleId !== 2){
+            return res.status(403).send({message: `You are not allowed to add users to the ${req.body.projectName} project...`})
+        } 
+    }
+    
     //if any of the users arent on the team, send a 400
     newMembers.forEach((member: Teammate) => {
         let idx: number | null = null;
@@ -250,7 +257,7 @@ async function removeMember(req: any, res: any) {
         return res.status(500).send({message: 'Server couldnt check authorization levels...'})
     }
     //if the user has a role_id less than the target user, they can remove the target user as a member of the project
-    if(userProjectRoleId! < targetUserProjectRoleId!){
+    if(userProjectRoleId! < targetUserProjectRoleId! || userTeamRoleCombo.roleID === 1){
         try{
             await projects.transactionRemoveTargetUserFromProject(targetUserId, targetProjectId)
             return res.status(200).send({message: 'Removed member from the project'})
