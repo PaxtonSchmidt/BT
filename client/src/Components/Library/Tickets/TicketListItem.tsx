@@ -18,7 +18,6 @@ export default function ticketListItem(props: ticket) {
     let isAssignee = checkIfAssignee(props.assignee_user_discriminator)
 
     function handleTicketSelect(ticket: any){
-        console.log(ticket)
         props.setFocusedTicket(ticket)
     }
     
@@ -36,16 +35,13 @@ export default function ticketListItem(props: ticket) {
                 </button>
             </div>
             <div className='listRowSection rightSection'>
-                <span className='rowItem'>
+                <span className='rowItem' >
+                    <p style={{textOverflow: 'ellipsis', overflow: 'hidden', margin: '0px'}}>
                     {props.project_name}
+                    </p>
                 </span>
-                {isAssignee ?  
-                    <span className='rowItem'>{props.assignee_username}</span>
-                    : 
-                    <span className='rowItem'>none</span>
-                }
                 <span className='rowItem'>
-                    Awaiting Review
+                    Review
                 </span>
                 <span className='rowItem'>
                     {priority}
