@@ -1,6 +1,3 @@
-import consumeCookie from "./consumeCookies/consumeCookie";
-import { consumeCookieFlags } from "./consumeCookies/consumeCookieFlags";
-
 const jwt = require('jsonwebtoken');
 
 export default function authenticateJWT(token: any) {
