@@ -62,6 +62,7 @@ async function getTickets(req: any, res: any){
     if(userTeamRoleCombo.roleID === Roles.Legend.owner){
         try{
             let ticketList = await tickets.getTeamTickets(userTeamRoleCombo.teamID)
+            console.log(ticketList)
             return res.status(200).send(ticketList)
         }catch(e){
             return res.status(500).send({message: 'Server couldnt get tickets...'})
