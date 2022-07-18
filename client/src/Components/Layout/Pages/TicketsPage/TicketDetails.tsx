@@ -30,8 +30,18 @@ export default function TicketDetails() {
                 </div>    
                 <div className='ticketDetailItemContainer'>
                     <div className='ticketDetailItem'>
-                        <span className='detailLabel'>Project:</span>
-                        <span>{focusedTicketState.project_name}</span>
+                        <div style={{width: '50%', display: 'flex'}} >
+                            <span className='detailLabel' style={{overflow: 'hidden', textOverflow: 'ellipsis'}}>
+                                <span> Project:</span>   
+                            </span>
+                            <span>
+                                <p style={{textOverflow: 'ellipsis', margin:'0px', overflow: 'hidden'}}>
+                                {focusedTicketState.project_name}
+                                </p>
+                            </span>
+                        </div>
+                        
+                        
                         {isAssigneeNull ?
                         <>
                         <span className='detailLabel'  style={{marginLeft: 'auto'}}>Assignee:</span>
