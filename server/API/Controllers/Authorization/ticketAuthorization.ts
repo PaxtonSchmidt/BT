@@ -46,8 +46,8 @@ async function submitTicketComment(req: Express.Request, res: Express.Response){
     if(ticket.relevant_project_id !== req.body.projectID){
         return res.status(400).send({message: 'That ticket isnt for this project...'})
     }else if(isUserAllowedToComment === true){
-        tickets.addTicketComment(ticket.ticket_id, userTeamRoleCombo.userID, newComment)
-        return res.status(200).send({message: 'Server added the comment to the ticket'})
+        let result = await tickets.addTicketComment(ticket.ticket_id, userTeamRoleCombo.userID, newComment)
+        return res.status(200).send({insertID: result.insertId})
     }else{
         return res.status(403).send({message: 'You are not allowed to comment on this ticket...'})
     }
