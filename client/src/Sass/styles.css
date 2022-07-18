@@ -755,11 +755,11 @@ input[type=number] {
 }
 
 .leftSection {
-  width: 30%;
+  width: 50%;
 }
 
 .rightSection {
-  width: 70%;
+  width: 50%;
 }
 
 .rightSection > .rowItem {
@@ -1692,6 +1692,11 @@ body {
 .fadeIn {
   -webkit-animation: fadeIn 1s;
           animation: fadeIn 1s;
+}
+
+.time {
+  opacity: 30%;
+  font-size: 10px;
 }
 
 @-webkit-keyframes fadeIn {
