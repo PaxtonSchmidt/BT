@@ -303,13 +303,13 @@ export default function ProjectMembersManage(){
                                                 <>
                                                 <li>{focusedMemberState.username} will no longer be able to add teammates to the {focusedProjectState.name} project</li>
                                                 <li>{focusedMemberState.username} will no longer be able to remove teammates from the {focusedProjectState.name} project</li>
-                                                <li>{focusedMemberState.username} will no longer be able to set any ticket on the {focusedProjectState.name} project to 'Solution Accepted' and 'Closed'</li>
+                                                <li>{focusedMemberState.username} will no longer be able to edit the priority, assignee and status of any ticket on the {focusedProjectState.name} project</li>
                                                 </>}
                                                 {roleUpdateType === 'Promote' &&
                                                 <>
-                                                <li>{focusedMemberState.username} will be able to add teammates to the {focusedProjectState.name} project</li>
-                                                <li>{focusedMemberState.username} will be able to remove teammates with a dev role from the {focusedProjectState.name} project</li>
-                                                <li>{focusedMemberState.username} will be able to set any ticket on the {focusedProjectState.name} project to 'Solution Accepted' and 'Closed'</li>
+                                                <li>{focusedMemberState.username} will be able to add teammates as developers to the {focusedProjectState.name} project</li>
+                                                <li>{focusedMemberState.username} will be able to remove teammates with a developer role from the {focusedProjectState.name} project</li>
+                                                <li>{focusedMemberState.username} will be able to edit the priority, assignee and status of any ticket on the {focusedProjectState.name} project</li>
                                                 </>}
                                             </ul>
                                             <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
