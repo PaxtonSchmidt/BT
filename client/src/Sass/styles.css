@@ -1243,7 +1243,7 @@ input[type=number] {
   -webkit-transition: 0.5s;
   transition: 0.5s;
   overflow-y: scroll;
-  height: 149px;
+  height: 145px;
   margin-top: auto;
   margin-bottom: 10px;
 }
