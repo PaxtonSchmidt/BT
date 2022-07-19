@@ -7,8 +7,9 @@ import postTicketComment from '../../../API/Requests/Tickets/PostTicketComment';
 import { State } from '../../../Redux/reducers';
 import TicketNoteListItem from './TicketNoteListItem';
 import * as _ from 'lodash'
-import getCurrentDate from '../../../Services/getCurrentDate';
 import ChatDateDivider from '../Feed/ChatDateDivider';
+import { Formik } from 'formik';
+import moment from 'moment';
 
 export default function TicketNoteList() {
     const focusedTicketState = useSelector((state: State) => state.focusedTicket)
@@ -17,6 +18,8 @@ export default function TicketNoteList() {
     const [chosenNotes, setChosenNotes] = useState<any[]>([]);
     const [allNotes, setAllNotes] = useState<TicketNote[]>([]);
     const [newNote, setNewNote] = useState<string>('');
+
+    console.log(socketState)
 
     useEffect(() => {
         if(socketState){
@@ -56,29 +59,7 @@ export default function TicketNoteList() {
     } 
     useEffect(() => {setChosenNotes(createChosenNotesArray())}, [focusedTicketState, allNotes])
 
-    async function handleSubmit(note: string){
-        if(note.length > 300){return console.log('Too many characters...')}
-        if(note.length < 1){return console.log('Empty comments not allowed...')}
-        let response = await postTicketComment(note, focusedTicketState);
-        if(response !== 'Error'){
-            let newTicketNoteToEmit: TicketNote = {
-                comment_id: response.insertID, 
-                author_username: sessionState.currentUser.username, 
-                author_discriminator: sessionState.currentUser.discriminator,
-                body: note,
-                relevant_ticket_id: focusedTicketState.ticket_id,
-                date_created: getCurrentDate()
-            };
-            setAllNotes(previousState => [...previousState, newTicketNoteToEmit])
-            socketState.emit(
-                'newTicketNote',
-                newTicketNoteToEmit
-            )
-            setNewNote('')
-        } else{
-            //fire an error toast 
-        }
-    }
+   
 
     function ticketNoteListLoop(){
         if(!chosenNotes){return}
@@ -122,42 +103,70 @@ export default function TicketNoteList() {
     }else {
         return (
             <>
-                {anyNotes ? 
+               
                 <div className='fadeIn ticketNoteListContainer'>
+                    {anyNotes ? 
                     <div id='list' className='ticketNoteList componentGlow fadeIn' style={{paddingTop: '10px'}}>    
                         {ticketNoteListLoop()}
                     </div>
-                    <Box component='form' className='ticketNoteForm' onSubmit={(e:  React.FormEvent<HTMLInputElement>)=>{e.preventDefault(); handleSubmit(newNote)}}>
-                        <TextField
-                        label='Add a note...'
-                        type='text'
-                        className='ticketNoteInput' 
-                        name='title'
-                        variant='standard'
-                        color='info'
-                        onChange={(e)=>setNewNote(e.target.value)}
-                        value={newNote}
-                        />
-                    </Box>
-                </div>
-                :
-                <div className='fadeIn ticketNoteListContainer' >
+                    : 
                     <div className='list ticketNoteList delayedFadeIn' style={{color: '#ffffff31', textAlign: 'center', paddingBottom: '10px'}}>
                         <p>{`There are no notes for this ticket yet`}</p>
-                    </div>
-                    <Box component='form' className='ticketNoteForm' onSubmit={(e:  React.FormEvent<HTMLInputElement>)=>{e.preventDefault(); handleSubmit(newNote)}}>
-                        <TextField
-                        label='Add a note...'
-                        type='text'
-                        className='ticketNoteInput' 
-                        name='title'
-                        variant='standard'
-                        color='info'
-                        onChange={(e)=>setNewNote(e.target.value)}
-                        value={newNote}
-                        />
-                    </Box>
-                </div>}
+                    </div>}
+                    
+                    <Formik 
+                        initialValues={{note: ''}}
+                        onSubmit={(data, {resetForm}) => {
+                            async function handleNoteSubmit(note: string){
+                                if(note.length > 300){return console.log('Too many characters...')}
+                                if(note.length < 1){return console.log('Empty comments not allowed...')}
+                                let response = await postTicketComment(data.note, focusedTicketState);
+                                if(response !== 'Error'){
+                                    let newTicketNoteToEmit: TicketNote = {
+                                        comment_id: response.insertID, 
+                                        author_username: sessionState.currentUser.username, 
+                                        author_discriminator: sessionState.currentUser.discriminator,
+                                        body: note,
+                                        relevant_ticket_id: focusedTicketState.ticket_id,
+                                        date_created: moment().add(4, 'hours').format().slice(0,19).split('T').join(' ')
+                                    };
+                                    console.log(newTicketNoteToEmit.date_created)
+                                    setAllNotes(previousState => [...previousState, newTicketNoteToEmit])
+                                    socketState.emit(
+                                        'newTicketNote',
+                                        newTicketNoteToEmit
+                                    )
+                                    resetForm()
+                                } else{
+                                    //fire an error toast 
+                                }
+                            }
+                            return handleNoteSubmit(data.note)
+                        }}
+                    >
+                    {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
+                            return (
+                                <form className='form' style={{width: '100%'}} onSubmit={handleSubmit} onBlur={handleBlur}>
+                                    
+                                <div className='ticketNoteForm' >
+                                    <TextField
+                                        label='note'
+                                        type='text'
+                                        value={values.note}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        className='formComponent'
+                                        name='note'
+                                        variant='standard'
+                                        color='info'
+                                        required />
+                                </div>
+                                </form>
+                            )}
+                        }
+                    </Formik>
+                </div>
+               
             </>            
         )
     }
