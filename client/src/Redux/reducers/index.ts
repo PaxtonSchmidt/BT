@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import alertReducer from './alertReducer';
 import currentUserReducer from './currentUserReducer';
 import focusedMemberReducer from './focusedMemberReducer';
 import focusedProjectReducer from './focusedProjectReducer';
@@ -22,7 +23,8 @@ const reducers = combineReducers({
     focusedMember: focusedMemberReducer,
     focusedTeammate: focusedTeammateReducer,
     teammates: teammatesReducer,
-    socket: socketReducer
+    socket: socketReducer,
+    alert: alertReducer
 })
 
 export default reducers
