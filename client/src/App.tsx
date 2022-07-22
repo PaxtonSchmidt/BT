@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@mui/material';
+import { Alert, Snackbar, ThemeProvider } from '@mui/material';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -16,7 +16,7 @@ import './Sass/styles.css';
 import { theme } from './theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { LoginActionCreators, SocketActionCreators } from './Redux';
+import { AlertActionCreators, LoginActionCreators, SocketActionCreators } from './Redux';
 import { io } from 'socket.io-client';
 import { State } from './Redux/reducers';
 
@@ -24,11 +24,14 @@ function App() {
   const dispatch = useDispatch();
   const { login } = bindActionCreators(LoginActionCreators, dispatch)
   const { updateSocket } = bindActionCreators(SocketActionCreators, dispatch)
+  const { fireAlert } = bindActionCreators(AlertActionCreators, dispatch)
   const [isTeamSelected, setIsTeamSelected] = useState(checkIsTeamSelected() === true);
   const loginState = useSelector((state: State) => state.login)
   const sessionState = useSelector((state: State) => state.session)
+  const alertState = useSelector((state: State) => state.alert)
   let isSessionState = typeof sessionState.currentTeam?.name !== 'undefined';
-
+  console.log(alertState)
+  console.log(sessionState)
   //connect socket.io only if the user is logged in AND theyve selected a team, still need server side security of course
   useEffect(() => {
     if(loginState === 1 && isSessionState === true){
@@ -62,6 +65,13 @@ function App() {
     return false;
   }
 
+  function handleCloseAlert() {
+    fireAlert({
+      isOpen: true,
+      status: 0,
+      message: ''
+    })
+  }
   
   return (
     <ThemeProvider theme={theme}>
@@ -104,6 +114,11 @@ function App() {
 
           </Route>
         </Routes>
+        <Snackbar open={alertState.isOpen} autoHideDuration={6000} onClose={handleCloseAlert} anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}>
+            <Alert severity='error'>
+                {alertState.message}
+            </Alert>
+        </Snackbar>
     </ThemeProvider>
   );
 }
