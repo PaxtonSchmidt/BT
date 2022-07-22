@@ -2,6 +2,6 @@ export interface Ticket {
     title: string;
     description: string;
     project: string;
-    assignee: {};
+    assignee: any;
     priority: string;
 }
