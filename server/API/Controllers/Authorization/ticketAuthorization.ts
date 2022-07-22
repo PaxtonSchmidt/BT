@@ -38,7 +38,8 @@ async function submitTicketComment(req: Express.Request, res: Express.Response){
         ticket = ticketPacket[0]
         projectMembersIds = await projects.projectMembersIdsByProjectId(req.body.projectID)
         let isUserIDInMembersList = projectMembersIds?.findIndex((member: any)=>{if(member.user_id === userTeamRoleCombo.userID){return true}}) !== -1
-        isUserAllowedToComment = isUserIDInMembersList || userTeamRoleCombo.roleID === 1
+        isUserAllowedToComment = isUserIDInMembersList 
+        // || userTeamRoleCombo.roleID === 1
     }catch(e){
         return res.status(500).send({message: 'Server couldnt get the ticket information...'})
     }
@@ -53,10 +54,15 @@ async function submitTicketComment(req: Express.Request, res: Express.Response){
     }
 }
 
+async function putEditTicket(req: Express.Request, res: Express.Response){
+    let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+    
+}
 
 
 
 module.exports = {
     submitTicketComment,
-    getTicketNotes
+    getTicketNotes,
+    putEditTicket
 }
