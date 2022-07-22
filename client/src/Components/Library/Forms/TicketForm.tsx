@@ -1,26 +1,45 @@
 import React, { useRef } from 'react';
-import { Field, Formik, FormikValues } from 'formik';
-import { InputLabel, MenuItem, Select, TextField, ThemeProvider } from '@mui/material';
-import { theme } from '../../../theme';
+import { Formik, FormikValues } from 'formik';
+import { MenuItem, TextField } from '@mui/material';
 import postTicket from '../../../API/Requests/Tickets/PostTicket';
 import { useSelector } from 'react-redux';
 import { State } from '../../../Redux/reducers';
 import { useState } from 'react';
+import putEditTicket from '../../../API/Requests/Tickets/PutEditTicket';
 
 interface Props{
-    isExtended: boolean
+    isExtended?: boolean,
+    handleSetIsExtended?: any,
+    setIsEditOpen?: any,
+    isEditMode?: boolean
 }
 
 export default function TicketForm(props: Props) { 
     const [chosenProject, setChosenProject] = useState('');
-    const [isDisabled, setIsDisabled] = useState(true);
+    const [isDisabled, setIsDisabled] = useState(!props.isEditMode);
     const sessionState = useSelector((state: State) => state.session)
+    const focusedTicketState = useSelector((state: State) => state.focusedTicket)
     const formRef = useRef<FormikValues>() as any;
-
     let projects = sessionState.currentTeam?.projects;
     let intendedProject: any = projects?.filter((project: any) => project.name === chosenProject)[0]
     let projectValues = projects?.map((project: any) => project.name)
     let userValues = intendedProject?.project_members.map((member: any) => member)
+
+    if(props.isEditMode){
+        intendedProject = projects?.filter((project: any) => project.name === focusedTicketState.project_name)[0]
+    }
+    let initialUser = ''
+    if(props.isEditMode){
+        userValues = intendedProject?.project_members.map((member: any) => member)
+    }
+    if(props.isEditMode && userValues){
+        let userIDX = userValues.findIndex((user: any) => {
+            if(user.username === focusedTicketState.assignee_username && user.discriminator === focusedTicketState.assignee_user_discriminator){
+                return true
+            }
+        })
+        initialUser = userValues[userIDX]
+    }
     const priority = ['high', 'medium', 'low']
 
     const handleReset = () => {
@@ -28,22 +47,34 @@ export default function TicketForm(props: Props) {
             formRef.current.handleReset()
         }
     }
-    props.isExtended ? console.log('all g') : handleReset()
+    props.isExtended ? console.log('') : handleReset()
+    let initialData = {
+        title: '',
+        description: '',
+        project: '',
+        assignee: '',
+        priority: ''}
+    if(props.isEditMode){
+        initialData.title = `${focusedTicketState.title}`;
+        initialData.description = `${focusedTicketState.description}`;
+        initialData.project = `${focusedTicketState.project_name}`;
+        initialData.assignee = initialUser
+        initialData.priority = priority[focusedTicketState.priority]
+    }
 return(     
     <Formik 
-        initialValues={{title: '',
-                        description: '',
-                        project: '',
-                        assignee: '',
-                        priority: ''}}
+        initialValues={initialData}
         onSubmit={data => {
             if(data.title.length > 50){
                 return console.log('Your title is too long...')
             } else if (data.description.length > 1000){
                 return console.log('Your description is too long...')
             } else{
-                console.log(data) 
-                return postTicket(data)
+                if(!props.isEditMode){
+                    return postTicket(data)
+                } else{
+                    return putEditTicket(data, focusedTicketState.ticket_id)
+                }
             }
         }}
         innerRef={formRef}
@@ -51,11 +82,12 @@ return(
     {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
             return (
                 
-                <form id='ticketForm' className='delayedFadeIn form ' style={{width: 'fit-content'}} onSubmit={handleSubmit} onBlur={handleBlur}>
+                <form id='ticketForm' className='fadeIn form ' style={{width: 'fit-content'}} onSubmit={handleSubmit} onBlur={handleBlur} onChange={handleChange}>
                     
                     <div className='formContainer '>           
                         <div className='formSection formInputsContainer'>
                             <TextField
+                                disabled={props.isEditMode}
                                 label='Title'
                                 type='text'
                                 value={values.title}
@@ -84,7 +116,7 @@ return(
                                 })}
                             </TextField>
                             <TextField 
-
+                                disabled={props.isEditMode}
                                 select 
                                 name='project' 
                                 defaultValue={''} 
@@ -154,6 +186,9 @@ return(
                 <div className='formButtonsContainer'>
                     <button type='reset'
                         onClick={e => {
+                            if(props.setIsEditOpen){
+                                props.setIsEditOpen()
+                            }
                             setIsDisabled(true)
                             handleReset(e)
                         }}
