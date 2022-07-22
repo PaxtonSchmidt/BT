@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { SessionActionCreators, TeammatesActionCreators } from '../../../Redux';
-import { updateTeammates } from '../../../Redux/action-creators/teammatesActionCreators';
 import { State } from '../../../Redux/reducers';
 import Hamburger from './Hamburger';
 import Navbar from './Navbar/Navbar';
@@ -21,7 +20,7 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
     const loginState = useSelector((state: State) => state.login)
     const sessionState = useSelector((state: State) => state.session)
     let navigate = useNavigate();
-    
+
     async function getSessionState() {
         let response: any = await fetch('/users/getSessionState', {
             method: 'GET',
