@@ -10,4 +10,6 @@ router.get("/getTicketNotes", ticketAuth.getTicketNotes);
 router.post("/addTicket", projectAuth.submitNewTicket);
 router.post("/addTicketComment", ticketAuth.submitTicketComment);
 
+router.put("/putEditTicket", ticketAuth.putEditTicket)
+
 module.exports = router;
