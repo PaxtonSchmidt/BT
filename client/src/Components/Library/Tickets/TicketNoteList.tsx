@@ -10,8 +10,14 @@ import * as _ from 'lodash'
 import ChatDateDivider from '../Feed/ChatDateDivider';
 import { Formik } from 'formik';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { AlertActionCreators } from '../../../Redux';
+import { bindActionCreators } from 'redux';
+import { hideAlert } from '../../../Redux/action-creators/alertActionCreator';
 
 export default function TicketNoteList() {
+    const dispatch = useDispatch();
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
     const focusedTicketState = useSelector((state: State) => state.focusedTicket)
     const sessionState = useSelector((state: State) => state.session)
     const socketState = useSelector((state: State) => state.socket)
@@ -19,12 +25,9 @@ export default function TicketNoteList() {
     const [allNotes, setAllNotes] = useState<TicketNote[]>([]);
     const [newNote, setNewNote] = useState<string>('');
 
-    console.log(socketState)
-
     useEffect(() => {
         if(socketState){
             socketState.on('newTicketNote', (note: TicketNote) => {
-                console.log(note)
                 setAllNotes(previousState => [...previousState, note])
             })
         }
@@ -96,7 +99,7 @@ export default function TicketNoteList() {
         return (
             <div className='fadeIn ticketNoteListContainer' >
                 <div className='list delayedFadeIn' style={{color: '#ffffff', textAlign: 'center', paddingTop: '10px'}}>
-                    <p>{`Select a ticket to see its notes`}</p>
+                    <p>{`Please select a ticket`}</p>
                 </div>
             </div>
         )
@@ -121,9 +124,9 @@ export default function TicketNoteList() {
                                 if(note.length > 300){return console.log('Too many characters...')}
                                 if(note.length < 1){return console.log('Empty comments not allowed...')}
                                 let response = await postTicketComment(data.note, focusedTicketState);
-                                if(response !== 'Error'){
+                                if(response.status === 200){
                                     let newTicketNoteToEmit: TicketNote = {
-                                        comment_id: response.insertID, 
+                                        comment_id: response.body.insertID, 
                                         author_username: sessionState.currentUser.username, 
                                         author_discriminator: sessionState.currentUser.discriminator,
                                         body: note,
@@ -138,6 +141,12 @@ export default function TicketNoteList() {
                                     )
                                     resetForm()
                                 } else{
+                                    fireAlert({
+                                        isOpen: true,
+                                        status: response.status,
+                                        message: response.body.message
+                                    });
+                                    setTimeout(hideAlert, 6000)
                                     //fire an error toast 
                                 }
                             }
