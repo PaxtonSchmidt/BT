@@ -137,8 +137,14 @@
 .css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon{
     color: $yellow !important;
 }
+.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.Mui-disabled{
+    -webkit-text-fill-color: rgba(255, 240, 240, 0.61) !important;
+}
 .Mui-disabled{
-    color: rgb(58, 58, 58) !important
+    color: rgb(122, 122, 122) !important
+}
+.css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled{
+    -webkit-text-fill-color: rgba(255, 240, 240, 0.61) !important;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 

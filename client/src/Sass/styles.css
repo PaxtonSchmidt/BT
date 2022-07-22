@@ -597,8 +597,16 @@
   color: #efff0a !important;
 }
 
+.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.Mui-disabled {
+  -webkit-text-fill-color: rgba(255, 240, 240, 0.61) !important;
+}
+
 .Mui-disabled {
-  color: #3a3a3a !important;
+  color: #7a7a7a !important;
+}
+
+.css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled {
+  -webkit-text-fill-color: rgba(255, 240, 240, 0.61) !important;
 }
 
 input:-webkit-autofill,
@@ -668,30 +676,46 @@ input[type=number] {
   -webkit-transition: 0.5s;
   transition: 0.5s;
   cursor: pointer;
+  padding-top: 5px;
+  height: 100%;
 }
 
 .ticketListItemButtonContainer:hover > .ticketListItemButton {
   color: #efff0a !important;
 }
 
-.ticketListItem:hover > div > .ticketListItemButtonContainer > .ticketListItemButton {
-  color: #ffffff;
+.ticketEditButton {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  top: -5px;
+  left: 10px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .ticketListItemButtonContainer {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   font-size: 14px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   padding-top: 0px;
   background-color: transparent;
   border: none;
   cursor: pointer;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .ticketListTitle {
