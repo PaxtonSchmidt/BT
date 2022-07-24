@@ -9,7 +9,7 @@ const alertReducer = (state: any = initialState, action: Action) => {
         case alertActionType.FIRE:
             return action.payload;
         case alertActionType.HIDE:
-            return {isOpen: false}
+            return {isOpen: false, status: state.status, message: state.message}
         default: 
             return state; 
     }
