@@ -1,11 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Formik, FormikValues } from 'formik';
 import { MenuItem, TextField } from '@mui/material';
 import postTicket from '../../../API/Requests/Tickets/PostTicket';
 import { useSelector } from 'react-redux';
 import { State } from '../../../Redux/reducers';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import putEditTicket from '../../../API/Requests/Tickets/PutEditTicket';
+import { bindActionCreators } from 'redux';
+import { AlertActionCreators } from '../../../Redux';
 
 interface Props{
     isExtended?: boolean,
@@ -15,16 +18,19 @@ interface Props{
 }
 
 export default function TicketForm(props: Props) { 
+    const dispatch = useDispatch();
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
     const [chosenProject, setChosenProject] = useState('');
     const [isDisabled, setIsDisabled] = useState(!props.isEditMode);
     const sessionState = useSelector((state: State) => state.session)
     const focusedTicketState = useSelector((state: State) => state.focusedTicket)
+    const [isDirty, setIsDirty] = useState(false)
     const formRef = useRef<FormikValues>() as any;
     let projects = sessionState.currentTeam?.projects;
     let intendedProject: any = projects?.filter((project: any) => project.name === chosenProject)[0]
     let projectValues = projects?.map((project: any) => project.name)
     let userValues = intendedProject?.project_members.map((member: any) => member)
-
+console.log('asd')
     if(props.isEditMode){
         intendedProject = projects?.filter((project: any) => project.name === focusedTicketState.project_name)[0]
     }
@@ -43,37 +49,74 @@ export default function TicketForm(props: Props) {
     const priority = ['high', 'medium', 'low']
 
     const handleReset = () => {
-        if(formRef.current ){
+        if(formRef.current && isDirty === false){
             formRef.current.handleReset()
         }
     }
+    console.log(isDirty)
     props.isExtended ? console.log('') : handleReset()
-    let initialData = {
+    const [initialData, setInitialDate] = useState({
         title: '',
         description: '',
         project: '',
         assignee: '',
-        priority: ''}
-    if(props.isEditMode){
-        initialData.title = `${focusedTicketState.title}`;
-        initialData.description = `${focusedTicketState.description}`;
-        initialData.project = `${focusedTicketState.project_name}`;
-        initialData.assignee = initialUser
-        initialData.priority = priority[focusedTicketState.priority]
-    }
+        priority: '',
+        resolution_status: ''})
+        
+    useEffect(() => {
+        if(props.isEditMode){
+            let editInitialData = {
+                title: `${focusedTicketState.title}`,
+                description: `${focusedTicketState.description}`,
+                project: `${focusedTicketState.project_name}`,
+                assignee: initialUser,
+                priority: priority[focusedTicketState.priority],
+                resolution_status: `${focusedTicketState.resolution_status}`
+            }
+            setInitialDate(editInitialData)
+        }
+    }, [])
 return(     
     <Formik 
         initialValues={initialData}
-        onSubmit={data => {
+        onSubmit={(data, { resetForm }) => {
             if(data.title.length > 50){
                 return console.log('Your title is too long...')
             } else if (data.description.length > 1000){
                 return console.log('Your description is too long...')
             } else{
                 if(!props.isEditMode){
-                    return postTicket(data)
+                    async function handleSubmitTicket(){
+                        let response = await postTicket(data)
+                        if(response.status !== 200){
+                            fireAlert({
+                                isOpen: true,
+                                status: response.status,
+                                message: response.body.message
+                            })
+                            setTimeout(hideAlert, 6000)
+                        } else {
+                            resetForm()
+                        }
+                    }
+                    handleSubmitTicket();
                 } else{
-                    return putEditTicket(data, focusedTicketState.ticket_id)
+                    async function handleEditTicket(){
+                        console.log(data)
+                        let response = await putEditTicket(data, focusedTicketState.ticket_id)
+                        if(response.status !== 200){
+                            fireAlert({
+                                isOpen: true,
+                                status: response.status,
+                                message: response.body.message
+                            })
+                            setTimeout(hideAlert, 6000)
+                        } else {
+                            resetForm()
+                            props.setIsEditOpen(false)
+                        }
+                    }
+                    handleEditTicket();
                 }
             }
         }}
@@ -91,7 +134,7 @@ return(
                                 label='Title'
                                 type='text'
                                 value={values.title}
-                                onChange={handleChange}
+                                onChange={(e)=>{setIsDirty(true); handleChange(e)}}
                                 onBlur={handleBlur}
                                 className='formComponent'
                                 name='title'
@@ -107,7 +150,7 @@ return(
                                 color='info' 
                                 variant='standard' 
                                 onBlur={handleBlur('priority')} 
-                                onChange={handleChange} 
+                                onChange={(e)=>{setIsDirty(true); handleChange(e)}} 
                                 sx={{ width: '200px' }}>
                                 {priority.map((priority, index) => {
                                     return (
@@ -126,6 +169,7 @@ return(
                                 color='info' 
                                 variant='standard' 
                                 onChange={e => {
+                                    setIsDirty(true)
                                     handleChange(e)
                                     setChosenProject(e.target.value);
                                     setIsDisabled(false)
@@ -140,8 +184,6 @@ return(
                                 ]
                                 )}
                             </TextField>
-
-                            
                             <TextField 
                                 disabled={isDisabled}
                                 select  
@@ -152,7 +194,7 @@ return(
                                 className='formComponent' 
                                 color='info' 
                                 variant='standard' 
-                                onChange={handleChange} 
+                                onChange={(e)=>{setIsDirty(true); handleChange(e)}} 
                                 onBlur={handleBlur} 
                                 sx={{ width: '200px'}}>
                                     <p style={{height: '0px', margin: '0px'}}></p>
@@ -162,13 +204,33 @@ return(
                                     );
                                 })}
                             </TextField>
+                            <TextField 
+                                disabled={isDisabled}
+                                select  
+                                name='resolution_status' 
+                                defaultValue={''} 
+                                value={values.resolution_status} 
+                                label='Status' 
+                                className='formComponent' 
+                                color='info' 
+                                variant='standard' 
+                                onChange={(e)=>{setIsDirty(true); handleChange(e)}} 
+                                onBlur={handleBlur} 
+                                sx={{ width: '200px'}}>
+                                    <p style={{height: '0px', margin: '0px'}}></p>
+                                {/* {status?.map((status: any) => {
+                                    return (
+                                        <MenuItem key={status.status_id} value={status.status_id} id='status'>{status.status_value}</MenuItem>
+                                    );
+                                })} */}
+                            </TextField>
                         </div>
                         <div className='formSection formInputsContainer' >
                             <TextField
                                 label='Description'
                                 type='text'
                                 value={values.description}
-                                onChange={handleChange}
+                                onChange={(e)=> {setIsDirty(true); handleChange(e)}}
                                 onBlur={handleBlur}
                                 className='formComponent'
                                 sx={{ color: '#ffffff' }}
