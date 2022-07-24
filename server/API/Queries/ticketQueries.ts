@@ -92,4 +92,24 @@ function addTicketComment(ticketID: number, authorId: number, comment: string){
     })
 }
 
-module.exports = {createTicketsTable, addTicket, getTeamTickets, getAssignedProjectTickets, getTicketByID, addTicketComment, getAssignedProjectTicketNotes, getAllTicketNotes}
+function putEditTicket(ticket_id: number, assigned_user_id: number , description: string, resolution_status: number){
+    let values = [assigned_user_id, getCurrentDate(), description, resolution_status, ticket_id]
+    let sql = 'UPDATE tickets SET assigned_user_id= ?, date_last_updated= ?, description= ?, resolution_status= ? WHERE ticket_id= ?'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result);
+        });
+    })
+}
+
+module.exports = {
+    createTicketsTable, 
+    addTicket, 
+    getTeamTickets, 
+    getAssignedProjectTickets, 
+    getTicketByID, 
+    addTicketComment, 
+    getAssignedProjectTicketNotes, 
+    getAllTicketNotes,
+    putEditTicket
+}
