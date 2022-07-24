@@ -1723,6 +1723,10 @@ body {
   font-size: 10px;
 }
 
+.css-1vooibu-MuiSvgIcon-root {
+  fill: #efff0a !important;
+}
+
 @-webkit-keyframes fadeIn {
   0% {
     opacity: 0;
