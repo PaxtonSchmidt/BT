@@ -24,7 +24,7 @@ function App() {
   const dispatch = useDispatch();
   const { login } = bindActionCreators(LoginActionCreators, dispatch)
   const { updateSocket } = bindActionCreators(SocketActionCreators, dispatch)
-  const { fireAlert } = bindActionCreators(AlertActionCreators, dispatch)
+  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
   const [isTeamSelected, setIsTeamSelected] = useState(checkIsTeamSelected() === true);
   const loginState = useSelector((state: State) => state.login)
   const sessionState = useSelector((state: State) => state.session)
@@ -63,14 +63,6 @@ function App() {
       return true
     }
     return false;
-  }
-
-  function handleCloseAlert() {
-    fireAlert({
-      isOpen: true,
-      status: 0,
-      message: ''
-    })
   }
   
   return (
@@ -114,8 +106,8 @@ function App() {
 
           </Route>
         </Routes>
-        <Snackbar open={alertState.isOpen} autoHideDuration={6000} onClose={handleCloseAlert} anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}>
-            <Alert severity='error'>
+        <Snackbar open={alertState.isOpen} autoHideDuration={7000} anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}>
+            <Alert severity='error' style={{border: '1px solid #efff0a', backgroundColor: '#1a1a1a', color: '#efff0a', paddingTop: '10px', fill: '#efff0a'}}>
                 {alertState.message}
             </Alert>
         </Snackbar>
