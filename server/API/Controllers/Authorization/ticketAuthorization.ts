@@ -3,6 +3,7 @@ import consumeCookie, { userTeamRoleCombo } from '../../Services/consumeCookies/
 import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags';
 let tickets = require('../../Queries/ticketQueries')
 let projects = require('../../Queries/projectQueries')
+let users = require('../../Queries/userQueries')
 
 async function getTicketNotes(req: Express.Request, res: Express.Response){
     let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
@@ -56,7 +57,27 @@ async function submitTicketComment(req: Express.Request, res: Express.Response){
 
 async function putEditTicket(req: Express.Request, res: Express.Response){
     let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
-    
+    let isUserAllowedToEdit: boolean = false
+    let isTargetUserOnProject: boolean = false
+    let targetUserID: number | null = null
+    console.log(req.body)
+    try{
+        let targetUserIDPacket = await users.getUserByNameDiscriminator(req.body.assignee_username, req.body.assignee_discriminator, res).catch()
+        targetUserID = targetUserIDPacket.user_id
+    }catch(e){
+        return res.status(500).send({message: 'Server couldnt check authorization information...'})
+    }
+    //if the user is a lead on the project, team_owner or the assignee of the ticket they can edit the ticket 
+    //if the assignee is on the project, they can be added as the assignee
+    if(isTargetUserOnProject === false){
+        return res.status(400).send({message:'That user cannot be assigned to this ticket...'})
+    }
+    if(userTeamRoleCombo.roleID === 1 || isUserAllowedToEdit){
+        let updateResult = await tickets.putEditTicket(req.body.ticket_id, targetUserID, req.body.description, req.body.resolution_status)
+        return res.status(200).send({message: 'Updated ticket'})
+    }else {
+        return res.status(403).send({message: 'You are not allowed to edit this ticket...'})
+    }
 }
 
 
