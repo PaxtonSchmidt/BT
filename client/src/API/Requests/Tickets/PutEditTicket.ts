@@ -1,14 +1,14 @@
 import { Ticket } from "../../interfaces/ticket"
 
 export default async function putEditTicket(ticket: Ticket, ticket_id: number) {
-    console.log(ticket.assignee)
-    console.log(ticket_id)
+    console.log(ticket)
     let body = {
         target_ticket_id: ticket_id,
         priority: ticket.priority,
         assignee_username: ticket.assignee.username,
-        assignee_discriminator: ticket.assignee.disciminator,
-        description: ticket.description
+        assignee_discriminator: ticket.assignee.discriminator,
+        description: ticket.description,
+        resolution_status: ticket.resolution_status
     }
     const response = await fetch('/tickets/putEditTicket', {
         method: 'PUT',
@@ -16,7 +16,6 @@ export default async function putEditTicket(ticket: Ticket, ticket_id: number) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
-    })
-    console.log(response)
-    return response.status
+    }).then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    return response
 }
