@@ -28,7 +28,7 @@ export default function TicketNoteList() {
     useEffect(() => {
         if(socketState){
             socketState.on('newTicketNote', (note: TicketNote) => {
-                setAllNotes(previousState => [...previousState, note])
+                setAllNotes(previousState => [note, ...previousState])
             })
         }
     }, [socketState])
@@ -55,7 +55,7 @@ export default function TicketNoteList() {
         let newChosenNotes: TicketNote[] = []
         allNotes.forEach((note: TicketNote) => {
             if(note.relevant_ticket_id === focusedTicketState.ticket_id){
-                newChosenNotes.unshift(note)
+                newChosenNotes.push(note)
             }
         });
         return newChosenNotes
@@ -134,7 +134,7 @@ export default function TicketNoteList() {
                                         date_created: moment().add(4, 'hours').format().slice(0,19).split('T').join(' ')
                                     };
                                     console.log(newTicketNoteToEmit.date_created)
-                                    setAllNotes(previousState => [...previousState, newTicketNoteToEmit])
+                                    setAllNotes(previousState => [ newTicketNoteToEmit, ...previousState])
                                     socketState.emit(
                                         'newTicketNote',
                                         newTicketNoteToEmit
@@ -147,7 +147,6 @@ export default function TicketNoteList() {
                                         message: response.body.message
                                     });
                                     setTimeout(hideAlert, 6000)
-                                    //fire an error toast 
                                 }
                             }
                             return handleNoteSubmit(data.note)
