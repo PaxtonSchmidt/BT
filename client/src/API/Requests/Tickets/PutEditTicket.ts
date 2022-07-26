@@ -1,9 +1,10 @@
 import { Ticket } from "../../interfaces/ticket"
 
-export default async function putEditTicket(ticket: Ticket, ticket_id: number) {
+export default async function putEditTicket(ticket: Ticket, ticket_id: number, project_id: number) {
     console.log(ticket)
     let body = {
         target_ticket_id: ticket_id,
+        project_id: project_id,
         priority: ticket.priority,
         assignee_username: ticket.assignee.username,
         assignee_discriminator: ticket.assignee.discriminator,
