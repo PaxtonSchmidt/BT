@@ -19,14 +19,18 @@ function addTicket(req: any, res: any, userTeamIDCombo: any, targetUserId: any, 
     }
 
     let date = getCurrentDate()
-    let ticket = {author_id: userTeamIDCombo[0], title: req.body.title, description: req.body.description, date_created: date, date_last_updated: date, assigned_user_id: assigneeId, resolution_status: '1', relevant_project_id: relevantProjectId, priority: ticketPriority}
+    let values = [userTeamIDCombo[0], req.body.title, req.body.description, date, date, assigneeId, req.body.resolution_status, relevantProjectId, ticketPriority]
+    console.log(values)
+    // {author_id: userTeamIDCombo[0], title: req.body.title, description: req.body.description, date_created: date, date_last_updated: date, assigned_user_id: assigneeId, resolution_status: '1', relevant_project_id: relevantProjectId, priority: ticketPriority}
     
 
-    let sql = "INSERT INTO tickets SET ?"; 
+    let sql = "INSERT INTO tickets SET author_id= ?, title= ?, description= ?, date_created= ?, date_last_updated= ?, assigned_user_id= ?, resolution_status= ?, relevant_project_id= ?, priority= ?"; 
     
-    connectionPool.query(sql, ticket, (err: any, result: any) => {
-        if (err) result.send(err);
-        res.send(result.status);
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            console.log(err)
+            return err ? reject(err) : resolve(result);
+        });
     })
 }
 
@@ -46,6 +50,15 @@ function getAssignedProjectTickets(userID: any, teamID: any){
 
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result);
+        });
+    })
+}
+
+function getNewTicket(ticket_id: number){
+    let sql = 'SELECT t.ticket_id, ua.username AS author_username, ua.discriminator AS author_discriminator, t.title, t.description, t.date_created, t.date_last_updated, ub.username AS assignee_username, ub.discriminator AS assignee_user_discriminator, t.resolution_status, t.relevant_project_id  AS project_id, t.priority, p.name AS project_name FROM tickets t LEFT JOIN users ua ON t.author_id = ua.user_id LEFT JOIN users ub ON t.assigned_user_id = ub.user_id LEFT JOIN projects p ON t.relevant_project_id = p.project_id WHERE t.ticket_id= ?'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, ticket_id, (err: any, result: any) => {
             return err ? reject(err) : resolve(result);
         });
     })
@@ -92,11 +105,14 @@ function addTicketComment(ticketID: number, authorId: number, comment: string){
     })
 }
 
-function putEditTicket(ticket_id: number, assigned_user_id: number , description: string, resolution_status: number){
-    let values = [assigned_user_id, getCurrentDate(), description, resolution_status, ticket_id]
-    let sql = 'UPDATE tickets SET assigned_user_id= ?, date_last_updated= ?, description= ?, resolution_status= ? WHERE ticket_id= ?'
+function putEditTicket(ticket_id: number, assigned_user_id: number , description: string, resolution_status: number, priority: number){
+    console.log('got here')
+    let values = [assigned_user_id, priority, getCurrentDate(), description, resolution_status, ticket_id]
+    console.log(values)
+    let sql = 'UPDATE tickets SET assigned_user_id= ?, priority= ?, date_last_updated= ?, description= ?, resolution_status= ? WHERE ticket_id= ?'
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
+            console.log(err)
             return err ? reject(err) : resolve(result);
         });
     })
@@ -111,5 +127,6 @@ module.exports = {
     addTicketComment, 
     getAssignedProjectTicketNotes, 
     getAllTicketNotes,
-    putEditTicket
+    putEditTicket,
+    getNewTicket
 }
