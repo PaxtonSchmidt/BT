@@ -30,24 +30,23 @@ function App() {
   const sessionState = useSelector((state: State) => state.session)
   const alertState = useSelector((state: State) => state.alert)
   let isSessionState = typeof sessionState.currentTeam?.name !== 'undefined';
-  console.log(alertState)
-  console.log(sessionState)
+  
   //connect socket.io only if the user is logged in AND theyve selected a team, still need server side security of course
   useEffect(() => {
     if(loginState === 1 && isSessionState === true){
       const socket = io("http://localhost:4000", {withCredentials: true});
       socket.on("connect", () => {
-        const engine = socket.io.engine
-        engine.once("upgrade", () => {
-          console.log(engine.transport.name)
-          console.log('upgraded')
-        })
+        // const engine = socket.io.engine
+        // engine.once("upgrade", () => {
+        //   console.log(engine.transport.name)
+        //   console.log('upgraded')
+        // })
       })
-      socket.on("disconnect", () => {
-        console.log(
-          'socket disconnected'
-        )
-      })
+      // socket.on("disconnect", () => {
+      //   console.log(
+      //     'socket disconnected'
+      //   )
+      // })
       updateSocket(socket)
     }
   }, [login])
