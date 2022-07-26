@@ -1,13 +1,13 @@
 export const priorityTranslation = {
     translateTicketPriority(word:  string){
         switch (word){
-            case 'high':
+            case 'High':
                 return 1
                 break;
-            case 'medium': 
+            case 'Medium': 
                 return 2
                 break;
-            case 'low':
+            case 'Low':
                 return 3
                 break;
             default: 
