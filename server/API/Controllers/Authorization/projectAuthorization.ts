@@ -17,7 +17,7 @@ async function submitNewTicket(req: any, res: any) {
     let userTeamRoleIds = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
     let targetProjectID = req.body.assignee.project_id;
     let targetUserId = {user_id: ''}
-    let ticketPriority = translateTicketPriority(req.body.priority);
+    let ticketPriority = req.body.priority;
     let relevant_project_id = {project_id: ''}    
     try{
         isUserOnProject = consumeRowDataPacket(await projects.isUserOnProject(userTeamRoleIds.userID, targetProjectID ));
@@ -41,8 +41,9 @@ async function submitNewTicket(req: any, res: any) {
         try{
             //now add the ticket
             let userTeamIDCombo = [userTeamRoleIds.userID, userTeamRoleIds.teamID]
-            await tickets.addTicket(req, res, userTeamIDCombo, targetUserId.user_id, ticketPriority, relevant_project_id.project_id)
-            return res.status(200).send({message: 'Submitted ticket'})
+            let newTicketIdPacket = await tickets.addTicket(req, res, userTeamIDCombo, targetUserId.user_id, ticketPriority, relevant_project_id.project_id)
+            let ticket = await tickets.getNewTicket(newTicketIdPacket.insertId)
+            return res.status(200).send({message: 'Submitted ticket', ticket: ticket[0]})
         } catch(e) {
             return res.status(500).send({message: 'Server couldnt submit ticket...'})
         }
@@ -62,7 +63,6 @@ async function getTickets(req: any, res: any){
     if(userTeamRoleCombo.roleID === Roles.Legend.owner){
         try{
             let ticketList = await tickets.getTeamTickets(userTeamRoleCombo.teamID)
-            console.log(ticketList)
             return res.status(200).send(ticketList)
         }catch(e){
             return res.status(500).send({message: 'Server couldnt get tickets...'})
