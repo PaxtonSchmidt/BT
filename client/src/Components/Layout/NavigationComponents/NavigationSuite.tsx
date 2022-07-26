@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { SessionActionCreators, TeammatesActionCreators } from '../../../Redux';
+import { SessionActionCreators, TeammatesActionCreators, TicketsActionCreators } from '../../../Redux';
 import { State } from '../../../Redux/reducers';
 import Hamburger from './Hamburger';
 import Navbar from './Navbar/Navbar';
@@ -17,6 +17,7 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
     const dispatch = useDispatch();
     const { updateSession } = bindActionCreators(SessionActionCreators, dispatch)
     const { updateTeammates } = bindActionCreators(TeammatesActionCreators, dispatch)
+    const { updateTickets } = bindActionCreators(TicketsActionCreators, dispatch)
     const loginState = useSelector((state: State) => state.login)
     const sessionState = useSelector((state: State) => state.session)
     let navigate = useNavigate();
@@ -42,9 +43,19 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
         }).then(res => res.json())
         return updateTeammates(await response)
     }
+    async function getTickets(){
+        let response: any = fetch('/tickets/getTickets', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+        updateTickets(await response)
+    }
     useEffect(() => {
         getSessionState();
         getTeammates();
+        getTickets();
     }, [])
 
     let role = 3 //defaults to dev, sets to actual role when the sessionState arrives
