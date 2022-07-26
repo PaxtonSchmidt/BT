@@ -10,3 +10,4 @@ export * as FocusedTeammateActionCreators from './action-creators/focusedTeammat
 export * as TeammatesActionCreators from './action-creators/teammatesActionCreators'
 export * as SocketActionCreators from './action-creators/socketActionCreator'
 export * as AlertActionCreators from './action-creators/alertActionCreator'
+export * as TicketsActionCreators from './action-creators/ticketsActionCreators'
