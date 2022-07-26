@@ -6,7 +6,12 @@ interface updateFocusedTicket {
     payload: Ticket
 }
 
-export type Action = updateFocusedTicket
+interface editFocusedTicket {
+    type: focusedTicketActionType.EDIT,
+    payload: Ticket
+}
+
+export type Action = updateFocusedTicket | editFocusedTicket
 
 
 
