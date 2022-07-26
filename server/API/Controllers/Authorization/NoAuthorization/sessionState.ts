@@ -80,7 +80,6 @@ async function getSessionState(req: any, res: any) {
         sessionTeam.projects.shift();
         
         sessionState = {currentUser: sessionUser, currentTeam: sessionTeam, invites: sessionInvites}
-        console.log(sessionState)
     }catch(e){
         return res.status(500).send({message: 'Server couldnt fetch user information...'})
     }
