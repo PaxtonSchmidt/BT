@@ -23,8 +23,7 @@ export default function TicketNoteList() {
     const socketState = useSelector((state: State) => state.socket)
     const [chosenNotes, setChosenNotes] = useState<any[]>([]);
     const [allNotes, setAllNotes] = useState<TicketNote[]>([]);
-    const [newNote, setNewNote] = useState<string>('');
-
+    
     useEffect(() => {
         if(socketState){
             socketState.on('newTicketNote', (note: TicketNote) => {
@@ -48,7 +47,6 @@ export default function TicketNoteList() {
         if(typeof focusedTicketState.ticket_id !== 'undefined' && socketState){
             socketState.emit('joinTicket', focusedTicketState.ticket_id, focusedTicketState.project_id)
         }
-        console.log('emmitted join')
     }, [focusedTicketState])
 
     function createChosenNotesArray(){
@@ -98,8 +96,8 @@ export default function TicketNoteList() {
     if(focusedTicketState.ticket_id === undefined){
         return (
             <div className='fadeIn ticketNoteListContainer' >
-                <div className='list delayedFadeIn' style={{color: '#ffffff', textAlign: 'center', paddingTop: '10px'}}>
-                    <p>{`Please select a ticket`}</p>
+                <div className='list delayedFadeIn' style={{color: '#ffffff', textAlign: 'center', paddingTop: '10px', height: '100%'}}>
+                    <p >{`Please select a ticket`}</p>
                 </div>
             </div>
         )
@@ -107,13 +105,13 @@ export default function TicketNoteList() {
         return (
             <>
                
-                <div className='fadeIn ticketNoteListContainer'>
+                <div className='fadeIn ticketNoteListContainer' style={{transition: '0'}}>
                     {anyNotes ? 
-                    <div id='list' className='ticketNoteList componentGlow fadeIn' style={{paddingTop: '10px'}}>    
+                    <div id='list' className='ticketNoteList componentGlow delayedFadeIn' style={{paddingTop: '10px', transition: '0s'}}>    
                         {ticketNoteListLoop()}
                     </div>
                     : 
-                    <div className='list ticketNoteList delayedFadeIn' style={{color: '#ffffff31', textAlign: 'center', paddingBottom: '10px'}}>
+                    <div className='list ticketNoteList delayedFadeIn' style={{color: '#ffffff31', textAlign: 'center', paddingBottom: '10px', transition: '0'}}>
                         <p>{`There are no notes for this ticket yet`}</p>
                     </div>}
                     
