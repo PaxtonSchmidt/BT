@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { PieChart } from 'react-minimal-pie-chart'
 import { DataEntry } from 'react-minimal-pie-chart/types/commonTypes';
 import { Assignee } from '../../../../API/interfaces/statsTypes';
-import { AssigneeStatistic } from '../../../PropsInterfaces/statistic';
+import { AssigneeStatistic } from '../../../ComponentInterfaces/statistic';
 
 interface Props {
     data: Assignee[] | undefined
