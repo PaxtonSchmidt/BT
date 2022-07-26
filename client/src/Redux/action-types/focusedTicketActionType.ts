@@ -1,3 +1,4 @@
 export enum focusedTicketActionType {
-    UPDATE = 'updateFocusedTicket'
+    UPDATE = 'updateFocusedTicket',
+    EDIT = 'editFocusedTicket'
 }
