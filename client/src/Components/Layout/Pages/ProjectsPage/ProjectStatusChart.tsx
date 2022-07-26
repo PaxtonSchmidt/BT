@@ -10,25 +10,26 @@ interface Props {
 
 export default function ProjectStatusChart(props: Props){
     const [dataArray, setDataArray] = useState<DataEntry[]>([]);
+    console.log(dataArray)
     function setNewDataArray(){    
         let closedVal: number = 0;
-        let openVal: number = 0;
-        let spVal: number = 0;
-        let srVal: number = 0;
+        let assignedVal: number = 0;
+        let InvestigatingVal: number = 0;
+        let reviewingVal: number = 0;
         let unassignedVal: number = 0;
         if(props.data.Closed !== undefined){closedVal = props.data.Closed}
-        if(props.data.Open !== undefined){openVal = props.data.Open}
-        if(props.data.SolutionProposed !== undefined){spVal = props.data.SolutionProposed}
-        if(props.data.SolutionRejected !== undefined){srVal = props.data.SolutionRejected}
+        if(props.data.Assigned !== undefined){assignedVal = props.data.Assigned}
+        if(props.data.Investigating !== undefined){InvestigatingVal = props.data.Investigating}
+        if(props.data.Reviewing !== undefined){reviewingVal = props.data.Reviewing}
         if(props.data.Unassigned !== undefined){unassignedVal = props.data.Unassigned}
         let newDataArray: DataEntry[] = [
-            {title: 'Closed', color: '#222222', value: closedVal},
-            {title: 'Open', color: '#222222', value: openVal},
-            {title: 'Solution Proposed', color: '#222222', value: spVal},
-            {title: 'Solution Rejected', color: '#222222', value: srVal},
-            {title: 'Unassigned', color: '#222222', value: unassignedVal}
+            {title: 'Assigned', color: '#222222', value: assignedVal},
+            {title: 'Unassigned', color: '#222222', value: unassignedVal},
+            {title: 'Investigating', color: '#222222', value: InvestigatingVal},
+            {title: 'Reviewing', color: '#222222', value: reviewingVal},
+            {title: 'Closed', color: '#222222', value: closedVal}
         ]
-        if(closedVal === 0 && openVal === 0 && spVal === 0 && srVal === 0 && unassignedVal === 0){
+        if(closedVal === 0 && assignedVal === 0 && reviewingVal === 0 && InvestigatingVal === 0 && reviewingVal === 0 && unassignedVal === 0){
             return setDataArray([])
         }
         let indicesToRemove: number[] = []
@@ -62,7 +63,7 @@ export default function ProjectStatusChart(props: Props){
                     </tspan>
                 </text>
             }
-            segmentsShift={.3}
+            segmentsShift={1}
             className='pieChart fadeIn'
             />
         )
