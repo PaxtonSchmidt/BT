@@ -56,7 +56,7 @@ export default function ProjectPriorityChart(props: Props){
                     </tspan>
                 </text>
             }
-            segmentsShift={.3}
+            segmentsShift={1}
             className='pieChart fadeIn'
             />
         )
