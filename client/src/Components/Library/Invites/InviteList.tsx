@@ -2,7 +2,7 @@ import React, { Dispatch } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { Invite } from '../../PropsInterfaces/invite';
+import { Invite } from '../../ComponentInterfaces/invite';
 import { InvitesActionCreators } from '../../../Redux';
 import { Invites } from '../../../Redux/interfaces/invites';
 import InviteCard  from './InviteCard';
