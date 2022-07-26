@@ -70,6 +70,15 @@ function isUserOnProject(userID: any, projectID: any){
         })
     })
 }
+function isUserOnProjectByNameDiscriminator(username: string, discriminator: number, project_id: number){
+    let values = [username, discriminator, project_id]
+    let sql = 'SELECT EXISTS(SELECT up.role_id FROM user_projects up LEFT JOIN users u ON up.user_id = u.user_id WHERE u.username= ? AND u.discriminator= ? AND up.project_id= ?)'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
 function getProjectIdByTeamIdAndProjectName(teamID: number, projectName: string){
     let values = [teamID, projectName]
     let sql = 'SELECT project_id FROM projects WHERE team_id= ? AND name= ?'
@@ -138,6 +147,7 @@ function projectMembersIdsByProjectId(projectID: number){
         })
     })
 }
+
 //transactions
 async function transactionRemoveTargetUserFromProject(targetUserId: number, projectId: number){
     let values = [targetUserId, projectId]
@@ -186,6 +196,7 @@ module.exports = {
     getSessionProjectRoles,
     getProjectMembers,
     isUserOnProject,
+    isUserOnProjectByNameDiscriminator,
     getProjectIdByTeamIdAndProjectName,
     getRelatedMemberDetails,
     getRoleByUserIdProjectId,
