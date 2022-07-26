@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Invite } from '../../PropsInterfaces/invite';
+import { Invite } from '../../ComponentInterfaces/invite';
 import deleteInvite from '../../../API/Requests/Invites/DeleteInvite'
 import { bindActionCreators } from 'redux';
 import { useDispatch } from 'react-redux';
