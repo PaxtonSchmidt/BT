@@ -1,8 +1,8 @@
 interface StatusStats {
     Unassigned: number,
-    Open: number,
-    SolutionProposed: number,
-    SolutionRejected: number,
+    Assigned: number,
+    Investigating: number,
+    Reviewing: number,
     Closed: number
 }
 interface PriorityStats{
@@ -38,9 +38,9 @@ export default function composeProjectStatistics(ticketList: any){
             projectStats: {
             ticketStatusStats: {
                 Unassigned: 0,
-                Open: 0,
-                SolutionProposed: 0,
-                SolutionRejected: 0,
+                Assigned: 0,
+                Investigating: 0,
+                Reviewing: 0,
                 Closed: 0
             },
             ticketPriorityStats: {
@@ -53,9 +53,9 @@ export default function composeProjectStatistics(ticketList: any){
         allProjectsStats: {
             ticketStatusStats: {
                 Unassigned: 0,
-                Open: 0,
-                SolutionProposed: 0,
-                SolutionRejected: 0,
+                Assigned: 0,
+                Investigating: 0,
+                Reviewing: 0,
                 Closed: 0
             },
             ticketPriorityStats: {
@@ -79,30 +79,29 @@ export default function composeProjectStatistics(ticketList: any){
                 project_id: ticket.project_id, 
                 project_name: ticket.project_name, 
                 projectStats: {
-                    ticketStatusStats: {Unassigned: 0, Open: 0, SolutionProposed: 0, SolutionRejected: 0, Closed: 0}, 
+                    ticketStatusStats: {Unassigned: 0, Assigned: 0, Investigating: 0, Reviewing: 0, Closed: 0}, 
                     ticketPriorityStats: {Low: 0, Medium: 0, High: 0 },
                     ticketAssigneeStats: []
                 }
             }
             projectIDX = ComposedStats.projects.push(newProjectObject) - 1
         }
-
         switch (ticket.resolution_status){
             case 1:
                 ComposedStats.projects[projectIDX].projectStats.ticketStatusStats.Unassigned += 1
                 ComposedStats.allProjectsStats.ticketStatusStats.Unassigned += 1
                 break;
             case 2: 
-                ComposedStats.projects[projectIDX].projectStats.ticketStatusStats.Open += 1
-                ComposedStats.allProjectsStats.ticketStatusStats.Open += 1
+                ComposedStats.projects[projectIDX].projectStats.ticketStatusStats.Assigned += 1
+                ComposedStats.allProjectsStats.ticketStatusStats.Assigned += 1
                 break;
             case 3: 
-                ComposedStats.projects[projectIDX].projectStats.ticketStatusStats.SolutionProposed += 1
-                ComposedStats.allProjectsStats.ticketStatusStats.SolutionProposed += 1
+                ComposedStats.projects[projectIDX].projectStats.ticketStatusStats.Investigating += 1
+                ComposedStats.allProjectsStats.ticketStatusStats.Investigating += 1
                 break;
             case 4: 
-                ComposedStats.projects[projectIDX].projectStats.ticketStatusStats.SolutionRejected += 1
-                ComposedStats.allProjectsStats.ticketStatusStats.SolutionRejected += 1
+                ComposedStats.projects[projectIDX].projectStats.ticketStatusStats.Reviewing += 1
+                ComposedStats.allProjectsStats.ticketStatusStats.Reviewing += 1
                 break;
             case 5:
                 ComposedStats.projects[projectIDX].projectStats.ticketStatusStats.Closed += 1
