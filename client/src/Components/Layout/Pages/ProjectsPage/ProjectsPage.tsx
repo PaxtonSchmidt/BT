@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import ComposedStats, { Assignee, PriorityStats, Project, StatusStats } from '../../../../API/interfaces/statsTypes';
 import { State } from '../../../../Redux/reducers';
 import ProjectList from '../../../Library/Projects/ProjectList';
-import { AssigneeStatistic, Statistic } from '../../../PropsInterfaces/statistic';
+import { AssigneeStatistic, Statistic } from '../../../ComponentInterfaces/statistic';
 import ProjectAssigneeChart from './ProjectAssigneeChart';
 import ProjectChart from './ProjectPriorityChart';
 import ProjectFormContainer from './ProjectFormContainer';
