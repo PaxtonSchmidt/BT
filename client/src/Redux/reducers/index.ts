@@ -11,6 +11,7 @@ import sessionReducer from './sessionReducer';
 import socketReducer from './socketReducer';
 import teammatesReducer from './teammatesReducer';
 import teamsReducer from './teamsReducer';
+import ticketsReducer from './ticketsReducer';
 
 const reducers = combineReducers({
     login: loginReducer,
@@ -24,7 +25,8 @@ const reducers = combineReducers({
     focusedTeammate: focusedTeammateReducer,
     teammates: teammatesReducer,
     socket: socketReducer,
-    alert: alertReducer
+    alert: alertReducer,
+    tickets: ticketsReducer
 })
 
 export default reducers
