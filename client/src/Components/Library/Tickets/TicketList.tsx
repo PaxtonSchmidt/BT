@@ -5,26 +5,20 @@ import { bindActionCreators } from 'redux';
 import { FocusedTicketActionCreators } from '../../../Redux';
 import { State } from '../../../Redux/reducers';
 import TicketListItem from './TicketListItem';
+let deepClone = require('lodash.clonedeep')
 
 function Tickets() {
     let dispatch = useDispatch();
     const { updateFocusedTicket } = bindActionCreators(FocusedTicketActionCreators, dispatch)
+    const focusedTicketState = useSelector((state: State) => state.focusedTicket)
+    const ticketsState = useSelector((state: State) => state.tickets)
     const [tickets, setTickets] = useState<any[]>([]);
-
+    
     useEffect(() => {
-        async function getTickets(){
-            let response: any = fetch('/tickets/getTickets', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => res.json())
-            let tickets = await response    
-            setTickets(tickets)
-            return await response
+        if(ticketsState){
+            if(ticketsState.length > 0){setTickets(deepClone(ticketsState).reverse())}
         }
-        getTickets();
-    }, [])
+    }, [ticketsState])
 
     if(tickets.length === 0){
         return(
@@ -98,6 +92,7 @@ function Tickets() {
                         resolution_status= {ticket.resolution_status}
                         priority= {ticket.priority}
                         setFocusedTicket={updateFocusedTicket}
+                        focusedTicketID={focusedTicketState.ticket_id}
                         />
                         )}
                 </div>
