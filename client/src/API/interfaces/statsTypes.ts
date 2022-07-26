@@ -1,8 +1,8 @@
 export interface StatusStats {
     Unassigned: number,
-    Open: number,
-    SolutionProposed: number,
-    SolutionRejected: number,
+    Assigned: number,
+    Investigating: number,
+    Reviewing: number,
     Closed: number
 }
 export interface PriorityStats{
