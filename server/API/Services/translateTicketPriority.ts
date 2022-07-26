@@ -1,12 +1,12 @@
 export function translateTicketPriority(word:  string){
     switch (word){
-        case 'high':
+        case 'High':
             return 1
             break;
-        case 'medium': 
+        case 'Medium': 
             return 2
             break;
-        case 'low':
+        case 'Low':
             return 3
             break;
         default: 
@@ -17,13 +17,13 @@ export function translateTicketPriority(word:  string){
 export function translateTicketPriorityBack(number: number){
     switch (number){
         case 1:
-            return 'high'
+            return 'High'
             break;
         case 2: 
-            return 'medium'
+            return 'Medium'
             break;
         case 3:
-            return 'low'
+            return 'Low'
             break;
         default: 
             return 'ERROR IN TRANSLATING TICKET PRIORITY'
