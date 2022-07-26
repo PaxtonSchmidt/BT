@@ -672,7 +672,7 @@ input[type=number] {
 }
 
 .ticketListItemButton {
-  color: #ffffff31;
+  color: #efff0a6b;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   cursor: pointer;
@@ -680,23 +680,16 @@ input[type=number] {
   height: 100%;
 }
 
-.ticketListItemButtonContainer:hover > .ticketListItemButton {
+.ticketListItemButtonContainer > .ticketListItemButton {
   color: #efff0a !important;
 }
 
-.ticketEditButton {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  top: -5px;
-  left: 10px;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+.ticketListItemButtonContainer {
+  color: #efff0a !important;
 }
 
 .ticketListItemButtonContainer {
+  color: #efff0a6b;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -716,6 +709,8 @@ input[type=number] {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
 }
 
 .ticketListTitle {
@@ -764,7 +759,11 @@ input[type=number] {
 }
 
 .listItem.listRow:hover {
-  border-bottom: 1px solid #efff0a6b;
+  border-bottom: 1px solid white;
+}
+
+.ChosenTicket {
+  border-bottom: 1px solid #efff0a !important;
 }
 
 .listRowSection {
@@ -1228,14 +1227,9 @@ input[type=number] {
 
 .discriminator {
   font-size: 11px;
-  opacity: 30%;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   margin-bottom: 2px;
-}
-
-.ticketDetailItem:hover > .detailDiscriminator {
-  opacity: 100%;
 }
 
 .detailsColumn {
@@ -1541,7 +1535,7 @@ body {
   overflow-x: hidden;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  margin-top: -290px;
+  margin-top: -340px;
 }
 
 .projectPageContent {

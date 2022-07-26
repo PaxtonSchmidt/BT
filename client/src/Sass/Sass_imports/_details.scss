@@ -41,12 +41,8 @@
 }
 .discriminator{
     font-size: 11px;
-    opacity: 30%;
     transition: $transition;
     margin-bottom: 2px;
-}
-.ticketDetailItem:hover > .detailDiscriminator{
-    opacity: 100%;
 }
 .detailsColumn{
     width: 100%;
