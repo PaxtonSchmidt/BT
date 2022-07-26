@@ -1,5 +1,5 @@
 export default async function postTicket(data: any) {
-
+console.log(data)
     const response = await fetch('/tickets/addTicket', {
         method: 'POST',
         headers: {
