@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../../Redux/reducers';
 import ProjectMembersListItem from './ProjectMembersListItem'
 import plus from '../../Images/Icons/plus-lg.svg';
 import ProjectPotentialMembersListItem from './ProjectPotentialMembersListItem';
 import { Teammate } from '../../../API/interfaces/teammate';
 import postNewProjectMembers from '../../../API/Requests/Projects/PostNewProjectMembers';
+import { bindActionCreators } from 'redux';
+import { AlertActionCreators, SessionActionCreators } from '../../../Redux';
+import { addMembersToAProjectInSession } from '../../../Redux/action-creators/sessionActionCreators';
 let deepClone = require('lodash.clonedeep')
 
 export default function ProjectMembersList() {
-    const [members, setMembers] = useState([]);
+    let dispatch = useDispatch();
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
+    const { addMembersToAProjectInSession } = bindActionCreators(SessionActionCreators, dispatch)
+    const [members, setMembers] = useState<any[]>([]);
     const [teamMates, setTeamMembers] = useState([]);
     const [addedMembers, setAddedMembers] = useState<Teammate[]>([]);
-    const [potentialProjectMembers, setPotentialProjectMembers] = useState([]);
+    const [potentialProjectMembers, setPotentialProjectMembers] = useState<any[]>([]);
     const [isAddingMembers, setIsAddingMembers] = useState(false)
     const [canUserManageMembers, setCanUserManageMembers] = useState(false);
     const [isDirty, setIsDirty] = useState<boolean>(false)
@@ -108,7 +114,6 @@ export default function ProjectMembersList() {
     let manageableProjectMembers = getIsManageableProject()
 
     function handleToggleMemberBeingAdded(member: Teammate){
-        console.log(member)
         let idx = addedMembers.findIndex((addedMember: Teammate) => {
             return addedMember.username === member.username && addedMember.discriminator === member.discriminator
         })
@@ -122,9 +127,43 @@ export default function ProjectMembersList() {
             return setAddedMembers(newAddedGroup)
         }
     }
-
     async function handleSubmitAddedMembers(){
-        let response = await postNewProjectMembers(addedMembers, focusedProjectState.name)
+        async function submitMembersList(){
+            let response = await postNewProjectMembers(addedMembers, focusedProjectState.name)
+            if(response.status !== 200){
+                fireAlert({
+                    isOpen: true,
+                    status: response.status,
+                    message: response.body.message
+                })
+                setTimeout(hideAlert, 6000)
+            } else {
+                let project = projects.find((project: any) => project.name === focusedProjectState.name)
+                let defaultProjectRole_id = 3 //dev role
+                let newMembers: any[] = []
+                let newPotentialMembersList: any[] = [...potentialProjectMembers]
+                addedMembers.forEach((member: any)=>{
+                    newMembers.push({
+                        username: member.username,
+                        discriminator: member.discriminator,
+                        role_id: defaultProjectRole_id,
+                        project_id: project.project_id
+                    })
+                    let idx = newPotentialMembersList.findIndex((potentialMember: any)=>{
+                        if(member.username === potentialMember.username && member.discriminator === potentialMember.discriminator){
+                            return true
+                        }
+                    })
+                    newPotentialMembersList.splice(idx, 1)
+                })
+                let newMembersList = [...members, ...newMembers]
+                addMembersToAProjectInSession(newMembers)
+                setMembers(newMembersList)
+                setPotentialProjectMembers(newPotentialMembersList)
+                setAddedMembers([])
+            }
+        }
+        submitMembersList();
     }
 
     return (
