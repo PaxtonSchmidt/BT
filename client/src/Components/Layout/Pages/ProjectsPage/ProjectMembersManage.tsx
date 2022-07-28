@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FocusedMemberActionCreators } from '../../../../Redux';
+import { AlertActionCreators, FocusedMemberActionCreators, SessionActionCreators } from '../../../../Redux';
 import { State } from '../../../../Redux/reducers';
 import { translateRole } from '../../../../Services/translateRole';
 import ProjectMembersList from '../../../Library/Projects/ProjectMembersList'
 import { Box, Modal } from '@mui/material';
-import UpdateUserRole from '../../../Library/Buttons/UpdateUserRole';
+import { ProjectMember } from '../../../../Redux/interfaces/member'
+import { removeMemberFromProjectInSession } from '../../../../Redux/action-creators/sessionActionCreators';
 let deepClone = require('lodash.clonedeep')
 
 export default function ProjectMembersManage(){
@@ -18,7 +19,8 @@ export default function ProjectMembersManage(){
     const [memberDetails, setMemberDetails] = useState<any[]>([])
     const dispatch = useDispatch();
     const { updateFocusedMember } = bindActionCreators(FocusedMemberActionCreators, dispatch)
-    const [word, setWord] = useState('Update')
+    const { removeMemberFromProjectInSession, updateProjectMemberRoleInSession } = bindActionCreators(SessionActionCreators, dispatch)
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isRoleModalOpen, setIsRoleModalOpen] = useState<boolean>(false);
 
@@ -45,7 +47,7 @@ export default function ProjectMembersManage(){
             return setMemberDetails(await response)
         }
         getMemberDetails()
-    },[])
+    },[sessionState])
 
     function handleCloseUserDetailsForm() {
         setIsDirty(false)
@@ -93,8 +95,9 @@ export default function ProjectMembersManage(){
         }
     }
 
+    //submitting updated user role
     async function handleSubmit(){
-        let updateUser = {}
+        let updateUser: any = {}
         if(roleUpdateType === 'Promote'){
             updateUser = {
                 username: focusedMemberState.username,
@@ -110,32 +113,65 @@ export default function ProjectMembersManage(){
                 newRoleId: 3
             }
         }
-        let response: any = fetch('/projects/updateMemberRole', {
+        let response: any = await fetch('/projects/updateMemberRole', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(updateUser)
-        }).then(res => res.json())
-        return console.log(await response)
+        }).then(r =>  r.json().then(data => ({status: r.status, body: data})))
+        if(response.status !== 200){
+            fireAlert({
+                isOpen: true,
+                status: response.status,
+                message: response.body.message
+            })
+            setTimeout(hideAlert, 6000)
+        } else {
+            let focusedProject = sessionState.currentTeam.projects.find((project: any) => project.name === updateUser.targetProjectName)
+            let newStateUserProject: ProjectMember = {
+                username: focusedMemberState.username,
+                discriminator: focusedMemberState.discriminator,
+                role_id: updateUser.newRoleId,
+                project_id: focusedProject.project_id
+            }
+            updateProjectMemberRoleInSession(newStateUserProject)
+            setIsRoleModalOpen(false)
+            updateFocusedMember({username: '', discriminator: 0})
+        }
     }
-    
-    
-
+    //submitting member removal
     async function handleRemoveMember(){
+        console.log('sad')
         let targetUserProject = {
             username: focusedMemberState.username,
             discriminator: focusedMemberState.discriminator,
             project: focusedProjectState.name
         }
-        let response: any = fetch('/projects/removeMember', {
+        let response: any = await fetch('/projects/removeMember', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(targetUserProject)
-        }).then(res => res.json())
-        return console.log(await response)
+        }).then(r =>  r.json().then(data => ({status: r.status, body: data})))
+        if(response.status !== 200){
+            fireAlert({
+                isOpen: true,
+                status: response.status,
+                message: response.body.message
+            })
+            setTimeout(hideAlert, 6000)
+        } else {
+            let focusedProject = sessionState.currentTeam.projects.find((project: any) => project.name === targetUserProject.project)
+            let memberToRemove: ProjectMember = {
+                username: targetUserProject.username,
+                discriminator: targetUserProject.discriminator,
+                project_id: focusedProject.project_id
+            }
+            removeMemberFromProjectInSession(memberToRemove)
+            setIsModalOpen(false)
+        }
     }
 
     let focusedProject = currentUserProjects.find((project: any)=>{
@@ -303,13 +339,13 @@ export default function ProjectMembersManage(){
                                                 <>
                                                 <li>{focusedMemberState.username} will no longer be able to add teammates to the {focusedProjectState.name} project</li>
                                                 <li>{focusedMemberState.username} will no longer be able to remove teammates from the {focusedProjectState.name} project</li>
-                                                <li>{focusedMemberState.username} will no longer be able to edit the priority, assignee and status of any ticket on the {focusedProjectState.name} project</li>
+                                                <li>{focusedMemberState.username} will only be able to edit the priority, assignee, description and status of tickets he's assigned to on the {focusedProjectState.name} project</li>
                                                 </>}
                                                 {roleUpdateType === 'Promote' &&
                                                 <>
                                                 <li>{focusedMemberState.username} will be able to add teammates as developers to the {focusedProjectState.name} project</li>
                                                 <li>{focusedMemberState.username} will be able to remove teammates with a developer role from the {focusedProjectState.name} project</li>
-                                                <li>{focusedMemberState.username} will be able to edit the priority, assignee and status of any ticket on the {focusedProjectState.name} project</li>
+                                                <li>{focusedMemberState.username} will be able to edit the priority, assignee, description and status of any ticket on the {focusedProjectState.name} project</li>
                                                 </>}
                                             </ul>
                                             <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
