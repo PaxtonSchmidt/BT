@@ -1,33 +1,63 @@
-import React, { useRef } from 'react';
+import React, { Dispatch, SetStateAction, useRef } from 'react';
 import { Formik, FormikValues } from 'formik';
 import { TextField } from '@mui/material';
 import postProject from '../../../API/Requests/Projects/PostProject';
+import { bindActionCreators } from 'redux';
+import { AlertActionCreators } from '../../../Redux';
+import { useDispatch } from 'react-redux';
 
 interface Props{
-    isExtended: boolean
+    isExtended: boolean,
+    setIsExtended: Dispatch<SetStateAction<boolean>>
 }
 
 export default function ProjectForm(props: Props) {
-    const formRef = useRef<FormikValues>() as any;
+    const dispatch = useDispatch();
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
 
-    const handleReset = () => {
-        if(formRef.current ){
-            formRef.current.handleReset()
-        }
-    }
-    if(props.isExtended){handleReset()}
-return(
+    return(
         <>
             <Formik 
                 initialValues={{name: '',
                                 description: ''}}
                 onSubmit={data => {
-                    console.log(data) 
-                    postProject(data)
+                    (async () => {
+                        if(data.name.length > 50){
+                            fireAlert({
+                                isOpen: true,
+                                status: 0,
+                                message: 'Max name length is 50 characters...'
+                            })
+                            setTimeout(hideAlert, 6000)
+                            return 
+                        } else if (data.description.length > 1000){
+                            fireAlert({
+                                isOpen: true,
+                                status: 0,
+                                message: 'Max description length is 1000 characters...'
+                            })
+                            setTimeout(hideAlert, 6000)
+                            return 
+                        } else {
+                            let response = await postProject(data)
+                            response.status !== 200 ? 
+                                (()=> {
+                                    console.log('asda;skjd')
+                                    fireAlert({
+                                        isOpen: true,
+                                        status: response.status,
+                                        message: response.body.message
+                                    })
+                                    setTimeout(hideAlert, 6000);
+                                })()
+                                : (()=>{
+                                    console.log('a ok')
+                                })() 
+                        }
+                    })() 
                 }}
-                innerRef={formRef}
             >
-            {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
+            {({values, handleChange, handleBlur, handleSubmit, resetForm}) => {
                     return (
                         <form className='delayedFadeIn form' style={{width: 'fit-content'}} onSubmit={handleSubmit} onBlur={handleBlur}>
                             
@@ -37,7 +67,7 @@ return(
                                 label='Name'
                                 type='text'
                                 value={values.name}
-                                onChange={handleChange}
+                                onChange={(e)=>handleChange(e)}
                                 onBlur={handleBlur}
                                 className='formComponent'
                                 name='name'
@@ -46,20 +76,19 @@ return(
                                 required />
                             <TextField 
                                 name='description' 
+                                type='text'
                                 value={values.description} 
                                 label='Description' 
                                 className='formComponent' 
                                 color='info' 
                                 variant='standard' 
-                                onChange={handleChange} 
+                                onChange={(e)=>handleChange(e)} 
                                 onBlur={handleBlur} 
                                 required />
                         </div>
                         <div className='formButtonsContainer'>
                             <button type='reset'
-                                onClick={e => {
-                                    handleReset(e)
-                                }}
+                                onClick={()=>{resetForm(); props.setIsExtended(false)}}
                                 className='button bottomButton bottomButtons cancelButton'
                                 style={{ margin: '2px 2px 0px 0px' }}>
                                 X
