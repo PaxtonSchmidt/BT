@@ -1,17 +1,18 @@
 import { currentUser } from "./currentUser";
 import { Invite } from "./invites";
+import { ProjectMember } from "./member";
 
 export interface Project{
     name: string,
     role: string,
-    teammates: []
+    project_members: ProjectMember[]
 }
 
 export interface currentTeam{
     name: string, 
     date_joined: string,
     team_role: string, 
-    project_roles: Project[]
+    projects: Project[]
 }
 
 export interface Session {
