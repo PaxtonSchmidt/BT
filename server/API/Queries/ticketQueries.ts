@@ -28,7 +28,7 @@ function addTicket(req: any, res: any, userTeamIDCombo: any, targetUserId: any, 
     
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
-            console.log(err)
+            console.log(result)
             return err ? reject(err) : resolve(result);
         });
     })
