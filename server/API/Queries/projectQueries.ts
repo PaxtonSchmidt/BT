@@ -3,13 +3,13 @@ import { Teammate } from '../Interfaces/teammate';
 import getCurrentDate from '../Services/getCurrentDate';
 let mysql = require('mysql');
 
-function addProject(creatorId: any, teamID: any, name: string, description: string) {
+function addProject(creatorId: any, teamID: any, name: string, description: string, role: number) {
     let date = getCurrentDate()
     let project = {team_id: teamID, creator_user_id: creatorId, name: name, description: description, date_created: date}
     let sql = "INSERT INTO projects SET ?"; 
     connectionPool.query(sql, project, (err: any, result: any) => {
         if (err) result.send(err);
-        let user_projectValues = {user_id: creatorId, project_id: result.insertId, role_id: 1, relevant_team_id: teamID, enlisted_by_user_id: creatorId, date_joined: date}
+        let user_projectValues = {user_id: creatorId, project_id: result.insertId, role_id: role, relevant_team_id: teamID, enlisted_by_user_id: creatorId, date_joined: date}
         let user_projectSQL = "INSERT INTO user_projects SET ?"
         connectionPool.query(user_projectSQL, user_projectValues, (err: any, result: any) => {
             if(err) result.send(err)
