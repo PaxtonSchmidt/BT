@@ -10,7 +10,6 @@ interface Props {
 
 export default function ProjectStatusChart(props: Props){
     const [dataArray, setDataArray] = useState<DataEntry[]>([]);
-    console.log(dataArray)
     function setNewDataArray(){    
         let closedVal: number = 0;
         let assignedVal: number = 0;
