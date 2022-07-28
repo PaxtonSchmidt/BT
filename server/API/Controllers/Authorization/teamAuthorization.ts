@@ -57,7 +57,7 @@ async function addProject(req: any, res: any){
     let userTeamRoleCombo: any = [];
     let projectName = req.body.name; 
     let isProjectNameTakenOnTeam = true;
-        
+         
     try{
         userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
         projectIdAtAttemptedProjectName = await projects.getProjectIdByTeamIdAndProjectName(userTeamRoleCombo.teamID, projectName)
@@ -72,10 +72,16 @@ async function addProject(req: any, res: any){
     if(currentUserRoleID !== Roles.Legend.owner && currentUserRoleID !== Roles.Legend.lead){
         return res.status(403).send({message: 'You are not allowed to create projects for this team...'})
     } else if(isProjectNameTakenOnTeam === true){
-        return res.status(400).send({message: 'That name is already used by a project in this team...'})
+        return res.status(400).send({message: 'There is already a project with that name on this team...'})
     } else{
+        let role: number = -1
+        if(userTeamRoleCombo.roleID === 1){
+            role = 1 //project role for people who are TEAM OWNER and make the project
+        } else{
+            role = 2 //project role for people who are a TEAM LEAD and make the project
+        }
         try{
-            await projects.addProject(userTeamRoleCombo.userID, userTeamRoleCombo.teamID, req.body.name, req.body.description)
+            await projects.addProject(userTeamRoleCombo.userID, userTeamRoleCombo.teamID, req.body.name, req.body.description, role)
         }catch(e){
             return res.status(500).send({message: 'Server couldnt add the project to this team...'})
         }
