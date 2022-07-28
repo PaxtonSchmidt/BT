@@ -7,6 +7,6 @@ export default async function postNewProjectMembers(data: Teammate[], project: s
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({newMembers: data, projectName: project})
-    })
-    return response.json()
+    }).then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    return response
 }
