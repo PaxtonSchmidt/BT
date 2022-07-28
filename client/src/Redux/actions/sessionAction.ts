@@ -1,4 +1,5 @@
 import { sessionActionType } from "../action-types/sessionActionType"
+import { ProjectMember } from "../interfaces/member"
 import { Session } from "../interfaces/session"
 
 interface UpdateAction {
@@ -6,7 +7,22 @@ interface UpdateAction {
     payload: Session
 }
 
-export type Action = UpdateAction
+interface addMembersToAProjectAction {
+    type: sessionActionType.ADD_MEMBERS_TO_PROJECT,
+    payload: ProjectMember[]
+}
+
+interface removeMemberFromProjectInSession{
+    type: sessionActionType.REMOVE_MEMBER_FROM_PROJECT,
+    payload: ProjectMember
+}
+
+interface updatedProjectMemberRole{
+    type: sessionActionType.UPDATE_PROJECT_MEMBER_ROLE,
+    payload: ProjectMember
+}
+
+export type Action = UpdateAction | addMembersToAProjectAction | removeMemberFromProjectInSession | updatedProjectMemberRole
 
 
 
