@@ -84,7 +84,6 @@ async function getSessionState(req: any, res: any) {
         return res.status(500).send({message: 'Server couldnt fetch user information...'})
     }
 
-    
     try{
         return res.status(200).send(sessionState)
     }catch(e){
