@@ -106,6 +106,7 @@ export default function composeProjectStatistics(ticketList: any){
             case 5:
                 ComposedStats.projects[projectIDX].projectStats.ticketStatusStats.Closed += 1
                 ComposedStats.allProjectsStats.ticketStatusStats.Closed += 1
+                break;
             default:
                 console.log('error in the data...')
         }
@@ -124,7 +125,7 @@ export default function composeProjectStatistics(ticketList: any){
                 ComposedStats.allProjectsStats.ticketPriorityStats.Low += 1
                 break;
             default:
-                console.log('error in the data')
+                console.log('there error in the data')
         }
 
         let index = ComposedStats.projects[projectIDX].projectStats.ticketAssigneeStats.findIndex((assignee: Assignee) => {
