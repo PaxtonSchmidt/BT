@@ -72,13 +72,13 @@ function ProjectList() {
         //needs pagination
         return (
             <div onWheel={handleWheel} id='projectList'  className='sideScrollList componentGlow'>
+                <button className='filterProjectsToggle scaleYonHover' onClick={() => setFilterToLeadingOnly(!filterToLeadingOnly)}>{WhichView}</button>
                 <div onClick={() => updateFocusedProject({name: 'All'})} className='sideScrollListItem scaleYonHover fadeIn selectedProjectInList' id={projectAllName}>
                     All
                 </div>
                 {projectsList!.map((project: any) =>
                     <ProjectListItem key={project} name={project} />
                 )}
-                <button className='filterProjectsToggle scaleYonHover' onClick={() => setFilterToLeadingOnly(!filterToLeadingOnly)}>{WhichView}</button>
             </div>
         )
     }
