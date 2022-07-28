@@ -17,44 +17,56 @@ interface Props{
     isEditMode?: boolean
 }
 
+interface AssigneeValue {
+    username: string,
+    discriminator: number | null,
+    role_id: number,
+    project_id: number
+}
+
 export default function TicketForm(props: Props) { 
     let dispatch = useDispatch();
+    const formRef: any = useRef();
     const { updateFocusedTicket, editFocusedTicket } = bindActionCreators(FocusedTicketActionCreators, dispatch)
     const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
     const { addTicket, editTicket } = bindActionCreators(TicketsActionCreators, dispatch)
-    const [chosenProject, setChosenProject] = useState('');
     const [isDisabled, setIsDisabled] = useState(!props.isEditMode);
     const sessionState = useSelector((state: State) => state.session)
     const focusedTicketState = useSelector((state: State) => state.focusedTicket)
-    const ticketsState = useSelector((state: State) => state.tickets)
-    const [isDirty, setIsDirty] = useState(false)
-    const formRef = useRef<FormikValues>() as any;
-    let projects = sessionState.currentTeam?.projects;
-    let intendedProject: any = projects?.filter((project: any) => project.name === chosenProject)[0]
-    let projectValues = projects?.map((project: any) => project.name)
-    let userValues = intendedProject?.project_members.map((member: any) => member)
+    const [intendedProject, setIntendedProject] = useState<any>();
+    let projectValues = sessionState.currentTeam?.projects.map((project: any) => project.name)
     let isFormTransitioned: string = props.isExtended === true ? 'FormTransition' : ''
+    let noAssignee: AssigneeValue = {username: 'none', discriminator: null, project_id: -1, role_id: -1}
+    let assigneeValues: any[] = [noAssignee]
 
-    if(props.isEditMode){
-        intendedProject = projects?.filter((project: any) => project.name === focusedTicketState.project_name)[0]
-    }
-    let initialUser = ''
-    if(props.isEditMode){
-        userValues = intendedProject?.project_members.map((member: any) => member)
-    }
-    if(userValues){
-        userValues.unshift({username: 'none', discriminator: null, project_id: focusedTicketState.project_id, role_id: -1})
-    }
+    useEffect(()=>{
+        if(props.isEditMode){
+            let project = sessionState.currentTeam.projects.filter((project: any) => project.name === focusedTicketState.project_name)[0]
+            handleSetIntendedProject(project)  
+        } 
+    }, [])
 
-    if(props.isEditMode && userValues){
-        let userIDX = userValues.findIndex((user: any) => {
-            if(user.username === focusedTicketState.assignee_username && user.discriminator === focusedTicketState.assignee_user_discriminator){
-                return true
-            }
-        })
-        initialUser = userValues[userIDX]
-    }
+    useEffect(() => {
+        intendedProject && intendedProject.project_members.forEach((member: any) => assigneeValues.push(member)) 
+        let assigneeIDX = assigneeValues.findIndex((assignee: AssigneeValue)=>{return assignee.username === focusedTicketState.assignee_username && assignee.discriminator === focusedTicketState.assignee_user_discriminator})
+        if(props.isEditMode && formRef.current){
+            formRef.current.setValues({
+                title: `${focusedTicketState.title}`,
+                description: `${focusedTicketState.description}`,
+                project: `${focusedTicketState.project_name}`,
+                assignee: assigneeValues[assigneeIDX],
+                priority: `${focusedTicketState.priority}`,
+                resolution_status: `${focusedTicketState.resolution_status}`,
+                ticket_id: focusedTicketState.ticket_id
+            })
+        }
+        formRef.current.setFieldValue("assignee", props.isEditMode ? assigneeValues[assigneeIDX] : noAssignee)
+    }, [intendedProject, []])
 
+    function handleSetIntendedProject(project: any){
+        setIntendedProject(project)
+    }
+    
     const priority = [
         {id: 1, descriptor: 'high'}, 
         {id: 2, descriptor: 'medium'}, 
@@ -67,38 +79,28 @@ export default function TicketForm(props: Props) {
         {id: 4, descriptor: 'Reviewing'}, 
         {id: 5, descriptor: 'Closed'}
     ]
-    const handleReset = () => {
-        if(formRef.current && isDirty === false){
-            formRef.current.handleReset()
-        }
+
+    if(sessionState.currentTeam && sessionState.currentTeam.team_role === 1){
+            console.log('asda')
     }
-    props.isExtended ? console.log('') : handleReset()
+
+    function handleOnProjectSelect(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
+        let project = sessionState.currentTeam.projects.filter((project: any) => project.name === e.target.value)[0] 
+        handleSetIntendedProject(project)
+    }
+
     let initialData: any = {
         title: '',
         description: '',
         project: '',
         assignee: '',
         priority: '',
-        resolution_status: ''}
-        
-    function setDataToFocusedTicket() {
-            let editInitialData = {
-                title: `${focusedTicketState.title}`,
-                description: `${focusedTicketState.description}`,
-                project: `${focusedTicketState.project_name}`,
-                assignee: initialUser,
-                priority: `${focusedTicketState.priority}`,
-                resolution_status: `${focusedTicketState.resolution_status}`,
-                ticket_id: focusedTicketState.ticket_id
-            }
-            initialData = editInitialData
+        resolution_status: ''
     }
-    
-    if(props.isEditMode){
-        setDataToFocusedTicket()
-    }
+    let fadeAnimationType: string = props.isEditMode ? 'fadeIn' : 'delayedFadeIn'
 return(     
     <Formik 
+        innerRef={formRef}
         initialValues={initialData}
         onSubmit={(data, { resetForm }) => {
             data.resolution_status = parseInt(data.resolution_status)
@@ -122,8 +124,8 @@ return(
             } else{
                 if(!props.isEditMode){
                     async function handleSubmitTicket(){
+                        console.log(data)
                         let response = await postTicket(data)
-                        console.log(response.body.ticket)
                         if(response.status !== 200){
                             fireAlert({
                                 isOpen: true,
@@ -143,6 +145,7 @@ return(
                     handleSubmitTicket();
                 } else{
                     async function handleEditTicket(){
+                        console.log(data)
                         let response = await putEditTicket(data, focusedTicketState.ticket_id, focusedTicketState.project_id)
                         if(response.status !== 200){
                             fireAlert({
@@ -162,13 +165,11 @@ return(
                 }
             }
         }}
-        innerRef={formRef}
     >
-    {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
+    {({values, handleChange, handleBlur, handleSubmit, resetForm}) => {
+
             return (
-                
-                <form id='ticketForm' className={`fadeIn form ${isFormTransitioned}`}  style={{width: 'fit-content'}} onSubmit={handleSubmit} onBlur={handleBlur} onChange={handleChange}>
-                    
+                <form id='ticketForm' className={`${fadeAnimationType} form ${isFormTransitioned}`}  style={{width: 'fit-content'}} onSubmit={handleSubmit} onBlur={handleBlur} onChange={handleChange}>
                     <div className='formContainer '>           
                         <div className='formSection formInputsContainer'>
                             <TextField
@@ -176,7 +177,7 @@ return(
                                 label='Title'
                                 type='text'
                                 value={values.title}
-                                onChange={(e)=>{setIsDirty(true); handleChange(e)}}
+                                onChange={(e)=>{handleChange(e)}}
                                 onBlur={handleBlur}
                                 className='formComponent'
                                 name='title'
@@ -192,7 +193,7 @@ return(
                                 color='info' 
                                 variant='standard' 
                                 onBlur={handleBlur('priority')} 
-                                onChange={(e)=>{setIsDirty(true); handleChange(e)}} 
+                                onChange={(e)=>{handleChange(e)}} 
                                 sx={{ width: '200px' }}>
                                 {priority.map((priority, index) => {
                                     return (
@@ -204,16 +205,14 @@ return(
                                 disabled={props.isEditMode}
                                 select 
                                 name='project' 
-                                defaultValue={''} 
                                 value={values.project}  
                                 label='Project' 
                                 className='formComponent' 
                                 color='info' 
                                 variant='standard' 
                                 onChange={e => {
-                                    setIsDirty(true)
                                     handleChange(e)
-                                    setChosenProject(e.target.value);
+                                    handleOnProjectSelect(e);
                                     setIsDisabled(false)
                                 }} 
                                 onBlur={handleBlur} 
@@ -228,19 +227,19 @@ return(
                             </TextField>
                             <TextField 
                                 disabled={isDisabled}
+                                defaultValue={''}
                                 select  
                                 name='assignee' 
-                                defaultValue={''} 
                                 value={values.assignee} 
                                 label='Assignee' 
                                 className='formComponent' 
                                 color='info' 
                                 variant='standard' 
-                                onChange={(e)=>{setIsDirty(true); handleChange(e)}} 
+                                onChange={(e)=>{handleChange(e)}} 
                                 onBlur={handleBlur} 
                                 sx={{ width: '200px'}}>
                                     <p style={{height: '0px', margin: '0px'}}></p>
-                                {userValues?.map((member: any, index: any) => {
+                                {assigneeValues?.map((member: any, index: any) => {
                                     let isNullOption: string = member.username === 'none' && member.discriminator === null ? '' : '#'
                                     return (
                                         <MenuItem key={index} value={member} id='user'>{member.username} {isNullOption}{member.discriminator}</MenuItem>
@@ -256,7 +255,7 @@ return(
                                 className='formComponent' 
                                 color='info' 
                                 variant='standard' 
-                                onChange={(e)=>{setIsDirty(true); handleChange(e)}} 
+                                onChange={(e)=>{handleChange(e)}} 
                                 onBlur={handleBlur} 
                                 sx={{ width: '200px'}}>
                                     <p style={{height: '0px', margin: '0px'}}></p>
@@ -272,7 +271,7 @@ return(
                                 label='Description'
                                 type='text'
                                 value={values.description}
-                                onChange={(e)=> {setIsDirty(true); handleChange(e)}}
+                                onChange={(e)=> {handleChange(e)}}
                                 onBlur={handleBlur}
                                 className='formComponent'
                                 sx={{ color: '#ffffff' }}
@@ -289,14 +288,15 @@ return(
                 
                 <div className='formButtonsContainer'>
                     <button type='reset'
-                        onClick={e => {
+                        onClick={() => {
                             if(props.setIsEditOpen){
                                 props.setIsEditOpen()
                             } else if(props.setIsExtended) {
                                 props.setIsExtended(false)
+                                resetForm()
                             }
                             setIsDisabled(true)
-                            handleReset(e)
+                            resetForm()
                         }}
                         className='button bottomButton bottomButtons cancelButton'
                         style={{ margin: '2px 2px 0px 0px' }}>
