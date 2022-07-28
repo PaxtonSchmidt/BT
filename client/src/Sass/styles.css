@@ -1339,14 +1339,27 @@ input[type=number] {
   background-color: transparent;
   border-bottom: 1px solid #ffffff31;
   padding-bottom: 10px;
-}
-
-.sideScrollList:hover {
-  border-bottom: 1px solid #efff0a6b;
+  overflow-y: hidden;
 }
 
 .sideScrollList::-webkit-scrollbar {
-  display: none;
+  height: 1px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  z-index: 3000;
+}
+
+.sideScrollList::-webkit-scrollbar-track {
+  background: transparent;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.sideScrollList::-webkit-scrollbar-thumb {
+  border: 1px solid #efff0a6b;
+  background-color: #efff0a6b;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
 }
 
 .sideScrollListItem {

@@ -13,12 +13,21 @@
     background-color: transparent;
     border-bottom: 1px solid $accentGrey;
     padding-bottom: 10px;
-}
-.sideScrollList:hover{
-    border-bottom: 1px solid $dimYellow;
+    overflow-y: hidden;
 }
 .sideScrollList::-webkit-scrollbar{
-    display: none;
+    height: 1px;
+    transition: $transition;
+    z-index: 3000;
+}
+.sideScrollList::-webkit-scrollbar-track {
+    background: transparent;
+    transition: $transition;
+}
+.sideScrollList::-webkit-scrollbar-thumb {
+    border: 1px solid $dimYellow;
+    background-color: $dimYellow;
+    transition: $transition;
 }
 .sideScrollListItem{
     cursor: pointer;
