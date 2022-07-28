@@ -12,7 +12,7 @@ export default function TicketDetails() {
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
     const sessionState = useSelector((state: State) => state.session)
     let priority = priorityTranslation.translateTicketPriorityBack(focusedTicketState.priority)    
-    let isAssigneeNull = focusedTicketState.assignee_username === null 
+    let isAssigneeNull = focusedTicketState.assignee_user_discriminator === null 
     let assigneeUsername: string = isAssigneeNull ? 'none' : focusedTicketState.assignee_username
     let assigneeDiscriminator: string = isAssigneeNull ? '' : focusedTicketState.assignee_user_discriminator
     let isFocusedTicketUndefined: boolean = focusedTicketState.title === undefined
@@ -71,12 +71,12 @@ export default function TicketDetails() {
                 </div>    
                 <div className='ticketDetailItemContainer '>
                     <div className='ticketDetailItem'>
-                        <div style={{width: '50%', display: 'flex'}} >
-                            <span className='detailLabel fadeIn ' style={{overflow: 'hidden', textOverflow: 'ellipsis'}}>
+                        <div style={{width: '50%', display: 'flex', overflow: 'hidden', textOverflow: 'ellipsis'}} >
+                            <span className='detailLabel fadeIn '>
                                 <span> Project:</span>   
                             </span>
                             <span className='fadeIn '>
-                                <p style={{textOverflow: 'ellipsis', margin:'0px', overflow: 'hidden'}}>
+                                <p style={{textOverflow: 'ellipsis', margin:'0px', overflow: 'hidden', whiteSpace: 'nowrap'}}>
                                 {focusedTicketState.project_name}
                                 </p>
                             </span>
