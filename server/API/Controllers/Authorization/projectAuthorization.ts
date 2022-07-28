@@ -4,7 +4,6 @@ import composeProjectStatistics from '../../Services/composeProjectStatistics';
 import consumeCookie, { userTeamRoleCombo } from '../../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
 import { consumeRowDataPacket } from '../../Services/consumeRowDataPacket';
-import {translateTicketPriority} from '../../Services/translateTicketPriority';
 let Roles = require('./Roles')
 let tickets = require('../../Queries/ticketQueries')
 let projects = require('../../Queries/projectQueries')
@@ -15,19 +14,19 @@ async function submitNewTicket(req: any, res: any) {
     let isUserOnProject = false;
     let isAssigneeOnProject = false;
     let userTeamRoleIds = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
-    let targetProjectID = req.body.assignee.project_id;
-    let targetUserId = {user_id: ''}
+    let targetUserId: any = {user_id: ''}
     let ticketPriority = req.body.priority;
-    let relevant_project_id = {project_id: ''}    
+    let relevant_project_id = {project_id: ''}   
     try{
-        isUserOnProject = consumeRowDataPacket(await projects.isUserOnProject(userTeamRoleIds.userID, targetProjectID ));
         relevant_project_id = await projects.getProjectIdByTeamIdAndProjectName(userTeamRoleIds.teamID, req.body.project);
+        isUserOnProject = consumeRowDataPacket(await projects.isUserOnProject(userTeamRoleIds.userID, relevant_project_id.project_id ));
         //if there is an assignee, is the assigned user on the project?
-        if(req.body.assignee === ''){
+        if(req.body.assignee.username === 'none'){
             isAssigneeOnProject = true
+            targetUserId = {user_id: null}
         } else {
             targetUserId = await users.getUserByNameDiscriminator(req.body.assignee.username, req.body.assignee.discriminator, res)
-            isAssigneeOnProject = consumeRowDataPacket(await projects.isUserOnProject(targetUserId.user_id, targetProjectID))
+            isAssigneeOnProject = consumeRowDataPacket(await projects.isUserOnProject(targetUserId.user_id, relevant_project_id.project_id))
         }    
     }catch(e){
         return res.status(500).send({message: 'Server couldnt find role information...'})
@@ -128,6 +127,9 @@ async function getRelatedMemberDetails(req: any, res: any){
         return res.status(500).send({message: 'Server couldnt get Projects...'})
     }
 }
+interface Role_Id{
+    role_id: number;
+}
 async function addListOfMembersToProject(req: any, res: any){
     let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
     let newMembers: Teammate[] = req.body.newMembers;
@@ -137,7 +139,8 @@ async function addListOfMembersToProject(req: any, res: any){
     let targetProjectId: number | null = null;
     let allTeammates: any[] = [];
     let currentProjectMembers: Teammate[] | null = null
-    let userProjectRoleIdPacket = []
+    let userProjectRoleIdPacket: Role_Id[] = []
+    
     //get a list of all teammates, check that these users are on the list and if they are, add them all to the project with a dev role
     try{
         let targetProjectIdPacket = await projects.getProjectIdByTeamIdAndProjectName(userTeamRoleCombo.teamID, projectName)
@@ -167,34 +170,43 @@ async function addListOfMembersToProject(req: any, res: any){
 
     //if the user isnt a project lead, send a 403
     if(userTeamRoleCombo.roleID !== 1){
-
-        userProjectRoleId = userProjectRoleIdPacket[0]
+        userProjectRoleId = userProjectRoleIdPacket[0].role_id
         console.log(userProjectRoleId)
         if(userProjectRoleId !== 1 && userProjectRoleId !== 2){
             return res.status(403).send({message: `You are not allowed to add users to the ${req.body.projectName} project...`})
         } 
     }
     
+    
     //if any of the users arent on the team, send a 400
+    let usersNotOnTeamIdxArray : number[] = []
     newMembers.forEach((member: Teammate) => {
         let idx: number | null = null;
         idx = allTeammates.findIndex((teammate: Teammate) => {
             return member.username === teammate.username && member.discriminator === teammate.discriminator
         })
         if(idx === -1 || idx === null){
-            return res.status(400).send({message: 'One or more of these users are not on the team...'})
+            usersNotOnTeamIdxArray.push(idx)
         }
     });
+    if(usersNotOnTeamIdxArray.length > 0){
+        return res.status(400).send({message: 'One or more of these users are not on the team...'})
+    }
     //if any of the users are already on the project, send a 400
+    let usersOnProjectIdxArray: number[] = [];
     newMembers.forEach((member: Teammate) => {
-        let idx: number | null = null;
-        idx = currentProjectMembers!.findIndex((teammate: Teammate) => {
+        let idx = currentProjectMembers!.findIndex((teammate: Teammate) => {
             return member.username === teammate.username && member.discriminator === teammate.discriminator
         })
         if(idx !== -1){
-            return res.status(400).send({message: 'One or more of these users are already in the project...'})
+            usersOnProjectIdxArray.push(idx)
         }
     });
+    if(usersOnProjectIdxArray.length > 0){
+        return res.status(400).send({message: 'One or more of these users are already in the project...'})
+    }
+    
+
     try{
         await projects.addListOfUsersToProject(newMembersIds, targetProjectId, userTeamRoleCombo.teamID, userTeamRoleCombo.userID)
         return res.status(200).send({message: 'Server added the users to the project'})
