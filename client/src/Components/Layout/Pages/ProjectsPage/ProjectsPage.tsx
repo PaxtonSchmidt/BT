@@ -29,6 +29,7 @@ let ChartTypes: ChosenChartType = {
 export default function ProjectsPage({ isTeamSelected }: Props) {
     const loginState = useSelector((state: State) => state.login)
     const sessionState = useSelector((state: State) => state.session)
+    const [isExtended, setIsExtended] = useState<boolean>(false)
     const focusedProjectState = useSelector((state: State) => state.focusedProject)
     const [chartData, setChartData] = useState<any>()
     let [projectStats, setProjectStats] = useState<ComposedStats>();
@@ -108,8 +109,8 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
             if(sessionState.currentTeam === undefined){return <></>}
             return(
             <div className='overflow'>
-                <div id='pageContentContainer' className='pageContentContainer  projectPageContent' >
-                    <ProjectFormContainer/>
+                <div id='pageContentContainer' className={`pageContentContainer  projectPageContent ${isExtended ? 'FormContainerTransition' : ''}`}  >
+                    <ProjectFormContainer isExtended={isExtended} setIsExtended={setIsExtended}/>
                 </div>
                 
                 <div className='pageBodyContainer4  fadeIn ' style={{flexDirection: 'row'}}>
@@ -120,7 +121,7 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
                         </div>
                         <div className='pageBodyQuadrant fadeIn' style={{borderRight: 'none', flexDirection: 'column', paddingLeft: '10px'}}>
                             <div className='selectChartButtons'>
-                                <div style={{color:  'white'}}><p>{`Select Data:`}</p></div>
+                                <div style={{color:  'white'}}><p>{`Data:`}</p></div>
                                 <div id='status' className='inComponentButton chartTypeButton scaleYonHover' onClick={()=>setChartType(ChartTypes.status)} style={{marginLeft: 'auto'}}>
                                     <p style={{margin: '0px'}}>Status</p>
                                 </div>
