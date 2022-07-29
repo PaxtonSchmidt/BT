@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
 import postInviteToTeam from '../../../API/Requests/Invites/PostInviteToTeam';
-import { useSelector } from 'react-redux';
-import { State } from '../../../Redux/reducers';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { AlertActionCreators } from '../../../Redux';
 
-export default function InviteToTeamForm() {
+interface Props {
+    isExtended: boolean,
+    setIsExtended: Dispatch<SetStateAction<boolean>>
+}
+
+export default function InviteToTeamForm(props: Props) {
+    const dispatch = useDispatch();
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
     
 
 return(
@@ -13,11 +21,23 @@ return(
             <Formik 
                 initialValues={{invitee: '',
                                 discriminator: ''}}
-                onSubmit={async data => {
-                    console.log(data) 
-                    if(await postInviteToTeam(data) === 200){
+                onSubmit={async (data, { resetForm }) => {
+                    let response = await postInviteToTeam(data)
+                    console.log(response)
+                    response.status !== 200 ? 
+                    (()=> {
+                        fireAlert({
+                            isOpen: true,
+                            status: response.status,
+                            message: response.body.message
+                        })
+                        setTimeout(hideAlert, 6000);
+                    })()
+                    : (()=>{
                         
-                    }
+                        props.setIsExtended(false)
+                        resetForm()
+                    })()
                 }}
             >
             {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
