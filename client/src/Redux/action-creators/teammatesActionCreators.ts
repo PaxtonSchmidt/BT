@@ -11,3 +11,19 @@ export const updateTeammates = (teammates: Teammate[]) => {
         })
     }
 }
+export const updateTeammateRole = (teammate: Teammate) => {
+    return (dispatch: Dispatch<Action>) => {
+        dispatch({
+            type: teammatesActionType.UPDATE_TEAMMATE_ROLE,
+            payload: teammate
+        })
+    }
+}
+export const removeTeammate = (teammate: Teammate) => {
+    return (dispatch: Dispatch<Action>) => {
+        dispatch({
+            type: teammatesActionType.REMOVE_TEAMMATE,
+            payload: teammate
+        })
+    }
+}
