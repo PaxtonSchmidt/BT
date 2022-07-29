@@ -3,19 +3,52 @@ import { Teammate } from '../Interfaces/teammate';
 import getCurrentDate from '../Services/getCurrentDate';
 let mysql = require('mysql');
 
-function addProject(creatorId: any, teamID: any, name: string, description: string, role: number) {
+async function addProject(creatorId: any, teamID: any, name: string, description: string, role: number){
     let date = getCurrentDate()
     let project = {team_id: teamID, creator_user_id: creatorId, name: name, description: description, date_created: date}
     let sql = "INSERT INTO projects SET ?"; 
-    connectionPool.query(sql, project, (err: any, result: any) => {
-        if (err) result.send(err);
-        let user_projectValues = {user_id: creatorId, project_id: result.insertId, role_id: role, relevant_team_id: teamID, enlisted_by_user_id: creatorId, date_joined: date}
-        let user_projectSQL = "INSERT INTO user_projects SET ?"
-        connectionPool.query(user_projectSQL, user_projectValues, (err: any, result: any) => {
-            if(err) result.send(err)
+    let user_projectSQL = "INSERT INTO user_projects SET ?"
+    let insertId: any = null
+
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.getConnection(function(err: any, connection: any){
+            if(err) throw err;
+            
+            try{
+                connection.beginTransaction(function(err: any){
+                    if(err) throw err
+                    //create project
+                    let insertId = connection.query(sql, project, (err: any, result: any) => {
+                        if (err) {connection.rollback(function() {throw err;});}
+                        insertId = result.insertId
+    
+                        //add user to project
+                        let user_projectValues = {
+                            user_id: creatorId, 
+                            project_id: insertId,
+                            role_id: role, 
+                            relevant_team_id: teamID, 
+                            enlisted_by_user_id: creatorId, 
+                            date_joined: date
+                        }
+                        connection.query(user_projectSQL, user_projectValues, (err: any) => {
+                            if (err) {connection.rollback(function() {throw err;});}
+    
+                            //commit changes
+                            connection.commit(function(err: any, result: any) {
+                                if (err) {connection.rollback(function() {throw err;});}
+                            })
+                            resolve(insertId)
+                        })
+                    })
+                })
+            } catch(e){
+                return console.log(e)
+            }
         })
     })
 }
+
 function getSessionProjectRoles(teamID: string, userID: string){
     let values = [teamID, userID]
     let sql ='SELECT p.project_id AS project_id, p.name AS name, up.role_id AS role_id FROM projects p LEFT JOIN user_projects up ON up.project_id = p.project_id WHERE p.team_id= ? AND up.user_id= ?'
@@ -102,7 +135,6 @@ function getRoleByUserIdProjectId(userID: number, projectID: number){
     let sql = 'SELECT role_id FROM user_projects WHERE user_id= ? AND project_id= ?'
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
-            if(err) throw err
             return err ? reject(err) : resolve(result)
         })
     })
