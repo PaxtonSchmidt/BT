@@ -4,7 +4,8 @@ import { ProjectMember } from "./member";
 
 export interface Project{
     name: string,
-    role: string,
+    role_id: number,
+    project_id: number,
     project_members: ProjectMember[]
 }
 
