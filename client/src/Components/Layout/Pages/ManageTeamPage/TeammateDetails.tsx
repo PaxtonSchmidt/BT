@@ -1,10 +1,13 @@
 import { Box, Modal } from '@mui/material'
 import e from 'express'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { json } from 'stream/consumers'
 import { Teammate } from '../../../../API/interfaces/teammate'
 import putUpdateTeammateRole from '../../../../API/Requests/Teams/PutUpdateTeamRole'
+import { AlertActionCreators, TeammatesActionCreators } from '../../../../Redux'
+import { updateTeammateRole } from '../../../../Redux/action-creators/teammatesActionCreators'
 import { State } from '../../../../Redux/reducers'
 import { translateRole } from '../../../../Services/translateRole'
 import UpdateUserRole from '../../../Library/Buttons/UpdateUserRole'
@@ -25,9 +28,12 @@ export interface TeammatesInformation extends Teammate{
 }
 
 export default function TeammateDetails(){
+    const dispatch = useDispatch();
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
+    const { updateTeammateRole, removeTeammate } = bindActionCreators(TeammatesActionCreators, dispatch)
     const sessionState = useSelector((state: State) => state.session)
     const focusedTeammateState = useSelector((state: State) => state.focusedTeammate)
-    const [teammatesInformation, setTeammatesInformation] = useState<TeammatesInformation[]>();
+    const [teammatesInformation, setTeammatesInformation] = useState<any>();
     const [chosenTeammate, setChosenTeammate] = useState<TeammatesInformation>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -46,7 +52,7 @@ export default function TeammateDetails(){
         setIsLoading(false)
     }
     useEffect(()=>{getTeamatesInformation()}, [])
-    
+
     function handleNewTeammate(){
         let chosenTeammate: TeammatesInformation | undefined = teammatesInformation!.find((teammate: TeammatesInformation) => {
             if(teammate.username === focusedTeammateState.username && teammate.discriminator === focusedTeammateState.discriminator){
@@ -56,17 +62,6 @@ export default function TeammateDetails(){
         setChosenTeammate(chosenTeammate)
     }
     useEffect(()=>{if(teammatesInformation !== undefined){handleNewTeammate()}}, [focusedTeammateState, teammatesInformation])
-
-    async function handleRemoveTeammate(){
-        let response: any = fetch('/teams/removeTeammate', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({username: focusedTeammateState.username, discriminator: focusedTeammateState.discriminator})
-        }).then(res => res.json())
-        return console.log(await response)
-    }
 
     let role = null
     let date = ''
@@ -92,7 +87,35 @@ export default function TeammateDetails(){
         potentialNewTeamRole = 'Lead'
     }
 
-    
+    async function handleRemoveTeammate(){
+        let teammate = {username: focusedTeammateState.username, discriminator: focusedTeammateState.discriminator}
+        let response: any = await fetch('/teams/removeTeammate', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(teammate)
+        }).then(r =>  r.json().then(data => ({status: r.status, body: data})))
+        response.status !== 200 ? 
+        (()=> {
+            fireAlert({
+                isOpen: true,
+                status: response.status,
+                message: response.body.message
+            })
+            setTimeout(hideAlert, 6000);
+        })()
+        : (()=>{
+            console.log(response.status)
+            // remove from teammates list 
+            removeTeammate(teammate)
+
+            //remove from session state projects
+            
+            //set their tickets to unassigned
+        })()
+    }
+
     async function handleUpdateTeammateRole(){
         if(canUserManageTeammateRole === true && chosenTeammate){
             let newRoleID = 3;
@@ -103,12 +126,34 @@ export default function TeammateDetails(){
             }else{
                 return
             }
-            let responseStatus = putUpdateTeammateRole({username: chosenTeammate!.username, discriminator: chosenTeammate!.discriminator}, newRoleID);
-            console.log(responseStatus)
+            let data = {username: chosenTeammate!.username, discriminator: chosenTeammate!.discriminator}
+            let response: any = await putUpdateTeammateRole(data, newRoleID);
+            // console.log(response)
+            response.status !== 200 ? 
+            (()=> {
+                fireAlert({
+                    isOpen: true,
+                    status: response.status,
+                    message: response.body.message
+                })
+                setTimeout(hideAlert, 6000);
+            })()
+            : (()=>{
+                let newTeammatesInfo = [...teammatesInformation]
+                let targetTeammateIdx = newTeammatesInfo.findIndex((teammate: TeammatesInformation) => data.username === teammate.username && data.discriminator === teammate.discriminator)
+                let editedTeammate = newTeammatesInfo[targetTeammateIdx]
+                editedTeammate.team_role = newRoleID
+                newTeammatesInfo.splice(targetTeammateIdx, 1, editedTeammate)
+
+                setTeammatesInformation(newTeammatesInfo)
+                updateTeammateRole(editedTeammate)
+                setIsRoleModalOpen(false)
+            })()
         }
     }
 
-    if(isLoading){        return (
+    if(isLoading){
+        return (
             <>
             <div className='list delayedFadeIn' style={{height: '100%', textAlign: 'center', paddingTop: '15px'}}>Loading...</div>
             </>
@@ -134,24 +179,26 @@ export default function TeammateDetails(){
                                     #{chosenTeammate.discriminator}
                                 </span>
                             </div>
-                            <div style={{display:'flex', height: 'fit-content'}}>
-                                <span className='rowItem' style={{display: 'inline-block', width: 'fit-content', marginLeft:'10px', height:'100%', paddingTop:'6px', marginRight:'10px'}}>
+                            
+                        </div>
+                    </div>
+                    <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between', width: '100%'}}>
+                        <div className='memberListRowSection' style={{textAlign: 'left', width: '100%'}}>
+                            <div style={{display:'flex', height: 'fit-content', justifyContent: 'space-between'}}>
+                                <span className='rowItem' style={{display: 'inline-block', width: 'fit-content', height:'100%', paddingTop:'6px', marginRight:'10px'}}>
                                     {role}
                                 </span>
+                                
                                 {canUserManageTeammateRole && 
-                                    <span id='RoleUpdate' className='rowItem fadeIn inComponentButton scaleYonHover' onClick={()=>setIsRoleModalOpen(true)} 
-                                    style={{display: 'inline-block', width: 'fit-content', textAlign: 'center', height: 'fit-content'}}>
+                                    <span id='RoleUpdate' 
+                                        className='rowItem fadeIn inComponentButton scaleYonHover' 
+                                        onClick={()=>setIsRoleModalOpen(true)} 
+                                        style={{display: 'inline-block', width: 'fit-content', textAlign: 'center', height: 'fit-content'}}
+                                        >
                                         {roleUpdateType}
                                     </span>
                                 }
                             </div>
-                        </div>
-                    </div>
-                    <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between'}}>
-                        <div className='memberListRowSection' style={{textAlign: 'left'}}>
-                            <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content'}}>
-                                {focusedTeammateState.email}
-                            </span>
                         </div>
                     </div>
                     <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between'}}>      
@@ -266,12 +313,13 @@ export default function TeammateDetails(){
                             <li>{focusedTeammateState.username} will no longer be able to invite people to {sessionState.currentTeam.name}</li>
                             <li>{focusedTeammateState.username} will no longer be able to create projects for {sessionState.currentTeam.name}</li>
                             <li>{focusedTeammateState.username} will no longer be able to access the information on the team page</li>
+                            <li>{focusedTeammateState.username} will still have Project Lead permissions for any project they currently lead</li>
                             </>}
                             {roleUpdateType === 'Promote' &&
                             <>
                             <li>{focusedTeammateState.username} will be able to invite people to {sessionState.currentTeam.name}</li>
-                            <li>{focusedTeammateState.username} will be able to create projects for {sessionState.currentTeam.name}</li>
-                            <li>{focusedTeammateState.username} will be able to access the information on the team page</li>
+                            <li>{focusedTeammateState.username} will be able to access the information on the {sessionState.currentTeam.name} team page</li>
+                            <li>{focusedTeammateState.username} will be able to create projects in {sessionState.currentTeam.name} for which they would have Project Lead permissions</li>
                             </>}
                         </ul>
                         <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
