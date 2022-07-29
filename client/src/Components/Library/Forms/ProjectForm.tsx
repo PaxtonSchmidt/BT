@@ -3,8 +3,11 @@ import { Formik, FormikValues } from 'formik';
 import { TextField } from '@mui/material';
 import postProject from '../../../API/Requests/Projects/PostProject';
 import { bindActionCreators } from 'redux';
-import { AlertActionCreators } from '../../../Redux';
-import { useDispatch } from 'react-redux';
+import { AlertActionCreators, FocusedProjectActionCreators, SessionActionCreators } from '../../../Redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ProjectMember } from '../../../Redux/interfaces/member';
+import { State } from '../../../Redux/reducers';
+import { Project } from '../../../Redux/interfaces/session';
 
 interface Props{
     isExtended: boolean,
@@ -14,13 +17,16 @@ interface Props{
 export default function ProjectForm(props: Props) {
     const dispatch = useDispatch();
     const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
-
+    const { addProjectToSession } = bindActionCreators(SessionActionCreators, dispatch)
+    const { updateFocusedProject } = bindActionCreators(FocusedProjectActionCreators, dispatch)
+    const sessionState = useSelector((state: State) => state.session)
+    
     return(
         <>
             <Formik 
                 initialValues={{name: '',
                                 description: ''}}
-                onSubmit={data => {
+                onSubmit={(data, { resetForm }) => {
                     (async () => {
                         if(data.name.length > 50){
                             fireAlert({
@@ -51,7 +57,25 @@ export default function ProjectForm(props: Props) {
                                     setTimeout(hideAlert, 6000);
                                 })()
                                 : (()=>{
-                                    console.log('a ok')
+                                    //only owners and leads can create projects, if they do, their project role_id is the same as their team_role_id
+                                    //1 for owner, 2 for Leads. Both give Project Lead status. Owners have access to projects they are not on
+                                    let newProjectCreatorRole: number = sessionState.currentTeam.team_role
+                                    let projectCreator: ProjectMember = {
+                                        username: sessionState.currentUser.username,
+                                        discriminator: sessionState.currentUser.discriminator,
+                                        role_id: newProjectCreatorRole,
+                                        project_id: response.body.project_id
+                                    }
+                                    let newProject: Project = {
+                                        name: data.name,
+                                        role_id: newProjectCreatorRole,
+                                        project_id: response.body.project_id,
+                                        project_members: [projectCreator]
+                                    }
+                                    addProjectToSession(newProject)
+                                    updateFocusedProject(newProject)
+                                    props.setIsExtended(false)
+                                    resetForm()
                                 })() 
                         }
                     })() 
