@@ -12,6 +12,7 @@ function ProjectList() {
     const focusedProjectState = useSelector((state: State) => state.focusedProject)
     const [filterToLeadingOnly, setFilterToLeadingOnly]= useState(false)
     const sessionState = useSelector((state: State) => state.session)
+    
     let projectsList: any = [] 
     let currentUser = {
         username: sessionState.currentUser?.username,
@@ -65,20 +66,20 @@ function ProjectList() {
             if(projectList){    
                 let width = projectList.clientWidth
                 projectList!.scrollLeft += e.deltaY;
-                let timer: any = console.log(projectList.scrollLeft)
+                // let timer: any = console.log(projectList.scrollLeft)
             }      
         }
         
         //needs pagination
         return (
             <div onWheel={handleWheel} id='projectList'  className='sideScrollList componentGlow'>
-                <button className='filterProjectsToggle scaleYonHover' onClick={() => setFilterToLeadingOnly(!filterToLeadingOnly)}>{WhichView}</button>
                 <div onClick={() => updateFocusedProject({name: 'All'})} className='sideScrollListItem scaleYonHover fadeIn selectedProjectInList' id={projectAllName}>
                     All
                 </div>
                 {projectsList!.map((project: any) =>
                     <ProjectListItem key={project} name={project} />
                 )}
+                <button className='filterProjectsToggle scaleYonHover' onClick={() => setFilterToLeadingOnly(!filterToLeadingOnly)}>{WhichView}</button>
             </div>
         )
     }
