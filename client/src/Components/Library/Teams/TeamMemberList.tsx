@@ -7,32 +7,22 @@ import { State } from '../../../Redux/reducers';
 import TeammateListItem from './TeammateListItem';
 let deepClone = require('lodash.clonedeep')
 
-export interface TeammateDetail extends Teammate{
-    email: string
-}
-
 export default function TeammateList() {
     const dispatch = useDispatch();
     const { updateFocusedTeammate } = bindActionCreators(FocusedTeammateActionCreators, dispatch)
-    const [teammates, setTeammates] = useState<TeammateDetail[]>();
     const sessionState = useSelector((state: State) => state.session)
-
-    async function getTeammates(){
-        let response: any = fetch('/teams/getTeammates', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json())
-        return setTeammates(await response)
-    }
-    useEffect(()=>{getTeammates()}, [])
+    const teammatesState = useSelector((state: State) => state.teammates)
+    const focusedTeammate = useSelector((state: State) => state.focusedTeammate)
+    let teammates: Teammate[] = []
+    
+    if(teammatesState[0] !== undefined){teammates = teammatesState}
 
     function handleTeammateSelect(focusedTeammateIDX: number){
         updateFocusedTeammate(teammates![focusedTeammateIDX])
     }
 
-    if(teammates === undefined){
+    
+    if(teammates.length === 0){
         return (
             <>     
             <div className='listRow fadeIn' style={{marginTop: '0px', backgroundColor: '#222222'}}>      
@@ -52,10 +42,17 @@ export default function TeammateList() {
                     </div>
                 </div>
                 <div id='list'  className='list projectMembersList componentGlow fadeIn'>
-                    {teammates?.map((teammate: any, index: any) =>
+                    {teammates!.map((teammate: any, index: any) =>
                         //docs say its not ideal to use the index for the key
                         //however here it is necessary 
-                        <TeammateListItem key={index} teammate={teammate} IDX={index} handleTeammateSelect={handleTeammateSelect}/> 
+                        <TeammateListItem 
+                            key={index} 
+                            teammate={teammate} 
+                            IDX={index} 
+                            handleTeammateSelect={handleTeammateSelect} 
+                            focusedTeammateUsername={focusedTeammate.username}
+                            focusedTeammateDiscriminator={focusedTeammate.discriminator}
+                        /> 
                     )}
                 </div>
             </>       
