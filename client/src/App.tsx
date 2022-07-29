@@ -50,7 +50,6 @@ function App() {
       updateSocket(socket)
     }
   }, [login])
-  
 
   let isLogged = sessionStorage.getItem('isLoggedIn')
   if(isLogged === 'true'){
