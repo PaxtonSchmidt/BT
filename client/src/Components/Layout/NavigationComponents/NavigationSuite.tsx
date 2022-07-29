@@ -33,7 +33,6 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
             navigate('login')
         }
         updateSession(await response.json());
-        console.log('got the session')
     }
     async function getTeammates(){
         let response: any = fetch('/projects/getUsersOnTeam', {
@@ -54,6 +53,7 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
         updateTickets(await response)
     }
     useEffect(() => {
+        console.log('got session')
         getSessionState();
         getTeammates();
         getTickets();
