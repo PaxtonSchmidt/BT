@@ -139,13 +139,14 @@ async function addListOfMembersToProject(req: any, res: any){
     let targetProjectId: number | null = null;
     let allTeammates: any[] = [];
     let currentProjectMembers: Teammate[] | null = null
-    let userProjectRoleIdPacket: Role_Id[] = []
+    let userProjectRoleIdPacket: any = []
     
     //get a list of all teammates, check that these users are on the list and if they are, add them all to the project with a dev role
     try{
         let targetProjectIdPacket = await projects.getProjectIdByTeamIdAndProjectName(userTeamRoleCombo.teamID, projectName)
         targetProjectId = targetProjectIdPacket.project_id
         userProjectRoleIdPacket = await projects.getRoleByUserIdProjectId(userTeamRoleCombo.userID, targetProjectId)
+        if(userProjectRoleIdPacket.length === 0){userProjectRoleIdPacket = [{role_id: -1}]}
         allTeammates = await teams.getUsersOnTeam(userTeamRoleCombo.teamID)
         currentProjectMembers = await projects.getProjectMembersByProjectId(targetProjectId)
     }catch(e){
@@ -170,6 +171,7 @@ async function addListOfMembersToProject(req: any, res: any){
 
     //if the user isnt a project lead, send a 403
     if(userTeamRoleCombo.roleID !== 1){
+        console.log(userProjectRoleIdPacket)
         userProjectRoleId = userProjectRoleIdPacket[0].role_id
         console.log(userProjectRoleId)
         if(userProjectRoleId !== 1 && userProjectRoleId !== 2){
