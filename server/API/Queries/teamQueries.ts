@@ -92,9 +92,9 @@ async function getRoleIDByUsernameDiscriminatorTeamID(username: string, discrimi
         })
     })
 }
-function getInviteBySenderIDRecipientIDTeamID(senderID: string, recipientID: string, teamID: string, res: any){
-    let values = [senderID, recipientID, teamID]
-    let sql = 'SELECT EXISTS(SELECT * FROM team_invites WHERE sender_id= ? AND recipient_id= ? AND team_id= ?)'
+function getInviteByRecipientIDTeamID(recipientID: string, teamID: string, res: any){
+    let values = [recipientID, teamID]
+    let sql = 'SELECT EXISTS(SELECT * FROM team_invites WHERE recipient_id= ? AND team_id= ?)'
     
     return new Promise<any>((resolve, reject) => {
         connectionPool.query(sql, values, (err: any, result: any) => {
@@ -125,16 +125,6 @@ function getSessionTeam(teamID: string, userID: string){
 }
 function getUsersOnTeam(teamID: string){
     let sql = 'SELECT u.username, u.discriminator, ut.role_id AS team_role FROM users u LEFT JOIN user_teams ut ON u.user_id = ut.user_id WHERE ut.team_id= ?'
-    let values = [teamID]
-    
-    return new Promise<any>((resolve, reject) => {
-        connectionPool.query(sql, values, (err: any, result: any) => {
-            return err ? reject(err) : resolve(result)
-        })
-    })
-}
-function getUserDetailsOnTeam(teamID: string){
-    let sql = 'SELECT u.username, u.discriminator, u.email, ut.role_id AS team_role FROM users u LEFT JOIN user_teams ut ON u.user_id = ut.user_id WHERE ut.team_id= ?'
     let values = [teamID]
     
     return new Promise<any>((resolve, reject) => {
@@ -196,7 +186,6 @@ function putUpdateTeammateRole(user_id: number, roleID: number, team_id: number)
 //transactions
 async function transactionRemoveTargetUserFromTeam(targetUserId: number, team_id: number){
     let values = [targetUserId, team_id]
-    console.log(values)
     let deleteProjectMembershipSql = 'DELETE FROM user_projects WHERE user_id= ? AND project_id IN(SELECT project_id FROM projects WHERE team_id = ?)'
     let deleteTeamMembershiptSql = 'DELETE FROM user_teams WHERE user_id= ? AND team_id= ?'
     let unassignSql = 'UPDATE tickets SET assigned_user_id = null, resolution_status = 1 WHERE assigned_user_id= ? AND relevant_project_id IN (SELECT project_id FROM projects WHERE team_id = ?)'
@@ -213,30 +202,30 @@ async function transactionRemoveTargetUserFromTeam(targetUserId: number, team_id
                             throw err;
                         });
                     }
-                })
-                //delete project membership
-                connection.query(deleteProjectMembershipSql, values, (err: any) => {
-                    if (err) { 
-                        connection.rollback(function() {
-                            throw err;
-                        });
-                    }
-                })
-                //delete team membership
-                connection.query(deleteTeamMembershiptSql, values, (err: any) => {
-                    if (err) { 
-                        connection.rollback(function() {
-                            throw err;
-                        });
-                    }
-                })
-                //commit changes
-                connection.commit(function(err: any) {
-                    if (err) { 
-                        connection.rollback(function() {
-                        throw err;
-                        });
-                    }
+                    //delete project membership
+                    connection.query(deleteProjectMembershipSql, values, (err: any) => {
+                        if (err) { 
+                            connection.rollback(function() {
+                                throw err;
+                            });
+                        }
+                        //delete team membership
+                        connection.query(deleteTeamMembershiptSql, values, (err: any) => {
+                            if (err) { 
+                                connection.rollback(function() {
+                                    throw err;
+                                });
+                            }
+                            //commit changes
+                            connection.commit(function(err: any) {
+                                if (err) { 
+                                    connection.rollback(function() {
+                                        throw err;
+                                    });
+                                }
+                            })
+                        })
+                    })
                 })
             })
         } catch(e){
@@ -253,13 +242,12 @@ module.exports =
     addTeamInvite, 
     deleteTeamInvite, 
     getTeamInvites, 
-    getInviteBySenderIDRecipientIDTeamID, 
+    getInviteByRecipientIDTeamID, 
     fetchIsOnTeam, 
     getInviteById, 
     addUserToTeam,
     getSessionTeam,
     getUsersOnTeam,
-    getUserDetailsOnTeam,
     getTeammatesInfo,
     getTeammatesAssignedProjects,
     getTicketCount,
