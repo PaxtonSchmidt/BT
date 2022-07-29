@@ -9,7 +9,6 @@ let NoAuthorizationInvites = require('../Controllers/Authorization/NoAuthorizati
 
 router.get("/getTeams", teamSelectRoute.getCurrentUserTeams);
 router.get('/getTeamInvites', teamSelectRoute.getTeamInvites)
-router.get('/getTeammates', teamAuthorization.getTeammates)
 router.get('/getTeammatesInformation', teamAuthorization.getTeammatesInformation)
 router.get('/getTeamDetails', teamAuthorization.getTeamDetails)
 
