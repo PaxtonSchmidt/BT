@@ -14,8 +14,6 @@ export default function TeamDetails(){
     const sessionState = useSelector((state: State) => state.session)
     const [isLoading, setIsLoading] = useState<boolean>();    
     const [teamDetails, setTeamDetails] = useState<TeamDetail>();
-    console.log(sessionState)
-    console.log(teamDetails)
 
     async function getTeamatesInformation(){
         setIsLoading(true)
