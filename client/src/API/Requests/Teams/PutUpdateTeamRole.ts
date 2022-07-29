@@ -17,7 +17,7 @@ export default async function putUpdateTeammateRole(data: TargetTeammate, newRol
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
-    })
-    console.log(response)
-    return response.status
+    }).then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    
+    return response
 }
