@@ -10,7 +10,7 @@ interface Props {
 
 export default function ProjectAssigneeChart(props: Props){
     const [dataArray, setDataArray] = useState<DataEntry[]>([]);
-    console.log(props)
+    
     function setNewDataArray(){
         let newDataArray: DataEntry[] = [];
         if(props.data![0] === undefined){return setDataArray([])}
