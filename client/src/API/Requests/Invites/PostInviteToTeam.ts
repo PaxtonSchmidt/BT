@@ -6,7 +6,6 @@ export default async function postInviteToTeam(potentialTeammates: any) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(potentialTeammates)
-    }).then(res => res.json())
-    console.log(response)
-    return response.status
+    }).then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    return response
 }
