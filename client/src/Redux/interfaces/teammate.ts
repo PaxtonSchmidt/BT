@@ -3,6 +3,5 @@ export interface ProjectName{
 }
 export interface Teammate {
     username: string,
-    discriminator: number, 
-    email: string
+    discriminator: number
 }
