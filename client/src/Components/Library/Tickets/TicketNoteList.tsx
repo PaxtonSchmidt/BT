@@ -53,7 +53,7 @@ export default function TicketNoteList() {
         let newChosenNotes: TicketNote[] = []
         allNotes.forEach((note: TicketNote) => {
             if(note.relevant_ticket_id === focusedTicketState.ticket_id){
-                newChosenNotes.push(note)
+                newChosenNotes.unshift(note)
             }
         });
         return newChosenNotes
@@ -132,7 +132,7 @@ export default function TicketNoteList() {
                                         date_created: moment().add(4, 'hours').format().slice(0,19).split('T').join(' ')
                                     };
                                     console.log(newTicketNoteToEmit.date_created)
-                                    setAllNotes(previousState => [ newTicketNoteToEmit, ...previousState])
+                                    setAllNotes(previousState => [ ...previousState, newTicketNoteToEmit])
                                     socketState.emit(
                                         'newTicketNote',
                                         newTicketNoteToEmit
