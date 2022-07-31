@@ -53,10 +53,11 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
         updateTickets(await response)
     }
     useEffect(() => {
-        console.log('got session')
-        getSessionState();
-        getTeammates();
-        getTickets();
+        if(loginState === 1){
+            getSessionState();
+            getTeammates();
+            getTickets();
+        }
     }, [])
 
     let role = 3 //defaults to dev, sets to actual role when the sessionState arrives
