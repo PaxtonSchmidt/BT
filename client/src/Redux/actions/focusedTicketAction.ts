@@ -11,7 +11,11 @@ interface editFocusedTicket {
     payload: Ticket
 }
 
-export type Action = updateFocusedTicket | editFocusedTicket
+interface setFocusedTicketToUnassigned{
+    type: focusedTicketActionType.SET_TO_UNASSIGNED
+}
+
+export type Action = updateFocusedTicket | editFocusedTicket | setFocusedTicketToUnassigned
 
 
 

@@ -1,6 +1,7 @@
 import { sessionActionType } from "../action-types/sessionActionType"
 import { ProjectMember } from "../interfaces/member"
 import { Project, Session } from "../interfaces/session"
+import { Teammate } from "../interfaces/teammate"
 
 interface UpdateAction {
     type: sessionActionType.UPDATE,
@@ -27,7 +28,12 @@ interface addProjectToSession{
     payload: Project
 }
 
-export type Action = UpdateAction | addMembersToAProjectAction | removeMemberFromProjectInSession | updatedProjectMemberRole | addProjectToSession
+interface removeTeammateFromSessionProjects{
+    type: sessionActionType.REMOVE_TEAMMATE_FROM_SESSION_PROJECTS
+    payload: Teammate
+}
+
+export type Action = UpdateAction | addMembersToAProjectAction | removeMemberFromProjectInSession | updatedProjectMemberRole | addProjectToSession | removeTeammateFromSessionProjects
 
 
 

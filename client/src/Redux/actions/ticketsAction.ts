@@ -1,5 +1,6 @@
 import { Ticket } from "../../API/interfaces/ticket"
 import { ticketsActionType } from "../action-types/ticketsActionType"
+import { Teammate } from "../interfaces/teammate"
 
 interface UpdateAction {
     type: ticketsActionType.UPDATE,
@@ -21,7 +22,12 @@ interface EditAction {
     payload: Ticket
 }
 
-export type Action = UpdateAction | RemoveAction | AddAction | EditAction
+interface unnasignRemovedTeammatesTickets {
+    type: ticketsActionType.UNASSIGN_REMOVED_TEAMMATES_TICKETS,
+    payload: Teammate
+}
+
+export type Action = UpdateAction | RemoveAction | AddAction | EditAction | unnasignRemovedTeammatesTickets
 
 
 
