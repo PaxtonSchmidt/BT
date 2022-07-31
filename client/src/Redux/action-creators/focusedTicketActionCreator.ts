@@ -19,3 +19,10 @@ export const editFocusedTicket = (ticket: Ticket) => {
         })
     }
 }
+export const setFocusedTicketToUnassigned = () => {
+    return (dispatch: Dispatch<Action>) => {
+        dispatch({
+            type: focusedTicketActionType.SET_TO_UNASSIGNED
+        })
+    }
+}
