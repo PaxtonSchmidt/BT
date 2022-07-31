@@ -4,24 +4,17 @@ import getCurrentDate from '../Services/getCurrentDate';
 const bcrypt = require('bcrypt');
 
 
-async function addUser(req: any, res: any) {
-    try{
-        console.log(req.body)
-        let user = {username: req.body.username, discriminator: req.body.discriminator, password: req.body.password, email: req.body.email, date_created: getCurrentDate(), bio: req.body.bio, token_v: '0'};
-        const salt = await bcrypt.genSalt();
-        const hashedPassword = await bcrypt.hash(user.password, salt);
-        user.password = hashedPassword;
+async function addUser(username: string, discriminator: number, password: string, email: string, date_created: any, bio: string, token_v: string) {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    let values = [username, discriminator, hashedPassword, email, date_created, bio, token_v]
 
-        let sql = "INSERT INTO users SET ?";
-        
-        connectionPool.query(sql, user, (err: any, result: any) => {
-            if (err) throw(err);
-            console.log('Server added user to database');
-            res.send(result);
+    let sql = "INSERT INTO users SET username= ?, discriminator= ?, password= ?, email= ?, date_created= ?, bio= ?, token_v= ?";
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result[0])
         })
-    } catch {
-        res.status(500).send();
-    }
+    })
 }    
 
 function getUsers(req: any, res: any) {
