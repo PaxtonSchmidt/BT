@@ -1,9 +1,11 @@
+import e from 'express';
 import React, {useState, useEffect} from 'react';
 import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FocusedTicketActionCreators } from '../../../Redux';
 import { State } from '../../../Redux/reducers';
+import { ticket } from '../../ComponentInterfaces/ticket';
 import TicketListItem from './TicketListItem';
 let deepClone = require('lodash.clonedeep')
 
@@ -13,20 +15,49 @@ function Tickets() {
     const focusedTicketState = useSelector((state: State) => state.focusedTicket)
     const ticketsState = useSelector((state: State) => state.tickets)
     const [tickets, setTickets] = useState<any[]>([]);
-    
+    const [sortedBy, setSortedBy] = useState<string>('');
+    const [isClosedFiltered, setIsClosedFiltered] = useState<boolean>(false)
+    console.log(ticketsState)
     useEffect(() => {
-        if(ticketsState){
-            if(ticketsState.length > 0){setTickets(deepClone(ticketsState).reverse())}
+        if(ticketsState !== undefined){
+            let newTicketArray = ticketsState
+            if(ticketsState.length > 0){setTickets(newTicketArray)}
         }
     }, [ticketsState])
+
+    function sortTickets(){
+        let newState = [...tickets]
+        console.log(newState)
+        newState.splice(9, 10)
+        console.log(newState)
+        
+        setTickets(newState)
+    }
+
+    function filterClosedTickets(){
+        let state = [...tickets]
+        let newTickets = state.filter((ticket: ticket)=> ticket.resolution_status !== 5)
+        setTickets(newTickets)
+    }
+
+    useEffect(()=>{
+        // sortTickets()
+        if(isClosedFiltered === true){
+            filterClosedTickets()
+        } else { //reset to the tickets in ticketsStore
+            let newTicketArray = ticketsState
+            setTickets(newTicketArray)
+        }
+    }, [sortedBy, isClosedFiltered])
+
 
     if(tickets.length === 0){
         return(
         <Container className='pageBodyContainer1 fadeIn'>
-            <div className='listContainer'>
+            <div className='listContainer' >
                 <div className='listRow'>
-                    <div className='listRowSection leftSection'>
-                        <span className='rowItem' style={{paddingLeft: '30px'}}>
+                    <div className='listRowSection leftSection'> 
+                        <span className='rowItem' style={{paddingLeft: '30px'}} >
                             Title
                         </span>
                     </div>
@@ -55,7 +86,7 @@ function Tickets() {
             <div className='listContainer'>
                 <div className='listRow'>
                     <div className='listRowSection leftSection'>
-                        <span className='rowItem' style={{paddingLeft: '30px'}}>
+                        <span className='rowItem' style={{paddingLeft: '30px'}} onClick={()=>setIsClosedFiltered(!isClosedFiltered)}>
                             Title
                         </span>
                     </div>
@@ -75,7 +106,7 @@ function Tickets() {
 
 
                 <div className='list componentGlow' style={{textAlign: 'left'}}>
-                    {tickets!.map((ticket) =>
+                    {tickets?.map((ticket) =>
                         <TicketListItem 
                         key={ticket.ticket_id}
                         title={ticket.title}
