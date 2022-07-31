@@ -74,4 +74,7 @@ async function logout(req: any, res: any){
     }
 }
 
-module.exports = { login, logout }
+module.exports = { 
+    login, 
+    logout
+}
