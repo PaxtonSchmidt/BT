@@ -3,16 +3,26 @@ import { Formik } from 'formik';
 import { TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import postNewTeam from '../../../API/Requests/Teams/PostNewTeam';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { AlertActionCreators } from '../../../Redux';
 
 export default function NewTeamForm() {
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
     
     async function handleSubmit(data: any) {
-        console.log(data); 
         let attemptResult = await postNewTeam(data)
-        console.log(attemptResult)
-        if(attemptResult === 200){
+        if(attemptResult.status === 200){
             navigate('/selectTeam')
+        } else {
+            fireAlert({
+                isOpen: true,
+                status: attemptResult.status,
+                message: attemptResult.body
+            })
+            setTimeout(hideAlert, 6000);
         }
     }
     
