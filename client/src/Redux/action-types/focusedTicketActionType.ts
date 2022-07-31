@@ -1,4 +1,5 @@
 export enum focusedTicketActionType {
     UPDATE = 'updateFocusedTicket',
-    EDIT = 'editFocusedTicket'
+    EDIT = 'editFocusedTicket',
+    SET_TO_UNASSIGNED = 'SET_TO_UNASSIGNED'
 }
