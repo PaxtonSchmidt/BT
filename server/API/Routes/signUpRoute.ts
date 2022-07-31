@@ -1,7 +1,7 @@
 import * as express from 'express';
 let router = express.Router();
 
-let signUpRoute = require('../Queries/AuthQueries/signUpQueries');
+let signUpRoute = require('../Controllers/SignUp');
 
 router.post('/signup', signUpRoute.signUp);
 
