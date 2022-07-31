@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { priorityTranslation } from '../../../../Services/translateTicketPriority';
 import { State } from '../../../../Redux/reducers';
@@ -27,6 +27,7 @@ export default function TicketDetails() {
     //if the user is the owner and they are on the project, their role_id is 1
     //if the user is the owner and they are not on the project, their role_id is 0, but they still have all perms, they just wont show in the project member list so they cant be assigned tickets and so on
     //if the user is a lead on the project, their role is 2
+    //if the user is the assignee or author, they can edit the ticket
     if(sessionState && isFocusedTicketUndefined === false){
         if(sessionState.currentTeam.team_role === 1){
             isUserAllowedToEdit = true
