@@ -161,6 +161,7 @@ export default function ProjectMembersList() {
                 setMembers(newMembersList)
                 setPotentialProjectMembers(newPotentialMembersList)
                 setAddedMembers([])
+                setIsAddingMembers(false)
             }
         }
         submitMembersList();
