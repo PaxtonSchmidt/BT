@@ -7,7 +7,7 @@ export const authService = {
     async signIn(data: Claims) {
         let responseCode = await postLogin(data);
         
-        if(responseCode === 200) {
+        if(responseCode.status === 200) {
 
             sessionStorage.setItem('isLoggedIn', 'true');
 
@@ -25,13 +25,6 @@ export const authService = {
 
     async signUp(data: NewUser) {
         let responseCode = await postSignUp(data);
-        
-        if(responseCode === 200) {
-            return responseCode
-            //currentUser undefined, figure out how to return the res.body.username 
-            // setGlobalStateUser(currentUser);
-            //clear cookie maybe?
-        }
         return responseCode
     },
 
