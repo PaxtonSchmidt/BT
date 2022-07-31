@@ -79,6 +79,15 @@
     color: $accentGrey;
     transition: $transition;
 }
+.disabled{
+    cursor: default !important;
+}
+.disabled:hover{
+    color: $accentGrey !important;
+}
+.svgSibling:hover ~ .disabled{
+    fill: $accentGrey;
+}
 .bi-arrow-bar-down:hover{
     color: $yellow;
 }

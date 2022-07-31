@@ -515,6 +515,18 @@
   transition: 0.5s;
 }
 
+.disabled {
+  cursor: default !important;
+}
+
+.disabled:hover {
+  color: #ffffff31 !important;
+}
+
+.svgSibling:hover ~ .disabled {
+  fill: #ffffff31;
+}
+
 .bi-arrow-bar-down:hover {
   color: #efff0a;
 }
@@ -1553,6 +1565,10 @@ body {
 
 .projectPageContent {
   margin-top: -173px;
+}
+
+.notATeamLeadMargin {
+  margin-top: 60px;
 }
 
 .manageTeamPageContent {
