@@ -118,9 +118,14 @@ async function getRelatedMemberDetails(req: any, res: any){
         return res.status(500).send({message: 'Server couldnt find role information...'})
     }
     //Send everyone all the project member details for projects they are in. 
-    //The owner is already in every project so additional logic is not needed
+    //The owner needs to get the details for every user in every project
+    let relatedMemberDetailsList = []
     try{
-        let relatedMemberDetailsList = await projects.getRelatedMemberDetails(userTeamRoleCombo.userID, userTeamRoleCombo.teamID)
+        if(userTeamRoleCombo.roleID !== 1){
+            relatedMemberDetailsList = await projects.getRelatedMemberDetails(userTeamRoleCombo.userID, userTeamRoleCombo.teamID)
+        } else if(userTeamRoleCombo.roleID === 1){
+            relatedMemberDetailsList = await projects.getAllMemberDetails(userTeamRoleCombo.teamID)
+        }
         let details = composeMemberDetails(relatedMemberDetailsList)
         return res.status(200).send(details)
     }catch(e){
@@ -220,19 +225,27 @@ async function updateMemberRole(req: any, res: any){
     let userTeamRoleCombo: any = []
     let targetUser: any = null;
     let targetProjectID: any = null;
+    let currentUserProjectRolePacket: any = null;
     let currentUserProjectRole: any = null;
+    let targetUserProjectRolePacket: any = null;
     let targetUserProjectRole: any = null;
     try{
         userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
         targetUser = await users.getUserByNameDiscriminator(req.body.username, req.body.discriminator)
         targetProjectID = await projects.getProjectIdByTeamIdAndProjectName(userTeamRoleCombo.teamID, req.body.targetProjectName)
-        currentUserProjectRole = await projects.getRoleByUserIdProjectId(userTeamRoleCombo.userID, targetProjectID.project_id)
-        targetUserProjectRole = await projects.getRoleByUserIdProjectId(targetUser.user_id, targetProjectID.project_id)
+        currentUserProjectRolePacket = await projects.getRoleByUserIdProjectId(userTeamRoleCombo.userID, targetProjectID.project_id)
+        if(currentUserProjectRolePacket.length > 0){
+            currentUserProjectRole = currentUserProjectRolePacket[0].role_id
+        }
+        targetUserProjectRolePacket = await projects.getRoleByUserIdProjectId(targetUser.user_id, targetProjectID.project_id)
+        if(currentUserProjectRolePacket.length > 0){
+            targetUserProjectRole = targetUserProjectRolePacket[0].role_id
+        }
     }catch(e){
         return res.status(500).send({message: 'Server couldnt find role information...'})
     }
     //if the currentUser has higher perms than the targetUser, then edit the target user's role as requested
-    if(currentUserProjectRole[0].role_id < targetUserProjectRole[0].role_id){
+    if((currentUserProjectRole !== null && targetUserProjectRole !== null && currentUserProjectRole < targetUserProjectRole) || userTeamRoleCombo.roleID === 1){
         try{
             await projects.updateMemberRole(targetUser.user_id, targetProjectID.project_id, req.body.newRoleId)
             return res.status(200).send({message: 'Role updated'})
@@ -262,16 +275,21 @@ async function removeMember(req: any, res: any) {
         let targetProjectIdPacket = await projects.getProjectIdByTeamIdAndProjectName(userTeamRoleCombo.teamID, req.body.project)
         targetProjectId = targetProjectIdPacket.project_id
         let userProjectRoleIdPacket = await projects.getRoleByUserIdProjectId(userTeamRoleCombo.userID, targetProjectId)
-        userProjectRoleId = userProjectRoleIdPacket[0].role_id
+        console.log(userProjectRoleIdPacket)
+        if(userProjectRoleIdPacket.length > 0){
+            userProjectRoleId = userProjectRoleIdPacket[0].role_id
+        }
         let targetUserProjectRoleIdPacket = await projects.getRoleByUsernameDiscriminatorProjectId(req.body.username, req.body.discriminator, targetProjectId)
-        targetUserProjectRoleId = targetUserProjectRoleIdPacket[0].role_id
+        if(targetUserProjectRoleIdPacket.length > 0){
+            targetUserProjectRoleId = targetUserProjectRoleIdPacket[0].role_id
+        }
         let targetUserIdPacket = await users.getUserByNameDiscriminator(req.body.username, req.body.discriminator)
         targetUserId = targetUserIdPacket.user_id
     }catch(e){
         return res.status(500).send({message: 'Server couldnt check authorization levels...'})
     }
     //if the user has a role_id less than the target user, they can remove the target user as a member of the project
-    if(userProjectRoleId! < targetUserProjectRoleId! || userTeamRoleCombo.roleID === 1){
+    if((targetUserProjectRoleId !== null && userProjectRoleId !== null && userProjectRoleId! < targetUserProjectRoleId!) || userTeamRoleCombo.roleID === 1){
         try{
             await projects.transactionRemoveTargetUserFromProject(targetUserId, targetProjectId)
             return res.status(200).send({message: 'Removed member from the project'})
