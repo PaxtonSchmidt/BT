@@ -24,7 +24,6 @@ function App() {
   const dispatch = useDispatch();
   const { login } = bindActionCreators(LoginActionCreators, dispatch)
   const { updateSocket } = bindActionCreators(SocketActionCreators, dispatch)
-  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
   const [isTeamSelected, setIsTeamSelected] = useState(checkIsTeamSelected() === true);
   const loginState = useSelector((state: State) => state.login)
   const sessionState = useSelector((state: State) => state.session)
