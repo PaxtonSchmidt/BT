@@ -80,10 +80,6 @@ export default function TicketForm(props: Props) {
         {id: 5, descriptor: 'Closed'}
     ]
 
-    if(sessionState.currentTeam && sessionState.currentTeam.team_role === 1){
-            console.log('asda')
-    }
-
     function handleOnProjectSelect(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
         let project = sessionState.currentTeam.projects.filter((project: any) => project.name === e.target.value)[0] 
         handleSetIntendedProject(project)
