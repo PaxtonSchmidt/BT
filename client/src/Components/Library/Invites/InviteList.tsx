@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { Invite } from '../../ComponentInterfaces/invite';
-import { InvitesActionCreators } from '../../../Redux';
+import { AlertActionCreators, InvitesActionCreators } from '../../../Redux';
 import { Invites } from '../../../Redux/interfaces/invites';
 import InviteCard  from './InviteCard';
 
@@ -11,6 +11,7 @@ function InviteList() {
     let navigate = useNavigate();
     const dispatch = useDispatch();
     const { updateInvites } = bindActionCreators(InvitesActionCreators, dispatch)
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
     const initial: any = [];
     const invitesState = useSelector((state: Invites) => state.invites)
     let invites = Object.assign(initial, invitesState)
@@ -22,18 +23,26 @@ function InviteList() {
         navigate('/newTeam')
     }
 
-    function handleRefresh() {
-        fetch('/teams/getTeamInvites')
-        .then((res => {
-            if(res.ok) {         
-                return res.json();
-            } else if(res.status === 404){
-                return []
-            } else{
-                return console.log('something went wrong...')
+    async function handleRefresh() {
+        let response = await fetch('/teams/getTeamInvites', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
             }
-        }))
-        .then(jsonRes => updateInvites(jsonRes));
+        }).then(r =>  r.json().then(data => ({status: r.status, body: data})))
+        
+        if(response.status === 200) {         
+            return updateInvites(response.body);
+        } else if(response.status === 404){
+            return []
+        } else{
+            fireAlert({
+                isOpen: true,
+                status: response.status,
+                message: response.body.message
+            })
+            return setTimeout(hideAlert, 6000)
+        }
     }
 
     const handleOnMouseMove = (e: any) => {
