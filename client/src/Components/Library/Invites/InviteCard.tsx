@@ -3,28 +3,39 @@ import { Invite } from '../../ComponentInterfaces/invite';
 import deleteInvite from '../../../API/Requests/Invites/DeleteInvite'
 import { bindActionCreators } from 'redux';
 import { useDispatch } from 'react-redux';
-import { InvitesActionCreators } from '../../../Redux';
+import { AlertActionCreators, InvitesActionCreators } from '../../../Redux';
 import { AnyMessageParams } from 'yup/lib/types';
 import postAcceptInvite from '../../../API/Requests/Invites/PostAcceptInvite';
 
 export default function InviteCard(props : Invite) {   
     const dispatch = useDispatch();
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
     const { remove } = bindActionCreators(InvitesActionCreators, dispatch)
 
     async function handleAcceptInvite(invite_id: any, team_name: any){
-        if(await postAcceptInvite(invite_id) === 200){
-            console.log(`You joined ${team_name}`)
+        let response = await postAcceptInvite(invite_id)
+        if(response.status === 200){
             remove(invite_id)
         } else{
-            console.log('Could not accept invite...')
+            fireAlert({
+                isOpen: true,
+                status: response.status,
+                message: response.body
+            })
+            setTimeout(hideAlert, 6000);
         }
     }
     async function handleDeleteInvite(invite_id: any){
-        console.log(invite_id)
-        if(await deleteInvite(invite_id) === 200){
+        let response = await deleteInvite(invite_id)
+        if(response.status === 200){
             remove(invite_id);
         } else{
-            return console.log('Could not delete invite...')
+            fireAlert({
+                isOpen: true,
+                status: response.status,
+                message: response.body
+            })
+            setTimeout(hideAlert, 6000);
         }
     }
     return(
