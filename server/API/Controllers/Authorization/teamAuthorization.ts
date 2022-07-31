@@ -209,8 +209,6 @@ async function RemoveTeammateFromTeam(req: Express.Request, res: Express.Respons
             return res.status(500).send({message: 'Server couldnt get target user information...'})
         }
     }
-
-
 }
 
 module.exports = { 
