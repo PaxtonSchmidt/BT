@@ -130,6 +130,15 @@ function getRelatedMemberDetails(userId: string, teamID: any){
         })
     })
 }
+function getAllMemberDetails(teamID: any){
+    let values = [teamID]
+    let sql = 'SELECT uA.username, uA.discriminator, up.project_id, up.role_id, up.date_joined AS dateAssigned, uB.username AS assignedByUsername, uB.discriminator AS assignedByUserDiscriminator, p.name AS project_name FROM user_projects up LEFT JOIN users uA ON up.user_id = uA.user_id LEFT JOIN users uB ON up.enlisted_by_user_id = uB.user_id LEFT JOIN projects p ON up.project_id = p.project_id WHERE up.project_id IN (SELECT project_id from projects WHERE team_id= ?) '
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, values, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result)
+        })
+    })
+}
 function getRoleByUserIdProjectId(userID: number, projectID: number){
     let values = [userID, projectID]
     let sql = 'SELECT role_id FROM user_projects WHERE user_id= ? AND project_id= ?'
@@ -231,6 +240,7 @@ module.exports = {
     isUserOnProjectByNameDiscriminator,
     getProjectIdByTeamIdAndProjectName,
     getRelatedMemberDetails,
+    getAllMemberDetails,
     getRoleByUserIdProjectId,
     updateMemberRole,
     getRoleByUsernameDiscriminatorProjectId,
