@@ -6,8 +6,9 @@ import { bindActionCreators } from 'redux'
 import { json } from 'stream/consumers'
 import { Teammate } from '../../../../API/interfaces/teammate'
 import putUpdateTeammateRole from '../../../../API/Requests/Teams/PutUpdateTeamRole'
-import { AlertActionCreators, TeammatesActionCreators } from '../../../../Redux'
+import { AlertActionCreators, FocusedTeammateActionCreators, FocusedTicketActionCreators, SessionActionCreators, TeammatesActionCreators, TicketsActionCreators } from '../../../../Redux'
 import { updateTeammateRole } from '../../../../Redux/action-creators/teammatesActionCreators'
+import { unnasignRemovedTeammatesTickets } from '../../../../Redux/action-creators/ticketsActionCreators'
 import { State } from '../../../../Redux/reducers'
 import { translateRole } from '../../../../Services/translateRole'
 import UpdateUserRole from '../../../Library/Buttons/UpdateUserRole'
@@ -31,8 +32,13 @@ export default function TeammateDetails(){
     const dispatch = useDispatch();
     const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
     const { updateTeammateRole, removeTeammate } = bindActionCreators(TeammatesActionCreators, dispatch)
+    const { removeTeammateFromSessionProjects } = bindActionCreators(SessionActionCreators, dispatch)
+    const { unnasignRemovedTeammatesTickets } = bindActionCreators(TicketsActionCreators, dispatch)
+    const { setFocusedTicketToUnassigned } = bindActionCreators(FocusedTicketActionCreators, dispatch)
+    const { updateFocusedTeammate } = bindActionCreators(FocusedTeammateActionCreators, dispatch)
     const sessionState = useSelector((state: State) => state.session)
     const focusedTeammateState = useSelector((state: State) => state.focusedTeammate)
+    const focusedTicketState = useSelector((state: State) => state.focusedTicket)
     const [teammatesInformation, setTeammatesInformation] = useState<any>();
     const [chosenTeammate, setChosenTeammate] = useState<TeammatesInformation>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -106,13 +112,18 @@ export default function TeammateDetails(){
             setTimeout(hideAlert, 6000);
         })()
         : (()=>{
-            console.log(response.status)
             // remove from teammates list 
             removeTeammate(teammate)
-
             //remove from session state projects
-            
+            removeTeammateFromSessionProjects(teammate)
             //set their tickets to unassigned
+            unnasignRemovedTeammatesTickets(teammate)
+            //unassign the ticket in focusedTicketState if they are the assignee
+            if(teammate.username === focusedTicketState.assignee_username && teammate.discriminator === focusedTicketState.assignee_user_discriminator){
+                setFocusedTicketToUnassigned()
+            }
+            updateFocusedTeammate({username: '', discriminator: 0, team_role: -1})
+            setIsModalOpen(false)
         })()
     }
 
