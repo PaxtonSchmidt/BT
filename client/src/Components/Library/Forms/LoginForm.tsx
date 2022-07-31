@@ -10,11 +10,12 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import gitHub from '../../Images/Icons/github.svg';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { LoginActionCreators } from '../../../Redux';
+import { AlertActionCreators, LoginActionCreators } from '../../../Redux';
 
 
 export default function LoginForm() {
     const dispatch = useDispatch();
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
     const { login } = bindActionCreators(LoginActionCreators, dispatch)
 
     let navigate = useNavigate();
@@ -31,9 +32,16 @@ export default function LoginForm() {
 
     async function handleSubmit(data: Claims) {
             let attemptResult = await authService.signIn(data);
-            if(attemptResult === 200){
+            if(attemptResult.status === 200){
                 login()
                 navigate('/selectTeam')
+            } else {
+                fireAlert({
+                    isOpen: true,
+                    status: attemptResult.status,
+                    message: attemptResult.body
+                })
+                setTimeout(hideAlert, 6000);
             }
     }
     return(
