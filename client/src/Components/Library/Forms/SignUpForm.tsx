@@ -1,33 +1,48 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
-import postLogin from '../../../API/Requests/Login/PostLogin';
 import { authService } from '../../../Services/AuthService';
-import { Claims } from '../../../API/interfaces/claims';
-import { Dispatch } from 'react';
-import { SetStateAction } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import gitHub from '../../Images/Icons/github.svg';
+import { useNavigate } from 'react-router-dom';
 import { NewUser } from '../../../API/interfaces/NewUser';
+import { bindActionCreators } from 'redux';
+import { AlertActionCreators } from '../../../Redux';
+import { useDispatch } from 'react-redux';
 
 export default function SignUpForm() {
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
 
     async function handleSubmit(data: NewUser) {
+        console.log('a')
         if(data.password !== data.confirmPass){
-            return console.log('passwords dont match') //fire toasts maybe
-        }if(data.discriminator > 9999 || data.discriminator < 1){
-            return console.log('please put a number between 1 and 9999')
+            fireAlert({
+                isOpen: true,
+                status: 0,
+                message: 'Passwords dont match...'
+            })
+            return setTimeout(hideAlert, 6000);
+        } else if(data.discriminator > 9999 || data.discriminator < 1){
+            fireAlert({
+                isOpen: true,
+                status: 0,
+                message: 'Please use a number between 1 and 9999'
+            })
+            return setTimeout(hideAlert, 6000);
         }
         let attemptResult = await authService.signUp(data);
         console.log(attemptResult)
-        if(attemptResult === 200){
-            navigate('/login')
-        } else if(attemptResult === 400){
-            console.log('Email already taken')
-            // <SomethingWentWrongToast />
+        if(attemptResult.status === 200){
+            console.log('got here')
+            return navigate('/login')
         } else {
-            console.log(attemptResult);
+            console.log('asda')
+            fireAlert({
+                isOpen: true,
+                status: attemptResult.status,
+                message: attemptResult.body.message
+            })
+            setTimeout(hideAlert, 6000);
         }
     }
 
