@@ -23,7 +23,6 @@ export default function ProjectMembersManage(){
     const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isRoleModalOpen, setIsRoleModalOpen] = useState<boolean>(false);
-
     let isUserAllowedToEditRole = false;
     let roleUpdateType = ''
     let potentialNewTeamRole: string = 'Null'
@@ -68,7 +67,6 @@ export default function ProjectMembersManage(){
             return false
         }
     })
-    
     if(focusedMemberDetails !== undefined){
         if(isFocusedProjectAll){
             //since team_role is determined by your highest project_role, this works
