@@ -35,6 +35,15 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
     let [projectStats, setProjectStats] = useState<ComposedStats>();
     const [chartType, setChartType] = useState(ChartTypes.status)  
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    
+    let isATeamLead = false
+    if(!isATeamLead){
+
+    }
+
+    if(sessionState.currentTeam !== undefined){
+        isATeamLead = sessionState.currentTeam.team_role === 1 || sessionState.currentTeam.team_role === 2
+    }
     useEffect(() => {
         async function getProjectsStatistics(){
             let response: any = fetch('/projects/getProjectsStatistics', {
@@ -109,11 +118,13 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
             if(sessionState.currentTeam === undefined){return <></>}
             return(
             <div className='overflow'>
+                {isATeamLead && 
                 <div id='pageContentContainer' className={`pageContentContainer  projectPageContent ${isExtended ? 'FormContainerTransition' : ''}`}  >
                     <ProjectFormContainer isExtended={isExtended} setIsExtended={setIsExtended}/>
                 </div>
+                }
                 
-                <div className='pageBodyContainer4  fadeIn ' style={{flexDirection: 'row'}}>
+                <div className={`pageBodyContainer4  fadeIn ${isATeamLead ? '' : 'notATeamLeadMargin'}`}  style={{flexDirection: 'row'}}>
                 <ProjectList />
                     <div className='pageBodyContainer5'>
                         <div className='pageBodyQuadrant'>
