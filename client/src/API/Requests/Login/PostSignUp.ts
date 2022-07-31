@@ -8,8 +8,7 @@ export default async function postSignUp(data: NewUser) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-    })
+    }).then(r =>  r.json().then(data => ({status: r.status, body: data})))
     
-    return response.status;
-    // return response.json().then((response) => console.log(response));
+    return response
 }

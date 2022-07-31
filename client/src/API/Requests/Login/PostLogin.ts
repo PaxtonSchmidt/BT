@@ -7,7 +7,6 @@ export default async function postLogin(claims: Claims) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(claims)
-    })
-    return response.status;
-    // return response.json().then((response) => console.log(response));
+    }).then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    return response;
 }

@@ -5,6 +5,6 @@ export default async function postNewTeam(data: string) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-    })
-    return response.status
+    }).then(r =>  r.json().then(data => ({status: r.status, body: data})))
+    return response
 }
