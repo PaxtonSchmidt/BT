@@ -64,27 +64,12 @@ export default function TicketNoteList() {
 
     function ticketNoteListLoop(){
         if(!chosenNotes){return}
-        //loop through the chosen notes to render them and constantly check if there is a difference
-        //of calendar days between the current note and last note
-        //if there is, insert a divider component in the array before the current note
         let arrayList = []
         let i = 0
         do{
             arrayList.push(<TicketNoteListItem note={chosenNotes[i]} />)
             i++
         } while(i < chosenNotes.length)
-        
-        // for(let i = 0; i < chosenNotes.length; i++){
-        //     if(chosenNotes[i - 1]){
-        //         let currentNoteDate = chosenNotes[i].date_created.replace(/[^a-zA-Z0-9 ]/g, '').replace('T', ' ').substring(0,8)
-        //         let lastNote = chosenNotes[i - 1].date_created.replace(/[^a-zA-Z0-9 ]/g, '').replace('T', ' ').substring(0,8)
-                
-        //         if(currentNoteDate < lastNote){
-        //             arrayList.splice(i, 0, <ChatDateDivider newDate={chosenNotes[i].date_created}/>)
-        //         }
-        //     }
-        // }
-        // arrayList.push(<ChatDateDivider newDate={chosenNotes[chosenNotes.length - 1].date_created}/>)
         
         return arrayList
     }
@@ -119,8 +104,22 @@ export default function TicketNoteList() {
                         initialValues={{note: ''}}
                         onSubmit={(data, {resetForm}) => {
                             async function handleNoteSubmit(note: string){
-                                if(note.length > 300){return console.log('Too many characters...')}
-                                if(note.length < 1){return console.log('Empty comments not allowed...')}
+                                if(note.length > 300){
+                                    fireAlert({
+                                        isOpen: true,
+                                        status: 0,
+                                        message: 'Too many characters...'
+                                    });
+                                    return setTimeout(hideAlert, 6000)
+                                }
+                                if(note.length < 1){
+                                    fireAlert({
+                                        isOpen: true,
+                                        status: 0,
+                                        message: 'Empty comments not allowed...'
+                                    });
+                                    return setTimeout(hideAlert, 6000)
+                                }
                                 let response = await postTicketComment(data.note, focusedTicketState);
                                 if(response.status === 200){
                                     let newTicketNoteToEmit: TicketNote = {
@@ -131,7 +130,6 @@ export default function TicketNoteList() {
                                         relevant_ticket_id: focusedTicketState.ticket_id,
                                         date_created: moment().add(4, 'hours').format().slice(0,19).split('T').join(' ')
                                     };
-                                    console.log(newTicketNoteToEmit.date_created)
                                     setAllNotes(previousState => [ ...previousState, newTicketNoteToEmit])
                                     socketState.emit(
                                         'newTicketNote',
