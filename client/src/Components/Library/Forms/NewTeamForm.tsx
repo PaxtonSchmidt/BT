@@ -20,7 +20,7 @@ export default function NewTeamForm() {
             fireAlert({
                 isOpen: true,
                 status: attemptResult.status,
-                message: attemptResult.body
+                message: attemptResult.body.message
             })
             setTimeout(hideAlert, 6000);
         }
