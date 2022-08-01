@@ -40,7 +40,7 @@ return(
                     })()
                 }}
             >
-            {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
+            {({values, handleChange, handleBlur, handleSubmit, handleReset, resetForm}) => {
                 //need to grab the team name somehow
                     return (
                         <form style={{width: 'fit-content'}} onSubmit={(e) => {
@@ -75,7 +75,16 @@ return(
                                 color='info'
                                 required />
                         </div>
-                        <div style={{ width: '100%', display: 'flex', justifyContent: 'right' }}>
+                        <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+                            <button type='reset'
+                                onClick={() => {
+                                    resetForm()
+                                    props.setIsExtended(false)
+                                }}
+                                className='button bottomButton bottomButtons cancelButton'
+                                style={{ margin: '2px 2px 0px 0px' }}>
+                                X
+                            </button>
                             <button 
 
                                 type='submit'
