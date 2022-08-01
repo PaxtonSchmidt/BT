@@ -1,7 +1,7 @@
 import * as express from 'express';
 let router = express.Router();
 
-let teamRoute = require("../Queries/teamQueries");
+let newTeamRoute = require('../Controllers/Authorization/NoAuthorization/newTeam')
 let teamSelectRoute = require("../Controllers/Authorization/NoAuthorization/TeamSelect");
 let teamAuthorization = require('../Controllers/Authorization/teamAuthorization');
 let NoAuthorizationInvites = require('../Controllers/Authorization/NoAuthorization/teamInvites')
@@ -12,7 +12,7 @@ router.get('/getTeamInvites', teamSelectRoute.getTeamInvites)
 router.get('/getTeammatesInformation', teamAuthorization.getTeammatesInformation)
 router.get('/getTeamDetails', teamAuthorization.getTeamDetails)
 
-router.post("/addTeam", teamRoute.addTeam);
+router.post("/addTeam", newTeamRoute.addTeam);
 router.post("/inviteUserToTeam", teamAuthorization.inviteUserToTeam);
 router.post('/acceptInvite', NoAuthorizationInvites.acceptInvite);
 
