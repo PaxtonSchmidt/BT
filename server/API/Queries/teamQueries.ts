@@ -12,24 +12,49 @@ import getCurrentDate from '../Services/getCurrentDate';
 //         res.send('Teams table created...');
 //     });
 // }
+async function addTeamTransaction(user_id: number, name: string, date: string, role_id: number){
+    let newTeamValues: any[] = [name, date, user_id]
+    let newTeamSQL = 'INSERT INTO teams SET name= ?, date_created= ?, owner_user_id= ?'
+    let addCreatorToTeamValues: any[] = [user_id, role_id, date, user_id]
+    let addCreatorToTeamSQL = 'INSERT INTO user_teams SET team_id= ?, user_id= ?, role_id= ?, date_joined= ?, enlisted_by_user_id= ?'
 
-function addTeam(req: any, res: any) {
-    let dateTime = getCurrentDate();
-    let creatorUserId = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag);
+    connectionPool.getConnection(function(err: any, connection: any){
+        try{
+            connection.beginTransaction(function(err: any){
+                if(err) throw err
 
-    let team = {name: req.body.name, date_created: dateTime, owner_user_id: creatorUserId}
-    let insertTeamSql = "INSERT INTO teams SET ?;"; 
-    connectionPool.query(insertTeamSql, team, (err: any, result: any) => {
-        if (err) result.send(err);
+                //create new team
+                connection.query(newTeamSQL, newTeamValues, (err: any, result: any) => {
+                    if (err) {connection.rollback(function() {throw err}
+                    )}
+                    addCreatorToTeamValues.unshift(result.insertId)
 
-        let user_teamValues = {user_id: creatorUserId, team_id: result.insertId, role_id: '1', date_joined: dateTime, enlisted_by_user_id: creatorUserId }
-        let user_teamSQL = "INSERT INTO user_teams SET ?"
-        connectionPool.query(user_teamSQL, user_teamValues, (err: any, result: any) => {
-            if (err) result.send(err);
-            res.send(result.status)
+                    //add user to team
+                    connection.query(addCreatorToTeamSQL, addCreatorToTeamValues, (err: any) => {
+                        if (err) {connection.rollback(function() {throw err})}
+
+                        //commit changes
+                        connection.commit(function(err: any) {
+                            if (err) {connection.rollback(function() {throw err})}
+                        })
+                    })
+                })
+            })
+        } catch(e){
+            throw e
+        }
+    })
+}
+
+async function isNameTaken(name: string){
+    let sql = 'SELECT EXISTS(SELECT team_id FROM teams WHERE name= ?)'
+    return new Promise<any>((resolve, reject) => {
+        connectionPool.query(sql, name, (err: any, result: any) => {
+            return err ? reject(err) : resolve(result);
         })
     })
 }
+
 async function addTeamInvite(req: any, res: any, userTeamIDCombo: any, recipientID: any){
     let invite = {recipient_id: recipientID, sender_id: userTeamIDCombo.userID, team_id: userTeamIDCombo.teamID, date_sent: getCurrentDate()}
     let sql = 'INSERT INTO team_invites SET ?'
@@ -183,7 +208,6 @@ function putUpdateTeammateRole(user_id: number, roleID: number, team_id: number)
     })
 }
 
-//transactions
 async function transactionRemoveTargetUserFromTeam(targetUserId: number, team_id: number){
     let values = [targetUserId, team_id]
     let deleteProjectMembershipSql = 'DELETE FROM user_projects WHERE user_id= ? AND project_id IN(SELECT project_id FROM projects WHERE team_id = ?)'
@@ -238,7 +262,8 @@ async function transactionRemoveTargetUserFromTeam(targetUserId: number, team_id
 
 module.exports = 
 {   
-    addTeam, 
+    addTeamTransaction, 
+    isNameTaken,
     addTeamInvite, 
     deleteTeamInvite, 
     getTeamInvites, 
