@@ -57,7 +57,7 @@ io.on("connection", (socket: any) => {
             socket.join(ticket_id)
         } else if(tokenInformation.roleID === 1){
         }else{
-            new Error('Cant connect to project chat for lack of perms...')
+            new Error('Cant connect to chat for lack of perms...')
         }
     })
     socket.on('newTicketNote', (ticketNote: TicketNote) => {
