@@ -7,6 +7,7 @@ import { FocusedTicketActionCreators } from '../../../Redux';
 import { State } from '../../../Redux/reducers';
 import { sorts, sortAction, SortTypes } from '../../ComponentInterfaces/sorts';
 import { ticket } from '../../ComponentInterfaces/ticket';
+import SortArrow from '../Buttons/sortArrow';
 import TicketListItem from './TicketListItem';
 
 function Tickets() {
@@ -16,9 +17,9 @@ function Tickets() {
     const ticketsState = useSelector((state: State) => state.tickets)
     const [tickets, setTickets] = useState<any[]>([]);
     const [isClosedFiltered, setIsClosedFiltered] = useState<boolean>(true)
-    
-    const [sortedBy, setSortedBy] = useState<string>(sorts.status);
-    
+    const [sortedBy, setSortedBy] = useState<string>(sorts.title);
+    const [isSortReversed, setIsSortReversed] = useState<boolean>(false);
+
     useEffect(() => {
         if(ticketsState !== undefined){
             let newTicketArray = ticketsState
@@ -60,6 +61,9 @@ function Tickets() {
         if(sortedBy === sortType){
             let newTickets = [...tickets].reverse()
             setTickets(newTickets)
+            setIsSortReversed(!isSortReversed)
+        } else {
+            setIsSortReversed(false)
         }
         setSortedBy(sortType)
     }
@@ -70,19 +74,23 @@ function Tickets() {
         <div className='listContainer'>
             <div className='listRow'>
                 <div className='listRowSection leftSection'>
-                    <span className='rowItem' style={{paddingLeft: '30px'}} onClick={()=>handleSetSortedBy(sorts.title)}>
+                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer', paddingLeft: '15px'}} onClick={()=>handleSetSortedBy(sorts.title)}>
                         Title
+                        {sortedBy === sorts.title && <SortArrow isSortReversed={isSortReversed} />}
                     </span>
                 </div>
                 <div className='listRowSection rightSection'>
-                    <span className='rowItem' onClick={()=>handleSetSortedBy(sorts.project)}>
+                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer'}} onClick={()=>handleSetSortedBy(sorts.project)}>
                         Project
+                        {sortedBy === sorts.project && <SortArrow isSortReversed={isSortReversed} />}
                     </span> 
-                    <span className='rowItem' onClick={()=>handleSetSortedBy(sorts.status)}>
+                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer'}} onClick={()=>handleSetSortedBy(sorts.status)}>
                         Status
+                        {sortedBy === sorts.status && <SortArrow isSortReversed={isSortReversed} />}
                     </span>
-                    <span className='rowItem' onClick={()=>handleSetSortedBy(sorts.priority)}>
+                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer'}} onClick={()=>handleSetSortedBy(sorts.priority)}>
                         Priority
+                        {sortedBy === sorts.priority && <SortArrow isSortReversed={isSortReversed} />}
                     </span>
                 </div>
             </div>
