@@ -26,13 +26,11 @@ export default function ticketListItem(props: Props) {
     }
 
     return(
-        <div className={`listItem listRow ${chosenTicketClass}`} style={{cursor: 'pointer'}} onClick={() => handleTicketSelect(props)}>
+        <div className={`listItem listRow ${chosenTicketClass} hoverGrey scaleYonHover`} style={{cursor: 'pointer', marginTop: '0px', marginBottom: '0px', marginLeft: '0px'}} onClick={() => handleTicketSelect(props)}>
             <div className='listRowSection leftSection'>
-                <button className='ticketListItemButtonContainer scaleYonHover' >
-                    <span className='ticketListTitle'>
-                        {props.title}
-                    </span>
-                </button>
+                <span className='ticketListTitle'>
+                    {props.title}
+                </span>
             </div>
             <div className='listRowSection rightSection'>
                 <span className='rowItem' >
