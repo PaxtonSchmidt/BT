@@ -5,8 +5,8 @@
     min-width: 250px;
     margin-top: 5px;
     padding-top: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
     padding-bottom: 20px;
     transition: $transition;
     flex-grow: 1;
@@ -41,8 +41,11 @@
 }
 .discriminator{
     font-size: 11px;
-    transition: $transition;
     margin-bottom: 2px;
+}
+.roleRow{
+    text-align: left;
+    width: calc(100% - 10px)
 }
 .detailsColumn{
     width: 100%;

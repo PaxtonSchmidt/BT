@@ -179,11 +179,11 @@ export default function TeammateDetails(){
         return(
             <>
             <div id='list'  className='list componentGlow fadeIn' style={{position: 'relative', height: '350px', overscrollBehavior: 'auto', overflowY: 'hidden', transition: '0s'}}>
-                <div className='ListContainer'>
-                    <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between', marginTop: 'auto'}}>
+                <div className='ListContainer' >
+                    <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between', marginTop: 'auto', borderColor: 'white'}}>
                         <div className='memberListRowSection' style={{textAlign: 'left', display: 'flex', justifyContent:'space-between', width: '100%', marginBottom: '8px'}}>
                             <div style={{display:'flex', height: 'fit-content'}}>
-                                <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content', height: 'fit-content', marginTop:'6px', marginBottom:'auto'}}>
+                                <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content', height: 'fit-content', marginTop:'6px', marginBottom:'auto', marginLeft: '5px'}}>
                                     {chosenTeammate.username}
                                 </span>
                                 <span className='rowItem discriminator' style={{display: 'inline-block', width: 'fit-content', marginTop:'8px'}}>
@@ -193,10 +193,10 @@ export default function TeammateDetails(){
                             
                         </div>
                     </div>
-                    <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between', width: '100%'}}>
-                        <div className='memberListRowSection' style={{textAlign: 'left', width: '100%'}}>
+                    <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between'}}>
+                        <div className='memberListRowSection roleRow' >
                             <div style={{display:'flex', height: 'fit-content', justifyContent: 'space-between'}}>
-                                <span className='rowItem' style={{display: 'inline-block', width: 'fit-content', height:'100%', paddingTop:'6px', marginRight:'10px'}}>
+                                <span className='rowItem' style={{display: 'inline-block', width: 'fit-content', height:'100%', paddingTop:'6px', marginRight:'10px', marginLeft: '5px'}}>
                                     {role}
                                 </span>
                                 
@@ -214,7 +214,7 @@ export default function TeammateDetails(){
                     </div>
                     <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between'}}>      
                         <div className='memberListRowSection' style={{textAlign: 'left'}}>
-                            <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content'}}>
+                            <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content', marginLeft: '5px'}}>
                                 Enlisted by
                             </span>
                             <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content'}}>
@@ -227,7 +227,7 @@ export default function TeammateDetails(){
                     </div>
                     <div className='listItem listRow memberRow manageMemberListRow ' style={{justifyContent: 'space-between'}}>
                         <div className='memberListRowSection' style={{textAlign: 'left'}}>
-                            <span className='rowItem' style={{display: 'inline-block', width: 'fit-content'}}>
+                            <span className='rowItem' style={{display: 'inline-block', width: 'fit-content', marginLeft: '5px'}}>
                                 Joined
                             </span>
                             <span className='rowItem' style={{display: 'inline-block', width: 'fit-content'}}>
@@ -235,23 +235,27 @@ export default function TeammateDetails(){
                             </span>
                         </div>
                     </div>
-                    <div className='listItem listRow memberRow manageMemberListRow ' style={{justifyContent: 'space-between'}}>
-                        <div className='memberListRowSection' style={{textAlign: 'left', width: '100%'}}>
-                            <span className='rowItem' style={{display: 'inline-block', width: '100%'}}>
-                                {`Projects ${chosenTeammate.username} is in:`}
-                            </span>
-                            <span className='rowItem teammateProjectList' style={{overflowX:'hidden', height: 'fit-content', maxHeight: '70px'}}>
-                                {chosenTeammate?.projects.map((project: AssignedProjects) => 
-                                    <>
-                                    <TeammateProjectButton Project={project.project_name} teammateUsername={chosenTeammate.username} teammateDiscriminator={chosenTeammate.discriminator}/>
-                                    </>
-                                )}
-                            </span>
-                        </div>
+                </div>
+                <div className='memberProjectList' style={{justifyContent: 'space-between'}}>
+                    <div className='memberListRowSection' style={{textAlign: 'left', width: '100%'}}>
+                        <span className='rowItem' style={{display: 'inline-block', width: '80%', paddingLeft: '5px'}}>
+                            {chosenTeammate?.projects.length === 0 
+                            ? `${chosenTeammate.username} is not in any projects...`
+                            : `Projects ${chosenTeammate.username} is in:`
+                            }
+                        </span>
+                        <span className='rowItem teammateProjectList' style={{overflowX:'hidden', height: 'fit-content', maxHeight: '70px'}}>
+                            {chosenTeammate?.projects.map((project: AssignedProjects) => 
+                                <>
+                                <TeammateProjectButton Project={project.project_name} teammateUsername={chosenTeammate.username} teammateDiscriminator={chosenTeammate.discriminator}/>
+                                </>
+                            )}
+                            
+                        </span>
                     </div>
                 </div>
                 {canUserManageTeammateRole &&
-                <div className='removeMemberButton ' style={{marginTop:'auto', backgroundColor: '#222222', paddingRight: '10px', flexGrow: '1'}}>
+                <div className='removeMemberButton ' style={{marginTop: 'auto', backgroundColor: '#222222', paddingRight: '5px'}}>
                     <div onClick={()=>setIsModalOpen(true)} style={{cursor: 'pointer', display: 'flex', alignItems: 'center'}}>
                         <p style={{marginRight: '10px', cursor: 'pointer'}}>Remove</p>
                         <svg  xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-x-square" viewBox="0 0 16 16">

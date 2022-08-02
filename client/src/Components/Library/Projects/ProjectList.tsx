@@ -37,14 +37,15 @@ function ProjectList() {
         sessionState.currentTeam?.projects.forEach((project: any) => projectsList.push(project.name))
     }
 
-    let projectAllName = 'All'
-    if(focusedProjectState.name === projectAllName){
-        document.getElementById(projectAllName)?.classList.add('selectedProjectInList')
-        document.getElementById(projectAllName)?.classList.remove('scaleYonHover')
-    } else {
-        document.getElementById(projectAllName)?.classList.remove('selectedProjectInList')
-        document.getElementById(projectAllName)?.classList.add('scaleYonHover')
-    }
+    useEffect(()=> {
+        if(focusedProjectState.name === 'All'){
+            document.getElementById('All')?.classList.add('selectedProjectInList')
+            document.getElementById('All')?.classList.remove('scaleYonHover')
+        } else {
+            document.getElementById('All')?.classList.remove('selectedProjectInList')
+            document.getElementById('All')?.classList.add('scaleYonHover')
+        }
+    }, [focusedProjectState])
 
     function checkView(){
         if(filterToLeadingOnly === true){
@@ -73,7 +74,7 @@ function ProjectList() {
         //needs pagination
         return (
             <div onWheel={handleWheel} id='projectList'  className='sideScrollList componentGlow'>
-                <div onClick={() => updateFocusedProject({name: 'All'})} className='sideScrollListItem scaleYonHover fadeIn selectedProjectInList' id={projectAllName}>
+                <div id='All' onClick={() => updateFocusedProject({name: 'All'})} className='sideScrollListItem scaleYonHover fadeIn'>
                     All
                 </div>
                 {projectsList!.map((project: any) =>

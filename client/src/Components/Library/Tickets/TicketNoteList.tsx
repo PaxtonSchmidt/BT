@@ -154,7 +154,7 @@ export default function TicketNoteList() {
                                     
                                 <div className='ticketNoteForm' >
                                     <TextField
-                                        label='note'
+                                        label='Message'
                                         type='text'
                                         value={values.note}
                                         onChange={handleChange}
@@ -163,7 +163,7 @@ export default function TicketNoteList() {
                                         name='note'
                                         variant='standard'
                                         color='info'
-                                        required />
+                                    />
                                 </div>
                                 </form>
                             )}

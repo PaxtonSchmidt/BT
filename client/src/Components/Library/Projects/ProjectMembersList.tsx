@@ -178,7 +178,7 @@ export default function ProjectMembersList() {
                         </span>
                     </div>
                 </div>
-                <div id='list'  className='list projectMembersList componentGlow fadeIn'>
+                <div id='list'  className='list membersList componentGlow fadeIn'>
                     {isPotentialProjectMembersEmpty ? 
                     <p className='delayedFadeIn' style={{color: 'white'}}>{`Everyone is already on the ${focusedProjectState.name} project...`}</p>:<></>}
                     {potentialProjectMembers.map((member: any, index: any) =>
@@ -209,7 +209,7 @@ export default function ProjectMembersList() {
                         </span>}
                     </div>
                 </div>
-                <div id='list'  className='list projectMembersList componentGlow fadeIn'>
+                <div id='list'  className='list membersList componentGlow fadeIn' style={{paddingRight: '0px'}}>
                     {members.map((member: any, index: any) =>
                         //docs say its not ideal to use the index for the key
                         //however here it is necessary 

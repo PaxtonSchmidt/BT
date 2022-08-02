@@ -34,7 +34,6 @@
       -ms-flex-align: center;
           align-items: center;
   margin-left: 50px;
-  border-bottom: 1px solid #1a1a1a;
   z-index: 1;
 }
 
@@ -43,6 +42,7 @@
   height: 30px;
   width: 30px;
   cursor: pointer;
+  z-index: 5;
 }
 
 .hamburgerContainer {
@@ -60,9 +60,13 @@
           justify-content: center;
   background-color: #222222;
   border-right: 1px solid #222222;
-  border-bottom: 1px solid #1a1a1a;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  z-index: 1;
+}
+
+.hamburgerContainer:hover {
+  background-color: #f0f8ff28;
 }
 
 .hamburgerContainer:hover + .sideBar {
@@ -104,21 +108,50 @@
   -webkit-transition: 0.5s;
   transition: 0.5s;
   border-right: 1px solid #ffffff31;
+  border-top: 1px solid #1a1a1a;
+  z-index: 0;
 }
 
 .sideBarItem {
-  margin: 13px 0px;
-  height: 50px;
+  height: 60px;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  z-index: 0;
+}
+
+.sideBarItem:hover {
+  background-color: rgba(240, 248, 255, 0.158);
+}
+
+.sidebarButtonText {
+  color: white;
+  white-space: nowrap;
+  width: 70%;
+}
+
+.sidebarIconContainer {
+  width: 30%;
+  padding-left: 13px;
+}
+
+.sidebarIcon {
+  height: 25px;
+  width: 25px;
 }
 
 .scaleYonHover {
@@ -129,11 +162,6 @@
 .scaleYonHover:hover {
   -webkit-transform: translateY(-1px);
           transform: translateY(-1px);
-}
-
-.sidebarIcon {
-  height: 25px;
-  width: 25px;
 }
 
 .outerNavElement {
@@ -642,9 +670,8 @@ input[type=number] {
 .list {
   width: calc(100%-40px);
   background-color: #222222;
-  height: 385px;
-  padding-left: 10px;
-  padding-right: 5px;
+  padding-right: 0px !important;
+  height: 360px;
   padding-bottom: 10px;
   overflow-y: scroll;
   overscroll-behavior: none;
@@ -657,9 +684,9 @@ input[type=number] {
 
 .listItem {
   background-color: transparent;
+  padding-left: 5px !important;
   color: white;
   position: relative;
-  margin: 10px 0px 10px 0px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -692,14 +719,6 @@ input[type=number] {
   height: 100%;
 }
 
-.ticketListItemButtonContainer > .ticketListItemButton {
-  color: #efff0a !important;
-}
-
-.ticketListItemButtonContainer {
-  color: #efff0a !important;
-}
-
 .ticketListItemButtonContainer {
   color: #efff0a6b;
   -webkit-box-align: center;
@@ -726,8 +745,7 @@ input[type=number] {
 }
 
 .ticketListTitle {
-  color: #ffffff;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .rowItem {
@@ -746,7 +764,6 @@ input[type=number] {
       -ms-flex-align: end;
           align-items: flex-end;
   text-align: end;
-  margin-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
   -webkit-box-pack: justify;
@@ -757,11 +774,23 @@ input[type=number] {
   color: white;
   position: relative;
   border-bottom: 1px solid white;
-  min-height: 40px;
+  height: 40px;
   width: calc(100%-40px);
   -webkit-transition: 0.5s;
   transition: 0.5s;
   cursor: default;
+}
+
+.searchTicketsForm {
+  width: 50%;
+  min-width: 300px;
+  max-width: 500px;
+  border: 1px solid #ffffff31;
+  border-bottom: none;
+}
+
+.searchTicketsFormComponent {
+  width: 100%;
 }
 
 .listItem.listRow {
@@ -775,7 +804,10 @@ input[type=number] {
 }
 
 .ChosenTicket {
-  border-bottom: 1px solid #efff0a !important;
+  -webkit-transform: translateY(-1px);
+          transform: translateY(-1px);
+  background-color: #ffffff98 !important;
+  color: black !important;
 }
 
 .listRowSection {
@@ -787,6 +819,10 @@ input[type=number] {
           justify-content: space-between;
   margin-bottom: 10px;
   max-width: 600px;
+}
+
+.hoverGrey:hover {
+  background-color: #f0f8ff28;
 }
 
 .leftSection {
@@ -834,9 +870,15 @@ input[type=number] {
   border-bottom: 1px solid #ffffff31 !important;
 }
 
-.projectMembersList {
+.membersList {
   height: 320px;
   padding-bottom: 0px;
+}
+
+.memberProjectList {
+  margin-top: 10px;
+  border-bottom: 1px solid #ffffff31;
+  padding-left: 5px;
 }
 
 .ticketNoteListContainer {
@@ -1154,7 +1196,7 @@ input[type=number] {
 }
 
 .decline:hover {
-  color: #5e0000 !important;
+  color: rgba(255, 0, 0, 0.74) !important;
   opacity: 100%;
   -webkit-transition: 0.5s;
   transition: 0.5s;
@@ -1184,8 +1226,8 @@ input[type=number] {
   min-width: 250px;
   margin-top: 5px;
   padding-top: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
   padding-bottom: 20px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
@@ -1239,9 +1281,12 @@ input[type=number] {
 
 .discriminator {
   font-size: 11px;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
   margin-bottom: 2px;
+}
+
+.roleRow {
+  text-align: left;
+  width: calc(100% - 10px);
 }
 
 .detailsColumn {
@@ -1396,6 +1441,10 @@ input[type=number] {
   transition: 0.5s;
 }
 
+.sideScrollListItem:hover {
+  background-color: rgba(240, 248, 255, 0.158);
+}
+
 .sideScrollListItem h5 {
   white-space: nowrap;
   font-size: 14px;
@@ -1410,7 +1459,8 @@ input[type=number] {
 }
 
 .selectedProjectInList {
-  background-color: #ffffff31;
+  background-color: #ffffff98 !important;
+  color: black;
   -webkit-transform: translateY(-2px);
           transform: translateY(-2px);
 }

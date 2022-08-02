@@ -11,7 +11,6 @@
     display: flex;
 
 }
-
 .navBar{
     position: fixed;
     display: flex;
@@ -22,7 +21,7 @@
     height: 50px;
     align-items: center;
     margin-left: 50px;
-    border-bottom: 1px solid $black;
+    
 
     z-index: 1;
 }
@@ -31,6 +30,7 @@
     height: 30px;
     width: 30px;
     cursor: pointer;
+    z-index: 5;
 }
 .hamburgerContainer {
     position: fixed;
@@ -41,8 +41,11 @@
     justify-content: center;
     background-color: $darkGrey;
     border-right: 1px solid $darkGrey;
-    border-bottom: 1px solid $black; 
     transition: $transition;
+    z-index: 1;
+}
+.hamburgerContainer:hover{
+    background-color: $hoverGrey;
 }
 .hamburgerContainer:hover + .sideBar{
     border-right: 1px solid $dimYellow;
@@ -73,24 +76,42 @@
     height: calc(100% - 50px);
     transition: $transition;
     border-right: 1px solid $accentGrey;
+    border-top: 1px solid $black;
+    z-index: 0;
 }
 .sideBarItem{
-    margin: 13px 0px;
-    height: 50px;
+    height: 60px;
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: left;
     align-items: center;
+    cursor: pointer;
+    transition: $transition;
+
+    z-index: 0;
+}
+.sideBarItem:hover{
+    background-color: rgba(240, 248, 255, 0.158);
+}
+.sidebarButtonText{
+    color: white;
+    white-space: nowrap;
+    width: 70%;
+}
+.sidebarIconContainer{
+    width: 30%;
+    padding-left: 13px;
+}
+.sidebarIcon{
+    height: 25px;
+    width: 25px;
 }
 .scaleYonHover {
     transition: $transition;
 }
 .scaleYonHover:hover {
     transform: translateY(-1px);
-}
-.sidebarIcon{
-    height: 25px;
-    width: 25px;
 }
 .outerNavElement {
     width: 50px;

@@ -1,9 +1,8 @@
 .list{
     width: calc(100%-40px);
     background-color: $darkGrey;
-    height: 385px;
-    padding-left: 10px;
-    padding-right: 5px;
+    padding-right: 0px !important;
+    height: 360px;
     padding-bottom: 10px;
     overflow-y: scroll;
     overscroll-behavior: none;
@@ -14,9 +13,9 @@
 }
 .listItem{
     background-color: transparent;
+    padding-left: 5px !important;
     color: white;
     position: relative;
-    margin: 10px 0px 10px 0px;
     display: flex;
     justify-content: space-between;
     white-space: nowrap;
@@ -27,6 +26,7 @@
     transition: $transition;
     cursor: default;
 }
+
 .listContainer{
     background-color: $darkGrey;
     margin-right: 5px;
@@ -37,12 +37,6 @@
     cursor: pointer;
     padding-top: 5px;
     height: 100%;
-}
-.ticketListItemButtonContainer > .ticketListItemButton{
-    color: $yellow !important;
-}
-.ticketListItemButtonContainer{
-    color: $yellow !important;
 }
 .ticketListItemButtonContainer{
     color: $dimYellow;
@@ -59,8 +53,7 @@
     transition: $transition;
 }
 .ticketListTitle{
-    color: #ffffff;
-    margin-left: 10px;
+    margin-left: 5px;
 }
 .rowItem{
     height: 100%;
@@ -71,7 +64,6 @@
     display: flex;
     align-items: flex-end;
     text-align: end;
-    margin-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
     justify-content: space-between;
@@ -80,10 +72,20 @@
     color: white;
     position: relative;
     border-bottom: 1px solid white;
-    min-height: 40px;
+    height: 40px;
     width: calc(100%-40px);
     transition: $transition;
     cursor: default;
+}
+.searchTicketsForm{
+    width: 50%;
+    min-width: 300px;
+    max-width: 500px;
+    border: 1px solid $accentGrey;
+    border-bottom: none;
+}
+.searchTicketsFormComponent{
+    width: 100%;
 }
 .listItem.listRow{
     padding-left: 0px;
@@ -94,13 +96,18 @@
     border-bottom: 1px solid white;
 }
 .ChosenTicket{
-    border-bottom: 1px solid $yellow !important;
+    transform: translateY(-1px);
+    background-color: $chosenWhite !important;
+    color: black !important;
 }
 .listRowSection{
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
     max-width: 600px;
+}
+.hoverGrey:hover{
+    background-color: $hoverGrey;
 }
 .leftSection{
     width: 50%;
@@ -135,9 +142,14 @@
 .manageMemberListRow:hover{
     border-bottom: 1px solid $accentGrey !important;
 }
-.projectMembersList{
+.membersList{
     height: 320px;
     padding-bottom: 0px;
+}
+.memberProjectList{
+    margin-top: 10px;
+    border-bottom: 1px solid $accentGrey;
+    padding-left: 5px;
 }
 .ticketNoteListContainer{
     background-color: $darkGrey;

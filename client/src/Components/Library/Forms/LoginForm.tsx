@@ -6,7 +6,7 @@ import { authService } from '../../../Services/AuthService';
 import { Claims } from '../../../API/interfaces/claims';
 import { Dispatch } from 'react';
 import { SetStateAction } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import gitHub from '../../Images/Icons/github.svg';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';

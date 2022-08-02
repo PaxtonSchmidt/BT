@@ -39,7 +39,7 @@ export default function InviteCard(props : Invite) {
         }
     }
     return(
-        <div className='card fadeIn' style={{cursor: 'default'}}>
+        <div className='card fadeIn scaleYonHover hoverGrey' style={{cursor: 'default'}}>
             <div className='cardContent' style={{color: 'white', fontWeight: 'bold'}}>
                 <div className='cardTeamName' >
                     {props.team_name}

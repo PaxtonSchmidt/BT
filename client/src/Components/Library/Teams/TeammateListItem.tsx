@@ -28,9 +28,9 @@ export default function TeammateListItem(props: Props) {
     }
 
     return (
-        <div onClick={()=>handleSelect()} className={`listItem listRow memberRow ${chosenTeammateClass}`} style={{justifyContent: 'space-between'}}>
+        <div onClick={()=>handleSelect()} className={`listItem listRow memberRow ${chosenTeammateClass} scaleYonHover hoverGrey`} style={{justifyContent: 'space-between', marginLeft: '0px'}}>
             <div className='memberListRowSection' style={{textAlign: 'left', overflow: 'hidden'}}>
-                <span className='rowItem username' style={{display: 'inline-block'}}>
+                <span className='rowItem username' style={{display: 'inline-block', marginLeft: '5px'}}>
                     {props.teammate.username } 
                 </span>
                 <span className='rowItem discriminator' style={{display: 'inline-block'}}>

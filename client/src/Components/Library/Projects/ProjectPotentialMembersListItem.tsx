@@ -27,7 +27,7 @@ export default function ProjectPotentialMembersListItem(props: Props) {
                       #{props.member.discriminator}
                     </span>
                 </div>
-                <div className='memberListRowSection' style={{textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <div className='memberListRowSection' style={{textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom:'8px'}}>
                     <div onClick={() => handleSelect()} className='rowItem' style={{cursor: 'pointer'}}>
                         {isSelected ? 
                         <div className='selectFromListButton scaleY fadeIn' style={{backgroundColor: 'green'}}>

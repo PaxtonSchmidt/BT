@@ -21,10 +21,10 @@ export default function ProjectMembersListItem(props: Props) {
         }
     }
     return (
-        <div className='ListContainer' onClick={handleSelect}>
-            <div  className={`listItem listRow memberRow ${focusedProjectState.name === 'All' && 'defaultCursor'}`} style={{justifyContent: 'space-between', overflowX:'hidden'}}>
+        <div className='ListContainer scaleYonHover hoverGrey' onClick={handleSelect} style={{marginLeft: '0px'}}>
+            <div  className={`listItem listRow memberRow ${focusedProjectState.name === 'All' && 'defaultCursor'}`} style={{justifyContent: 'space-between', overflowX:'hidden', marginLeft: '0px'}}>
                 <div className='memberListRowSection' style={{display:'flex', textAlign: 'center', alignContent: 'bottom'}}>
-                    <span className='rowItem username' style={{display: 'inline-block', width: 'fit-content', maxWidth: '160px', overflowX: 'hidden', textOverflow: 'ellipsis'}}>
+                    <span className='rowItem username' style={{marginLeft:'5px', display: 'inline-block', width: 'fit-content', maxWidth: '160px', overflowX: 'hidden', textOverflow: 'ellipsis'}}>
                         {props.member.username } 
                     </span>
                     <span className='rowItem discriminator' style={{display: 'inline-block', width: 'fit-content', marginTop: 'auto'}}>

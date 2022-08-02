@@ -210,7 +210,7 @@ export default function ProjectMembersManage(){
                         </span>
                     </div>
                 </div>
-                <div id='list'  className='list projectMembersList componentGlow fadeIn' style={{position: 'relative'}}>
+                <div id='list'  className='list membersList componentGlow fadeIn' style={{position: 'relative'}}>
                     <div className='ListContainer'>
                         <div className='listItem listRow memberRow manageMemberListRow' style={{justifyContent: 'space-between'}}>
                             <div className='memberListRowSection' style={{textAlign: 'left'}}>
