@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
@@ -20,6 +20,8 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
     const { updateTickets } = bindActionCreators(TicketsActionCreators, dispatch)
     const loginState = useSelector((state: State) => state.login)
     const sessionState = useSelector((state: State) => state.session)
+    const isSidebarExtensionPreferred = window.localStorage.getItem('sbEX') === 'true'
+    const [isExpanded, setIsExpanded] = useState<boolean>(isSidebarExtensionPreferred);
     let navigate = useNavigate();
 
     async function getSessionState() {
@@ -68,8 +70,8 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
             return (
                 <>
                     <Navbar />
-                    <Hamburger />
-                    <Sidebar teamRole={role}/>
+                    <Hamburger setIsSideBarExpanded={setIsExpanded} isSideBarExpanded={isExpanded}/>
+                    <Sidebar teamRole={role} isExpanded={isExpanded}/>
                     <Outlet />
                 </>
             )
