@@ -36,7 +36,9 @@ export const sortAction: SortActions = {
 }
 
 function projectCompare(i: ticket, j: ticket){
-    return (i.project_name < j.project_name) ? -1 :
+    let iName = i.project_name.toLowerCase()
+    let jName = j.project_name.toLowerCase()
+    return (iName < jName) ? -1 :
     (j.project_name < i.project_name) ? 1 : 
     0
 }
@@ -51,7 +53,9 @@ function statusCompare(i: ticket, j: ticket){
     0
 }
 function titleCompare(i: ticket, j: ticket){
-    return (i.title < j.title) ? -1 :
+    let iTitle = i.title.toLowerCase()
+    let jTitle = j.title.toLowerCase()
+    return (iTitle < jTitle) ? -1 :
     (j.title < i.title) ? 1 : 
     0
 }
