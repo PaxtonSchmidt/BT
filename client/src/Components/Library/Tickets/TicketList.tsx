@@ -1,5 +1,7 @@
+import TextField from '@mui/material/TextField';
 import e from 'express';
-import React, {useState, useEffect} from 'react';
+import { Formik, useFormik } from 'formik';
+import React, {useState, useEffect, useRef} from 'react';
 import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,6 +11,8 @@ import { sorts, sortAction, SortTypes } from '../../ComponentInterfaces/sorts';
 import { ticket } from '../../ComponentInterfaces/ticket';
 import SortArrow from '../Buttons/sortArrow';
 import TicketListItem from './TicketListItem';
+import searchIcon from '../../Images/Icons/search.svg'
+import { InputAdornment } from '@mui/material';
 
 function Tickets() {
     let dispatch = useDispatch();
@@ -17,78 +21,133 @@ function Tickets() {
     const ticketsState = useSelector((state: State) => state.tickets)
     const [tickets, setTickets] = useState<any[]>([]);
     const [isClosedFiltered, setIsClosedFiltered] = useState<boolean>(true)
-    const [sortedBy, setSortedBy] = useState<string>(sorts.title);
     const [isSortReversed, setIsSortReversed] = useState<boolean>(false);
+    let initialSortType = window.localStorage.getItem("srtTyp") || sorts.title
+    const [sortedBy, setSortedBy] = useState<string>(initialSortType);
 
     useEffect(() => {
-        if(ticketsState !== undefined){
-            let newTicketArray = ticketsState
-            if(ticketsState.length > 0){
-                setTickets(newTicketArray)
-                applyTicketSorts()
-            }
-        }
+        setTickets([...ticketsState])
     }, [ticketsState])
 
-    function applyTicketSorts(){
-        let newTickets: ticket[] = [...ticketsState]
-        //filter out closed tickets depending on toggle
+    function filterClosed(){
+        let newTickets: ticket[] = [...tickets]
+         //filter out closed tickets depending on toggle
         if(isClosedFiltered){
             newTickets = newTickets.filter((ticket: ticket)=> ticket.resolution_status !== 5)
         }
+        setTickets(newTickets)
+    }
 
-        //apply selected sort type
-        switch(sortedBy){
+    function sortBy(sort: string, checkReversal: boolean = true, passedInTickets: ticket[] = []){
+        window.localStorage.setItem("srtTyp", sort)
+        //optionally pass in a ticket array instead of using the tickets in component state
+        let newTickets: ticket[]
+        passedInTickets.length > 0 
+        ? newTickets = [...passedInTickets]
+        : newTickets = [...tickets]
+
+        //cannot rely on these sort functions to persist an array reversal
+        switch(sort){
             case sorts.project:
                 newTickets = sortAction.sortByProject(newTickets)
-                return setTickets(newTickets);
+                break;
             case sorts.status:
                 newTickets = sortAction.sortByStatus(newTickets)
-                return setTickets(newTickets)
+                break;
             case sorts.priority:   
                 newTickets = sortAction.sortByPriority(newTickets)
-                return setTickets(newTickets)
-            case sorts.title:   
+                break;
+            case sorts.title:  
                 newTickets = sortAction.sortByTitle(newTickets)
-                return setTickets(newTickets)
+                break;
             default: 
-                return setTickets(newTickets); 
+                break; 
         }
-    }
-    useEffect(()=>{applyTicketSorts()}, [sortedBy, isClosedFiltered])
 
-    function handleSetSortedBy(sortType: string){
-        if(sortedBy === sortType){
-            let newTickets = [...tickets].reverse()
-            setTickets(newTickets)
-            setIsSortReversed(!isSortReversed)
-        } else {
-            setIsSortReversed(false)
+        if(checkReversal === true){
+            if(sortedBy === sort && !isSortReversed){
+                newTickets.reverse()
+                setIsSortReversed(!isSortReversed)
+            } else {
+                setIsSortReversed(false)
+            }
         }
-        setSortedBy(sortType)
+        setTickets(newTickets)
+        setSortedBy(sort)
+    }
+
+    function handleSearch(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
+        let searchInput = e.currentTarget.value.toLowerCase()
+        let loopLength = searchInput.length
+        if(loopLength > 0){
+            let newTickets: ticket[] = []
+            for(let i = (ticketsState.length - 1); i > 0; i--){
+                let currentTicketTitle = ticketsState[i].title.substring(0, loopLength).toLowerCase()
+                if(currentTicketTitle === searchInput) {
+                    newTickets.push(ticketsState[i]) 
+                }
+            }
+            setTickets(newTickets)
+            sortBy(sortedBy, false, newTickets)
+        } else {
+            console.log('BBB')
+            setTickets(ticketsState)
+            sortBy(sortedBy, false, ticketsState)
+        }
     }
 
     //needs pagination
     return (
     <Container className='pageBodyContainer1 fadeIn'>
         <div className='listContainer'>
-            <div className='listRow'>
+            <div className='listRow' style={{marginTop: '5px', borderBottom: 'none', height: '30px', justifyContent: 'space-between'}}>
+                <p className='delayedFadeIn' style={{fontSize: '12px', color:'#ffffff31', marginBottom: '5px', marginTop:'auto'}}>{`Showing ${tickets.length} entries`}</p>
+                <Formik initialValues={{search: ''}} onSubmit={()=>{}} style={{width: '600px'}} >
+                    {({values, handleChange, handleBlur, handleSubmit, handleReset}) => {
+                        return (
+                            <form className='searchTicketsForm fadeIn'  onSubmit={handleSubmit} onBlur={handleBlur}>
+                                <TextField
+                                    type='text'
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position='start'>
+                                                <img style={{paddingLeft:'10px'}} src={searchIcon} />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    value={values.search}
+                                    onChange={e =>{
+                                        handleChange(e)
+                                        handleSearch(e)
+                                    }}
+                                    onBlur={handleBlur}
+                                    sx={{width: '100%'}}
+                                    name='search'
+                                    variant='standard'
+                                    color='info'
+                                    />
+                            </form>
+                        )}
+                    }
+                </Formik>
+            </div>
+            <div className='listRow' style={{marginTop: '0px', height: '35px'}}>
                 <div className='listRowSection leftSection'>
-                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer', paddingLeft: '15px'}} onClick={()=>handleSetSortedBy(sorts.title)}>
+                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer', paddingLeft: '0px'}} onClick={()=>sortBy(sorts.title)}>
                         Title
                         {sortedBy === sorts.title && <SortArrow isSortReversed={isSortReversed} />}
                     </span>
                 </div>
                 <div className='listRowSection rightSection'>
-                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer'}} onClick={()=>handleSetSortedBy(sorts.project)}>
+                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer'}} onClick={()=>sortBy(sorts.project)}>
                         Project
                         {sortedBy === sorts.project && <SortArrow isSortReversed={isSortReversed} />}
                     </span> 
-                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer'}} onClick={()=>handleSetSortedBy(sorts.status)}>
+                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer'}} onClick={()=>sortBy(sorts.status)}>
                         Status
                         {sortedBy === sorts.status && <SortArrow isSortReversed={isSortReversed} />}
                     </span>
-                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer'}} onClick={()=>handleSetSortedBy(sorts.priority)}>
+                    <span className='rowItem scaleYonHover' style={{cursor: 'pointer'}} onClick={()=>sortBy(sorts.priority)}>
                         Priority
                         {sortedBy === sorts.priority && <SortArrow isSortReversed={isSortReversed} />}
                     </span>
@@ -102,7 +161,7 @@ function Tickets() {
             </div>
             :
             <div className='list componentGlow' style={{textAlign: 'left'}}>
-                {tickets?.map((ticket) =>
+                {tickets?.map((ticket: ticket) =>
                     <TicketListItem 
                     key={ticket.ticket_id}
                     title={ticket.title}
