@@ -1,4 +1,4 @@
 export enum currentUserActionType {
-    UPDATE = 'update',
-    REMOVE = 'remove'
+  UPDATE = 'update',
+  REMOVE = 'remove',
 }

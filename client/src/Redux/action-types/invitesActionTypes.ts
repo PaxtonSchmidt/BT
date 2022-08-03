@@ -1,4 +1,4 @@
 export enum invitesActionType {
-    UPDATE = 'updateInvites',
-    REMOVE = 'removeInvites'
+  UPDATE = 'updateInvites',
+  REMOVE = 'removeInvites',
 }

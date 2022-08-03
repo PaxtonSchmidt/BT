@@ -1,29 +1,29 @@
-import { connectionPool } from "../../dbConnectionPool";
-import consumeCookie from "../../Services/consumeCookies/consumeCookie";
-import { consumeCookieFlags } from "../../Services/consumeCookies/consumeCookieFlags";
+import { connectionPool } from '../../dbConnectionPool';
+import consumeCookie from '../../Services/consumeCookies/consumeCookie';
+import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags';
 
 function fetchTargetUser(queryEmail: string) {
-    let sql = "Select user_id, password, token_v FROM users WHERE email = ?";
+  let sql = 'Select user_id, password, token_v FROM users WHERE email = ?';
 
-    return new Promise<any>((resolve, reject) => {
-        connectionPool.query(sql, queryEmail, (err: any, result: any) => {
-            return err ? reject(err) : resolve(result[0]);
-        });
-    })
+  return new Promise<any>((resolve, reject) => {
+    connectionPool.query(sql, queryEmail, (err: any, result: any) => {
+      return err ? reject(err) : resolve(result[0]);
+    });
+  });
 }
 
 async function fetchCurrentUser(req: any, res: any) {
-    let currentUserId = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserIdFlag)
+  let currentUserId = consumeCookie(
+    req.headers.cookie,
+    consumeCookieFlags.tokenUserIdFlag
+  );
 
-    let sql = 'SELECT username, discriminator, bio FROM users WHERE user_id = ?'
-    
+  let sql = 'SELECT username, discriminator, bio FROM users WHERE user_id = ?';
 
-    connectionPool.query(sql, currentUserId, (err: any, result: any) => {
-        if (err) throw(err);
-        res.send(result);
-    })
+  connectionPool.query(sql, currentUserId, (err: any, result: any) => {
+    if (err) throw err;
+    res.send(result);
+  });
 }
 
-
-
-module.exports = { fetchTargetUser, fetchCurrentUser }
+module.exports = { fetchTargetUser, fetchCurrentUser };

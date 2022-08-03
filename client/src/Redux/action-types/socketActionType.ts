@@ -1,3 +1,3 @@
 export enum socketActionType {
-    UPDATE = 'updateSocket'
+  UPDATE = 'updateSocket',
 }

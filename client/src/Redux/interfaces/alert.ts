@@ -1,5 +1,5 @@
-export interface alert{
-    isOpen: boolean,
-    status: number,
-    message: string
+export interface alert {
+  isOpen: boolean;
+  status: number;
+  message: string;
 }

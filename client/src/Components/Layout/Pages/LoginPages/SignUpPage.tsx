@@ -6,16 +6,14 @@ import { authService } from '../../../../Services/AuthService';
 import LoginForm from '../../../Library/Forms/LoginForm';
 import SignUpForm from '../../../Library/Forms/SignUpForm';
 
-
-
 export default function SignUpPage() {
-    useEffect(() => { 
-        authService.signOut()
-        authService.deselectTeam()}
-    , [])
-    return(
-        <Container  className='loginPage' >
-            <SignUpForm />
-        </Container>
-    )
+  useEffect(() => {
+    authService.signOut();
+    authService.deselectTeam();
+  }, []);
+  return (
+    <Container className='loginPage'>
+      <SignUpForm />
+    </Container>
+  );
 }

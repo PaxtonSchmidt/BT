@@ -1,8 +1,8 @@
 export interface Teammate {
-    username: string,
-    discriminator: number,
-    team_role: number
+  username: string;
+  discriminator: number;
+  team_role: number;
 }
-export interface TeammateDetail extends Teammate{
-    email: string
+export interface TeammateDetail extends Teammate {
+  email: string;
 }

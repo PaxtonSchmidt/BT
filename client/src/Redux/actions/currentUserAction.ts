@@ -1,18 +1,14 @@
-import { currentUserActionType } from "../action-types/currentUserActionTypes"
-import { currentUser } from "../interfaces/currentUser"
-
+import { currentUserActionType } from '../action-types/currentUserActionTypes';
+import { currentUser } from '../interfaces/currentUser';
 
 interface UpdateAction {
-    type: currentUserActionType.UPDATE,
-    payload: currentUser
+  type: currentUserActionType.UPDATE;
+  payload: currentUser;
 }
 
 interface RemoveAction {
-    type: currentUserActionType.REMOVE,
-    payload: currentUser
+  type: currentUserActionType.REMOVE;
+  payload: currentUser;
 }
 
-export type Action = UpdateAction | RemoveAction
-
-
-
+export type Action = UpdateAction | RemoveAction;

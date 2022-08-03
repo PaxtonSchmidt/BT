@@ -9,27 +9,34 @@ import FormAndDetails from './CommentsAndDetails';
 import TicketFormContainer from './TicketFormContainer';
 
 interface Props {
-    isTeamSelected: boolean;
+  isTeamSelected: boolean;
 }
 
-export default function TicketsPage({ isTeamSelected } : Props) {
-    const loginState = useSelector((state: State) => state.login)
-    const [isExtended, setIsExtended] = useState(false)
-    
-    let isFormContainerTransition: string = isExtended === true ? 'FormContainerTransition' : ''
-    if(loginState === 1) {
-        if(isTeamSelected === true){
-            return(
-                    <div className='overflow'>
-                        <div id='pageContentContainer' className={`pageContentContainer ${isFormContainerTransition}`} >
-                            <TicketFormContainer isExtended={isExtended} setIsExtended={setIsExtended}/>
-                            <CommentsAndDetails />
-                        </div>
-                            <TicketList />
-                    </div>
-            )
-        } return <Navigate to='/selectTeam' />
+export default function TicketsPage({ isTeamSelected }: Props) {
+  const loginState = useSelector((state: State) => state.login);
+  const [isExtended, setIsExtended] = useState(false);
+
+  let isFormContainerTransition: string =
+    isExtended === true ? 'FormContainerTransition' : '';
+  if (loginState === 1) {
+    if (isTeamSelected === true) {
+      return (
+        <div className='overflow'>
+          <div
+            id='pageContentContainer'
+            className={`pageContentContainer ${isFormContainerTransition}`}
+          >
+            <TicketFormContainer
+              isExtended={isExtended}
+              setIsExtended={setIsExtended}
+            />
+            <CommentsAndDetails />
+          </div>
+          <TicketList />
+        </div>
+      );
     }
-    return <Navigate to='/login' />
-    
+    return <Navigate to='/selectTeam' />;
+  }
+  return <Navigate to='/login' />;
 }

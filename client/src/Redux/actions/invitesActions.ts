@@ -1,17 +1,14 @@
-import { invitesActionType } from "../action-types/invitesActionTypes"
-import { Invites } from "../interfaces/invites"
+import { invitesActionType } from '../action-types/invitesActionTypes';
+import { Invites } from '../interfaces/invites';
 
 interface UpdateAction {
-    type: invitesActionType.UPDATE,
-    payload: Invites
+  type: invitesActionType.UPDATE;
+  payload: Invites;
 }
 
 interface RemoveAction {
-    type: invitesActionType.REMOVE,
-    payload: Invites
+  type: invitesActionType.REMOVE;
+  payload: Invites;
 }
 
-export type Action = UpdateAction | RemoveAction
-
-
-
+export type Action = UpdateAction | RemoveAction;

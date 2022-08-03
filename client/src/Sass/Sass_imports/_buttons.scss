@@ -1,161 +1,162 @@
-.buttonsContainer{
-    display: flex;
-    width: 100%;
-    margin: auto;
-}.submitButton:hover {
-    box-shadow: 0 -1px 1px white;
+.buttonsContainer {
+  display: flex;
+  width: 100%;
+  margin: auto;
 }
-.cancelButton:hover{
-    background-color: red;
-    border-color: red !important;
-    box-shadow: none !important;
+.submitButton:hover {
+  box-shadow: 0 -1px 1px white;
 }
-.topButtons{
-    justify-content: right;
-    box-shadow: 0px 1px 1px transparent;
-    text-align: center;
+.cancelButton:hover {
+  background-color: red;
+  border-color: red !important;
+  box-shadow: none !important;
 }
-.bottomButtons{
-    justify-content: right;
-    box-shadow: 0px -1px 1px transparent;
+.topButtons {
+  justify-content: right;
+  box-shadow: 0px 1px 1px transparent;
+  text-align: center;
 }
-.button{
-    min-width: 90px;
-    margin: 0px 0px 2px 2px;
-    border: none;
-    color: white;
-    background-color: $darkGrey;
-    padding: 5px 10px;
-    transition: $transition;
-    font-size: 14px
+.bottomButtons {
+  justify-content: right;
+  box-shadow: 0px -1px 1px transparent;
 }
-.userDetailsButton{
-    cursor: default;
-    border-bottom: 1px solid $yellow;
-    color: white;
-    opacity: 0%; 
-    float: right;
-    margin-right: 20px;
+.button {
+  min-width: 90px;
+  margin: 0px 0px 2px 2px;
+  border: none;
+  color: white;
+  background-color: $darkGrey;
+  padding: 5px 10px;
+  transition: $transition;
+  font-size: 14px;
 }
-.active{
-    cursor: pointer;
-    opacity: 100%;
+.userDetailsButton {
+  cursor: default;
+  border-bottom: 1px solid $yellow;
+  color: white;
+  opacity: 0%;
+  float: right;
+  margin-right: 20px;
 }
-.active:hover{
-    border-color: $yellow;
+.active {
+  cursor: pointer;
+  opacity: 100%;
+}
+.active:hover {
+  border-color: $yellow;
 }
 .topButton:hover {
-    cursor: pointer;
-    transition: $transition;
-    box-shadow: 0px 1px .5px $dimYellow;
+  cursor: pointer;
+  transition: $transition;
+  box-shadow: 0px 1px 0.5px $dimYellow;
 }
-.bottomButton:hover{
-    cursor: pointer;
-    transition: $transition;
-    box-shadow: 0px -1px .5px $dimYellow;
+.bottomButton:hover {
+  cursor: pointer;
+  transition: $transition;
+  box-shadow: 0px -1px 0.5px $dimYellow;
 }
-.buttonsContainerList{
-    margin-top: 20px;
-    margin-left: 0px;
-    width: calc(100% - 10px)
+.buttonsContainerList {
+  margin-top: 20px;
+  margin-left: 0px;
+  width: calc(100% - 10px);
 }
-.filterProjectsToggle{
-    width: fit-content !important;
-    background-color: $darkGrey;
-    border: none;
-    color: white;
-    height: 25px;
-    margin-left: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    white-space: nowrap;
+.filterProjectsToggle {
+  width: fit-content !important;
+  background-color: $darkGrey;
+  border: none;
+  color: white;
+  height: 25px;
+  margin-left: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
 }
-.inComponentButton{
-    background-color: $accentGrey;
-    padding: 3px 5px 3px 5px;
-    border-radius: 10px;
-    cursor: pointer;
-    color: white;
+.inComponentButton {
+  background-color: $accentGrey;
+  padding: 3px 5px 3px 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
 }
-.roleUpdatePending{
-    border: 1px solid $dimYellow;
-    transform: translateY(-1px);
+.roleUpdatePending {
+  border: 1px solid $dimYellow;
+  transform: translateY(-1px);
 }
-.resetRolesButton{
-    border-radius: 5px;
-    margin-left: 2px;
-    background-color: rgba(255, 0, 0, 0.459);
+.resetRolesButton {
+  border-radius: 5px;
+  margin-left: 2px;
+  background-color: rgba(255, 0, 0, 0.459);
 }
-.addItemButton{
-    color: white;
-    border-radius: 10px;
-    background-color: $accentGrey;
-    width: fit-content;
-    position: relative;
-    display: flex;
-    bottom: 10px;
-    left: 10px;
-    cursor: pointer;
-    margin-top: 15px;
-    margin-left: auto;
-    margin-right: auto;
+.addItemButton {
+  color: white;
+  border-radius: 10px;
+  background-color: $accentGrey;
+  width: fit-content;
+  position: relative;
+  display: flex;
+  bottom: 10px;
+  left: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.removeMemberButton{
-    position: relative;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    color: $dullRed;
-    transition: $transition;
-} 
-.bi-x-square{
-    cursor: pointer;
+.removeMemberButton {
+  position: relative;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  color: $dullRed;
+  transition: $transition;
+}
+.bi-x-square {
+  cursor: pointer;
 }
 .removeMemberButton:hover {
-    color: Red;
+  color: Red;
 }
-.modalButton{
-    cursor: pointer;
-    border-bottom: 1px solid transparent;
+.modalButton {
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
 }
-.modalButtonCancel:hover{
-    border-color: red;
+.modalButtonCancel:hover {
+  border-color: red;
 }
-.modalButtonConfirm:hover{
-    border-color: $yellow;
+.modalButtonConfirm:hover {
+  border-color: $yellow;
 }
-.selectFromListButton{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-    background-color: $accentGrey;
-    width: 50px;
-    font-size: 12px;
-    border-radius: 10px;
-    padding-left: 5px;
-    padding-right: 10px;
+.selectFromListButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  background-color: $accentGrey;
+  width: 50px;
+  font-size: 12px;
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-right: 10px;
 }
-.scaleY{
-    transform: translateY(-2px);
-    transition: $transition;
+.scaleY {
+  transform: translateY(-2px);
+  transition: $transition;
 }
-.chartTypeButton{
-    height: fit-content; 
-    background-color: $darkGrey;
-    border: 1px solid #ffffff31;
+.chartTypeButton {
+  height: fit-content;
+  background-color: $darkGrey;
+  border: 1px solid #ffffff31;
 }
-.selectedChartTypeButton{
-    background-color: $accentGrey;
-    transform: translateY(-1px);
+.selectedChartTypeButton {
+  background-color: $accentGrey;
+  transform: translateY(-1px);
 }
-.teammateProjectButton{
-    background-color: $darkGrey;
-    border: 1px solid $accentGrey;
-    border-radius: 10px;
-    padding: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
-    cursor: pointer;
-    height: fit-content;
+.teammateProjectButton {
+  background-color: $darkGrey;
+  border: 1px solid $accentGrey;
+  border-radius: 10px;
+  padding: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+  cursor: pointer;
+  height: fit-content;
 }

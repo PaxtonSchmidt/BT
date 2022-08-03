@@ -1,172 +1,172 @@
-.formContainer{
-    background-color: $darkGrey;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    margin: 10px auto 0px 0px;
-    padding: 10px 20px 20px 20px;
-    width: calc(fit-content);
-    min-width: 280px;
-    max-width: 800px;
-    transition: flex $transition;
+.formContainer {
+  background-color: $darkGrey;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin: 10px auto 0px 0px;
+  padding: 10px 20px 20px 20px;
+  width: calc(fit-content);
+  min-width: 280px;
+  max-width: 800px;
+  transition: flex $transition;
 }
-.form{
-    transition: $transition;
+.form {
+  transition: $transition;
 }
-.formButtonsContainer{ 
-    min-width: 290px;
-    max-width: 840px; 
-    display: flex; 
-    justify-content: space-between; 
-    margin: 0px auto 20px 0px; 
+.formButtonsContainer {
+  min-width: 290px;
+  max-width: 840px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px auto 20px 0px;
 }
-.formInput{
-    margin: 20px;
-    height: fit-content;
-    min-width: 150px;
+.formInput {
+  margin: 20px;
+  height: fit-content;
+  min-width: 150px;
 }
-.formInputsContainer{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+.formInputsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
-.formComponent{
-    width: 100% !important;
-    text-align: left;
-    margin-bottom: 5px !important;
+.formComponent {
+  width: 100% !important;
+  text-align: left;
+  margin-bottom: 5px !important;
 }
-.loginFormContainer{
-    min-width: 280px;
-    width: 500px;
-    margin: 10% auto;
+.loginFormContainer {
+  min-width: 280px;
+  width: 500px;
+  margin: 10% auto;
 }
-.loginForm{
-    width: 100% !important;
+.loginForm {
+  width: 100% !important;
 }
-.FormContainer{
-    border-bottom: 1px solid $darkGrey;
-    flex-direction: column;
-    transition: $transition;
+.FormContainer {
+  border-bottom: 1px solid $darkGrey;
+  flex-direction: column;
+  transition: $transition;
 }
-.twist{
-    transform: rotate(180deg);
-    padding-left: 20px;
-    padding-right: 0px;
-    fill: $yellow;
+.twist {
+  transform: rotate(180deg);
+  padding-left: 20px;
+  padding-right: 0px;
+  fill: $yellow;
 }
-.twist:hover{
-    transform: rotate(180deg);
-    fill: $yellow;
+.twist:hover {
+  transform: rotate(180deg);
+  fill: $yellow;
 }
-.FormContainer:hover{
-    border-bottom: 1px solid $dimYellow;
+.FormContainer:hover {
+  border-bottom: 1px solid $dimYellow;
 }
-.svgSibling{
-    margin-right: 10px;
+.svgSibling {
+  margin-right: 10px;
 }
-.svgSibling:hover ~ .bi-arrow-bar-down{
-    fill: $yellow;
+.svgSibling:hover ~ .bi-arrow-bar-down {
+  fill: $yellow;
 }
-.formLoadAnim{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.formLoadAnim {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.bi-arrow-bar-down{
-    padding-right: 10px;
-    cursor: pointer;
-    color: $accentGrey;
-    transition: $transition;
+.bi-arrow-bar-down {
+  padding-right: 10px;
+  cursor: pointer;
+  color: $accentGrey;
+  transition: $transition;
 }
-.disabled{
-    cursor: default !important;
+.disabled {
+  cursor: default !important;
 }
-.disabled:hover{
-    color: $accentGrey !important;
+.disabled:hover {
+  color: $accentGrey !important;
 }
-.svgSibling:hover ~ .disabled{
-    fill: $accentGrey;
+.svgSibling:hover ~ .disabled {
+  fill: $accentGrey;
 }
-.bi-arrow-bar-down:hover{
-    color: $yellow;
+.bi-arrow-bar-down:hover {
+  color: $yellow;
 }
-.ticketNoteForm{
-    height: fit-content;
-    width: calc(100%-20px);
-    padding: 0px 10px 0px 10px;
-    transition: $transition;
+.ticketNoteForm {
+  height: fit-content;
+  width: calc(100%-20px);
+  padding: 0px 10px 0px 10px;
+  transition: $transition;
 }
-.ticketNoteInput{
-    width: 100%;
+.ticketNoteInput {
+  width: 100%;
 }
-.Mui-focused{
-    color: $yellow !important;
+.Mui-focused {
+  color: $yellow !important;
 }
-.css-1gmxcjm-MuiFormLabel-root-MuiInputLabel-root{
-    color: $yellow !important;
+.css-1gmxcjm-MuiFormLabel-root-MuiInputLabel-root {
+  color: $yellow !important;
 }
-.css-1x51dt5-MuiInputBase-input-MuiInput-input{
-    color: white !important;
-    transition: $transition !important;
+.css-1x51dt5-MuiInputBase-input-MuiInput-input {
+  color: white !important;
+  transition: $transition !important;
 }
-.css-66dh3a-MuiInputBase-input-MuiInput-input{
-    color: white !important;
-    transition: $transition !important;
+.css-66dh3a-MuiInputBase-input-MuiInput-input {
+  color: white !important;
+  transition: $transition !important;
 }
 .css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input {
-    color: white !important;
-    transition: $transition !important;
+  color: white !important;
+  transition: $transition !important;
 }
 .css-wgizgc-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled)::before {
-    border-bottom: 1px solid $dimYellow !important;
-    transition: $transition !important;
+  border-bottom: 1px solid $dimYellow !important;
+  transition: $transition !important;
 }
-.css-1bck7qi-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled):before{
-    border-bottom: 1px solid $dimYellow !important;
-    transition: $transition !important;
+.css-1bck7qi-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled):before {
+  border-bottom: 1px solid $dimYellow !important;
+  transition: $transition !important;
 }
-.css-1u7je4m-MuiFormLabel-root-MuiInputLabel-root{
-    color: white !important;
+.css-1u7je4m-MuiFormLabel-root-MuiInputLabel-root {
+  color: white !important;
 }
-.css-6hp17o-MuiList-root-MuiMenu-list{
-    border: 1px solid $dimYellow;
-    background-color:  $darkGrey;
-    color: white;
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  border: 1px solid $dimYellow;
+  background-color: $darkGrey;
+  color: white;
 }
-.css-1bck7qi-MuiInputBase-root-MuiInput-root:before{
-    border-bottom: 1px solid $accentGrey !important;
+.css-1bck7qi-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid $accentGrey !important;
 }
-.css-wgizgc-MuiInputBase-root-MuiInput-root:before{
-    border-bottom: 1px solid $accentGrey !important;
+.css-wgizgc-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid $accentGrey !important;
 }
-.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon{
-    color: $accentGrey !important;
+.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon {
+  color: $accentGrey !important;
 }
-.css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon{
-    color: $yellow !important;
+.css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon {
+  color: $yellow !important;
 }
-.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.Mui-disabled{
-    -webkit-text-fill-color: rgba(255, 240, 240, 0.61) !important;
+.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.Mui-disabled {
+  -webkit-text-fill-color: rgba(255, 240, 240, 0.61) !important;
 }
-.Mui-disabled{
-    color: rgb(122, 122, 122) !important
+.Mui-disabled {
+  color: rgb(122, 122, 122) !important;
 }
-.css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled{
-    -webkit-text-fill-color: rgba(255, 240, 240, 0.61) !important;
+.css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled {
+  -webkit-text-fill-color: rgba(255, 240, 240, 0.61) !important;
 }
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px $darkGrey inset !important;
-    -webkit-text-fill-color: white !important;
-    box-shadow: 0 0 0 30px $darkGrey inset !important;
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px $darkGrey inset !important;
+  -webkit-text-fill-color: white !important;
+  box-shadow: 0 0 0 30px $darkGrey inset !important;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 }
-input[type=number] {
-    -moz-appearance: textfield;
+input[type='number'] {
+  -moz-appearance: textfield;
 }

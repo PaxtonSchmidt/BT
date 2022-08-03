@@ -658,12 +658,12 @@ input:-webkit-autofill:active {
   box-shadow: 0 0 0 30px #222222 inset !important;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
 
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
@@ -732,7 +732,7 @@ input[type=number] {
       -ms-flex-direction: row;
           flex-direction: row;
   font-size: 14px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   padding-top: 0px;
   background-color: transparent;
   border: none;
@@ -797,10 +797,6 @@ input[type=number] {
   padding-left: 0px;
   padding-right: 0px;
   border-bottom: 1px solid #ffffff31;
-}
-
-.listItem.listRow:hover {
-  border-bottom: 1px solid white;
 }
 
 .ChosenTicket {
@@ -1066,7 +1062,7 @@ input[type=number] {
 }
 
 .card {
-  padding: .5px;
+  padding: 0.5px;
   border-radius: 0px 10px 10px 0px;
   height: 40px;
   width: 100%;
@@ -1118,7 +1114,7 @@ input[type=number] {
 
 .card > .cardContent {
   background: transparent;
-  margin: .5px;
+  margin: 0.5px;
   border-radius: inherit;
   height: calc(100% - 1px);
   width: calc(100% - 1px);
@@ -1190,7 +1186,7 @@ input[type=number] {
   background-color: transparent;
   border: none;
   color: white;
-  opacity: .5;
+  opacity: 0.5;
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }
@@ -1554,7 +1550,7 @@ input[type=number] {
 
 html {
   background-color: #1a1a1a;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 14px;
   margin: 0%;
   min-height: 100%;

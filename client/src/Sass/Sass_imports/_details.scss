@@ -1,93 +1,93 @@
-.ticketDetailsContainer{
-    color: white;
-    background-color: $darkGrey;
-    height: 320px;
-    min-width: 250px;
-    margin-top: 5px;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 20px;
-    transition: $transition;
-    flex-grow: 1;
-    width: 10%;
+.ticketDetailsContainer {
+  color: white;
+  background-color: $darkGrey;
+  height: 320px;
+  min-width: 250px;
+  margin-top: 5px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 20px;
+  transition: $transition;
+  flex-grow: 1;
+  width: 10%;
 }
-.openFormDetailsHeight{
-    min-height: 380px;
+.openFormDetailsHeight {
+  min-height: 380px;
 }
-.detailLabel{
-    color: $accentGrey;
-    margin-right: 5px;
-    font-size: 12px;
+.detailLabel {
+  color: $accentGrey;
+  margin-right: 5px;
+  font-size: 12px;
 }
-.ticketDetailItem{
-    display: flex;
-    height: 18px;
-    padding: 5px;
-    min-width: 150px;
-    width: 100%;
-    justify-content: left;
-    align-items: end;
-    text-align: left;
-    border-bottom: 1px solid $accentGrey;
-    cursor: default;
-    transition: $transition;
+.ticketDetailItem {
+  display: flex;
+  height: 18px;
+  padding: 5px;
+  min-width: 150px;
+  width: 100%;
+  justify-content: left;
+  align-items: end;
+  text-align: left;
+  border-bottom: 1px solid $accentGrey;
+  cursor: default;
+  transition: $transition;
 }
-.ticketDetailItemContainer{
-    display: flex; 
-    align-items: end; 
-    height: 45px; 
-    margin-bottom: 5px;
+.ticketDetailItemContainer {
+  display: flex;
+  align-items: end;
+  height: 45px;
+  margin-bottom: 5px;
 }
-.discriminator{
-    font-size: 11px;
-    margin-bottom: 2px;
+.discriminator {
+  font-size: 11px;
+  margin-bottom: 2px;
 }
-.roleRow{
-    text-align: left;
-    width: calc(100% - 10px)
+.roleRow {
+  text-align: left;
+  width: calc(100% - 10px);
 }
-.detailsColumn{
-    width: 100%;
+.detailsColumn {
+  width: 100%;
 }
-.ticketDetailsRow{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.ticketDetailsRow {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.detailsDescription{
-    display: flex;
-    justify-content: center;
-    border-bottom: 1px solid $accentGrey;
-    cursor: default;
-    transition: $transition;
-    overflow-y: scroll;
-    height: 145px;
-    margin-top: auto;
-    margin-bottom: 10px;
+.detailsDescription {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid $accentGrey;
+  cursor: default;
+  transition: $transition;
+  overflow-y: scroll;
+  height: 145px;
+  margin-top: auto;
+  margin-bottom: 10px;
 }
-.ticketDescriptionArea{
-    margin: auto 0px;
-    height: fit-content;
-    vertical-align: middle;
+.ticketDescriptionArea {
+  margin: auto 0px;
+  height: fit-content;
+  vertical-align: middle;
 }
-.teamDetails{
-    flex-grow: 1;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: $darkGrey;
-    height: 100px;
+.teamDetails {
+  flex-grow: 1;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: $darkGrey;
+  height: 100px;
 }
-.teamDetailsBodyContainer{
-    display: flex;
-    justify-content: space-around;
+.teamDetailsBodyContainer {
+  display: flex;
+  justify-content: space-around;
 }
-.teamDetailSection{
-    display: flex;
-    justify-content: space-around;
-    width: 33%;
+.teamDetailSection {
+  display: flex;
+  justify-content: space-around;
+  width: 33%;
 }
-.teamDetailItem{
-    cursor: default;
-    text-align: center;
+.teamDetailItem {
+  cursor: default;
+  text-align: center;
 }

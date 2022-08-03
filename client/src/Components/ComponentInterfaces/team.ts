@@ -1,6 +1,6 @@
 export interface Team {
-    name: string,
-    dateJoined: string,
-    ownerName: string,
-    ownerDiscriminator: string
+  name: string;
+  dateJoined: string;
+  ownerName: string;
+  ownerDiscriminator: string;
 }

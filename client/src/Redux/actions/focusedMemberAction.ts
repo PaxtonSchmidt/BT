@@ -1,12 +1,9 @@
-import { focusedMemberActionType } from "../action-types/focusedMemberActionType"
-import { Member } from "../interfaces/member"
+import { focusedMemberActionType } from '../action-types/focusedMemberActionType';
+import { Member } from '../interfaces/member';
 
 interface updateFocusedMember {
-    type: focusedMemberActionType.UPDATE,
-    payload: Member
+  type: focusedMemberActionType.UPDATE;
+  payload: Member;
 }
 
-export type Action = updateFocusedMember
-
-
-
+export type Action = updateFocusedMember;

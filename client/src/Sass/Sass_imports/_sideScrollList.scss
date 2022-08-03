@@ -1,63 +1,63 @@
-.sideScrollList{
-    color: white;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: $darkGrey;
-    height: 50px;
-    width: 100%;
-    overflow-x: scroll;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-    text-align: center;
-    background-color: transparent;
-    border-bottom: 1px solid $accentGrey;
-    padding-bottom: 10px;
-    overflow-y: hidden;
+.sideScrollList {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: $darkGrey;
+  height: 50px;
+  width: 100%;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  text-align: center;
+  background-color: transparent;
+  border-bottom: 1px solid $accentGrey;
+  padding-bottom: 10px;
+  overflow-y: hidden;
 }
-.sideScrollList::-webkit-scrollbar{
-    height: 1px;
-    transition: $transition;
-    z-index: 3000;
+.sideScrollList::-webkit-scrollbar {
+  height: 1px;
+  transition: $transition;
+  z-index: 3000;
 }
 .sideScrollList::-webkit-scrollbar-track {
-    background: transparent;
-    transition: $transition;
+  background: transparent;
+  transition: $transition;
 }
 .sideScrollList::-webkit-scrollbar-thumb {
-    border: 1px solid $dimYellow;
-    background-color: $dimYellow;
-    transition: $transition;
+  border: 1px solid $dimYellow;
+  background-color: $dimYellow;
+  transition: $transition;
 }
-.sideScrollListItem{
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    background-color: $darkGrey;
-    width: fit-content;
-    height: 20px;
-    margin: 0px 10px;
-    padding: 10px;
-    padding-top: auto;
-    border: 1px solid $accentGrey;
-    border-radius: 15px;
-    transition: $transition;
+.sideScrollListItem {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: $darkGrey;
+  width: fit-content;
+  height: 20px;
+  margin: 0px 10px;
+  padding: 10px;
+  padding-top: auto;
+  border: 1px solid $accentGrey;
+  border-radius: 15px;
+  transition: $transition;
 }
-.sideScrollListItem:hover{
-    background-color: rgba(240, 248, 255, 0.158);
+.sideScrollListItem:hover {
+  background-color: rgba(240, 248, 255, 0.158);
 }
-.sideScrollListItem h5{
-    white-space: nowrap;
-    font-size: 14px;
-    display: inline-block;
-    width: 100%;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin: 0px;
-    height: fit-content;
+.sideScrollListItem h5 {
+  white-space: nowrap;
+  font-size: 14px;
+  display: inline-block;
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin: 0px;
+  height: fit-content;
 }
-.selectedProjectInList{
-    background-color: $chosenWhite !important;
-    color: black;
-    transform: translateY(-2px);
+.selectedProjectInList {
+  background-color: $chosenWhite !important;
+  color: black;
+  transform: translateY(-2px);
 }

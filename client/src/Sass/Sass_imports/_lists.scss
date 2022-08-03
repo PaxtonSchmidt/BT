@@ -1,201 +1,199 @@
-.list{
-    width: calc(100%-40px);
-    background-color: $darkGrey;
-    padding-right: 0px !important;
-    height: 360px;
-    padding-bottom: 10px;
-    overflow-y: scroll;
-    overscroll-behavior: none;
+.list {
+  width: calc(100%-40px);
+  background-color: $darkGrey;
+  padding-right: 0px !important;
+  height: 360px;
+  padding-bottom: 10px;
+  overflow-y: scroll;
+  overscroll-behavior: none;
 }
-.listHeader{
-    margin-top: 0px;
-    margin-bottom: 1px;
+.listHeader {
+  margin-top: 0px;
+  margin-bottom: 1px;
 }
-.listItem{
-    background-color: transparent;
-    padding-left: 5px !important;
-    color: white;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    white-space: nowrap;
-    text-align: center;
-    align-items: center;
-    min-height: 40px;
-    width: calc(100%-40px);
-    transition: $transition;
-    cursor: default;
+.listItem {
+  background-color: transparent;
+  padding-left: 5px !important;
+  color: white;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  white-space: nowrap;
+  text-align: center;
+  align-items: center;
+  min-height: 40px;
+  width: calc(100%-40px);
+  transition: $transition;
+  cursor: default;
 }
 
-.listContainer{
-    background-color: $darkGrey;
-    margin-right: 5px;
+.listContainer {
+  background-color: $darkGrey;
+  margin-right: 5px;
 }
-.ticketListItemButton{
-    color: $dimYellow;
-    transition: $transition;
-    cursor: pointer;
-    padding-top: 5px;
-    height: 100%;
+.ticketListItemButton {
+  color: $dimYellow;
+  transition: $transition;
+  cursor: pointer;
+  padding-top: 5px;
+  height: 100%;
 }
-.ticketListItemButtonContainer{
-    color: $dimYellow;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    font-size: 14px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;;
-    padding-top: 0px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    width: fit-content;
-    transition: $transition;
+.ticketListItemButtonContainer {
+  color: $dimYellow;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  padding-top: 0px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: fit-content;
+  transition: $transition;
 }
-.ticketListTitle{
-    margin-left: 5px;
+.ticketListTitle {
+  margin-left: 5px;
 }
-.rowItem{
-    height: 100%;
-    width: fit-content;
-    display: inline-block;
+.rowItem {
+  height: 100%;
+  width: fit-content;
+  display: inline-block;
 }
-.listRow{
-    display: flex;
-    align-items: flex-end;
-    text-align: end;
-    padding-left: 10px;
-    padding-right: 10px;
-    justify-content: space-between;
-    white-space: nowrap;
-    background-color: transparent;
-    color: white;
-    position: relative;
-    border-bottom: 1px solid white;
-    height: 40px;
-    width: calc(100%-40px);
-    transition: $transition;
-    cursor: default;
+.listRow {
+  display: flex;
+  align-items: flex-end;
+  text-align: end;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: space-between;
+  white-space: nowrap;
+  background-color: transparent;
+  color: white;
+  position: relative;
+  border-bottom: 1px solid white;
+  height: 40px;
+  width: calc(100%-40px);
+  transition: $transition;
+  cursor: default;
 }
-.searchTicketsForm{
-    width: 50%;
-    min-width: 300px;
-    max-width: 500px;
-    border: 1px solid $accentGrey;
-    border-bottom: none;
+.searchTicketsForm {
+  width: 50%;
+  min-width: 300px;
+  max-width: 500px;
+  border: 1px solid $accentGrey;
+  border-bottom: none;
 }
-.searchTicketsFormComponent{
-    width: 100%;
+.searchTicketsFormComponent {
+  width: 100%;
 }
-.listItem.listRow{
-    padding-left: 0px;
-    padding-right: 0px;
-    border-bottom: 1px solid $accentGrey;
+.listItem.listRow {
+  padding-left: 0px;
+  padding-right: 0px;
+  border-bottom: 1px solid $accentGrey;
 }
-.listItem.listRow:hover{
-    border-bottom: 1px solid white;
+.ChosenTicket {
+  transform: translateY(-1px);
+  background-color: $chosenWhite !important;
+  color: black !important;
 }
-.ChosenTicket{
-    transform: translateY(-1px);
-    background-color: $chosenWhite !important;
-    color: black !important;
+.listRowSection {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  max-width: 600px;
 }
-.listRowSection{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    max-width: 600px;
+.hoverGrey:hover {
+  background-color: $hoverGrey;
 }
-.hoverGrey:hover{
-    background-color: $hoverGrey;
+.leftSection {
+  width: 50%;
 }
-.leftSection{
-    width: 50%;
+.rightSection {
+  width: 50%;
 }
-.rightSection{
-    width: 50%;
+.rightSection > .rowItem {
+  width: 25%;
+  text-align: center;
 }
-.rightSection > .rowItem{
-    width: 25%;
-    text-align: center;
+.memberListRowSection {
+  width: fit-content;
+  margin-bottom: 10px;
 }
-.memberListRowSection{
-    width: fit-content;
-    margin-bottom: 10px;
+.userDetailsRow {
+  cursor: pointer;
+  border-color: $dimYellow;
 }
-.userDetailsRow{
-    cursor: pointer;
-    border-color: $dimYellow;
+.userDetailsRow:hover {
+  border-bottom: 1px solid $yellow;
 }
-.userDetailsRow:hover{
-    border-bottom: 1px solid $yellow;
-}
-.memberRow{
-    cursor: pointer;
+.memberRow {
+  cursor: pointer;
 }
 .memberRow:hover > .memberListRowSection > .discriminator {
-    opacity: 100%;
+  opacity: 100%;
 }
-.manageMemberListRow{
-    cursor: default;
+.manageMemberListRow {
+  cursor: default;
 }
-.manageMemberListRow:hover{
-    border-bottom: 1px solid $accentGrey !important;
+.manageMemberListRow:hover {
+  border-bottom: 1px solid $accentGrey !important;
 }
-.membersList{
-    height: 320px;
-    padding-bottom: 0px;
+.membersList {
+  height: 320px;
+  padding-bottom: 0px;
 }
-.memberProjectList{
-    margin-top: 10px;
-    border-bottom: 1px solid $accentGrey;
-    padding-left: 5px;
+.memberProjectList {
+  margin-top: 10px;
+  border-bottom: 1px solid $accentGrey;
+  padding-left: 5px;
 }
-.ticketNoteListContainer{
-    background-color: $darkGrey;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    margin-bottom: 10px;
-    margin-top: 5px;
-    width: 50%;
-    min-width: 250px;
-    height: 340px;
-    padding-bottom: 10px;
+.ticketNoteListContainer {
+  background-color: $darkGrey;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  width: 50%;
+  min-width: 250px;
+  height: 340px;
+  padding-bottom: 10px;
 }
-.ticketNoteList{
-    transition: $transition;
-    height: fit-content;
-    border-bottom: 1px solid white;
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column-reverse;
-    padding-bottom: 0px;
-    padding-left: 10px;
-    padding-right: 5px;
-    overflow-y: scroll;
-    overscroll-behavior: none;
-    width: calc(100%-20px);
+.ticketNoteList {
+  transition: $transition;
+  height: fit-content;
+  border-bottom: 1px solid white;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column-reverse;
+  padding-bottom: 0px;
+  padding-left: 10px;
+  padding-right: 5px;
+  overflow-y: scroll;
+  overscroll-behavior: none;
+  width: calc(100%-20px);
 }
-.ticketNoteList:hover{
-    border-bottom: 1px solid $dimYellow;
+.ticketNoteList:hover {
+  border-bottom: 1px solid $dimYellow;
 }
-.noteListItem{
-    background-color: transparent;
-    color: white;
-    display: flex;
-    text-align: left;
-    transition: $transition;
-    cursor: default;
-    margin-bottom: 5px;
-    height: fit-content !important;
-    width: 100%;
+.noteListItem {
+  background-color: transparent;
+  color: white;
+  display: flex;
+  text-align: left;
+  transition: $transition;
+  cursor: default;
+  margin-bottom: 5px;
+  height: fit-content !important;
+  width: 100%;
 }
-.teammateProjectList{
-    display: flex;
-    flex-grow: 1;
-    height: 70px;
-    width: 100%;
-    flex-wrap: wrap;
-    overflow-y: scroll;
+.teammateProjectList {
+  display: flex;
+  flex-grow: 1;
+  height: 70px;
+  width: 100%;
+  flex-wrap: wrap;
+  overflow-y: scroll;
 }

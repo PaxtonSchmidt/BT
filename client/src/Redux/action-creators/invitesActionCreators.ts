@@ -1,21 +1,21 @@
-import { Dispatch } from "redux"
-import { invitesActionType } from "../action-types/invitesActionTypes"
-import { Action } from "../actions/invitesActions"
-import { Invites } from "../interfaces/invites"
+import { Dispatch } from 'redux';
+import { invitesActionType } from '../action-types/invitesActionTypes';
+import { Action } from '../actions/invitesActions';
+import { Invites } from '../interfaces/invites';
 
 export const updateInvites = (invites: Invites) => {
-    return (dispatch: Dispatch<Action>) => {
-        dispatch({
-            type: invitesActionType.UPDATE,
-            payload: invites
-        })
-    }
-}
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: invitesActionType.UPDATE,
+      payload: invites,
+    });
+  };
+};
 export const remove = (invites: Invites) => {
-    return (dispatch: Dispatch<Action>) => {
-        dispatch({
-            type: invitesActionType.REMOVE,
-            payload: invites
-        })
-    }
-}
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: invitesActionType.REMOVE,
+      payload: invites,
+    });
+  };
+};

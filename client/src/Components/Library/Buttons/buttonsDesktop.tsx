@@ -7,76 +7,97 @@ import { Invites } from '../../../Redux/interfaces/invites';
 import { InvitesActionCreators, LoginActionCreators } from '../../../Redux';
 import postInvalidateJWT from '../../../API/Requests/Login/PostInvalidateJWT';
 
-export default function SelectTeamPageButtons(){
-    const invitesState = useSelector((state: Invites) => state.invites)
-    const dispatch = useDispatch();
-    const { updateInvites } = bindActionCreators(InvitesActionCreators, dispatch)
-    let navigate = useNavigate();
+export default function SelectTeamPageButtons() {
+  const invitesState = useSelector((state: Invites) => state.invites);
+  const dispatch = useDispatch();
+  const { updateInvites } = bindActionCreators(InvitesActionCreators, dispatch);
+  let navigate = useNavigate();
 
-    useEffect(() => {
-        fetch('/teams/getTeamInvites')
-        .then((res => {
-            if(res.ok) {         
-                return res.json();
-            } else if(res.status === 404){
-                return '';
-            } else{
-                return console.log('something went wrong...')
-            }
-        }))
-        .then(jsonRes => updateInvites(jsonRes));
-    }, [])  
-
-    let inviteAmount = invitesState.length || 0;
-
-    let plurality = isPlural(invitesState.length);
-    //get the amount of team invites the user has from invite store
-    function isPlural(invites: any){
-        if(invites === '1'){
-            let plurality = ' Team Invite'
-            return plurality
-        }else{
-            let plurality = ' Team Invites'
-            return plurality
+  useEffect(() => {
+    fetch('/teams/getTeamInvites')
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else if (res.status === 404) {
+          return '';
+        } else {
+          return console.log('something went wrong...');
         }
-    }
+      })
+      .then((jsonRes) => updateInvites(jsonRes));
+  }, []);
 
-    function handleLogout(){
-        navigate('/login')
-    }
-    function handleCreateTeam(){
-        navigate('/newTeam')
-    }
-    function handleCheckInvites(){
-        navigate('/teamInvites')
-    }
-    function handleChooseTeam(){
-        navigate('/selectTeam')
-    }
-    
-    return(
-        <>
-            <button className='selectTeamPageNavbutton glowsToo' style={{bottom: '10px', position: 'absolute'}} onClick={handleLogout}>Logout</button>
+  let inviteAmount = invitesState.length || 0;
 
-            <span  className='selectTeamPageNavContainer' style={{bottom: '30px', position: 'absolute'}}>
-                <span>
-                    <button className='selectTeamPageNavbutton glowsToo' style={{paddingRight:'0px'}} onClick={handleCreateTeam} >Create</button>
-                </span>
-                <span className='selectTeamPageNavbuttonExtra'>
-                    /
-                </span>
-                <span>
-                    <button className='selectTeamPageNavbutton glowsToo' style={{paddingLeft:'0px'}}  onClick={handleChooseTeam}>Choose</button>
-                </span>
-                <span className='selectTeamPageNavbuttonExtra glowsToo'>
-                    a team
-                </span>
-            </span>
+  let plurality = isPlural(invitesState.length);
+  //get the amount of team invites the user has from invite store
+  function isPlural(invites: any) {
+    if (invites === '1') {
+      let plurality = ' Team Invite';
+      return plurality;
+    } else {
+      let plurality = ' Team Invites';
+      return plurality;
+    }
+  }
 
-            <button className='selectTeamPageNavbutton' style={{bottom: '50px', position: 'absolute'}} onClick={handleCheckInvites}>
-                <span className='invitesNum'>{inviteAmount}</span><span className='glowsToo'>{plurality}</span>
-            </button>
-        </>
-    )
+  function handleLogout() {
+    navigate('/login');
+  }
+  function handleCreateTeam() {
+    navigate('/newTeam');
+  }
+  function handleCheckInvites() {
+    navigate('/teamInvites');
+  }
+  function handleChooseTeam() {
+    navigate('/selectTeam');
+  }
 
+  return (
+    <>
+      <button
+        className='selectTeamPageNavbutton glowsToo'
+        style={{ bottom: '10px', position: 'absolute' }}
+        onClick={handleLogout}
+      >
+        Logout
+      </button>
+
+      <span
+        className='selectTeamPageNavContainer'
+        style={{ bottom: '30px', position: 'absolute' }}
+      >
+        <span>
+          <button
+            className='selectTeamPageNavbutton glowsToo'
+            style={{ paddingRight: '0px' }}
+            onClick={handleCreateTeam}
+          >
+            Create
+          </button>
+        </span>
+        <span className='selectTeamPageNavbuttonExtra'>/</span>
+        <span>
+          <button
+            className='selectTeamPageNavbutton glowsToo'
+            style={{ paddingLeft: '0px' }}
+            onClick={handleChooseTeam}
+          >
+            Choose
+          </button>
+        </span>
+        <span className='selectTeamPageNavbuttonExtra glowsToo'>a team</span>
+      </span>
+
+      <button
+        className='selectTeamPageNavbutton'
+        style={{ bottom: '50px', position: 'absolute' }}
+        onClick={handleCheckInvites}
+      >
+        <span className='invitesNum'>{inviteAmount}</span>
+        <span className='glowsToo'>{plurality}</span>
+      </button>
+    </>
+  );
 }

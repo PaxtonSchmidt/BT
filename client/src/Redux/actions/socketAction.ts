@@ -1,11 +1,8 @@
-import { socketActionType } from "../action-types/socketActionType"
+import { socketActionType } from '../action-types/socketActionType';
 
 interface updateSocket {
-    type: socketActionType.UPDATE,
-    payload: any
+  type: socketActionType.UPDATE;
+  payload: any;
 }
 
-export type Action = updateSocket
-
-
-
+export type Action = updateSocket;

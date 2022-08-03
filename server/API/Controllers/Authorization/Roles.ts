@@ -1,7 +1,7 @@
 const Legend = {
-    owner: 1,
-    lead: 2,
-    dev: 3
-}
+  owner: 1,
+  lead: 2,
+  dev: 3,
+};
 
-module.exports = { Legend }
+module.exports = { Legend };

@@ -1,3 +1,3 @@
 export enum focusedTeammateActionType {
-    UPDATE = 'updateFocusedTeammate'
+  UPDATE = 'updateFocusedTeammate',
 }

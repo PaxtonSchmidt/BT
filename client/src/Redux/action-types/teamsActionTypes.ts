@@ -1,4 +1,4 @@
 export enum teamsActionType {
-    UPDATE = 'updateTeam',
-    REMOVE = 'removeTeam'
+  UPDATE = 'updateTeam',
+  REMOVE = 'removeTeam',
 }

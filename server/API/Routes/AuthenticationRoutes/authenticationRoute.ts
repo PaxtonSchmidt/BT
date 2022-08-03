@@ -5,7 +5,7 @@ let authenticationRoutes = require('../../Controllers/SessionManagement/NoAuthen
 let authenticationQueries = require('../../Queries/AuthQueries/authenticationQueries');
 
 router.post('/login', authenticationRoutes.login);
-router.post('/logout', authenticationRoutes.logout)
-router.get('/currentUser', authenticationQueries.fetchCurrentUser)
+router.post('/logout', authenticationRoutes.logout);
+router.get('/currentUser', authenticationQueries.fetchCurrentUser);
 
 module.exports = router;

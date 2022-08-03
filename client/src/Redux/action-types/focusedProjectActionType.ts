@@ -1,3 +1,3 @@
 export enum focusedProjectActionType {
-    UPDATE = 'updateFocusedProject'
+  UPDATE = 'updateFocusedProject',
 }

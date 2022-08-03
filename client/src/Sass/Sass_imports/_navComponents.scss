@@ -1,121 +1,119 @@
-.circleIcon{
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
+.circleIcon {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
 }
-.navPicture{
-    background-color: $black;
+.navPicture {
+  background-color: $black;
 }
-.navComponent{
-    background-color: $darkGrey;
-    display: flex;
+.navComponent {
+  background-color: $darkGrey;
+  display: flex;
+}
+.navBar {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  top: 0;
+  width: calc(100% - 50px);
+  height: 50px;
+  align-items: center;
+  margin-left: 50px;
 
+  z-index: 1;
 }
-.navBar{
-    position: fixed;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    top: 0;
-    width: calc(100% - 50px);
-    height: 50px;
-    align-items: center;
-    margin-left: 50px;
-    
-
-    z-index: 1;
-}
-.hamburger{
-    position: fixed;
-    height: 30px;
-    width: 30px;
-    cursor: pointer;
-    z-index: 5;
+.hamburger {
+  position: fixed;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  z-index: 5;
 }
 .hamburgerContainer {
-    position: fixed;
-    height: 50px;
-    width: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: $darkGrey;
-    border-right: 1px solid $darkGrey;
-    transition: $transition;
-    z-index: 1;
+  position: fixed;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $darkGrey;
+  border-right: 1px solid $darkGrey;
+  transition: $transition;
+  z-index: 1;
 }
-.hamburgerContainer:hover{
-    background-color: $hoverGrey;
+.hamburgerContainer:hover {
+  background-color: $hoverGrey;
 }
-.hamburgerContainer:hover + .sideBar{
-    border-right: 1px solid $dimYellow;
+.hamburgerContainer:hover + .sideBar {
+  border-right: 1px solid $dimYellow;
 }
-.bell{
-    margin-top: 5px;
-    height: 20px;
-    width: 20px;
-    cursor: pointer;
+.bell {
+  margin-top: 5px;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
 }
-.bell::before{
-    background-color: red;
-    flex-wrap: nowrap;
-    color: red;
-    border: 1px solid white;
-    border-radius: 10px;
-    height: 50px;
-    width: 50px;
-    display: inline;
-    content: '1';
+.bell::before {
+  background-color: red;
+  flex-wrap: nowrap;
+  color: red;
+  border: 1px solid white;
+  border-radius: 10px;
+  height: 50px;
+  width: 50px;
+  display: inline;
+  content: '1';
 }
-.sideBar{
-    flex-direction: column;
-    width: fit-content;
-    margin-top: 50px;
-    margin-right: 10px;
-    min-width: 50px;
-    height: calc(100% - 50px);
-    transition: $transition;
-    border-right: 1px solid $accentGrey;
-    border-top: 1px solid $black;
-    z-index: 0;
+.sideBar {
+  flex-direction: column;
+  width: fit-content;
+  margin-top: 50px;
+  margin-right: 10px;
+  min-width: 50px;
+  height: calc(100% - 50px);
+  transition: $transition;
+  border-right: 1px solid $accentGrey;
+  border-top: 1px solid $black;
+  z-index: 0;
 }
-.sideBarItem{
-    height: 60px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-    align-items: center;
-    cursor: pointer;
-    transition: $transition;
+.sideBarItem {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  cursor: pointer;
+  transition: $transition;
 
-    z-index: 0;
+  z-index: 0;
 }
-.sideBarItem:hover{
-    background-color: rgba(240, 248, 255, 0.158);
+.sideBarItem:hover {
+  background-color: rgba(240, 248, 255, 0.158);
 }
-.sidebarButtonText{
-    color: white;
-    white-space: nowrap;
-    width: 70%;
+.sidebarButtonText {
+  color: white;
+  white-space: nowrap;
+  width: 70%;
 }
-.sidebarIconContainer{
-    width: 30%;
-    padding-left: 13px;
+.sidebarIconContainer {
+  width: 30%;
+  padding-left: 13px;
 }
-.sidebarIcon{
-    height: 25px;
-    width: 25px;
+.sidebarIcon {
+  height: 25px;
+  width: 25px;
 }
 .scaleYonHover {
-    transition: $transition;
+  transition: $transition;
 }
 .scaleYonHover:hover {
-    transform: translateY(-1px);
+  transform: translateY(-1px);
 }
 .outerNavElement {
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    margin-left: 3px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  margin-left: 3px;
 }

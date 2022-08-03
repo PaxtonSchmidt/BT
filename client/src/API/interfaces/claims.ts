@@ -1,4 +1,4 @@
-export interface Claims{
-    email: string;
-    password: string;
+export interface Claims {
+  email: string;
+  password: string;
 }

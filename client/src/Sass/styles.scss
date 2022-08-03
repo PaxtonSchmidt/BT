@@ -1,229 +1,230 @@
-@import "./Sass_imports/_library.scss";
-@import "./Sass_imports/_navComponents.scss";
-@import "./Sass_imports/_buttons.scss";
-@import "./Sass_imports/_forms.scss";
-@import "./Sass_imports/_lists.scss";
-@import "./Sass_imports/_scrollbar.scss";
-@import "./Sass_imports/_cards.scss";
-@import "./Sass_imports/_details.scss";
-@import "./Sass_imports/_javascriptApplied.scss";
-@import "./Sass_imports/_sideScrollList.scss";
-@import "./Sass_imports/_manageMembersWidget.scss";
-@import "./Sass_imports/_dataVis.scss";
+@import './Sass_imports/_library.scss';
+@import './Sass_imports/_navComponents.scss';
+@import './Sass_imports/_buttons.scss';
+@import './Sass_imports/_forms.scss';
+@import './Sass_imports/_lists.scss';
+@import './Sass_imports/_scrollbar.scss';
+@import './Sass_imports/_cards.scss';
+@import './Sass_imports/_details.scss';
+@import './Sass_imports/_javascriptApplied.scss';
+@import './Sass_imports/_sideScrollList.scss';
+@import './Sass_imports/_manageMembersWidget.scss';
+@import './Sass_imports/_dataVis.scss';
 
 html {
-    background-color: $black;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 14px;
-    margin: 0%;
-    min-height: 100%;
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(150deg, #1a1a1a, #000000)
+  background-color: $black;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  margin: 0%;
+  min-height: 100%;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(150deg, #1a1a1a, #000000);
 }
 
-body{
-    height: 100% ;
-    width: 100%;
-    
+body {
+  height: 100%;
+  width: 100%;
 }
 
-#root{
-    display: flex;
-    bottom: 0;
-    height: 100% !important;
-    width: 100%;
+#root {
+  display: flex;
+  bottom: 0;
+  height: 100% !important;
+  width: 100%;
 }
-.bugLogo{
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-} 
-.pageContentContainer{
-    padding-right: 15px;
-    width: 100%;
-    height: fit-content;
-    margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    display: inline-block;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    scroll-behavior: smooth;
-    overflow-y: scroll;
-    overflow-x: hidden;
+.bugLogo {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pageContentContainer {
+  padding-right: 15px;
+  width: 100%;
+  height: fit-content;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: inline-block;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
-    transition: $transition;
-    margin-top: -340px;
+  transition: $transition;
+  margin-top: -340px;
 }
-.projectPageContent{
-    margin-top: -173px;
+.projectPageContent {
+  margin-top: -173px;
 }
-.notATeamLeadMargin{
-    margin-top: 60px;
+.notATeamLeadMargin {
+  margin-top: 60px;
 }
-.manageTeamPageContent{
-    margin-top: -153px;
+.manageTeamPageContent {
+  margin-top: -153px;
 }
-.pageBodyContainer5{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    border-bottom: 1px solid $accentGrey;
+.pageBodyContainer5 {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 1px solid $accentGrey;
 }
-.pageBodyQuadrant{
-    display: flex;
-    width: 50%;
-    border-right: 1px solid $accentGrey;
-    justify-content: space-between;
+.pageBodyQuadrant {
+  display: flex;
+  width: 50%;
+  border-right: 1px solid $accentGrey;
+  justify-content: space-between;
 }
-.pageBodyContainer1{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.pageBodyContainer1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .pageBodyContainer2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin-bottom: 5px;   
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 5px;
 }
-.pageBodyContainer4{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding-right: 5px;
-    margin-bottom: 10px;
+.pageBodyContainer4 {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-right: 5px;
+  margin-bottom: 10px;
 }
-.pageHeader{
-    font-size: 70px;
-    margin: 0px;
-    background-image: linear-gradient(0deg, $black 10%, $darkGrey 40%);
-    background-clip: text;
-    color: transparent;
+.pageHeader {
+  font-size: 70px;
+  margin: 0px;
+  background-image: linear-gradient(0deg, $black 10%, $darkGrey 40%);
+  background-clip: text;
+  color: transparent;
 }
-.pageHeaderContainer{
-    height: fit-content;
+.pageHeaderContainer {
+  height: fit-content;
 }
-.formAndDetails{
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 10px;
-    min-width: 280px;
-    border-bottom: 1px solid $accentGrey;
+.formAndDetails {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 280px;
+  border-bottom: 1px solid $accentGrey;
 }
-.header{
-    color: white;
-    font-size: 18px;
-    margin: 0px;
-    margin-bottom: 10px;
-    height: 20px;
+.header {
+  color: white;
+  font-size: 18px;
+  margin: 0px;
+  margin-bottom: 10px;
+  height: 20px;
 }
-.loginPage{
-    background-image: url('../Components/Images/Pic/black\ sand.jpeg');
-    background-size: cover;
-    background-position: center;
+.loginPage {
+  background-image: url('../Components/Images/Pic/black\ sand.jpeg');
+  background-size: cover;
+  background-position: center;
 
-    height: 100vh !important;
-    overflow-y: hidden;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    align-items: top;
-    text-align: center;
+  height: 100vh !important;
+  overflow-y: hidden;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: top;
+  text-align: center;
 }
-.altBG{
-    background: linear-gradient(100deg, #1a1a1a, #000000)
+.altBG {
+  background: linear-gradient(100deg, #1a1a1a, #000000);
 }
-.componentGlow{
-    transition: $transition;
-    box-shadow: 0px 1px 1px transparent;
+.componentGlow {
+  transition: $transition;
+  box-shadow: 0px 1px 1px transparent;
 }
-.overflow{
-    overflow-x: hidden;
-    overflow-y: scroll !important;
-    height: 100%;
-    width: 100%;
-    justify-content: center;
+.overflow {
+  overflow-x: hidden;
+  overflow-y: scroll !important;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
 }
-.defaultCursor{
-    cursor: default !important;
+.defaultCursor {
+  cursor: default !important;
 }
-.noPadding{
-    padding-left: 0px !important;
+.noPadding {
+  padding-left: 0px !important;
 }
-.fadeIn{
-    animation: fadeIn 1s;
+.fadeIn {
+  animation: fadeIn 1s;
 }
-.time{
-    opacity: 30%;
-    font-size: 10px;
+.time {
+  opacity: 30%;
+  font-size: 10px;
 }
-.css-1vooibu-MuiSvgIcon-root{
-    fill: $yellow !important;
+.css-1vooibu-MuiSvgIcon-root {
+  fill: $yellow !important;
 }
-@keyframes fadeIn{
-    0% {opacity: 0;}
-    100% {opacity: 1;}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 //gives time for things to load before conditionally rendering components with fetched data
-.delayedFadeIn{
+.delayedFadeIn {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 1.2s;
+}
+@keyframes delayedFadeIn {
+  0% {
     opacity: 0;
-    animation: fadeIn 1s forwards;
-    animation-delay: 1.2s;
+  }
+  100% {
+    opacity: 1;
+  }
 }
-@keyframes delayedFadeIn{
-    0% {opacity: 0;}
-    100% {opacity: 1;}
+.longFadeIn {
+  animation: longFadeIn 3s;
 }
-.longFadeIn{
-    animation: longFadeIn 3s;
+@keyframes longFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
-@keyframes longFadeIn{
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-}
-
-
 
 @media (max-width: 1200px) {
 }
 @media (max-width: 1024px) {
-    
 }
-@media (max-width: 768px) {  
-    
-    .pageHeader{
-        font-size: 60px;
-    }
+@media (max-width: 768px) {
+  .pageHeader {
+    font-size: 60px;
+  }
 }
-@media (max-width: 480px) {   
-    .pageHeader{
-        font-size: 40px;
-    }
+@media (max-width: 480px) {
+  .pageHeader {
+    font-size: 40px;
+  }
 }
-@media (max-width: 320px) { 
-    .pageHeader{
-        font-size: 30px;
-    }
+@media (max-width: 320px) {
+  .pageHeader {
+    font-size: 30px;
+  }
 }
-
-
-
-
-
-
-
 
 /* Bootstrap Sass overrides */
 

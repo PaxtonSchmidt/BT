@@ -1,21 +1,21 @@
-import { Ticket } from "../../API/interfaces/ticket"
-import { focusedTicketActionType } from "../action-types/focusedTicketActionType"
+import { Ticket } from '../../API/interfaces/ticket';
+import { focusedTicketActionType } from '../action-types/focusedTicketActionType';
 
 interface updateFocusedTicket {
-    type: focusedTicketActionType.UPDATE,
-    payload: Ticket
+  type: focusedTicketActionType.UPDATE;
+  payload: Ticket;
 }
 
 interface editFocusedTicket {
-    type: focusedTicketActionType.EDIT,
-    payload: Ticket
+  type: focusedTicketActionType.EDIT;
+  payload: Ticket;
 }
 
-interface setFocusedTicketToUnassigned{
-    type: focusedTicketActionType.SET_TO_UNASSIGNED
+interface setFocusedTicketToUnassigned {
+  type: focusedTicketActionType.SET_TO_UNASSIGNED;
 }
 
-export type Action = updateFocusedTicket | editFocusedTicket | setFocusedTicketToUnassigned
-
-
-
+export type Action =
+  | updateFocusedTicket
+  | editFocusedTicket
+  | setFocusedTicketToUnassigned;

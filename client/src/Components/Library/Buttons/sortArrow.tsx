@@ -1,12 +1,16 @@
-import React from 'react'
-import arrow from '../../Images/Icons/arrow-up-short.svg'
+import React from 'react';
+import arrow from '../../Images/Icons/arrow-up-short.svg';
 
 interface Props {
-    isSortReversed: boolean;
+  isSortReversed: boolean;
 }
 
-export default function sortArrow(props: Props){
-    return (
-        <img src={arrow} className={`fadeIn ${props.isSortReversed ? 'twist' : ''}`} style={{position: 'absolute'}}/>
-    )
+export default function sortArrow(props: Props) {
+  return (
+    <img
+      src={arrow}
+      className={`fadeIn ${props.isSortReversed ? 'twist' : ''}`}
+      style={{ position: 'absolute' }}
+    />
+  );
 }
