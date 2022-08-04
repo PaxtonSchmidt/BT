@@ -134,6 +134,12 @@
   z-index: 0;
 }
 
+.chosenSideBarButton {
+  background-color: #aaaaaa !important;
+  color: black;
+  fill: black;
+}
+
 .sideBarItem:hover {
   background-color: rgba(240, 248, 255, 0.158);
 }
@@ -802,7 +808,7 @@ input[type='number'] {
 .ChosenTicket {
   -webkit-transform: translateY(-1px);
           transform: translateY(-1px);
-  background-color: #ffffff98 !important;
+  background-color: #aaaaaa !important;
   color: black !important;
 }
 
@@ -920,6 +926,10 @@ input[type='number'] {
   overflow-y: scroll;
   overscroll-behavior: none;
   width: calc(100%-20px);
+}
+
+.projectNoteListContainer {
+  width: 100%;
 }
 
 .ticketNoteList:hover {
@@ -1455,7 +1465,7 @@ input[type='number'] {
 }
 
 .selectedProjectInList {
-  background-color: #ffffff98 !important;
+  background-color: #aaaaaa !important;
   color: black;
   -webkit-transform: translateY(-2px);
           transform: translateY(-2px);

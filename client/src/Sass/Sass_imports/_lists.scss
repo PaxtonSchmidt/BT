@@ -175,6 +175,9 @@
   overscroll-behavior: none;
   width: calc(100%-20px);
 }
+.projectNoteListContainer{
+  width: 100%;
+}
 .ticketNoteList:hover {
   border-bottom: 1px solid $dimYellow;
 }
