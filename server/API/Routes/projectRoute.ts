@@ -5,10 +5,12 @@ let projectAuthorization = require('../Controllers/Authorization/projectAuthoriz
 
 router.post("/addProject", teamAuthorization.addProject);
 router.post("/addListOfMembersToProject", projectAuthorization.addListOfMembersToProject);
+router.post("/addProjectComment", projectAuthorization.addProjectComment)
 
 router.get('/getProjectsStatistics', projectAuthorization.getProjectsStatistics)
 router.get('/getRelatedMemberDetails', projectAuthorization.getRelatedMemberDetails)
 router.get('/getUsersOnTeam', projectAuthorization.getUsersOnTeam)
+router.get("/getProjectComments", projectAuthorization.getProjectComments)
 
 router.put('/updateMemberRole', projectAuthorization.updateMemberRole)
 

@@ -44,14 +44,8 @@ async function getTicketNotes(req: Express.Request, res: Express.Response) {
   }
 }
 
-async function submitTicketComment(
-  req: Express.Request,
-  res: Express.Response
-) {
-  let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(
-    req.headers.cookie,
-    consumeCookieFlags.tokenUserTeamRoleIdFlag
-  );
+async function submitTicketComment( req: Express.Request,  res: Express.Response) {
+  let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
   let newComment: string = req.body.comment;
   let ticket: any = null;
   let projectMembersIds: number[] | null = null;
@@ -70,7 +64,6 @@ async function submitTicketComment(
         }
       }) !== -1;
     isUserAllowedToComment = isUserIDInMembersList;
-    // || userTeamRoleCombo.roleID === 1
   } catch (e) {
     return res
       .status(500)

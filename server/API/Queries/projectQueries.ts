@@ -163,6 +163,7 @@ function getProjectIdByTeamIdAndProjectName(
   let sql = 'SELECT project_id FROM projects WHERE team_id= ? AND name= ?';
   return new Promise<any>((resolve, reject) => {
     connectionPool.query(sql, values, (err: any, result: any) => {
+      console.log(result)
       return err ? reject(err) : resolve(result[0]);
     });
   });
@@ -304,6 +305,32 @@ async function transactionRemoveTargetUserFromProject(
     }
   });
 }
+function addProjectComment(comment: string, project_id: number, user_id: number, date: string){
+  let values = [project_id, user_id, date, comment]
+  let sql = 'INSERT INTO project_comment SET project_id= ?, author_user_id= ?, date_created= ?, project_comment_body= ?'
+  return new Promise<any>((resolve, reject) => {
+    connectionPool.query(sql, values, (err: any, result: any) => {
+      return err ? reject(err) : resolve(result);
+    });
+  });
+}
+function getUsersProjectsComments(userID: number, teamID: number){
+  let values = [userID, teamID]
+  let sql = 'SELECT pc.project_comment_id AS comment_id, pc.project_id, u.username AS author_username, u.discriminator AS author_discriminator, pc.date_created, pc.project_comment_body AS body FROM project_comment pc LEFT JOIN users u ON pc.author_user_id = u.user_id WHERE pc.project_id IN (SELECT project_id FROM user_projects WHERE user_id= ? AND relevant_team_id = ?)'
+  return new Promise<any>((resolve, reject) => {
+    connectionPool.query(sql, values, (err: any, result: any) => {
+      return err ? reject(err) : resolve(result);
+    });
+  });
+}
+function getAllTeamProjectComments(teamId: number){
+  let sql = 'SELECT pc.project_comment_id AS comment_id, pc.project_id, u.username AS author_username, u.discriminator AS author_discriminator, pc.date_created, pc.project_comment_body AS body FROM project_comment pc LEFT JOIN users u ON pc.author_user_id = u.user_id WHERE pc.project_id IN (SELECT project_id FROM projects WHERE team_id= ?)'
+  return new Promise<any>((resolve, reject) => {
+    connectionPool.query(sql, teamId, (err: any, result: any) => {
+      return err ? reject(err) : resolve(result);
+    });
+  });
+}
 
 module.exports = {
   addProject,
@@ -323,4 +350,7 @@ module.exports = {
   projectMembersIdsByProjectId,
   getAllProjectsOnTeam,
   getProjectMembersForLead,
+  addProjectComment,
+  getUsersProjectsComments,
+  getAllTeamProjectComments
 };
