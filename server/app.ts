@@ -1,3 +1,4 @@
+import { ProjectNote } from './API/Interfaces/ProjectNote';
 import { TicketNote } from './API/Interfaces/TicketNote';
 import authenticateRequest from './API/Middleware/authenticateRequest';
 import authenticateJWT from './API/Services/authenticateJWT';
@@ -17,7 +18,7 @@ const server = http.createServer(app);
 server.listen('4000', () => {
   console.log('server started on port 4000');
 });
-
+console.log('a')
 app.use(express.json());
 app.use('/', require('./API/Routes/AuthenticationRoutes/authenticationRoute'));
 app.use('/signup/', require('./API/Routes/signUpRoute'));
@@ -65,7 +66,24 @@ io.on('connection', (socket: any) => {
       );
       if (isUserOnProject) {
         socket.join(ticket_id);
-      } else if (tokenInformation.roleID === 1) {
+      } else {
+        new Error('Cant connect to chat for lack of perms...');
+      }
+    }
+  );
+  socket.on(
+    'joinProject',
+    async function (project_id: number) {
+      console.log('joined proj room')
+      let tokenInformation = consumeCookie(
+        socket.handshake.headers.cookie,
+        consumeCookieFlags.tokenUserTeamRoleIdFlag
+      );
+      let isUserOnProject = consumeRowDataPacket(
+        await projects.isUserOnProject(tokenInformation.userID, project_id)
+      );
+      if (isUserOnProject || tokenInformation.roleID === 1) {
+        socket.join(`project:${project_id}`);
       } else {
         new Error('Cant connect to chat for lack of perms...');
       }
@@ -73,6 +91,10 @@ io.on('connection', (socket: any) => {
   );
   socket.on('newTicketNote', (ticketNote: TicketNote) => {
     socket.to(ticketNote.relevant_ticket_id).emit('newTicketNote', ticketNote);
+  });
+  socket.on('newProjectNote', (projectNote: ProjectNote) => {
+    console.log(projectNote.body)
+    socket.to(`project:${projectNote.project_id}`).emit('newProjectNote', projectNote);
   });
 });
 
