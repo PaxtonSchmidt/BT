@@ -50,7 +50,7 @@ function selectTeam(req: any, res: any) {
             token_v: token_v + 1,
           },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: '1800s' }
+          { expiresIn: '600s' }
         );
 
         return res

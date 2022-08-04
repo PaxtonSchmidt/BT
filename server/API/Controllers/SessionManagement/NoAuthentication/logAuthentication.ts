@@ -31,17 +31,13 @@ function login(req: any, res: any) {
           {
             user_id: targetUser.user_id,
             token_v: targetUser.token_v,
-          }, //cannot be a string because it breaks jwt.Sign()->{expiresIn}
+          }, 
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: '300s' }
+          { expiresIn: '180s' }
         );
-
-        res
-          .cookie('token', accessToken, {
+        res.cookie('token', accessToken, {
             httpOnly: true,
-          })
-          .status(200)
-          .send({ message: 'Welcome to our application' });
+          }).status(200).send({ message: 'Welcome to our application' });
       } else {
         res
           .status(401)
