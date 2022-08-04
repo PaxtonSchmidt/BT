@@ -27,6 +27,7 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
   const { updateTickets } = bindActionCreators(TicketsActionCreators, dispatch);
   const loginState = useSelector((state: State) => state.login);
   const sessionState = useSelector((state: State) => state.session);
+  const socketState = useSelector((state: State) => state.socket);
   const isSidebarExtensionPreferred =
     window.localStorage.getItem('sbEX') === 'true';
   const [isExpanded, setIsExpanded] = useState<boolean>(
@@ -71,6 +72,18 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
       getTickets();
     }
   }, []);
+  useEffect(() => {
+    console.log('sd')
+    if(sessionState.currentTeam !== undefined && socketState){
+      sessionState.currentTeam.projects.forEach((project: any)=>{
+        console.log(project)
+        socketState.emit(
+          'joinProject',
+          project.project_id
+        );
+      })
+    }
+  }, [sessionState, []])
 
   let role = 3; //defaults to dev, sets to actual role when the sessionState arrives
   role = sessionState.currentTeam?.team_role;
