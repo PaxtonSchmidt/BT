@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { TicketNote } from '../../../API/interfaces/TicketNote';
 import postTicketComment from '../../../API/Requests/Tickets/PostTicketComment';
 import { State } from '../../../Redux/reducers';
-import TicketNoteListItem from './TicketNoteListItem';
 import * as _ from 'lodash';
 import ChatDateDivider from '../Feed/ChatDateDivider';
 import { Formik } from 'formik';
@@ -14,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { AlertActionCreators } from '../../../Redux';
 import { bindActionCreators } from 'redux';
 import { hideAlert } from '../../../Redux/action-creators/alertActionCreator';
+import NoteListItem from './NoteListItem';
 
 export default function TicketNoteList() {
   const dispatch = useDispatch();
@@ -43,6 +43,7 @@ export default function TicketNoteList() {
       },
     }).then((res) => res.json());
     let notes = await response;
+    console.log(notes)
     return setAllNotes(notes);
   }
   useEffect(() => {
@@ -76,7 +77,7 @@ export default function TicketNoteList() {
     let arrayList = [];
     let i = 0;
     do {
-      arrayList.push(<TicketNoteListItem note={chosenNotes[i]} />);
+      arrayList.push(<NoteListItem note={chosenNotes[i]} />);
       i++;
     } while (i < chosenNotes.length);
 
@@ -128,7 +129,7 @@ export default function TicketNoteList() {
                 transition: '0',
               }}
             >
-              <p>{`There are no notes for this ticket yet`}</p>
+              <p>{`There are no comments for this ticket yet`}</p>
             </div>
           )}
 
