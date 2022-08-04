@@ -9,16 +9,9 @@ import ComposedStats, {
 } from '../../../../API/interfaces/statsTypes';
 import { State } from '../../../../Redux/reducers';
 import ProjectList from '../../../Library/Projects/ProjectList';
-import {
-  AssigneeStatistic,
-  Statistic,
-} from '../../../ComponentInterfaces/statistic';
-import ProjectAssigneeChart from './ProjectAssigneeChart';
-import ProjectChart from './ProjectPriorityChart';
+import ProjectChat from './ProjectChat';
 import ProjectFormContainer from './ProjectFormContainer';
 import ProjectMembersManage from './ProjectMembersManage';
-import ProjectPriorityChart from './ProjectPriorityChart';
-import ProjectStatusChart from './ProjectStatusChart';
 
 interface Props {
   isTeamSelected: boolean;
@@ -173,68 +166,14 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
           >
             <ProjectList />
             <div className='pageBodyContainer5'>
-              <div className='pageBodyQuadrant'>
+              <div className='pageBodyQuadrant' style={{borderRight: 'none'}}>
                 <ProjectMembersManage />
               </div>
-              <div
-                className='pageBodyQuadrant fadeIn'
-                style={{
-                  borderRight: 'none',
-                  flexDirection: 'column',
-                  paddingLeft: '10px',
-                }}
-              >
-                <div className='selectChartButtons'>
-                  <div style={{ color: 'white' }}>
-                    <p>{`Data:`}</p>
-                  </div>
-                  <div
-                    id='status'
-                    className='inComponentButton chartTypeButton scaleYonHover'
-                    onClick={() => setChartType(ChartTypes.status)}
-                    style={{ marginLeft: 'auto' }}
-                  >
-                    <p style={{ margin: '0px' }}>Status</p>
-                  </div>
-                  <div
-                    id='priority'
-                    className='inComponentButton chartTypeButton scaleYonHover'
-                    onClick={() => setChartType(ChartTypes.priority)}
-                    style={{ marginLeft: '3px' }}
-                  >
-                    <p style={{ margin: '0px' }}>Priority</p>
-                  </div>
-                  {focusedProjectState.name !== 'All' && (
-                    <div
-                      className='inComponentButton chartTypeButton scaleYonHover'
-                      id='assignee'
-                      onClick={() => setChartType(ChartTypes.assignee)}
-                      style={{ marginLeft: '3px' }}
-                    >
-                      <p style={{ margin: '0px' }}>Assignee</p>
-                    </div>
-                  )}
-                </div>
-                {isLoading ? (
-                  <></>
-                ) : (
-                  <>
-                    {chartType === ChartTypes.status && (
-                      <ProjectStatusChart
-                        data={chartData}
-                        isLoading={isLoading}
-                      />
-                    )}
-                    {chartType === ChartTypes.assignee && (
-                      <ProjectAssigneeChart data={chartData} />
-                    )}
-                    {chartType === ChartTypes.priority && (
-                      <ProjectPriorityChart data={chartData} />
-                    )}
-                  </>
-                )}
+              <div className='pageBodyQuadrant fadeIn' style={{borderRight: 'none'}}>
+                <ProjectChat />
               </div>
             </div>
+            
           </div>
         </div>
       );
@@ -243,3 +182,4 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
   }
   return <Navigate to='/login' />;
 }
+
