@@ -16,7 +16,9 @@ import { Session } from '../../../../Redux/interfaces/session';
 import { State } from '../../../../Redux/reducers';
 import SelectTeamPageButtons from '../../../Library/Buttons/buttonsDesktop';
 import TeamList from '../../../Library/Teams/TeamList';
-import { response } from 'express';
+import e, { response } from 'express';
+import getTeamsFromDB from '../../../../API/Requests/Teams/GetTeamFromDB';
+import alertDispatcher from '../../../../API/Requests/AlertDispatcher';
 
 interface Props {
   setIsTeamSelected: Dispatch<SetStateAction<boolean>>;
@@ -31,39 +33,25 @@ export default function SelectTeamPage({ setIsTeamSelected }: Props) {
     FocusedTicketActionCreators,
     dispatch
   );
-  const { fireAlert, hideAlert } = bindActionCreators(
-    AlertActionCreators,
-    dispatch
-  );
+  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch);
   const loginState = useSelector((state: State) => state.login);
   let [isBusy, setBusy] = useState(true);
   let nullSession: any = {};
   let nullTicket: any = {};
 
-  async function getTeamsFromDB() {
-    let response = await fetch('/teams/getTeams', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((r) => r.json().then((data) => ({ status: r.status, body: data })));
-
-    if (response.status === 200) {
+  async function getTeams() {
+    let response = await getTeamsFromDB()
+    if(response.isOk){
       return updateTeams(response.body);
-    } else if (response.status === 400) {
+    } else if(response.error.status === 400){
       return window.location.assign('/login');
     } else {
-      fireAlert({
-        isOpen: true,
-        status: response.status,
-        message: response.body.message,
-      });
-      return setTimeout(hideAlert, 6000);
+      return alertDispatcher(fireAlert, response.error, hideAlert)
     }
   }
 
   useEffect(() => {
-    getTeamsFromDB();
+    getTeams();
     setBusy(false);
     updateTickets([]);
     updateSession(nullSession);

@@ -1,11 +1,14 @@
 import React, { useState, Dispatch } from 'react';
 import { SetStateAction } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import postSelectTeam from '../../../API/Requests/Login/PostSelectTeam';
 import { authService } from '../../../Services/AuthService';
 import { Team, Teams } from '../../../Redux/interfaces/teams';
 import TeamCard from './TeamCard';
+import { bindActionCreators } from 'redux';
+import { AlertActionCreators } from '../../../Redux';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
 
 interface Props {
   setIsTeamSelected: Dispatch<SetStateAction<boolean>>;
@@ -13,15 +16,21 @@ interface Props {
 
 function TeamList(setIsTeamSelected: Props) {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators,dispatch);
   const initial: Team[] = [];
   const teamsState = useSelector((state: Teams) => state.teams);
   let teams = Object.assign(initial, teamsState);
 
   async function handleSelect(team: string) {
-    console.log(await postSelectTeam({ team }));
-    authService.selectTeam();
-    setIsTeamSelected.setIsTeamSelected(true);
-    navigate('/tickets');
+    let response = await postSelectTeam({ team })
+    if(response.isOk){
+      authService.selectTeam();
+      setIsTeamSelected.setIsTeamSelected(true);
+      navigate('/tickets');
+    }else{
+      alertDispatcher(fireAlert, response.error, hideAlert)
+    }
   }
 
   function handleGoToCreateTeam() {

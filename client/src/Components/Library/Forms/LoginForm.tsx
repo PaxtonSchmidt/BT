@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AlertActionCreators, LoginActionCreators } from '../../../Redux';
 import postInvalidateJWT from '../../../API/Requests/Login/PostInvalidateJWT';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
 
 export default function LoginForm() {
     const dispatch = useDispatch();
@@ -35,16 +36,11 @@ export default function LoginForm() {
 
     async function handleSubmit(data: Claims) {
         let attemptResult = await authService.signIn(data);
-        if (attemptResult.status === 200) {
+        if(attemptResult.isOk){
             login();
             navigate('/selectTeam');
         } else {
-            fireAlert({
-                isOpen: true,
-                status: attemptResult.status,
-                message: attemptResult.body,
-            });
-            setTimeout(hideAlert, 6000);
+            alertDispatcher(fireAlert, attemptResult.error, hideAlert)
         }
     }
     return (

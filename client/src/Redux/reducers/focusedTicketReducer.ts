@@ -10,8 +10,6 @@ const focusedTicketReducer = (state: any = initialState, action: Action) => {
       return action.payload;
     case focusedTicketActionType.EDIT:
       editedTicket = { ...state };
-      console.log(state);
-      console.log(editedTicket);
       editedTicket.assignee_username =
         action.payload.assignee === undefined
           ? ''

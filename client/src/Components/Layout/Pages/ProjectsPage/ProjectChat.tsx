@@ -6,6 +6,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { ProjectNote } from '../../../../API/interfaces/ProjectNote';
+import alertDispatcher from '../../../../API/Requests/AlertDispatcher';
+import getProjectComments from '../../../../API/Requests/Projects/GetProjectComments';
 import postProjectComment from '../../../../API/Requests/Projects/PostProjectComment';
 import { AlertActionCreators } from '../../../../Redux';
 import { State } from '../../../../Redux/reducers';
@@ -30,24 +32,13 @@ const ProjectChat: React.FC = () => {
       }, [socketState]);
 
     useEffect(() => {
-        async function getProjectComments(){
-            let response = await fetch('/projects/getProjectComments', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-                }).then((r) => r.json().then((data) => ({ status: r.status, body: data })));
-                if(response.status !== 200){
-                    fireAlert({
-                        isOpen: true,
-                        status: response.status,
-                        message: response.body.message,
-                      });
-                      return setTimeout(hideAlert, 6000);
-                }
-            return setAllNotes(response.body);
-        }
-        getProjectComments()
+      (async ()=>{
+        let response = await getProjectComments()
+        response.isOk
+        ? setAllNotes(response.body)
+        : alertDispatcher(fireAlert, response.error, hideAlert)
+      })()
+      getProjectComments()
     }, [])
 
     function constructVisibleNotes() {
@@ -158,12 +149,11 @@ const ProjectChat: React.FC = () => {
                     );
                     let project_id: number 
                     if(focusedProject.name !== 'All'){
-                        console.log(focusedProject.name)
                         project_id =  sessionState.currentTeam.projects.find((project: any) => project.name === focusedProject.name).project_id
                     } else {
                         project_id = -1
                     }
-                    if (response.status === 200) {
+                    if(response.isOk){
                       let newProjectNoteToEmit: ProjectNote = {
                         comment_id: response.body.insertID,
                         author_username: sessionState.currentUser.username,
@@ -177,7 +167,6 @@ const ProjectChat: React.FC = () => {
                           .split('T')
                           .join(' '),
                       };
-                      console.log(newProjectNoteToEmit)
                       socketState.emit('newProjectNote', newProjectNoteToEmit);
                       setAllNotes((previousState) => [
                         ...previousState,
@@ -185,12 +174,7 @@ const ProjectChat: React.FC = () => {
                       ]);
                       resetForm();
                     } else {
-                      fireAlert({
-                        isOpen: true,
-                        status: response.status,
-                        message: response.body.message,
-                      });
-                      setTimeout(hideAlert, 6000);
+                      alertDispatcher(fireAlert, response.error, hideAlert)
                     }
                   }
                   return handleNoteSubmit(data.note);

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import alertDispatcher from '../../../../API/Requests/AlertDispatcher';
+import getTeamDetails from '../../../../API/Requests/Teams/GetTeamDetails';
+import { AlertActionCreators } from '../../../../Redux';
 import { State } from '../../../../Redux/reducers';
 
 interface TeamDetail {
@@ -11,20 +16,22 @@ interface TeamDetail {
 }
 
 export default function TeamDetails() {
+  const dispatch = useDispatch()
+  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch);
   const sessionState = useSelector((state: State) => state.session);
   const [isLoading, setIsLoading] = useState<boolean>();
   const [teamDetails, setTeamDetails] = useState<TeamDetail>();
 
   async function getTeamatesInformation() {
     setIsLoading(true);
-    let response: any = fetch('/teams/getTeamDetails', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((res) => res.json());
-    setTeamDetails(await response);
-    setIsLoading(false);
+    let response = await getTeamDetails()
+    if(response.isOk){
+      setTeamDetails(await response.body);
+      setIsLoading(false);
+    } else {
+      alertDispatcher(fireAlert, response.error, hideAlert)
+    }
+    
   }
   useEffect(() => {
     getTeamatesInformation();

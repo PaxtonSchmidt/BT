@@ -13,6 +13,7 @@ import {
   FocusedTicketActionCreators,
   TicketsActionCreators,
 } from '../../../Redux';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher'
 
 interface Props {
   isExtended?: boolean;
@@ -159,45 +160,34 @@ export default function TicketForm(props: Props) {
         } else {
           if (!props.isEditMode) {
             async function handleSubmitTicket() {
-              console.log(data);
               let response = await postTicket(data);
-              if (response.status !== 200) {
-                fireAlert({
-                  isOpen: true,
-                  status: response.status,
-                  message: response.body.message,
-                });
-                setTimeout(hideAlert, 6000);
-              } else {
+              
+              !response.isOk 
+              ? alertDispatcher(fireAlert, response.error, hideAlert)
+              : (()=>{
                 if (props.setIsExtended) {
                   props.setIsExtended(false);
                 }
                 updateFocusedTicket(response.body.ticket);
                 addTicket(response.body.ticket);
                 resetForm();
-              }
+              })()
             }
             handleSubmitTicket();
           } else {
             async function handleEditTicket() {
-              console.log(data);
               let response = await putEditTicket(
                 data,
                 focusedTicketState.ticket_id,
                 focusedTicketState.project_id
-              );
-              if (response.status !== 200) {
-                fireAlert({
-                  isOpen: true,
-                  status: response.status,
-                  message: response.body.message,
-                });
-                setTimeout(hideAlert, 6000);
-              } else {
+              )
+              if(response.isOk){
                 editTicket(data);
                 editFocusedTicket(data);
                 resetForm();
                 props.setIsEditOpen(false);
+              } else {
+                alertDispatcher(fireAlert, response.error, hideAlert)
               }
             }
             handleEditTicket();

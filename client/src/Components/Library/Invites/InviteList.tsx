@@ -6,15 +6,14 @@ import { Invite } from '../../ComponentInterfaces/invite';
 import { AlertActionCreators, InvitesActionCreators } from '../../../Redux';
 import { Invites } from '../../../Redux/interfaces/invites';
 import InviteCard from './InviteCard';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
+import getInvites from '../../../API/Requests/Invites/getInvites';
 
 function InviteList() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
+  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators,dispatch);
   const { updateInvites } = bindActionCreators(InvitesActionCreators, dispatch);
-  const { fireAlert, hideAlert } = bindActionCreators(
-    AlertActionCreators,
-    dispatch
-  );
   const initial: any = [];
   const invitesState = useSelector((state: Invites) => state.invites);
   let invites = Object.assign(initial, invitesState);
@@ -27,24 +26,13 @@ function InviteList() {
   }
 
   async function handleRefresh() {
-    let response = await fetch('/teams/getTeamInvites', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((r) => r.json().then((data) => ({ status: r.status, body: data })));
-
-    if (response.status === 200) {
-      return updateInvites(response.body);
-    } else if (response.status === 404) {
-      return [];
+    let response = await getInvites()
+    if(response.isOk) {
+      return updateInvites(response.body)
+    } else if(response.error.status === 404){
+      return []
     } else {
-      fireAlert({
-        isOpen: true,
-        status: response.status,
-        message: response.body.message,
-      });
-      return setTimeout(hideAlert, 6000);
+      alertDispatcher(fireAlert, response.error, hideAlert)
     }
   }
 

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import house from '../../../Images/Icons/house.svg';
 import project from '../../../Images/Icons/project.svg';
 import ticket from '../../../Images/Icons/ticket.svg';
 import people from '../../../Images/Icons/people.svg';
 import swap from '../../../Images/Icons/arrow-left-right.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface Props {
     teamRole: number;
@@ -18,23 +18,22 @@ interface Destinations {
 }
 
 export default function Sidebar(props: Props) {
+    const location = useLocation();
     const navigate = useNavigate();
     let destinations: Destinations = {
-        tickets: 'tickets',
-        projects: 'projects',
-        team: 'team',
+        tickets: '/tickets',
+        projects: '/projects',
+        team: '/team',
         selectTeam: '/selectTeam',
     };
-    let intialPage: string = window.sessionStorage.getItem('pg') || ''
-    const [chosenPage, setChosenPage] = useState<string>(intialPage);
-
+    const [chosenPage, setChosenPage] = useState<string>(location.pathname);
+    useEffect(()=>setChosenPage(location.pathname), [location.pathname])
     let isTeamOwnerOrLead = props.teamRole === 1 || props.teamRole === 2;
     function handleNavSelect(location: string) {
         navigate(location);
     }
 
     function handleSelect(destination: string) {
-        window.sessionStorage.setItem('pg', destination);
         handleNavSelect(destination);
         setChosenPage(destination);
     }
@@ -170,7 +169,6 @@ export default function Sidebar(props: Props) {
                 )}
             </div>
 
-            {/* This component will be a quick switch between teams the current user belongs to. Requires re-login by expiring token? */}
             <div
                 className={`navItem sideBarItem scaleYonHover 
                 ${

@@ -12,30 +12,24 @@ import ProjectMembersList from '../../../Library/Projects/ProjectMembersList';
 import { Box, Modal } from '@mui/material';
 import { ProjectMember } from '../../../../Redux/interfaces/member';
 import { removeMemberFromProjectInSession } from '../../../../Redux/action-creators/sessionActionCreators';
+import { CustomResponse } from '../../../../API/Requests/Base/baseRequest';
+import getMemberDetails from '../../../../API/Requests/Projects/GetMemberDetails';
+import alertDispatcher from '../../../../API/Requests/AlertDispatcher';
+import updateMembetRole from '../../../../API/Requests/Projects/PutUpdateMembetRole';
+import removeMember from '../../../../API/Requests/Projects/DeleteMember';
 let deepClone = require('lodash.clonedeep');
 
 export default function ProjectMembersManage() {
   const focusedMemberState = useSelector((state: State) => state.focusedMember);
   const sessionState = useSelector((state: State) => state.session);
-  const [isMemberSelected, setIsMemberSelected] = useState(
-    focusedMemberState.username !== ''
-  );
-  const focusedProjectState = useSelector(
-    (state: State) => state.focusedProject
-  );
+  const [isMemberSelected, setIsMemberSelected] = useState(focusedMemberState.username !== '');
+  const focusedProjectState = useSelector((state: State) => state.focusedProject);
   const [isDirty, setIsDirty] = useState(false);
   const [memberDetails, setMemberDetails] = useState<any[]>([]);
   const dispatch = useDispatch();
-  const { updateFocusedMember } = bindActionCreators(
-    FocusedMemberActionCreators,
-    dispatch
-  );
-  const { removeMemberFromProjectInSession, updateProjectMemberRoleInSession } =
-    bindActionCreators(SessionActionCreators, dispatch);
-  const { fireAlert, hideAlert } = bindActionCreators(
-    AlertActionCreators,
-    dispatch
-  );
+  const { updateFocusedMember } = bindActionCreators(FocusedMemberActionCreators,dispatch);
+  const { removeMemberFromProjectInSession, updateProjectMemberRoleInSession } = bindActionCreators(SessionActionCreators, dispatch);
+  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators,dispatch);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRoleModalOpen, setIsRoleModalOpen] = useState<boolean>(false);
   let isUserAllowedToEditRole = false;
@@ -51,16 +45,12 @@ export default function ProjectMembersManage() {
 
   useEffect(() => setIsMemberSelected(!isMemberSelected), [focusedMemberState]);
   useEffect(() => {
-    async function getMemberDetails() {
-      let response: any = fetch('/projects/getRelatedMemberDetails', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then((res) => res.json());
-      return setMemberDetails(await response);
-    }
-    getMemberDetails();
+    (async()=>{
+      let response: CustomResponse = await getMemberDetails()
+      return response.isOk
+      ? setMemberDetails(await response.body)
+      : alertDispatcher(fireAlert, response.error, hideAlert)
+    })()
   }, [sessionState]);
 
   function handleCloseUserDetailsForm() {
@@ -133,21 +123,8 @@ export default function ProjectMembersManage() {
         newRoleId: 3,
       };
     }
-    let response: any = await fetch('/projects/updateMemberRole', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updateUser),
-    }).then((r) => r.json().then((data) => ({ status: r.status, body: data })));
-    if (response.status !== 200) {
-      fireAlert({
-        isOpen: true,
-        status: response.status,
-        message: response.body.message,
-      });
-      setTimeout(hideAlert, 6000);
-    } else {
+    let response: CustomResponse = await updateMembetRole(updateUser)
+    if(response.isOk){
       let focusedProject = sessionState.currentTeam.projects.find(
         (project: any) => project.name === updateUser.targetProjectName
       );
@@ -160,30 +137,20 @@ export default function ProjectMembersManage() {
       updateProjectMemberRoleInSession(newStateUserProject);
       setIsRoleModalOpen(false);
       updateFocusedMember({ username: '', discriminator: 0 });
+    } else {
+      alertDispatcher(fireAlert, response.error, hideAlert)
     }
   }
   //submitting member removal
   async function handleRemoveMember() {
-    console.log('sad');
     let targetUserProject = {
       username: focusedMemberState.username,
       discriminator: focusedMemberState.discriminator,
       project: focusedProjectState.name,
-    };
-    let response: any = await fetch('/projects/removeMember', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(targetUserProject),
-    }).then((r) => r.json().then((data) => ({ status: r.status, body: data })));
-    if (response.status !== 200) {
-      fireAlert({
-        isOpen: true,
-        status: response.status,
-        message: response.body.message,
-      });
-      setTimeout(hideAlert, 6000);
+    }
+    let response: CustomResponse = await removeMember(targetUserProject)
+    if (!response.isOk) {
+      alertDispatcher(fireAlert, response.error, hideAlert)
     } else {
       let focusedProject = sessionState.currentTeam.projects.find(
         (project: any) => project.name === targetUserProject.project

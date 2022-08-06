@@ -46,7 +46,6 @@ async function inviteUserToTeam(req: any, res: any) {
         res
       )
     );
-    console.log(isInviteExisting);
     isAlreadyOnTeam = consumeRowDataPacket(
       await teams.fetchIsOnTeam(recipientID, userTeamRoleCombo.teamID)
     );
@@ -94,17 +93,24 @@ async function addProject(req: any, res: any) {
   let projectIdAtAttemptedProjectName = { project_id: '' };
   let projectName = req.body.name;
   let isProjectNameTakenOnTeam = true;
+  let amountOfTeamProjects: number | null = null
 
   try {
     projectIdAtAttemptedProjectName =
-      await projects.getProjectIdByTeamIdAndProjectName(
-        userTeamRoleCombo.teamID,
-        projectName
-      );
+    await projects.getProjectIdByTeamIdAndProjectName(
+      userTeamRoleCombo.teamID,
+      projectName
+    );
+    let amountOfTeamProjectsPacket = await teams.getProjectCount(userTeamRoleCombo.teamID)
+    amountOfTeamProjects = Object.values<number>(amountOfTeamProjectsPacket[0])[0]
   } catch (e) {
     return res
       .status(500)
       .send({ message: 'Server couldnt check invite information...' });
+  }
+  let projectLimit = 10
+  if(amountOfTeamProjects !== null && (amountOfTeamProjects >= projectLimit)){
+    return res.status(400).send({message: `There is a maximum of ${projectLimit} projects per team...`})
   }
 
   projectIdAtAttemptedProjectName

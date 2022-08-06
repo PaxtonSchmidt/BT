@@ -5,6 +5,7 @@ import postInviteToTeam from '../../../API/Requests/Invites/PostInviteToTeam';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AlertActionCreators } from '../../../Redux';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
 
 interface Props {
   isExtended: boolean;
@@ -24,20 +25,12 @@ export default function InviteToTeamForm(props: Props) {
         initialValues={{ invitee: '', discriminator: '' }}
         onSubmit={async (data, { resetForm }) => {
           let response = await postInviteToTeam(data);
-          console.log(response);
-          response.status !== 200
-            ? (() => {
-                fireAlert({
-                  isOpen: true,
-                  status: response.status,
-                  message: response.body.message,
-                });
-                setTimeout(hideAlert, 6000);
-              })()
-            : (() => {
-                props.setIsExtended(false);
-                resetForm();
-              })();
+          if(response.isOk){
+            props.setIsExtended(false) 
+            resetForm()
+          } else {
+            alertDispatcher(fireAlert, response.error, hideAlert)
+          }
         }}
       >
         {({

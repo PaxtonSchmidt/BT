@@ -17,7 +17,6 @@ async function addTeam(req: Express.Request, res: Express.Response) {
 
   try {
     let isNameTakenPacket = await teams.isNameTaken(req.body.name);
-    console.log(isNameTakenPacket);
     isNameTaken = consumeRowDataPacket(isNameTakenPacket);
   } catch (e) {
     return res

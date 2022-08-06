@@ -6,41 +6,27 @@ import { useDispatch } from 'react-redux';
 import { AlertActionCreators, InvitesActionCreators } from '../../../Redux';
 import { AnyMessageParams } from 'yup/lib/types';
 import postAcceptInvite from '../../../API/Requests/Invites/PostAcceptInvite';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
+import { fireAlert, hideAlert } from '../../../Redux/action-creators/alertActionCreator';
 
 export default function InviteCard(props: Invite) {
   const dispatch = useDispatch();
-  const { fireAlert, hideAlert } = bindActionCreators(
-    AlertActionCreators,
-    dispatch
-  );
+  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators,dispatch);
   const { remove } = bindActionCreators(InvitesActionCreators, dispatch);
 
   async function handleAcceptInvite(invite_id: any, team_name: any) {
     let response = await postAcceptInvite(invite_id);
-    if (response.status === 200) {
-      remove(invite_id);
-    } else {
-      fireAlert({
-        isOpen: true,
-        status: response.status,
-        message: response.body,
-      });
-      setTimeout(hideAlert, 6000);
-    }
+    response.isOk
+    ? remove(invite_id)
+    : alertDispatcher(fireAlert, response.error, hideAlert)
   }
   async function handleDeleteInvite(invite_id: any) {
     let response = await deleteInvite(invite_id);
-    if (response.status === 200) {
-      remove(invite_id);
-    } else {
-      fireAlert({
-        isOpen: true,
-        status: response.status,
-        message: response.body,
-      });
-      setTimeout(hideAlert, 6000);
-    }
-  }
+    response.isOk
+    ? remove(invite_id)
+    : alertDispatcher(fireAlert, response.error, hideAlert)
+  } 
+
   return (
     <div
       className='card fadeIn scaleYonHover hoverGrey'

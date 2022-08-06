@@ -106,7 +106,6 @@ function getIdsForUsernameDiscriminatorList(teammates: Teammate) {
   return new Promise<any>((resolve, reject) => {
     connectionPool.query(sql, teammates, (err: any, result: any) => {
       if (err) throw err;
-      console.log(result);
       return err ? reject(err) : resolve('ok');
     });
   });

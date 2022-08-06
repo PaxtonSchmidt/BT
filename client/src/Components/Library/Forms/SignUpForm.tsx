@@ -7,6 +7,7 @@ import { NewUser } from '../../../API/interfaces/NewUser';
 import { bindActionCreators } from 'redux';
 import { AlertActionCreators } from '../../../Redux';
 import { useDispatch } from 'react-redux';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
 
 export default function SignUpForm() {
   let navigate = useNavigate();
@@ -17,7 +18,6 @@ export default function SignUpForm() {
   );
 
   async function handleSubmit(data: NewUser) {
-    console.log('a');
     if (data.password !== data.confirmPass) {
       fireAlert({
         isOpen: true,
@@ -34,18 +34,10 @@ export default function SignUpForm() {
       return setTimeout(hideAlert, 6000);
     }
     let attemptResult = await authService.signUp(data);
-    console.log(attemptResult);
-    if (attemptResult.status === 200) {
-      console.log('got here');
+    if(attemptResult.isOk){
       return navigate('/login');
-    } else {
-      console.log('asda');
-      fireAlert({
-        isOpen: true,
-        status: attemptResult.status,
-        message: attemptResult.body.message,
-      });
-      setTimeout(hideAlert, 6000);
+    }else {
+      alertDispatcher(fireAlert, attemptResult.error, hideAlert)
     }
   }
 

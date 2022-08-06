@@ -9,6 +9,7 @@ import postNewProjectMembers from '../../../API/Requests/Projects/PostNewProject
 import { bindActionCreators } from 'redux';
 import { AlertActionCreators, SessionActionCreators } from '../../../Redux';
 import { addMembersToAProjectInSession } from '../../../Redux/action-creators/sessionActionCreators';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
 let deepClone = require('lodash.clonedeep');
 
 export default function ProjectMembersList() {
@@ -160,13 +161,8 @@ export default function ProjectMembersList() {
         addedMembers,
         focusedProjectState.name
       );
-      if (response.status !== 200) {
-        fireAlert({
-          isOpen: true,
-          status: response.status,
-          message: response.body.message,
-        });
-        setTimeout(hideAlert, 6000);
+      if(!response.isOk){
+        alertDispatcher(fireAlert, response.error, hideAlert);
       } else {
         let project = projects.find(
           (project: any) => project.name === focusedProjectState.name

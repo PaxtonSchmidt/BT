@@ -32,7 +32,6 @@ export default function TeammateProjectButton(props: Props) {
     AlertActionCreators,
     dispatch
   );
-  console.log(props);
   function handleSelect() {
     let projectIDX = sessionState.currentTeam.projects.findIndex(
       (project: Project) => {

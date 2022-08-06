@@ -1,12 +1,6 @@
 import { Claims } from '../../interfaces/claims';
+import postBase from '../Base/postBaseRequest';
 
 export default async function postLogin(claims: Claims) {
-  const response = await fetch('/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(claims),
-  }).then((r) => r.json().then((data) => ({ status: r.status, body: data })));
-  return response;
+  return postBase('/login', claims)
 }

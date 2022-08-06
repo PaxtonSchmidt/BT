@@ -6,7 +6,6 @@ function createUserTeamsTable(req: any, res: any) {
 
   connectionPool.query(sql, (err: Error, result: any) => {
     if (err) throw err;
-    console.log(result);
     res.send('User teams table created...');
   });
 }

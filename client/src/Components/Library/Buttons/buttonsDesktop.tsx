@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { authService } from '../../../Services/AuthService';
 import { Invites } from '../../../Redux/interfaces/invites';
 import { InvitesActionCreators, LoginActionCreators } from '../../../Redux';
-import postInvalidateJWT from '../../../API/Requests/Login/PostInvalidateJWT';
 
 export default function SelectTeamPageButtons() {
   const invitesState = useSelector((state: Invites) => state.invites);

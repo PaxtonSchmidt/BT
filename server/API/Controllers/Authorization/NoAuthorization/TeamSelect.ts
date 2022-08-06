@@ -35,7 +35,6 @@ async function getTeamInvites(req: any, res: any) {
   try {
     queryInvites = await teams.getTeamInvites(currentUserID);
   } catch (e) {
-    console.log(e);
     return res
       .status(500)
       .send({ message: 'Couldnt get invites from database...' });

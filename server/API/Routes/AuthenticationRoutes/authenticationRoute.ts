@@ -6,6 +6,5 @@ let authenticationQueries = require('../../Queries/AuthQueries/authenticationQue
 
 router.post('/login', authenticationRoutes.login);
 router.post('/logout', authenticationRoutes.logout);
-router.get('/currentUser', authenticationQueries.fetchCurrentUser);
 
 module.exports = router;

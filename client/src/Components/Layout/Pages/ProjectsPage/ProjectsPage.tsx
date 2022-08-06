@@ -60,7 +60,6 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
     }
     getProjectsStatistics();
   }, []);
-
   function selectDataForChart() {
     let chosenProjectData: Assignee[] | PriorityStats | StatusStats | null =
       null;

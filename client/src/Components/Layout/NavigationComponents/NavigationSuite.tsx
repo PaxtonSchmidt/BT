@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import {
-  SessionActionCreators,
-  TeammatesActionCreators,
-  TicketsActionCreators,
-} from '../../../Redux';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
+import { CustomResponse } from '../../../API/Requests/Base/baseRequest';
+import getSessionState from '../../../API/Requests/Login/getSessionState';
+import getUsersOnTeam from '../../../API/Requests/Teams/GetUsersOnTeam';
+import getTickets from '../../../API/Requests/Tickets/GetTickets';
+import {AlertActionCreators,SessionActionCreators,TeammatesActionCreators,TicketsActionCreators} from '../../../Redux';
 import { State } from '../../../Redux/reducers';
 import Hamburger from './Hamburger';
 import Navbar from './Navbar/Navbar';
@@ -18,63 +19,53 @@ interface Props {
 }
 
 export default function NavigationSuite({ isTeamSelected }: Props) {
+  const location = useLocation();
   const dispatch = useDispatch();
   const { updateSession } = bindActionCreators(SessionActionCreators, dispatch);
-  const { updateTeammates } = bindActionCreators(
-    TeammatesActionCreators,
-    dispatch
-  );
+  const { updateTeammates } = bindActionCreators(TeammatesActionCreators, dispatch);
+  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch);
   const { updateTickets } = bindActionCreators(TicketsActionCreators, dispatch);
   const loginState = useSelector((state: State) => state.login);
   const sessionState = useSelector((state: State) => state.session);
   const socketState = useSelector((state: State) => state.socket);
-  const isSidebarExtensionPreferred =
-    window.localStorage.getItem('sbEX') === 'true';
-  const [isExpanded, setIsExpanded] = useState<boolean>(
-    isSidebarExtensionPreferred
-  );
-  let navigate = useNavigate();
+  const isSidebarExtensionPreferred = window.localStorage.getItem('sbEX') === 'true';
+  const [isExpanded, setIsExpanded] = useState<boolean>(isSidebarExtensionPreferred);
 
-  async function getSessionState() {
-    let response: any = await fetch('/users/getSessionState', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((res) => res);
-    if (response.status === 400) {
-      navigate('login');
-    }
-    updateSession(await response.json());
+  async function getSession() {
+    let response: CustomResponse = await getSessionState()
+    return response.isOk 
+    ? updateSession(await response.body)
+    : alertDispatcher(fireAlert, response.error, hideAlert)
   }
   async function getTeammates() {
-    let response: any = fetch('/projects/getUsersOnTeam', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((res) => res.json());
-    return updateTeammates(await response);
+    let response: CustomResponse = await getUsersOnTeam()
+    console.log(response)
+    return response.isOk 
+    ? updateTeammates(await response.body)
+    : alertDispatcher(fireAlert, response.error, hideAlert)
   }
-  async function getTickets() {
-    let response: any = fetch('/tickets/getTickets', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((res) => res.json());
-    updateTickets(await response);
+  async function getTeamTickets(){
+    let response: CustomResponse = await getTickets()
+    response.isOk
+    ? updateTickets(await response.body)
+    : alertDispatcher(fireAlert, response.error, hideAlert)
   }
+
   useEffect(() => {
-    if (loginState === 1) {
-      getSessionState();
-      getTeammates();
-      getTickets();
-    }
+    (async ()=>{
+      if (loginState === 1) {
+        getSession();
+        getTeammates();
+        getTeamTickets()
+      }
+    })()
   }, []);
+
   useEffect(() => {
-    console.log('sd')
-    if(sessionState.currentTeam !== undefined && socketState){
+    if(location.pathname === '/projects' 
+      && (sessionState.currentTeam !== undefined) 
+      && socketState)
+      {
       sessionState.currentTeam.projects.forEach((project: any)=>{
         console.log(project)
         socketState.emit(
@@ -83,9 +74,9 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
         );
       })
     }
-  }, [sessionState, []])
+  }, [location.pathname])
 
-  let role = 3; //defaults to dev, sets to actual role when the sessionState arrives
+  let role = 3; //defaults to dev perms, sets to actual role when the sessionState arrives
   role = sessionState.currentTeam?.team_role;
 
   if (loginState === 1) {
@@ -106,3 +97,5 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
   }
   return <Navigate to='/login' />;
 }
+
+

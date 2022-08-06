@@ -61,7 +61,7 @@ export default function NoteListItem(props: Props) {
   dateDay = dateDay.split('').reverse().join().replace(/,/g, '');
 
   return (
-    <div className='noteListItem'>
+    <div className='noteListItem fadeIn'>
       <div style={{ display: 'flex', width: 'fit-content', height: '100%' }}>
         <p
           className='username'

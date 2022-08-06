@@ -38,7 +38,6 @@ function addTicket(
     relevantProjectId,
     ticketPriority,
   ];
-  console.log(values);
   // {author_id: userTeamIDCombo[0], title: req.body.title, description: req.body.description, date_created: date, date_last_updated: date, assigned_user_id: assigneeId, resolution_status: '1', relevant_project_id: relevantProjectId, priority: ticketPriority}
 
   let sql =
@@ -46,7 +45,6 @@ function addTicket(
 
   return new Promise<any>((resolve, reject) => {
     connectionPool.query(sql, values, (err: any, result: any) => {
-      console.log(result);
       return err ? reject(err) : resolve(result);
     });
   });
@@ -85,22 +83,10 @@ function getNewTicket(ticket_id: number) {
   });
 }
 
-function getAssignedProjectTicketNotes(userID: any, teamID: any) {
-  let values = [teamID, userID];
+function getTicketNotes(ticket_id: any) {
+  let values = [ticket_id];
   let sql =
-    'SELECT tc.comment_id, u.username AS author_username, u.discriminator AS author_discriminator, tc.comment_body AS body, tc.ticket_id AS relevant_ticket_id, tc.date_created FROM ticket_comment tc LEFT JOIN users u ON tc.author_user_id = u.user_id WHERE tc.ticket_id IN (SELECT ticket_id from tickets WHERE relevant_project_id IN(SELECT project_id FROM user_projects WHERE relevant_team_id= ? AND user_id= ?))';
-
-  return new Promise<any>((resolve, reject) => {
-    connectionPool.query(sql, values, (err: any, result: any) => {
-      return err ? reject(err) : resolve(result);
-    });
-  });
-}
-
-function getAllTicketNotes(teamID: any) {
-  let values = [teamID];
-  let sql =
-    'SELECT tc.comment_id, u.username AS author_username, u.discriminator AS author_discriminator, tc.comment_body AS body, tc.ticket_id AS relevant_ticket_id, tc.date_created FROM ticket_comment tc LEFT JOIN users u ON tc.author_user_id = u.user_id WHERE tc.ticket_id IN (SELECT ticket_id from tickets WHERE relevant_project_id IN(SELECT project_id FROM projects WHERE team_id= ?))';
+    'SELECT tc.comment_id, u.username AS author_username, u.discriminator AS author_discriminator, tc.comment_body AS body, tc.ticket_id AS relevant_ticket_id, tc.date_created FROM ticket_comment tc LEFT JOIN users u ON tc.author_user_id = u.user_id WHERE tc.ticket_id= ?';
 
   return new Promise<any>((resolve, reject) => {
     connectionPool.query(sql, values, (err: any, result: any) => {
@@ -136,7 +122,6 @@ function putEditTicket(
   resolution_status: number,
   priority: number
 ) {
-  console.log('got here');
   let values = [
     assigned_user_id,
     priority,
@@ -145,12 +130,19 @@ function putEditTicket(
     resolution_status,
     ticket_id,
   ];
-  console.log(values);
   let sql =
     'UPDATE tickets SET assigned_user_id= ?, priority= ?, date_last_updated= ?, description= ?, resolution_status= ? WHERE ticket_id= ?';
   return new Promise<any>((resolve, reject) => {
     connectionPool.query(sql, values, (err: any, result: any) => {
-      console.log(err);
+      return err ? reject(err) : resolve(result);
+    });
+  });
+}
+function checkIsTicketForTeam(ticket_id: number, team_id: number){
+  let values = [ticket_id, team_id]
+  let sql = 'SELECT EXISTS(SELECT * FROM tickets WHERE ticket_id= ? AND relevant_project_id IN (SELECT project_id FROM projects WHERE team_id= ?))'
+  return new Promise<any>((resolve, reject) => {
+    connectionPool.query(sql, values, (err: any, result: any) => {
       return err ? reject(err) : resolve(result);
     });
   });
@@ -163,8 +155,8 @@ module.exports = {
   getAssignedProjectTickets,
   getTicketByID,
   addTicketComment,
-  getAssignedProjectTicketNotes,
-  getAllTicketNotes,
+  getTicketNotes,
   putEditTicket,
   getNewTicket,
+  checkIsTicketForTeam
 };

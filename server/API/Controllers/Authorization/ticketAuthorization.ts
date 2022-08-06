@@ -4,10 +4,6 @@ import consumeCookie, {
 } from '../../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags';
 import { consumeRowDataPacket } from '../../Services/consumeRowDataPacket';
-import {
-  translateTicketPriority,
-  translateTicketPriorityBack,
-} from '../../Services/translateTicketPriority';
 let tickets = require('../../Queries/ticketQueries');
 let projects = require('../../Queries/projectQueries');
 let users = require('../../Queries/userQueries');
@@ -17,32 +13,28 @@ async function getTicketNotes(req: Express.Request, res: Express.Response) {
     req.headers.cookie,
     consumeCookieFlags.tokenUserTeamRoleIdFlag
   );
-  let allNotes: [] = [];
-  //if the use is the owner, send them all ticket notes from the team
-  //if they are a dev or project lead, send them only the ticket notes for their assigned projects
-  if (userTeamRoleCombo.roleID === 1) {
-    try {
-      allNotes = await tickets.getAllTicketNotes(userTeamRoleCombo.teamID);
-      return res.status(200).send(allNotes);
-    } catch (e) {
-      return res
-        .status(500)
-        .send({ message: 'Server couldnt fetch the notes...' });
-    }
-  } else if (userTeamRoleCombo.roleID === 2 || userTeamRoleCombo.roleID === 3) {
-    try {
-      allNotes = await tickets.getAssignedProjectTicketNotes(
-        userTeamRoleCombo.userID,
-        userTeamRoleCombo.teamID
-      );
-      return res.status(200).send(allNotes);
-    } catch (e) {
-      return res
-        .status(500)
-        .send({ message: 'Server couldnt fetch the notes...' });
-    }
+  let isTicketForTeam: boolean = false
+  try{
+    let isTicketForTeamPacket = await tickets.checkIsTicketForTeam(req.body.ticket_id, userTeamRoleCombo.teamID).catch()
+    isTicketForTeam = consumeRowDataPacket(isTicketForTeamPacket)
+  }catch(e){
+    return res.status(500).send({message: 'Server couldnt check your access to this ticket...'})
+  }
+  if(isTicketForTeam === false){
+    return res.status(403).send({message: "You dont have access to this ticket's notes..."})
+  }
+  let notes: [] = [];
+  try {
+    notes = await tickets.getTicketNotes(req.body.ticket_id);
+    console.log(notes)
+    return res.status(200).send(notes);
+  } catch (e) {
+    return res
+      .status(500)
+      .send({ message: 'Server couldnt fetch the notes...' });
   }
 }
+
 
 async function submitTicketComment( req: Express.Request,  res: Express.Response) {
   let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
@@ -89,6 +81,7 @@ async function submitTicketComment( req: Express.Request,  res: Express.Response
 }
 
 async function putEditTicket(req: Express.Request, res: Express.Response) {
+  // return res.status(300).send({message: 'error'})
   let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(
     req.headers.cookie,
     consumeCookieFlags.tokenUserTeamRoleIdFlag
@@ -141,9 +134,6 @@ async function putEditTicket(req: Express.Request, res: Express.Response) {
   }
   if (userTeamRoleCombo.roleID === 1 || isUserProjectLead) {
     try {
-      console.log(req.body);
-      // ticket_id: number, assigned_user_id: number , description: string, resolution_status: number
-      console.log(req.body.priority);
       let updateResult = await tickets
         .putEditTicket(
           req.body.target_ticket_id,
@@ -153,7 +143,6 @@ async function putEditTicket(req: Express.Request, res: Express.Response) {
           req.body.priority
         )
         .catch();
-      console.log(updateResult);
       return res.status(200).send({ message: 'Updated ticket' });
     } catch (e) {
       return res

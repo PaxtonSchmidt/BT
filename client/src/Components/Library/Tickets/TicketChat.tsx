@@ -14,6 +14,8 @@ import { AlertActionCreators } from '../../../Redux';
 import { bindActionCreators } from 'redux';
 import { hideAlert } from '../../../Redux/action-creators/alertActionCreator';
 import NoteListItem from './NoteListItem';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
+import postGetTicketNotes from '../../../API/Requests/Tickets/PostgetTicketNotes';
 
 export default function TicketNoteList() {
   const dispatch = useDispatch();
@@ -26,6 +28,7 @@ export default function TicketNoteList() {
   const socketState = useSelector((state: State) => state.socket);
   const [chosenNotes, setChosenNotes] = useState<any[]>([]);
   const [allNotes, setAllNotes] = useState<TicketNote[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
     if (socketState) {
@@ -36,25 +39,23 @@ export default function TicketNoteList() {
   }, [socketState]);
 
   async function getTicketNotes() {
-    let response: any = fetch('/tickets/getTicketNotes', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((res) => res.json());
-    let notes = await response;
-    console.log(notes)
-    return setAllNotes(notes);
+    setIsLoading(true)
+    let response = await postGetTicketNotes({ticket_id: focusedTicketState.ticket_id})
+    setIsLoading(false)
+    return response.isOk 
+    ? setAllNotes(response.body)
+    : alertDispatcher(fireAlert, response.error, hideAlert)
   }
   useEffect(() => {
-    getTicketNotes();
-    if (typeof focusedTicketState.ticket_id !== 'undefined' && socketState) {
-      socketState.emit(
-        'joinTicket',
-        focusedTicketState.ticket_id,
-        focusedTicketState.project_id
-      );
+    if(focusedTicketState.ticket_id !== undefined  
+      && socketState){
+        socketState.emit(
+          'joinTicket',
+          focusedTicketState.ticket_id,
+          focusedTicketState.project_id
+        );
     }
+    getTicketNotes()
   }, [focusedTicketState]);
 
   function createChosenNotesArray() {
@@ -84,10 +85,6 @@ export default function TicketNoteList() {
     return arrayList;
   }
 
-  let anyNotes: boolean = false;
-  if (chosenNotes) {
-    anyNotes = chosenNotes.length > 0;
-  }
   if (focusedTicketState.ticket_id === undefined) {
     return (
       <div className='fadeIn ticketNoteListContainer'>
@@ -111,7 +108,7 @@ export default function TicketNoteList() {
           className='fadeIn ticketNoteListContainer'
           style={{ transition: '0' }}
         >
-          {anyNotes ? (
+          {chosenNotes.length > 0 ? (
             <div
               id='list'
               className='ticketNoteList componentGlow delayedFadeIn'
@@ -129,7 +126,7 @@ export default function TicketNoteList() {
                 transition: '0',
               }}
             >
-              <p>{`There are no comments for this ticket yet`}</p>
+              {!isLoading && <p className='fadeIn'>{`There are no comments for this ticket yet`}</p>}
             </div>
           )}
 
@@ -157,7 +154,7 @@ export default function TicketNoteList() {
                   data.note,
                   focusedTicketState
                 );
-                if (response.status === 200) {
+                if(response.isOk){
                   let newTicketNoteToEmit: TicketNote = {
                     comment_id: response.body.insertID,
                     author_username: sessionState.currentUser.username,
@@ -179,12 +176,7 @@ export default function TicketNoteList() {
                   socketState.emit('newTicketNote', newTicketNoteToEmit);
                   resetForm();
                 } else {
-                  fireAlert({
-                    isOpen: true,
-                    status: response.status,
-                    message: response.body.message,
-                  });
-                  setTimeout(hideAlert, 6000);
+                  alertDispatcher(fireAlert, response.error, hideAlert)
                 }
               }
               return handleNoteSubmit(data.note);

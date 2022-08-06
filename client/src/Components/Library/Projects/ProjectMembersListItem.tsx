@@ -19,15 +19,15 @@ export default function ProjectMembersListItem(props: Props) {
     (state: State) => state.focusedProject
   );
   let role = translateRole.TranslateProjectRole(props.member.role_id);
-
   function handleSelect() {
     if (focusedProjectState.name !== 'All') {
       return updateFocusedMember(props.member);
     }
   }
+  let noFocusedMemberClasses = focusedProjectState.name === 'All' ? '' : 'scaleYonHover hoverGrey'
   return (
     <div
-      className='ListContainer scaleYonHover hoverGrey'
+      className={`ListContainer ${noFocusedMemberClasses}`}
       onClick={handleSelect}
       style={{ marginLeft: '0px' }}>
       <div

@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ProjectMember } from '../../../Redux/interfaces/member';
 import { State } from '../../../Redux/reducers';
 import { Project } from '../../../Redux/interfaces/session';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
 
 interface Props {
   isExtended: boolean;
@@ -58,38 +59,28 @@ export default function ProjectForm(props: Props) {
               return;
             } else {
               let response = await postProject(data);
-              response.status !== 200
-                ? (() => {
-                    console.log('asda;skjd');
-                    fireAlert({
-                      isOpen: true,
-                      status: response.status,
-                      message: response.body.message,
-                    });
-                    setTimeout(hideAlert, 6000);
-                  })()
-                : (() => {
-                    //only owners and leads can create projects, if they do, their project role_id is the same as their team_role_id
-                    //1 for owner, 2 for Leads. Both give Project Lead status. Owners have access to projects they are not on
-                    let newProjectCreatorRole: number =
-                      sessionState.currentTeam.team_role;
-                    let projectCreator: ProjectMember = {
-                      username: sessionState.currentUser.username,
-                      discriminator: sessionState.currentUser.discriminator,
-                      role_id: newProjectCreatorRole,
-                      project_id: response.body.project_id,
-                    };
-                    let newProject: Project = {
-                      name: data.name,
-                      role_id: newProjectCreatorRole,
-                      project_id: response.body.project_id,
-                      project_members: [projectCreator],
-                    };
-                    addProjectToSession(newProject);
-                    updateFocusedProject(newProject);
-                    props.setIsExtended(false);
-                    resetForm();
-                  })();
+              if(!response.isOk){
+                alertDispatcher(fireAlert, response.error, hideAlert)
+              } else {
+                let newProjectCreatorRole: number =
+                sessionState.currentTeam.team_role;
+                let projectCreator: ProjectMember = {
+                  username: sessionState.currentUser.username,
+                  discriminator: sessionState.currentUser.discriminator,
+                  role_id: newProjectCreatorRole,
+                  project_id: response.body.project_id,
+                };
+                let newProject: Project = {
+                  name: data.name,
+                  role_id: newProjectCreatorRole,
+                  project_id: response.body.project_id,
+                  project_members: [projectCreator],
+                };
+                addProjectToSession(newProject);
+                updateFocusedProject(newProject);
+                props.setIsExtended(false);
+                resetForm();
+              }
             }
           })();
         }}

@@ -16,7 +16,6 @@ export default function LoginPage() {
     //this way you cant spam for new tokens
     let isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
     if (isLoggedIn !== undefined && isLoggedIn === 'true') {
-      console.log('g');
       postInvalidateJWT();
       window.location.reload();
     }

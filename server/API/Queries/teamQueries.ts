@@ -277,6 +277,15 @@ function putUpdateTeammateRole(
     });
   });
 }
+function getProjectCount(team_id: number){
+  let values = [team_id];
+  let sql = 'SELECT COUNT(*) FROM projects WHERE team_id= ?';
+  return new Promise<any>((resolve, reject) => {
+    connectionPool.query(sql, values, (err: any, result: any) => {
+      return err ? reject(err) : resolve(result);
+    });
+  });
+}
 
 async function transactionRemoveTargetUserFromTeam(
   targetUserId: number,
@@ -354,5 +363,6 @@ module.exports = {
   fetchIsOnTeamByUsernameDiscriminatorTeamID,
   putUpdateTeammateRole,
   getRoleIDByUsernameDiscriminatorTeamID,
-  transactionRemoveTargetUserFromTeam,
+  getProjectCount,
+  transactionRemoveTargetUserFromTeam
 };

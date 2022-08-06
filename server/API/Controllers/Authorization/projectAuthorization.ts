@@ -264,7 +264,6 @@ async function addListOfMembersToProject(req: any, res: any) {
             targetProjectId
         );
     } catch (e) {
-        console.log(e);
         return res
             .status(500)
             .send({ message: 'Server couldnt check authorization levels...' });
@@ -496,7 +495,6 @@ async function removeMember(req: any, res: any) {
                 .status(200)
                 .send({ message: 'Removed member from the project' });
         } catch (e) {
-            console.log(e);
             return res
                 .status(500)
                 .send({

@@ -5,17 +5,9 @@ import postSignUp from '../API/Requests/Login/PostSignUp';
 
 export const authService = {
   async signIn(data: Claims) {
-    let responseCode = await postLogin(data);
-
-    if (responseCode.status === 200) {
-      sessionStorage.setItem('isLoggedIn', 'true');
-
-      return responseCode;
-      //currentUser undefined, figure out how to return the res.body.username
-      // setGlobalStateUser(currentUser);
-      //clear cookie maybe?
-    }
-    return responseCode;
+    let response = await postLogin(data);
+    response.isOk && sessionStorage.setItem('isLoggedIn', 'true');
+    return response
   },
 
   signOut() {
@@ -23,8 +15,7 @@ export const authService = {
   },
 
   async signUp(data: NewUser) {
-    let responseCode = await postSignUp(data);
-    return responseCode;
+    return await postSignUp(data);
   },
 
   async selectTeam() {

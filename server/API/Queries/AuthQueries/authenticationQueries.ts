@@ -11,19 +11,4 @@ function fetchTargetUser(queryEmail: string) {
     });
   });
 }
-
-async function fetchCurrentUser(req: any, res: any) {
-  let currentUserId = consumeCookie(
-    req.headers.cookie,
-    consumeCookieFlags.tokenUserIdFlag
-  );
-
-  let sql = 'SELECT username, discriminator, bio FROM users WHERE user_id = ?';
-
-  connectionPool.query(sql, currentUserId, (err: any, result: any) => {
-    if (err) throw err;
-    res.send(result);
-  });
-}
-
-module.exports = { fetchTargetUser, fetchCurrentUser };
+module.exports = { fetchTargetUser };

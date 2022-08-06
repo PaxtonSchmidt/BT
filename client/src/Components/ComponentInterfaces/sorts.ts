@@ -52,8 +52,8 @@ function statusCompare(i: ticket, j: ticket) {
   return i.resolution_status < j.resolution_status
     ? -1
     : j.resolution_status < i.resolution_status
-    ? 1
-    : 0;
+      ? 1
+      : 0;
 }
 function titleCompare(i: ticket, j: ticket) {
   let iTitle = i.title.toLowerCase();

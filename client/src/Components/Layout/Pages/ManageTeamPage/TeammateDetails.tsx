@@ -5,6 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { json } from 'stream/consumers';
 import { Teammate } from '../../../../API/interfaces/teammate';
+import alertDispatcher from '../../../../API/Requests/AlertDispatcher';
+import { CustomResponse } from '../../../../API/Requests/Base/baseRequest';
+import deleteTeammate from '../../../../API/Requests/Teams/DeleteTeammate';
+import getTeammatesInfo from '../../../../API/Requests/Teams/GetTeammatesInfo';
 import putUpdateTeammateRole from '../../../../API/Requests/Teams/PutUpdateTeamRole';
 import {
   AlertActionCreators,
@@ -37,34 +41,14 @@ export interface TeammatesInformation extends Teammate {
 
 export default function TeammateDetails() {
   const dispatch = useDispatch();
-  const { fireAlert, hideAlert } = bindActionCreators(
-    AlertActionCreators,
-    dispatch
-  );
-  const { updateTeammateRole, removeTeammate } = bindActionCreators(
-    TeammatesActionCreators,
-    dispatch
-  );
-  const { removeTeammateFromSessionProjects } = bindActionCreators(
-    SessionActionCreators,
-    dispatch
-  );
-  const { unnasignRemovedTeammatesTickets } = bindActionCreators(
-    TicketsActionCreators,
-    dispatch
-  );
-  const { setFocusedTicketToUnassigned } = bindActionCreators(
-    FocusedTicketActionCreators,
-    dispatch
-  );
-  const { updateFocusedTeammate } = bindActionCreators(
-    FocusedTeammateActionCreators,
-    dispatch
-  );
+  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators,dispatch);
+  const { updateTeammateRole, removeTeammate } = bindActionCreators(TeammatesActionCreators,dispatch)
+  const { removeTeammateFromSessionProjects } = bindActionCreators(SessionActionCreators, dispatch);
+  const { unnasignRemovedTeammatesTickets } = bindActionCreators(TicketsActionCreators,dispatch);
+  const { setFocusedTicketToUnassigned } = bindActionCreators(FocusedTicketActionCreators,dispatch);
+  const { updateFocusedTeammate } = bindActionCreators(FocusedTeammateActionCreators,dispatch);
   const sessionState = useSelector((state: State) => state.session);
-  const focusedTeammateState = useSelector(
-    (state: State) => state.focusedTeammate
-  );
+  const focusedTeammateState = useSelector((state: State) => state.focusedTeammate);
   const focusedTicketState = useSelector((state: State) => state.focusedTicket);
   const [teammatesInformation, setTeammatesInformation] = useState<any>();
   const [chosenTeammate, setChosenTeammate] = useState<TeammatesInformation>();
@@ -75,14 +59,13 @@ export default function TeammateDetails() {
 
   async function getTeamatesInformation() {
     setIsLoading(true);
-    let response: any = fetch('/teams/getTeammatesInformation', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((res) => res.json());
-    setTeammatesInformation(await response);
-    setIsLoading(false);
+    let response: CustomResponse = await getTeammatesInfo()
+    if(response.isOk){
+      setTeammatesInformation(response.body)
+      setIsLoading(false);
+    } else {
+      alertDispatcher(fireAlert, response.error, hideAlert)
+    }
   }
   useEffect(() => {
     getTeamatesInformation();
@@ -140,44 +123,30 @@ export default function TeammateDetails() {
       username: focusedTeammateState.username,
       discriminator: focusedTeammateState.discriminator,
     };
-    let response: any = await fetch('/teams/removeTeammate', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(teammate),
-    }).then((r) => r.json().then((data) => ({ status: r.status, body: data })));
-    response.status !== 200
-      ? (() => {
-          fireAlert({
-            isOpen: true,
-            status: response.status,
-            message: response.body.message,
-          });
-          setTimeout(hideAlert, 6000);
-        })()
-      : (() => {
-          // remove from teammates list
-          removeTeammate(teammate);
-          //remove from session state projects
-          removeTeammateFromSessionProjects(teammate);
-          //set their tickets to unassigned
-          unnasignRemovedTeammatesTickets(teammate);
-          //unassign the ticket in focusedTicketState if they are the assignee
-          if (
-            teammate.username === focusedTicketState.assignee_username &&
-            teammate.discriminator ===
-              focusedTicketState.assignee_user_discriminator
-          ) {
-            setFocusedTicketToUnassigned();
-          }
-          updateFocusedTeammate({
-            username: '',
-            discriminator: 0,
-            team_role: -1,
-          });
-          setIsModalOpen(false);
-        })();
+    let response: CustomResponse = await deleteTeammate(teammate)
+    response.isOk
+    ? (()=>{
+      // remove from teammates list
+      removeTeammate(teammate);
+      //remove from session state projects
+      removeTeammateFromSessionProjects(teammate);
+      //set their tickets to unassigned
+      unnasignRemovedTeammatesTickets(teammate);
+      //unassign the ticket in focusedTicketState if they are the assignee
+      if (
+        teammate.username === focusedTicketState.assignee_username &&
+        teammate.discriminator === focusedTicketState.assignee_user_discriminator) {
+        setFocusedTicketToUnassigned();
+      }
+
+      updateFocusedTeammate({
+        username: '',
+        discriminator: 0,
+        team_role: -1,
+      });
+      setIsModalOpen(false);
+    })()
+    : alertDispatcher(fireAlert, response.error, hideAlert)
   }
 
   async function handleUpdateTeammateRole() {
@@ -195,31 +164,24 @@ export default function TeammateDetails() {
         discriminator: chosenTeammate!.discriminator,
       };
       let response: any = await putUpdateTeammateRole(data, newRoleID);
-      // console.log(response)
-      response.status !== 200
-        ? (() => {
-            fireAlert({
-              isOpen: true,
-              status: response.status,
-              message: response.body.message,
-            });
-            setTimeout(hideAlert, 6000);
-          })()
-        : (() => {
-            let newTeammatesInfo = [...teammatesInformation];
-            let targetTeammateIdx = newTeammatesInfo.findIndex(
-              (teammate: TeammatesInformation) =>
-                data.username === teammate.username &&
-                data.discriminator === teammate.discriminator
-            );
-            let editedTeammate = newTeammatesInfo[targetTeammateIdx];
-            editedTeammate.team_role = newRoleID;
-            newTeammatesInfo.splice(targetTeammateIdx, 1, editedTeammate);
+      
+      !response.isOk 
+      ? alertDispatcher(fireAlert, response.error, hideAlert)
+      : (() => {
+        let newTeammatesInfo = [...teammatesInformation];
+        let targetTeammateIdx = newTeammatesInfo.findIndex(
+          (teammate: TeammatesInformation) =>
+            data.username === teammate.username &&
+            data.discriminator === teammate.discriminator
+        );
+        let editedTeammate = newTeammatesInfo[targetTeammateIdx];
+        editedTeammate.team_role = newRoleID;
+        newTeammatesInfo.splice(targetTeammateIdx, 1, editedTeammate);
 
-            setTeammatesInformation(newTeammatesInfo);
-            updateTeammateRole(editedTeammate);
-            setIsRoleModalOpen(false);
-          })();
+        setTeammatesInformation(newTeammatesInfo);
+        updateTeammateRole(editedTeammate);
+        setIsRoleModalOpen(false);
+      })()
     }
   }
 

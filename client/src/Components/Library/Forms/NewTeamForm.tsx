@@ -6,27 +6,18 @@ import postNewTeam from '../../../API/Requests/Teams/PostNewTeam';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AlertActionCreators } from '../../../Redux';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
 
 export default function NewTeamForm() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
-  const { fireAlert, hideAlert } = bindActionCreators(
-    AlertActionCreators,
-    dispatch
-  );
+  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators,dispatch);
 
   async function handleSubmit(data: any) {
     let attemptResult = await postNewTeam(data);
-    if (attemptResult.status === 200) {
-      navigate('/selectTeam');
-    } else {
-      fireAlert({
-        isOpen: true,
-        status: attemptResult.status,
-        message: attemptResult.body.message,
-      });
-      setTimeout(hideAlert, 6000);
-    }
+    attemptResult.isOk
+    ? navigate('/selectTeam')
+    : alertDispatcher(fireAlert, attemptResult.error, hideAlert)
   }
 
   return (
