@@ -11,3 +11,4 @@ export * as TeammatesActionCreators from './action-creators/teammatesActionCreat
 export * as SocketActionCreators from './action-creators/socketActionCreator';
 export * as AlertActionCreators from './action-creators/alertActionCreator';
 export * as TicketsActionCreators from './action-creators/ticketsActionCreators';
+export * as WindowSizeActionCreators from './action-creators/windowSizeActionCreator';

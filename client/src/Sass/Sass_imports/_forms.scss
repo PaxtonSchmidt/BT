@@ -1,21 +1,12 @@
 .formContainer {
   background-color: $darkGrey;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  margin: 10px auto 0px 0px;
-  padding: 10px 20px 20px 20px;
-  width: calc(fit-content);
-  min-width: 280px;
-  max-width: 800px;
   transition: flex $transition;
 }
 .form {
   transition: $transition;
 }
 .formButtonsContainer {
-  min-width: 290px;
+  min-width: 280px;
   max-width: 840px;
   display: flex;
   justify-content: space-between;
@@ -26,23 +17,27 @@
   height: fit-content;
   min-width: 150px;
 }
-.formInputsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-}
-.formComponent {
-  width: 100% !important;
-  text-align: left;
-  margin-bottom: 5px !important;
-}
 .loginFormContainer {
   min-width: 280px;
-  width: 500px;
-  margin: 10% auto;
+  height: fit-content;
+  padding: 10px 10px 10px 10px;
+  background-color: $darkGrey;
+  margin-top: 20vh;
+}
+.loginFormContainerLG{
+  background-color: $darkGrey;
+  height: 450px;
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  max-width: 500px;
+  margin-top: 10vh;
+  border-radius: 5px;
+  box-shadow: 0 0 3px $hoverGrey;
 }
 .loginForm {
-  width: 100% !important;
+  width: 100%;
+  display: block;
 }
 .FormContainer {
   border-bottom: 1px solid $darkGrey;
@@ -108,7 +103,7 @@
 }
 .css-1x51dt5-MuiInputBase-input-MuiInput-input {
   color: white !important;
-  transition: $transition !important;
+  transition: 0 !important;
 }
 .css-66dh3a-MuiInputBase-input-MuiInput-input {
   color: white !important;
@@ -154,6 +149,13 @@
 }
 .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled {
   -webkit-text-fill-color: rgba(255, 240, 240, 0.61) !important;
+}
+.css-fmq57k-MuiButtonBase-root-MuiMenuItem-root:hover{
+  background-color: $hoverGrey !important;
+  transition: $transition;
+}
+.css-1cwe2u8-MuiInputBase-root-MuiInput-root:before{
+  border-bottom: 1px solid $accentGrey !important;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
