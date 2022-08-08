@@ -41,12 +41,13 @@ export default async function baseRequest(url: string, init: RequestInit): Promi
                     isOk: false,
                     error: {
                         status: 500,
-                        message: 'Something went wrong...'
+                        message: 'Lost connection to server...'
                     },
                     body: null
                 }
             }
         })
+
         
     return response
 }

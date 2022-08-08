@@ -205,6 +205,7 @@ const ProjectChat: React.FC = () => {
                           name='note'
                           variant='standard'
                           color='info'
+                          fullWidth
                         />
                       </div>
                     </form>

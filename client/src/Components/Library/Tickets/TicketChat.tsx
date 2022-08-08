@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import React, { useState, useEffect, ReactEventHandler } from 'react';
+import React, { useState, useEffect, ReactEventHandler, SetStateAction } from 'react';
 import { useSelector } from 'react-redux';
 import { TicketNote } from '../../../API/interfaces/TicketNote';
 import postTicketComment from '../../../API/Requests/Tickets/PostTicketComment';
@@ -17,12 +17,14 @@ import NoteListItem from './NoteListItem';
 import alertDispatcher from '../../../API/Requests/AlertDispatcher';
 import postGetTicketNotes from '../../../API/Requests/Tickets/PostgetTicketNotes';
 
-export default function TicketNoteList() {
+interface Props{
+  setIsOpen?: React.Dispatch<SetStateAction<boolean>>,
+  isModalChat?: boolean
+}
+
+export default function TicketChat(props: Props) {
   const dispatch = useDispatch();
-  const { fireAlert, hideAlert } = bindActionCreators(
-    AlertActionCreators,
-    dispatch
-  );
+  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch);
   const focusedTicketState = useSelector((state: State) => state.focusedTicket);
   const sessionState = useSelector((state: State) => state.session);
   const socketState = useSelector((state: State) => state.socket);
@@ -55,7 +57,9 @@ export default function TicketNoteList() {
           focusedTicketState.project_id
         );
     }
-    getTicketNotes()
+    if(focusedTicketState.ticket_id !==  undefined){
+      getTicketNotes()
+    }
   }, [focusedTicketState]);
 
   function createChosenNotesArray() {
@@ -85,9 +89,13 @@ export default function TicketNoteList() {
     return arrayList;
   }
 
+  let modalChatContainerStyles = !props.isModalChat ? {} : {
+    width: '100%',
+    height: '80%'
+  }
   if (focusedTicketState.ticket_id === undefined) {
     return (
-      <div className='fadeIn ticketNoteListContainer'>
+      <div style={modalChatContainerStyles} className='fadeIn ticketNoteListContainer'>
         <div
           className='list delayedFadeIn'
           style={{
@@ -106,7 +114,7 @@ export default function TicketNoteList() {
       <>
         <div
           className='fadeIn ticketNoteListContainer'
-          style={{ transition: '0' }}
+          style={modalChatContainerStyles}
         >
           {chosenNotes.length > 0 ? (
             <div
@@ -203,10 +211,11 @@ export default function TicketNoteList() {
                       value={values.note}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      className='formComponent'
+                      style={{marginBottom:'5px'}}
                       name='note'
                       variant='standard'
                       color='info'
+                      fullWidth
                     />
                   </div>
                 </form>

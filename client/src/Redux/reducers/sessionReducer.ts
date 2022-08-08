@@ -53,7 +53,6 @@ const sessionReducer = (state: any = initialState, action: Action) => {
       targetProjectIndex = newSessionState!.currentTeam.projects.findIndex(
         (project: any) => project.project_id === targetProjectId
       );
-      console.log(action.payload);
       targetMemberOfTargetProjectIdx = newSessionState!.currentTeam.projects[
         targetProjectIndex
       ].project_members.findIndex((member: ProjectMember) => {

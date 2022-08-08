@@ -1,8 +1,6 @@
-import { ok } from 'assert';
 import { User } from '../../../Interfaces/User';
 import consumeCookie from '../../../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from '../../../Services/consumeCookies/consumeCookieFlags';
-import getCurrentDate from '../../../Services/getCurrentDate';
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const authenticationQueries = require('../../../Queries/AuthQueries/authenticationQueries');

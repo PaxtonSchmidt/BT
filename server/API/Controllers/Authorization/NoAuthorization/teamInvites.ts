@@ -1,6 +1,25 @@
+import * as Express from 'express'
 import consumeCookie from '../../../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from '../../../Services/consumeCookies/consumeCookieFlags';
-let teams = require('../../../Queries/teamQueries');
+import { userTeamRoleCombo } from '../../../Services/consumeCookies/consumeCookie'
+let teams = require('../../../Queries/teamQueries')
+
+async function getInvites(req: Express.Request, res: Express.Response){
+  let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
+  let userInvites: any;
+  try{
+    let userInvitesPacket = await teams.getTeamInvites(userTeamRoleCombo.userID)
+    userInvites = userInvitesPacket
+  } catch(e){
+    return res.status(500).send({message: 'Server couldnt get invites...'})
+  }
+
+  try{
+    return res.status(200).send(userInvites)
+  } catch(e){
+    return res.status(500).send({message: 'Server couldnt send team invites...'})
+  }
+}
 
 async function deleteInvite(req: any, res: any) {
   let currentUserID = consumeCookie(
@@ -11,7 +30,6 @@ async function deleteInvite(req: any, res: any) {
   try {
     invite = await teams.getInviteById(req.body.inviteID);
   } catch (e) {
-    console.log(e);
     return res.status(500).send({ message: 'Server couldnt check invite...' });
   }
 
@@ -24,7 +42,6 @@ async function deleteInvite(req: any, res: any) {
       await teams.deleteTeamInvite(res, req.body.inviteID);
       return res.status(200).send({ message: 'Deleted invite' });
     } catch (e) {
-      console.log(e);
       return res.status(500).send({ message: 'Could not delete invite...' });
     }
   } else {
@@ -60,7 +77,6 @@ async function acceptInvite(req: any, res: any) {
 
       return res.status(200).send({ message: 'Accepted invite to team' });
     } catch (e) {
-      console.log(e);
       return res
         .status(500)
         .send({ message: 'Couldnt accept invite to team...' });
@@ -70,4 +86,8 @@ async function acceptInvite(req: any, res: any) {
   }
 }
 
-module.exports = { deleteInvite, acceptInvite };
+module.exports = { 
+  deleteInvite,
+  acceptInvite,
+  getInvites
+ };

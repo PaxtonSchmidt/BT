@@ -19,8 +19,6 @@ export default function NoteListItem(props: Props) {
   let minutes = parseInt(
     props.note.date_created.toLocaleString().substring(14, 16)
   );
-  // console.log(`${props.note.date_created} ${hours} ${minutes}`)
-  // console.log(24 - (hours - etcDifferenceToUTC))
   if (hours < etcDifferenceToUTC) {
     hours = 24 + (hours - etcDifferenceToUTC);
     date = date - 1;

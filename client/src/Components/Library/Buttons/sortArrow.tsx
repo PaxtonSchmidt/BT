@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import arrow from '../../Images/Icons/arrow-up-short.svg';
 
 interface Props {
@@ -10,7 +10,7 @@ export default function sortArrow(props: Props) {
     <img
       src={arrow}
       className={`fadeIn ${props.isSortReversed ? 'twist' : ''}`}
-      style={{ position: 'absolute' }}
+      style={{ position: 'absolute', zIndex:'3' }}
     />
   );
 }

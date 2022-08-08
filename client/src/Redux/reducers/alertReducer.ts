@@ -5,7 +5,6 @@ import { Action } from '../actions/alertAction';
 const alertReducer = (state: any = {}, action: Action) => {
   switch (action.type) {
     case alertActionType.FIRE:
-      console.log(action.payload)
       return action.payload
     case alertActionType.HIDE:
       return { isOpen: false, status: state.status, message: state.message };

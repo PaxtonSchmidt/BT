@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
 import postInviteToTeam from '../../../API/Requests/Invites/PostInviteToTeam';
@@ -18,9 +18,10 @@ export default function InviteToTeamForm(props: Props) {
     AlertActionCreators,
     dispatch
   );
-
+  
   return (
     <>
+    <div className={`loginFormContainer ${props.isExtended ? 'FormTransition' : ''}`}  style={{paddingLeft: '0px', paddingRight: '0px', paddingBottom: '0px', borderRadius: '0px', boxShadow: 'none', transition: '.5s'}}>
       <Formik
         initialValues={{ invitee: '', discriminator: '' }}
         onSubmit={async (data, { resetForm }) => {
@@ -44,14 +45,13 @@ export default function InviteToTeamForm(props: Props) {
           //need to grab the team name somehow
           return (
             <form
-              style={{ width: 'fit-content' }}
+              style={{ width: 'fit-content', padding: '10px' }}
               onSubmit={(e) => {
                 handleSubmit(e);
               }}
               onBlur={handleBlur}
               className='fadeIn'
             >
-              <div className='formContainer'>
                 <h4 className='header'>Invite people</h4>
                 <TextField
                   label='Username'
@@ -59,11 +59,11 @@ export default function InviteToTeamForm(props: Props) {
                   value={values.invitee}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className='formComponent'
                   name='invitee'
                   variant='standard'
                   color='info'
                   required
+                  fullWidth
                 />
                 <TextField
                   label='#0000'
@@ -71,18 +71,18 @@ export default function InviteToTeamForm(props: Props) {
                   value={values.discriminator}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className='formComponent'
                   name='discriminator'
                   variant='standard'
                   color='info'
                   required
+                  fullWidth
                 />
-              </div>
               <div
                 style={{
                   width: '100%',
                   display: 'flex',
                   justifyContent: 'space-between',
+                  marginTop:'10px'
                 }}
               >
                 <button
@@ -91,17 +91,17 @@ export default function InviteToTeamForm(props: Props) {
                     resetForm();
                     props.setIsExtended(false);
                   }}
-                  className='button bottomButton bottomButtons cancelButton'
-                  style={{ margin: '2px 2px 0px 0px' }}
+                  className='button scaleYonHover cancelButton'
+                  style={{ margin: '2px 2px 0px 0px', borderRadius: '5px' }}
                 >
                   X
                 </button>
                 <button
                   type='submit'
                   name='addToTeam'
-                  className='button bottomButton bottomButtons submitButton'
+                  className='button scaleYonHover hoverGrey'
                   style={{
-                    margin: '2px 0px 0px 0px',
+                    margin: '2px 0px 0px 0px', borderRadius: '5px',
                   }}
                 >
                   Submit
@@ -111,6 +111,8 @@ export default function InviteToTeamForm(props: Props) {
           );
         }}
       </Formik>
+      
+      </div>
     </>
   );
 }

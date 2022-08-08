@@ -8,10 +8,10 @@ export interface SortTypes {
 }
 
 export const sorts: SortTypes = {
-  project: 'project',
-  status: 'status',
-  priority: 'priority',
-  title: 'title',
+  project: 'Project',
+  status: 'Status',
+  priority: 'Priority',
+  title: 'Title',
 };
 
 export interface SortActions {

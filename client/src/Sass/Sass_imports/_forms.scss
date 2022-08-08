@@ -2,16 +2,6 @@
   background-color: $darkGrey;
   transition: flex $transition;
 }
-.form {
-  transition: $transition;
-}
-.formButtonsContainer {
-  min-width: 280px;
-  max-width: 840px;
-  display: flex;
-  justify-content: space-between;
-  margin: 0px auto 20px 0px;
-}
 .formInput {
   margin: 20px;
   height: fit-content;
@@ -22,7 +12,8 @@
   height: fit-content;
   padding: 10px 10px 10px 10px;
   background-color: $darkGrey;
-  margin-top: 20vh;
+  border-radius: 5px;
+  box-shadow: 0 0 3px $hoverGrey;
 }
 .loginFormContainerLG{
   background-color: $darkGrey;
@@ -31,7 +22,6 @@
   padding-left: 50px;
   padding-right: 50px;
   max-width: 500px;
-  margin-top: 10vh;
   border-radius: 5px;
   box-shadow: 0 0 3px $hoverGrey;
 }
@@ -46,8 +36,6 @@
 }
 .twist {
   transform: rotate(180deg);
-  padding-left: 20px;
-  padding-right: 0px;
   fill: $yellow;
 }
 .twist:hover {
@@ -56,9 +44,6 @@
 }
 .FormContainer:hover {
   border-bottom: 1px solid $dimYellow;
-}
-.svgSibling {
-  margin-right: 10px;
 }
 .svgSibling:hover ~ .bi-arrow-bar-down {
   fill: $yellow;
@@ -69,7 +54,6 @@
   align-items: center;
 }
 .bi-arrow-bar-down {
-  padding-right: 10px;
   cursor: pointer;
   color: $accentGrey;
   transition: $transition;
@@ -125,7 +109,7 @@
   color: white !important;
 }
 .css-6hp17o-MuiList-root-MuiMenu-list {
-  border: 1px solid $dimYellow;
+  border: 1px solid $accentGrey;
   background-color: $darkGrey;
   color: white;
 }
@@ -155,6 +139,9 @@
   transition: $transition;
 }
 .css-1cwe2u8-MuiInputBase-root-MuiInput-root:before{
+  border-bottom: 1px solid $accentGrey !important;
+}
+.css-96jr5n-MuiInputBase-root-MuiInput-root:before{
   border-bottom: 1px solid $accentGrey !important;
 }
 input:-webkit-autofill,

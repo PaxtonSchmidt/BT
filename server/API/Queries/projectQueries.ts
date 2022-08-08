@@ -75,7 +75,7 @@ async function addProject(
           );
         });
       } catch (e) {
-        return console.log(e);
+        return e;
       }
     });
   });
@@ -163,7 +163,6 @@ function getProjectIdByTeamIdAndProjectName(
   let sql = 'SELECT project_id FROM projects WHERE team_id= ? AND name= ?';
   return new Promise<any>((resolve, reject) => {
     connectionPool.query(sql, values, (err: any, result: any) => {
-      console.log(result)
       return err ? reject(err) : resolve(result[0]);
     });
   });
@@ -301,7 +300,7 @@ async function transactionRemoveTargetUserFromProject(
         });
       });
     } catch (e) {
-      return console.log(e);
+      return e;
     }
   });
 }

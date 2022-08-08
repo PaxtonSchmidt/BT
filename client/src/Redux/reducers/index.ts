@@ -12,6 +12,7 @@ import socketReducer from './socketReducer';
 import teammatesReducer from './teammatesReducer';
 import teamsReducer from './teamsReducer';
 import ticketsReducer from './ticketsReducer';
+import windowSizeReducer from './windowSizeReducer';
 
 const reducers = combineReducers({
   login: loginReducer,
@@ -27,6 +28,7 @@ const reducers = combineReducers({
   socket: socketReducer,
   alert: alertReducer,
   tickets: ticketsReducer,
+  windowSize: windowSizeReducer
 });
 
 export default reducers;

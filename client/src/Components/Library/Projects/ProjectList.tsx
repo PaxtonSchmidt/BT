@@ -75,15 +75,29 @@ function ProjectList() {
   let WhichView = checkView();
 
   const [deltaX, setDeltaX] = useState<number>(0);
-  function handleSideScroll(e: React.WheelEvent<HTMLDivElement>) {
-    setDeltaX(deltaX + e.deltaY);
-  };
+  let projectList = document.getElementById('projectList');
+  let toggleWidth = document.getElementById('projectsFilterToggle') ? document.getElementById('projectsFilterToggle')!.offsetWidth : 0
+  let scrollWidth = 0 
+  if(projectList){
+    scrollWidth = projectList!.scrollWidth 
+  }
   useEffect(() => {
-    let projectList = document.getElementById('projectList');
     if (projectList) {
         projectList!.scrollLeft = deltaX;
       }
   }, [deltaX])
+  function handleSideScroll(e: React.WheelEvent<HTMLDivElement>) {
+    let newX: number = 0
+
+    if(deltaX + e.deltaY < 0){
+      newX = 0
+    } else if(deltaX + e.deltaY > scrollWidth){
+      newX = scrollWidth - (toggleWidth + 30)
+    }else {
+      newX = deltaX + e.deltaY 
+    }
+    setDeltaX(newX);
+  };
 
   if (!projectsList) {
     return <></>;
@@ -116,6 +130,7 @@ function ProjectList() {
           <ProjectListItem key={project} name={project} />
         ))}
         <button
+          id='projectsFilterToggle'
           className='filterProjectsToggle scaleYonHover'
           onClick={() => setFilterToLeadingOnly(!filterToLeadingOnly)}>
           {WhichView}

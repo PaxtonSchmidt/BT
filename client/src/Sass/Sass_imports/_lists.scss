@@ -53,14 +53,32 @@
   width: fit-content;
   transition: $transition;
 }
-.ticketListTitle {
-  margin-left: 5px;
-}
 .rowItem {
   height: 100%;
   width: fit-content;
   display: inline-block;
 }
+.ticketListRow{
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr 1fr;
+  padding-left: 10px;
+  padding-right: 5px;
+  color: white;
+  border-bottom: 1px solid $accentGrey;
+}
+.ticketListRowSM{
+  grid-template-columns: 3fr 1fr;
+}
+.ticketRowItem{
+  width: 100%;
+  text-align: left;
+  padding-top: 10px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
 .listRow {
   display: flex;
   align-items: flex-end;
@@ -98,20 +116,8 @@
   background-color: $chosenWhite !important;
   color: black !important;
 }
-.listRowSection {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  max-width: 600px;
-}
 .hoverGrey:hover {
   background-color: $hoverGrey;
-}
-.leftSection {
-  width: 50%;
-}
-.rightSection {
-  width: 50%;
 }
 .rightSection > .rowItem {
   width: 25%;
@@ -156,7 +162,6 @@
   flex-direction: column;
   margin-bottom: 10px;
   margin-top: 5px;
-  width: 50%;
   min-width: 250px;
   height: 340px;
   padding-bottom: 10px;

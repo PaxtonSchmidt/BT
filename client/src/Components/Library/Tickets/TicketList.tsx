@@ -12,7 +12,8 @@ import { ticket } from '../../ComponentInterfaces/ticket';
 import SortArrow from '../Buttons/sortArrow';
 import TicketListItem from './TicketListItem';
 import searchIcon from '../../Images/Icons/search.svg';
-import { InputAdornment } from '@mui/material';
+import { InputAdornment, Menu, MenuItem } from '@mui/material';
+import { BreakPoints } from '../Breakpoints';
 
 function Tickets() {
   let dispatch = useDispatch();
@@ -27,6 +28,8 @@ function Tickets() {
   const [isSortReversed, setIsSortReversed] = useState<boolean>(false);
   let initialSortType = window.localStorage.getItem('srtTyp') || sorts.title;
   const [sortedBy, setSortedBy] = useState<string>(initialSortType);
+  const windowWidth = useSelector((state: State) => state.windowSize) | window.innerWidth
+ 
 
   useEffect(() => {
     setTickets([...ticketsState]);
@@ -85,6 +88,30 @@ function Tickets() {
     setSortedBy(sort);
   }
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(event.currentTarget)
+    setAnchorEl(event.currentTarget);
+    setIsDropdownOpen(true)
+  };
+  function handleDropClose(sort: string){
+    //clicking away from mui menu will pass the dom object through this function and crash the app. thanks mui
+    if(typeof sort === 'string'){
+      sortBy(sort)  
+    }
+    setIsDropdownOpen(false)
+    setAnchorEl(null)
+  }
+  
+  let currentlyChosen: string = ''
+  if(sortedBy === sorts.title){
+    currentlyChosen = sorts.priority
+  } else {
+    currentlyChosen = sortedBy
+  }
+  
+
   function handleSearch(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
@@ -103,7 +130,6 @@ function Tickets() {
       setTickets(newTickets);
       sortBy(sortedBy, false, newTickets);
     } else {
-      console.log('BBB');
       setTickets(ticketsState);
       sortBy(sortedBy, false, ticketsState);
     }
@@ -111,7 +137,7 @@ function Tickets() {
 
   //needs pagination
   return (
-    <Container className='pageBodyContainer1 fadeIn'>
+    <Container className='pageBodyContainer1 fadeIn' style={windowWidth < BreakPoints.tablet ? {marginLeft: '5px'} : {}}>
       <div className='listContainer'>
         <div
           className='listRow'
@@ -177,11 +203,11 @@ function Tickets() {
             }}
           </Formik>
         </div>
-        <div className='listRow' style={{ marginTop: '0px', height: '35px' }}>
-          <div className='listRowSection leftSection'>
+
+        <div className={`ticketListRow ${windowWidth < BreakPoints.tablet && 'ticketListRowSM'}`} style={{ marginTop: '0px', height: '35px', borderColor: 'white' }}>
             <span
-              className='rowItem scaleYonHover'
-              style={{ cursor: 'pointer', paddingLeft: '0px' }}
+              className='ticketRowItem scaleYonHover'
+              style={{ cursor: 'pointer', paddingLeft: '0px', textAlign: 'left' }}
               onClick={() => sortBy(sorts.title)}
             >
               Title
@@ -189,10 +215,10 @@ function Tickets() {
                 <SortArrow isSortReversed={isSortReversed} />
               )}
             </span>
-          </div>
-          <div className='listRowSection rightSection'>
+            { windowWidth > BreakPoints.tablet 
+            ? <>
             <span
-              className='rowItem scaleYonHover'
+              className='ticketRowItem scaleYonHover'
               style={{ cursor: 'pointer' }}
               onClick={() => sortBy(sorts.project)}
             >
@@ -202,7 +228,7 @@ function Tickets() {
               )}
             </span>
             <span
-              className='rowItem scaleYonHover'
+              className='ticketRowItem scaleYonHover'
               style={{ cursor: 'pointer' }}
               onClick={() => sortBy(sorts.status)}
             >
@@ -212,7 +238,7 @@ function Tickets() {
               )}
             </span>
             <span
-              className='rowItem scaleYonHover'
+              className='ticketRowItem scaleYonHover'
               style={{ cursor: 'pointer' }}
               onClick={() => sortBy(sorts.priority)}
             >
@@ -221,7 +247,20 @@ function Tickets() {
                 <SortArrow isSortReversed={isSortReversed} />
               )}
             </span>
-          </div>
+            </>
+            :
+            <>
+            <span className='ticketRowItem' style={{cursor: 'pointer'}} onClick={handleClick}>
+              {currentlyChosen}
+              <SortArrow isSortReversed={isSortReversed} />
+            </span>
+            <Menu open={isDropdownOpen} onClose={handleDropClose} anchorEl={anchorEl} >
+              <MenuItem onClick={()=>handleDropClose(sorts.project)}>Project</MenuItem>
+              <MenuItem onClick={()=>handleDropClose(sorts.status)}>Status</MenuItem>
+              <MenuItem onClick={()=>handleDropClose(sorts.priority)}>Prority</MenuItem>
+            </Menu>
+            </>
+            }
         </div>
 
         {tickets.length === 0 ? (
@@ -251,6 +290,8 @@ function Tickets() {
                 priority={ticket.priority}
                 setFocusedTicket={updateFocusedTicket}
                 focusedTicketID={focusedTicketState.ticket_id}
+                sortedBy={sortedBy}
+                windowWidth={windowWidth}
               />
             ))}
           </div>

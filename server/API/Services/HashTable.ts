@@ -5,7 +5,6 @@ function hashStringToInt(s: string, tableSize: number) {
     hash = (13 * hash * s.charCodeAt(i)) % tableSize;
   }
 
-  console.log(hash);
   return hash;
 }
 

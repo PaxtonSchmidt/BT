@@ -77,6 +77,17 @@
   border-top: 1px solid $black;
   z-index: 0;
 }
+.sideBarModal {
+  flex-direction: column;
+  width: fit-content;
+  margin-right: 10px;
+  min-width: 50px;
+  height: 100%;
+  transition: $transition;
+  border-right: 1px solid $accentGrey;
+  border-top: 1px solid $black;
+  z-index: 0;
+}
 .sideBarItem {
   height: 60px;
   width: 100%;

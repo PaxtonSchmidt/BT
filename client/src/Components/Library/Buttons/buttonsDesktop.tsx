@@ -4,26 +4,26 @@ import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { authService } from '../../../Services/AuthService';
 import { Invites } from '../../../Redux/interfaces/invites';
-import { InvitesActionCreators, LoginActionCreators } from '../../../Redux';
+import { AlertActionCreators, InvitesActionCreators, LoginActionCreators } from '../../../Redux';
+import getInvites from '../../../API/Requests/Invites/getInvites';
+import { CustomResponse } from '../../../API/Requests/Base/baseRequest';
+import alertDispatcher from '../../../API/Requests/AlertDispatcher';
+import { fireAlert, hideAlert } from '../../../Redux/action-creators/alertActionCreator';
 
 export default function SelectTeamPageButtons() {
   const invitesState = useSelector((state: Invites) => state.invites);
   const dispatch = useDispatch();
+  const {fireAlert, hideAlert} = bindActionCreators(AlertActionCreators, dispatch)
   const { updateInvites } = bindActionCreators(InvitesActionCreators, dispatch);
   let navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/teams/getTeamInvites')
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else if (res.status === 404) {
-          return '';
-        } else {
-          return console.log('something went wrong...');
-        }
-      })
-      .then((jsonRes) => updateInvites(jsonRes));
+    (async()=>{
+      let response: CustomResponse = await getInvites()
+      response.isOk
+      ? updateInvites(response.body)
+      : alertDispatcher(fireAlert, response.error, hideAlert)
+    })()
   }, []);
 
   let inviteAmount = invitesState.length || 0;

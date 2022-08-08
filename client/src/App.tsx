@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import NavigationSuite from './Components/Layout/NavigationComponents/NavigationSuite';
-import DashboardPage from './Components/Layout/Pages/DashboardPage/DashboardPage';
 import LoginPage from './Components/Layout/Pages/LoginPages/LoginPage';
 import SignUpPage from './Components/Layout/Pages/LoginPages/SignUpPage';
 import ManageTeamPage from './Components/Layout/Pages/ManageTeamPage/ManageTeamPage';
@@ -16,11 +15,7 @@ import './Sass/styles.css';
 import { theme } from './theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  AlertActionCreators,
-  LoginActionCreators,
-  SocketActionCreators,
-} from './Redux';
+import {LoginActionCreators, SocketActionCreators, WindowSizeActionCreators } from './Redux';
 import { io } from 'socket.io-client';
 import { State } from './Redux/reducers';
 
@@ -28,30 +23,31 @@ function App() {
   const dispatch = useDispatch();
   const { login } = bindActionCreators(LoginActionCreators, dispatch);
   const { updateSocket } = bindActionCreators(SocketActionCreators, dispatch);
-  const [isTeamSelected, setIsTeamSelected] = useState(
-    checkIsTeamSelected() === true
-  );
+  const { updateSize } = bindActionCreators(WindowSizeActionCreators, dispatch);
+  const [isTeamSelected, setIsTeamSelected] = useState(true);
   const loginState = useSelector((state: State) => state.login);
   const sessionState = useSelector((state: State) => state.session);
   const alertState = useSelector((state: State) => state.alert);
+  const windowWidth = useSelector((state: State) => state.windowSize);
   let isSessionState = typeof sessionState.currentTeam?.name !== 'undefined';
+
+  
+  const onResize = () => {
+    updateSize(window.innerWidth)
+  }
+  //a window size observer. I refuse to write any media queries for this application
+  useEffect(() => {
+    window.addEventListener('resize', onResize)
+    return ()=>{
+      window.removeEventListener('resize', onResize)
+    }
+  })
 
   //connect socket.io only if the user is logged in AND theyve selected a team, still need server side security of course
   useEffect(() => {
     if (loginState === 1 && isSessionState === true) {
       const socket = io('http://localhost:4000', { withCredentials: true });
-      socket.on('connect', () => {
-        // const engine = socket.io.engine
-        // engine.once("upgrade", () => {
-        //   console.log(engine.transport.name)
-        //   console.log('upgraded')
-        // })
-      });
-      // socket.on("disconnect", () => {
-      //   console.log(
-      //     'socket disconnected'
-      //   )
-      // })
+      socket.on('connect', () => {});
       updateSocket(socket);
     }
   }, [login]);
@@ -59,13 +55,6 @@ function App() {
   let isLogged = sessionStorage.getItem('isLoggedIn');
   if (isLogged === 'true') {
     login();
-  }
-
-  function checkIsTeamSelected() {
-    if (0 === 0) {
-      return true;
-    }
-    return false;
   }
 
   return (
@@ -94,10 +83,6 @@ function App() {
             <NavigationSuite isTeamSelected={isTeamSelected} />
           }
         >
-          {/* <Route path='dashboard' //must be logged in and and have a selected team
-              element={ 
-                <DashboardPage isTeamSelected={isTeamSelected}/>
-            }/> */}
 
           <Route
             path='tickets' //must be logged in and and have a selected team

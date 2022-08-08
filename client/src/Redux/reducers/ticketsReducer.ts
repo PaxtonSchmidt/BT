@@ -46,7 +46,6 @@ const ticketsReducer = (state: any = initialState, action: Action) => {
           newTicketList[index].resolution_status = 1;
         }
       });
-      console.log(newTicketList);
       return newTicketList;
     default:
       return state;

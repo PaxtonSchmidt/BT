@@ -9,7 +9,6 @@ interface Props {
 export default function Hamburger(props: Props) {
   function handleSetIsSideBarExpanded() {
     let isExtended = !props.isSideBarExpanded;
-    window.localStorage.setItem('sbEX', isExtended.toString());
     props.setIsSideBarExpanded(!props.isSideBarExpanded);
   }
   return (

@@ -10,9 +10,11 @@ import getUsersOnTeam from '../../../API/Requests/Teams/GetUsersOnTeam';
 import getTickets from '../../../API/Requests/Tickets/GetTickets';
 import {AlertActionCreators,SessionActionCreators,TeammatesActionCreators,TicketsActionCreators} from '../../../Redux';
 import { State } from '../../../Redux/reducers';
+import { BreakPoints } from '../../Library/Breakpoints';
 import Hamburger from './Hamburger';
 import Navbar from './Navbar/Navbar';
 import Sidebar from './Sidebar/Sidebar';
+import SidebarModal from './Sidebar/SidebarModal';
 
 interface Props {
   isTeamSelected: boolean;
@@ -28,8 +30,17 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
   const loginState = useSelector((state: State) => state.login);
   const sessionState = useSelector((state: State) => state.session);
   const socketState = useSelector((state: State) => state.socket);
-  const isSidebarExtensionPreferred = window.localStorage.getItem('sbEX') === 'true';
-  const [isExpanded, setIsExpanded] = useState<boolean>(isSidebarExtensionPreferred);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const windowWidth = useSelector((state: State) => state.windowSize) | window.innerWidth //just so it has the inner width for the first render before it loads the redux state
+
+  const [isNormalSidebar, setIsNormalSidebar] = useState(true)
+  useEffect(()=>{
+    if(windowWidth < BreakPoints.tablet){
+      setIsNormalSidebar(false)
+    } else {
+      setIsNormalSidebar(true)
+    }
+}, [windowWidth])
 
   async function getSession() {
     let response: CustomResponse = await getSessionState()
@@ -39,7 +50,6 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
   }
   async function getTeammates() {
     let response: CustomResponse = await getUsersOnTeam()
-    console.log(response)
     return response.isOk 
     ? updateTeammates(await response.body)
     : alertDispatcher(fireAlert, response.error, hideAlert)
@@ -67,7 +77,6 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
       && socketState)
       {
       sessionState.currentTeam.projects.forEach((project: any)=>{
-        console.log(project)
         socketState.emit(
           'joinProject',
           project.project_id
@@ -88,7 +97,14 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
             setIsSideBarExpanded={setIsExpanded}
             isSideBarExpanded={isExpanded}
           />
-          <Sidebar teamRole={role} isExpanded={isExpanded} />
+
+          {isNormalSidebar
+          ? <Sidebar teamRole={role} isExpanded={isExpanded} />
+          : <SidebarModal teamRole={role} isExpanded={isExpanded} setIsExpanded={setIsExpanded
+          
+          } />
+          }
+          
           <Outlet />
         </>
       );

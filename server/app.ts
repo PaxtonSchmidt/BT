@@ -15,9 +15,7 @@ const { Server } = require('socket.io');
 app.use(cors());
 
 const server = http.createServer(app);
-server.listen('4000', () => {
-  console.log('server started on port 4000');
-});
+server.listen('4000', () => {});
 app.use(express.json());
 app.use('/', require('./API/Routes/AuthenticationRoutes/authenticationRoute'));
 app.use('/signup/', require('./API/Routes/signUpRoute'));
@@ -51,7 +49,6 @@ const io = new Server(server, {
 });
 io.on('connection', (socket: any) => {
   socket.on('upgrade', () => {
-    console.log('upgraded');
   });
   socket.on(
     'joinTicket',
@@ -73,7 +70,6 @@ io.on('connection', (socket: any) => {
   socket.on(
     'joinProject',
     async function (project_id: number) {
-      console.log('joined proj room')
       let tokenInformation = consumeCookie(
         socket.handshake.headers.cookie,
         consumeCookieFlags.tokenUserTeamRoleIdFlag
@@ -89,6 +85,7 @@ io.on('connection', (socket: any) => {
     }
   );
   socket.on('newTicketNote', (ticketNote: TicketNote) => {
+    console.log('asda')
     socket.to(ticketNote.relevant_ticket_id).emit('newTicketNote', ticketNote);
   });
   socket.on('newProjectNote', (projectNote: ProjectNote) => {

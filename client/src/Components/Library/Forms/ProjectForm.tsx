@@ -34,9 +34,11 @@ export default function ProjectForm(props: Props) {
     dispatch
   );
   const sessionState = useSelector((state: State) => state.session);
-
+  let isFormTransitioned: string =
+  props.isExtended === true ? 'FormTransition' : '';
   return (
     <>
+    <div className={`loginFormContainer ${isFormTransitioned}`} style={{borderRadius: '0px', boxShadow: 'none', transition: '.5s'}}>
       <Formik
         initialValues={{ name: '', description: '' }}
         onSubmit={(data, { resetForm }) => {
@@ -93,7 +95,6 @@ export default function ProjectForm(props: Props) {
               onSubmit={handleSubmit}
               onBlur={handleBlur}
             >
-              <div className='formContainer'>
                 <h4 className='header'>New Project</h4>
                 <TextField
                   label='Name'
@@ -106,6 +107,7 @@ export default function ProjectForm(props: Props) {
                   variant='standard'
                   color='info'
                   required
+                  fullWidth
                 />
                 <TextField
                   name='description'
@@ -118,35 +120,40 @@ export default function ProjectForm(props: Props) {
                   onChange={(e) => handleChange(e)}
                   onBlur={handleBlur}
                   required
+                  fullWidth
                 />
-              </div>
-              <div className='formButtonsContainer'>
-                <button
-                  type='reset'
-                  onClick={() => {
-                    resetForm();
-                    props.setIsExtended(false);
-                  }}
-                  className='button bottomButton bottomButtons cancelButton'
-                  style={{ margin: '2px 2px 0px 0px' }}
-                >
-                  X
-                </button>
-                <button
-                  type='submit'
-                  name='submit'
-                  className='button bottomButton bottomButtons submitButton'
-                  style={{
-                    margin: '2px 0px 0px 0px',
-                  }}
-                >
-                  Submit
-                </button>
-              </div>
+                <div style={{width :'100%', display: 'flex', justifyContent: 'space-between', alignItems: 'end', height: '50px'}}>
+                  <button
+                    type='reset'
+                    onClick={() => {
+                      resetForm();
+                      props.setIsExtended(false);
+                    }}
+                    className='button scaleYonHover cancelButton'
+                    style={{ 
+                      margin: '2px 2px 0px 0px', 
+                      borderRadius:'5px' 
+                    }}
+                  >
+                    X
+                  </button>
+                  <button
+                    type='submit'
+                    name='submit'
+                    className='button hoverGrey scaleYonHover'
+                    style={{
+                      margin: '2px 0px 0px 0px',
+                      borderRadius:'5px'
+                    }}
+                  >
+                    Submit
+                  </button>
+                </div>
             </form>
           );
         }}
       </Formik>
+      </div>
     </>
   );
 }

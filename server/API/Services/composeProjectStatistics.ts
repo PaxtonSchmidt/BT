@@ -126,7 +126,7 @@ export default function composeProjectStatistics(ticketList: any) {
         ComposedStats.allProjectsStats.ticketStatusStats.Closed += 1;
         break;
       default:
-        console.log('error in the data...');
+        break;
     }
 
     switch (ticket.priority) {
@@ -149,7 +149,7 @@ export default function composeProjectStatistics(ticketList: any) {
         ComposedStats.allProjectsStats.ticketPriorityStats.Low += 1;
         break;
       default:
-        console.log('there error in the data');
+        break;
     }
 
     let index = ComposedStats.projects[

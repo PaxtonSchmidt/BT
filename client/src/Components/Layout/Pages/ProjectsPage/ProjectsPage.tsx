@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 import ComposedStats, {
   Assignee,
   PriorityStats,
   Project,
   StatusStats,
 } from '../../../../API/interfaces/statsTypes';
+import alertDispatcher from '../../../../API/Requests/AlertDispatcher';
+import { CustomResponse } from '../../../../API/Requests/Base/baseRequest';
+import getProjectStats from '../../../../API/Requests/Projects/GetProjectStats';
+import { AlertActionCreators } from '../../../../Redux';
+import { fireAlert, hideAlert } from '../../../../Redux/action-creators/alertActionCreator';
 import { State } from '../../../../Redux/reducers';
 import ProjectList from '../../../Library/Projects/ProjectList';
 import ProjectChat from './ProjectChat';
@@ -28,6 +35,8 @@ let ChartTypes: ChosenChartType = {
 };
 
 export default function ProjectsPage({ isTeamSelected }: Props) {
+  const dispatch = useDispatch()
+  const {fireAlert, hideAlert} = bindActionCreators(AlertActionCreators, dispatch)
   const loginState = useSelector((state: State) => state.login);
   const sessionState = useSelector((state: State) => state.session);
   const [isExtended, setIsExtended] = useState<boolean>(false);
@@ -38,7 +47,7 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
   let [projectStats, setProjectStats] = useState<ComposedStats>();
   const [chartType, setChartType] = useState(ChartTypes.status);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  
   let isATeamLead = false;
   if (!isATeamLead) {
   }
@@ -50,13 +59,10 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
   }
   useEffect(() => {
     async function getProjectsStatistics() {
-      let response: any = fetch('/projects/getProjectsStatistics', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then((res) => res.json());
-      setProjectStats(await response);
+      let response: CustomResponse = await getProjectStats()
+      response.isOk 
+      ? setProjectStats(await response.body)
+      : alertDispatcher(fireAlert, response.error, hideAlert)
     }
     getProjectsStatistics();
   }, []);
@@ -146,7 +152,7 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
           {isATeamLead && (
             <div
               id='pageContentContainer'
-              className={`pageContentContainer  projectPageContent ${
+              className={`pageContentContainer projectPageContent ${
                 isExtended ? 'FormContainerTransition' : ''
               }`}
             >

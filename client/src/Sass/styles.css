@@ -112,6 +112,24 @@
   z-index: 0;
 }
 
+.sideBarModal {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-right: 10px;
+  min-width: 50px;
+  height: 100%;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  border-right: 1px solid #ffffff31;
+  border-top: 1px solid #1a1a1a;
+  z-index: 0;
+}
+
 .sideBarItem {
   height: 60px;
   width: 100%;
@@ -422,23 +440,6 @@
   transition: flex 0.5s, -webkit-box-flex 0.5s, -ms-flex 0.5s;
 }
 
-.form {
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-}
-
-.formButtonsContainer {
-  min-width: 280px;
-  max-width: 840px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  margin: 0px auto 20px 0px;
-}
-
 .formInput {
   margin: 20px;
   height: -webkit-fit-content;
@@ -454,7 +455,9 @@
   height: fit-content;
   padding: 10px 10px 10px 10px;
   background-color: #222222;
-  margin-top: 20vh;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 3px #f0f8ff28;
+          box-shadow: 0 0 3px #f0f8ff28;
 }
 
 .loginFormContainerLG {
@@ -464,7 +467,6 @@
   padding-left: 50px;
   padding-right: 50px;
   max-width: 500px;
-  margin-top: 10vh;
   border-radius: 5px;
   -webkit-box-shadow: 0 0 3px #f0f8ff28;
           box-shadow: 0 0 3px #f0f8ff28;
@@ -488,8 +490,6 @@
 .twist {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
-  padding-left: 20px;
-  padding-right: 0px;
   fill: #efff0a;
 }
 
@@ -501,10 +501,6 @@
 
 .FormContainer:hover {
   border-bottom: 1px solid #efff0a6b;
-}
-
-.svgSibling {
-  margin-right: 10px;
 }
 
 .svgSibling:hover ~ .bi-arrow-bar-down {
@@ -525,7 +521,6 @@
 }
 
 .bi-arrow-bar-down {
-  padding-right: 10px;
   cursor: pointer;
   color: #ffffff31;
   -webkit-transition: 0.5s;
@@ -605,7 +600,7 @@
 }
 
 .css-6hp17o-MuiList-root-MuiMenu-list {
-  border: 1px solid #efff0a6b;
+  border: 1px solid #ffffff31;
   background-color: #222222;
   color: white;
 }
@@ -645,6 +640,10 @@
 }
 
 .css-1cwe2u8-MuiInputBase-root-MuiInput-root:before {
+  border-bottom: 1px solid #ffffff31 !important;
+}
+
+.css-96jr5n-MuiInputBase-root-MuiInput-root:before {
   border-bottom: 1px solid #ffffff31 !important;
 }
 
@@ -743,16 +742,38 @@ input[type='number'] {
   transition: 0.5s;
 }
 
-.ticketListTitle {
-  margin-left: 5px;
-}
-
 .rowItem {
   height: 100%;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   display: inline-block;
+}
+
+.ticketListRow {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 3fr 1fr 1fr 1fr;
+      grid-template-columns: 3fr 1fr 1fr 1fr;
+  padding-left: 10px;
+  padding-right: 5px;
+  color: white;
+  border-bottom: 1px solid #ffffff31;
+}
+
+.ticketListRowSM {
+  -ms-grid-columns: 3fr 1fr;
+      grid-template-columns: 3fr 1fr;
+}
+
+.ticketRowItem {
+  width: 100%;
+  text-align: left;
+  padding-top: 10px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .listRow {
@@ -805,27 +826,8 @@ input[type='number'] {
   color: black !important;
 }
 
-.listRowSection {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  margin-bottom: 10px;
-  max-width: 600px;
-}
-
 .hoverGrey:hover {
   background-color: #f0f8ff28;
-}
-
-.leftSection {
-  width: 50%;
-}
-
-.rightSection {
-  width: 50%;
 }
 
 .rightSection > .rowItem {
@@ -890,7 +892,6 @@ input[type='number'] {
           flex-direction: column;
   margin-bottom: 10px;
   margin-top: 5px;
-  width: 50%;
   min-width: 250px;
   height: 340px;
   padding-bottom: 10px;
@@ -1222,18 +1223,20 @@ input[type='number'] {
   color: white;
   background-color: #222222;
   height: 320px;
-  min-width: 250px;
   margin-top: 5px;
   padding-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  width: 10%;
 }
 
 .openFormDetailsHeight {
@@ -1253,7 +1256,9 @@ input[type='number'] {
   height: 18px;
   padding: 5px;
   min-width: 150px;
-  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   -webkit-box-pack: left;
       -ms-flex-pack: left;
           justify-content: left;
@@ -1584,14 +1589,13 @@ body {
 }
 
 .pageContentContainer {
-  padding-right: 15px;
+  padding-right: 5px;
   width: 100%;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
   margin-top: 50px;
   margin-left: auto;
-  margin-right: auto;
   text-align: center;
   display: inline-block;
   -webkit-box-orient: vertical;
@@ -1609,19 +1613,22 @@ body {
   overflow-x: hidden;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  margin-top: -340px;
+}
+
+.ticketPageContentContainer {
+  margin-top: -325px;
 }
 
 .projectPageContent {
-  margin-top: -173px;
+  margin-top: -145px;
+}
+
+.manageTeamPageContent {
+  margin-top: -145px;
 }
 
 .notATeamLeadMargin {
   margin-top: 60px;
-}
-
-.manageTeamPageContent {
-  margin-top: -153px;
 }
 
 .pageBodyContainer5 {
@@ -1674,6 +1681,7 @@ body {
       -ms-flex-pack: start;
           justify-content: flex-start;
   margin-bottom: 5px;
+  margin-right: 0px !important;
 }
 
 .pageBodyContainer4 {
@@ -1709,24 +1717,26 @@ body {
 }
 
 .formAndDetails {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  gap: 10px;
   -webkit-box-align: left;
       -ms-flex-align: left;
           align-items: left;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  gap: 10px;
   min-width: 280px;
   border-bottom: 1px solid #ffffff31;
+}
+
+.formAndDetailsSM {
+  padding-bottom: 10px;
+  margin-left: 5px;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
 }
 
 .header {
@@ -1775,6 +1785,14 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.noPaddingRight {
+  padding-right: 0px !important;
+}
+
+.noPaddingLeft {
+  padding-left: 0px !important;
 }
 
 .defaultCursor {

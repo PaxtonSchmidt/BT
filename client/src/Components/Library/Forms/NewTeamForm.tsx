@@ -21,7 +21,7 @@ export default function NewTeamForm() {
   }
 
   return (
-    <div className='loginFormContainer fadeIn'>
+    <div style={{marginTop: '10vh'}} className='loginFormContainer fadeIn'>
       <h4 className='header'>Create Team</h4>
       <Formik initialValues={{ name: '' }} onSubmit={handleSubmit}>
         {({ values, handleChange, handleBlur, handleSubmit, handleReset }) => {
@@ -56,7 +56,7 @@ export default function NewTeamForm() {
                 <button
                   type='submit'
                   name='submit'
-                  className='button bottomButton bottomButtons submitButton'
+                  className='button'
                   style={{
                     margin: '2px 0px 0px 0px',
                   }}

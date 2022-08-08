@@ -9,7 +9,7 @@ export const translateRole = {
       case 3:
         return 'Developer';
       default:
-        console.log('Something broke the role translator...');
+        return
     }
   },
   TranslateRoleBack(team_role: string) {
@@ -22,7 +22,7 @@ export const translateRole = {
       case 'Developer':
         return 3;
       default:
-        console.log('Something broke the role translator...');
+        return
     }
   },
 
@@ -36,7 +36,7 @@ export const translateRole = {
       case 3:
         return 'Developer';
       default:
-        console.log('Something broke the role translator...');
+        return
     }
   },
   TranslateProjectRoleBack(team_role: string) {
@@ -49,7 +49,7 @@ export const translateRole = {
       case 'Developer':
         return 3;
       default:
-        console.log('Something broke the role translator...');
+        return
     }
   },
 };

@@ -38,7 +38,6 @@ export default function TeammateProjectButton(props: Props) {
         return project.name === props.Project;
       }
     );
-    console.log(projectIDX);
     if (projectIDX === -1) {
       fireAlert({
         isOpen: true,

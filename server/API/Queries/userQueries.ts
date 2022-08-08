@@ -33,14 +33,6 @@ async function addUser(
   });
 }
 
-function getUsers(req: any, res: any) {
-  let sql = 'SELECT * FROM users';
-
-  connectionPool.query(sql, (err: any, result: any) => {
-    if (err) throw err;
-    res.send(result);
-  });
-}
 
 function getUserByID(userID: string) {
   let sql = 'SELECT username, discriminator, bio FROM users WHERE user_id = ?';
@@ -113,11 +105,10 @@ function getIdsForUsernameDiscriminatorList(teammates: Teammate) {
 
 module.exports = {
   addUser,
-  getUsers,
   getUserByID,
   getUserByNameDiscriminator,
   getValidTokenVersion,
   incrementTokenVersion,
   checkUserTeam,
-  getIdsForUsernameDiscriminatorList,
+  getIdsForUsernameDiscriminatorList
 };

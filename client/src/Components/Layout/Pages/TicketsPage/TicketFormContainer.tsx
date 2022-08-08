@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AlertActionCreators } from '../../../../Redux';
 import { State } from '../../../../Redux/reducers';
+import { BreakPoints } from '../../../Library/Breakpoints';
 import TicketForm from '../../../Library/Forms/TicketForm';
 
 interface Props {
@@ -23,6 +24,7 @@ export default function TicketFormContainer(props: Props) {
     useState<boolean>(false);
   let isTwisted: string = props.isExtended ? 'twist' : '';
   let isFormDisabled: string = isTicketFormDisabled ? 'disabled' : '';
+  const windowWidth = useSelector((state: State) => state.windowSize) | window.innerWidth
 
   function checkIfAnyProjects() {
     let isAnyProject = false;
@@ -53,12 +55,11 @@ export default function TicketFormContainer(props: Props) {
       setTimeout(hideAlert, 6000);
     }
   }
-
   return (
     <Container
       id='FormContainer'
       className='pageBodyContainer2 FormContainer fadeIn'
-      style={{ borderBottom: `${isFormDisabled ? '1px solid #1a1a1a' : ''}` }}
+      style={{ borderBottom: `${isFormDisabled ? '1px solid #1a1a1a' : ''}`, marginLeft: `${windowWidth < BreakPoints.tablet ? '5px' : ''}`}}
     >
       <div className='formLoadAnim'>
         <TicketForm

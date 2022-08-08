@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 let users = require('../../Queries/userQueries');
 let auth = require('../../Queries/AuthQueries/authorizationQueries');
 
-//Selecting a team no invalidates original JWT and gives the user and updated token
+//Selecting a team now invalidates original JWT and gives the user and updated token
 //this token has a longer expiry and contains the team information of the session
 function selectTeam(req: any, res: any) {
   async function addTeamToJWT() {

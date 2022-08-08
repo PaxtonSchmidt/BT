@@ -26,7 +26,6 @@ async function getTicketNotes(req: Express.Request, res: Express.Response) {
   let notes: [] = [];
   try {
     notes = await tickets.getTicketNotes(req.body.ticket_id);
-    console.log(notes)
     return res.status(200).send(notes);
   } catch (e) {
     return res

@@ -3,15 +3,6 @@ import consumeCookie from '../Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from '../Services/consumeCookies/consumeCookieFlags';
 import getCurrentDate from '../Services/getCurrentDate';
 
-// function createTeamsTable(req: any, res: any) {
-//     let sql ="CREATE TABLE teams(team_id INT(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, date_created DATETIME NOT NULL, creator_user_id INT(11), PRIMARY KEY(team_id))";
-
-//     connectionPool.query(sql, (err: Error, result: any) => {
-//         if(err) throw err;
-//         console.log(result);
-//         res.send('Teams table created...');
-//     });
-// }
 async function addTeamTransaction(
   user_id: number,
   name: string,

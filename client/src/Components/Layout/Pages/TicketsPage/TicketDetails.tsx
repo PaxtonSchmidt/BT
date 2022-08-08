@@ -6,6 +6,7 @@ import { Modal } from '@mui/material';
 import TicketForm from '../../../Library/Forms/TicketForm';
 import { statusTranslation } from '../../../../Services/translateTicketStatus';
 import moment from 'moment';
+import { BreakPoints } from '../../../Library/Breakpoints';
 
 export default function TicketDetails() {
   const focusedTicketState = useSelector((state: State) => state.focusedTicket);
@@ -24,6 +25,8 @@ export default function TicketDetails() {
   let isFocusedTicketUndefined: boolean =
     focusedTicketState.title === undefined;
   let isUserAllowedToEdit: boolean = false;
+  const windowWidth = useSelector((state: State) => state.windowSize) | window.innerWidth
+  
 
   function handleSetIsModalOpen() {
     typeof focusedTicketState.ticket_id !== 'undefined' &&
@@ -56,16 +59,18 @@ export default function TicketDetails() {
     }
   }
   let conditionalMarginRight: string = isUserAllowedToEdit ? 'auto' : '';
+  
+
   return (
     <>
       {isFocusedTicketUndefined ? (
-        <div className='ticketDetailsContainer'>
+        <div className='ticketDetailsContainer' >
           <p
             className='delayedFadeIn'
             style={{
               color: 'ffffff31',
               marginTop: '14px',
-              marginBottom: 'auto',
+              marginBottom: 'auto'
             }}
           >
             Please select a ticket
