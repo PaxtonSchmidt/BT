@@ -18,6 +18,7 @@ import { bindActionCreators } from 'redux';
 import {LoginActionCreators, SocketActionCreators, WindowSizeActionCreators } from './Redux';
 import { io } from 'socket.io-client';
 import { State } from './Redux/reducers';
+import { getBreakpointName } from './Components/Library/Breakpoints';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,7 +34,16 @@ function App() {
 
   
   const onResize = () => {
-    updateSize(window.innerWidth)
+    // let oldBreakpoint = getBreakpointName(windowWidth)
+    // let newBreakpoint = getBreakpointName(window.innerWidth)
+
+    let difference =  window.innerWidth - windowWidth
+    if(difference > 10 || difference < -10){
+      return updateSize(window.innerWidth)
+    }
+    // if(oldBreakpoint !== newBreakpoint){
+    //   return updateSize(window.innerWidth)
+    // }
   }
   //a window size observer. I refuse to write any media queries for this application
   useEffect(() => {
@@ -41,7 +51,7 @@ function App() {
     return ()=>{
       window.removeEventListener('resize', onResize)
     }
-  })
+  }, [onResize])
 
   //connect socket.io only if the user is logged in AND theyve selected a team, still need server side security of course
   useEffect(() => {
@@ -49,6 +59,10 @@ function App() {
       const socket = io('http://localhost:4000', { withCredentials: true });
       socket.on('connect', () => {});
       updateSocket(socket);
+  
+      return () => {
+        socket.disconnect()
+      }
     }
   }, [login]);
 

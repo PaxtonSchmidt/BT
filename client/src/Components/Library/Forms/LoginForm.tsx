@@ -108,10 +108,11 @@ export default function LoginForm() {
                                     <button
                                         type='submit'
                                         name='login'
-                                        className={`button scaleYonHover hoverGrey button-border button-tb`}
+                                        className={`button scaleYonHover button-border button-tb hoverGreen`}
                                         style={{
                                             margin: '2px 0px 0px 0px',
                                             justifySelf: 'right',
+                                            backgroundColor: '#ffffff31'
                                         }}>
                                         Submit
                                     </button>

@@ -39,7 +39,11 @@ export interface TeammatesInformation extends Teammate {
   projects: AssignedProjects[];
 }
 
-export default function TeammateDetails() {
+interface Props {
+  isModalVersion?: boolean
+}
+
+export default function TeammateDetails(props: Props) {
   const dispatch = useDispatch();
   const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators,dispatch);
   const { updateTeammateRole, removeTeammate } = bindActionCreators(TeammatesActionCreators,dispatch)
@@ -217,13 +221,13 @@ export default function TeammateDetails() {
       <>
         <div
           id='list'
-          className='list componentGlow fadeIn'
+          className={`list componentGlow ${props.isModalVersion ? '' : 'fadeIn'}`}
           style={{
             position: 'relative',
             height: '350px',
             overscrollBehavior: 'auto',
             overflowY: 'hidden',
-            transition: '0s',
+            transition: '0s'
           }}
         >
           <div className='ListContainer'>
@@ -245,7 +249,7 @@ export default function TeammateDetails() {
                   marginBottom: '8px',
                 }}
               >
-                <div style={{ display: 'flex', height: 'fit-content' }}>
+                <div style={{ display: 'flex', height: 'fit-content', justifyContent: 'center', textAlign: 'center', width: '100%' }}>
                   <span
                     className='rowItem username'
                     style={{
@@ -253,8 +257,7 @@ export default function TeammateDetails() {
                       width: 'fit-content',
                       height: 'fit-content',
                       marginTop: '6px',
-                      marginBottom: 'auto',
-                      marginLeft: '5px',
+                      marginBottom: 'auto'
                     }}
                   >
                     {chosenTeammate.username}
@@ -394,6 +397,7 @@ export default function TeammateDetails() {
                   display: 'inline-block',
                   width: '80%',
                   paddingLeft: '5px',
+                  color: 'white'
                 }}
               >
                 {chosenTeammate?.projects.length === 0

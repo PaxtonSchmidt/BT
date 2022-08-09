@@ -1,3 +1,4 @@
+import { resetFocusedTicket } from '../action-creators/focusedTicketActionCreator';
 import { focusedTicketActionType } from '../action-types/focusedTicketActionType';
 import { Action } from '../actions/focusedTicketAction';
 
@@ -8,6 +9,8 @@ const focusedTicketReducer = (state: any = initialState, action: Action) => {
   switch (action.type) {
     case focusedTicketActionType.UPDATE:
       return action.payload;
+    case focusedTicketActionType.RESET:
+      return initialState;
     case focusedTicketActionType.EDIT:
       editedTicket = { ...state };
       editedTicket.assignee_username =

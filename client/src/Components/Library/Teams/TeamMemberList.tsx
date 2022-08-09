@@ -51,7 +51,7 @@ export default function TeammateList() {
             style={{ textAlign: 'left', width: '110px' }}
           >
             <span className='rowItem'>
-              Members of {sessionState.currentTeam.name}
+              Teammates
             </span>
           </div>
         </div>

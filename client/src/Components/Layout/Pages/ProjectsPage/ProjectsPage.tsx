@@ -15,8 +15,10 @@ import getProjectStats from '../../../../API/Requests/Projects/GetProjectStats';
 import { AlertActionCreators } from '../../../../Redux';
 import { fireAlert, hideAlert } from '../../../../Redux/action-creators/alertActionCreator';
 import { State } from '../../../../Redux/reducers';
+import { BreakPoints } from '../../../Library/Breakpoints';
 import ProjectList from '../../../Library/Projects/ProjectList';
 import ProjectChat from './ProjectChat';
+import { ProjectChatModal } from './ProjectChatModal';
 import ProjectFormContainer from './ProjectFormContainer';
 import ProjectMembersManage from './ProjectMembersManage';
 
@@ -40,14 +42,14 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
   const loginState = useSelector((state: State) => state.login);
   const sessionState = useSelector((state: State) => state.session);
   const [isExtended, setIsExtended] = useState<boolean>(false);
-  const focusedProjectState = useSelector(
-    (state: State) => state.focusedProject
-  );
+  const focusedProjectState = useSelector((state: State) => state.focusedProject);
   const [chartData, setChartData] = useState<any>();
   let [projectStats, setProjectStats] = useState<ComposedStats>();
   const [chartType, setChartType] = useState(ChartTypes.status);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  
+  const windowWidth = useSelector((state: State) => state.windowSize) | window.innerWidth //just so it has the inner width for the first render before it loads the redux state
+  const [isProjectChatOpen, setIsProjectChatOpen] = useState<boolean>(false);
+
   let isATeamLead = false;
   if (!isATeamLead) {
   }
@@ -148,7 +150,7 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
         return <></>;
       }
       return (
-        <div className='overflow'>
+        <div className='overflow' style={windowWidth > BreakPoints.tablet ? {} : {paddingLeft: '5px'}}>
           {isATeamLead && (
             <div
               id='pageContentContainer'
@@ -170,12 +172,15 @@ export default function ProjectsPage({ isTeamSelected }: Props) {
             style={{ flexDirection: 'row' }}
           >
             <ProjectList />
-            <div className='pageBodyContainer5'>
+            <div className={`pageBodyContainer5 ${windowWidth > BreakPoints.mobile ? '' : 'pageBodyContainer5SM'}`} >
               <div className='pageBodyQuadrant' style={{borderRight: 'none'}}>
-                <ProjectMembersManage />
+                <ProjectMembersManage setIsProjectChatOpen={setIsProjectChatOpen}/>
               </div>
-              <div className='pageBodyQuadrant fadeIn' style={{borderRight: 'none'}}>
-                <ProjectChat />
+
+              <div className={`pageBodyQuadrant fadeIn ${windowWidth > BreakPoints.mobile ? '' : 'pageBodyQuadrantSM'}`} style={{borderRight: 'none'}}>
+                {windowWidth > BreakPoints.mobile 
+                ? <ProjectChat vWidth={windowWidth} />
+                : <ProjectChatModal projectName={focusedProjectState.name} vWidth={windowWidth} isOpen={isProjectChatOpen} setIsOpen={setIsProjectChatOpen} />}
               </div>
             </div>
             

@@ -1,4 +1,3 @@
-import React, { SetStateAction } from 'react';
 import arrow from '../../Images/Icons/arrow-up-short.svg';
 
 interface Props {

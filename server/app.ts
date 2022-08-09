@@ -85,7 +85,6 @@ io.on('connection', (socket: any) => {
     }
   );
   socket.on('newTicketNote', (ticketNote: TicketNote) => {
-    console.log('asda')
     socket.to(ticketNote.relevant_ticket_id).emit('newTicketNote', ticketNote);
   });
   socket.on('newProjectNote', (projectNote: ProjectNote) => {

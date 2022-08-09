@@ -2,7 +2,7 @@
   width: calc(100%-40px);
   background-color: $darkGrey;
   padding-right: 0px !important;
-  height: 360px;
+  height: 385px;
   padding-bottom: 10px;
   overflow-y: scroll;
   overscroll-behavior: none;
@@ -29,7 +29,6 @@
 
 .listContainer {
   background-color: $darkGrey;
-  margin-right: 5px;
 }
 .ticketListItemButton {
   color: $dimYellow;
@@ -39,7 +38,7 @@
   height: 100%;
 }
 .ticketListItemButtonContainer {
-  color: $dimYellow;
+  color: white;
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -47,7 +46,10 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   padding-top: 0px;
-  background-color: transparent;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 5px;
+  background-color: $accentGrey;
   border: none;
   cursor: pointer;
   width: fit-content;
@@ -71,6 +73,7 @@
 }
 .ticketRowItem{
   width: 100%;
+  position: relative;
   text-align: left;
   padding-top: 10px;
   display: inline-block;
@@ -92,13 +95,13 @@
   position: relative;
   border-bottom: 1px solid white;
   height: 40px;
-  width: calc(100%-40px);
+  width: calc(100%-50px);
   transition: $transition;
   cursor: default;
 }
 .searchTicketsForm {
   width: 50%;
-  min-width: 300px;
+  min-width: 250px;
   max-width: 500px;
   border: 1px solid $accentGrey;
   border-bottom: none;
@@ -160,11 +163,12 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   margin-top: 5px;
   min-width: 250px;
   height: 340px;
   padding-bottom: 10px;
+  border-bottom: 1px solid $accentGrey;
 }
 .ticketNoteList {
   transition: $transition;
@@ -182,6 +186,7 @@
 }
 .projectNoteListContainer{
   width: 100%;
+  background-color: $darkGrey;
 }
 .ticketNoteList:hover {
   border-bottom: 1px solid $dimYellow;

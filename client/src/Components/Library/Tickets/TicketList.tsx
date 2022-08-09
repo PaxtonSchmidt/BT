@@ -148,19 +148,22 @@ function Tickets() {
             justifyContent: 'space-between',
           }}
         >
-          <p
-            className='delayedFadeIn'
-            style={{
-              fontSize: '12px',
-              color: '#ffffff31',
-              marginBottom: '5px',
-              marginTop: 'auto',
-            }}
+          {windowWidth > BreakPoints.mobile 
+          ?<p
+          className='delayedFadeIn'
+          style={{
+            fontSize: '12px',
+            color: '#ffffff31',
+            marginBottom: '5px',
+            marginTop: 'auto',
+          }}
           >{`Showing ${tickets.length} entries`}</p>
+          :<></>}
+          
           <Formik
             initialValues={{ search: '' }}
             onSubmit={() => {}}
-            style={{ width: '600px' }}
+            
           >
             {({
               values,
@@ -174,6 +177,7 @@ function Tickets() {
                   className='searchTicketsForm fadeIn'
                   onSubmit={handleSubmit}
                   onBlur={handleBlur}
+                  style={windowWidth <= BreakPoints.mobile ? {marginLeft: 'auto', marginRight: 'auto'} : {}}
                 >
                   <TextField
                     type='text'
@@ -250,9 +254,13 @@ function Tickets() {
             </>
             :
             <>
-            <span className='ticketRowItem' style={{cursor: 'pointer'}} onClick={handleClick}>
+            <span className='ticketRowItem' style={{paddingTop: '0px'}} onClick={handleClick}>
+              <div className='ticketSortDropButton' >
               {currentlyChosen}
-              <SortArrow isSortReversed={isSortReversed} />
+              {(sortedBy === sorts.priority || sortedBy === sorts.status || sortedBy === sorts.project) && (
+                <SortArrow isSortReversed={isSortReversed} />
+              )}
+              </div>
             </span>
             <Menu open={isDropdownOpen} onClose={handleDropClose} anchorEl={anchorEl} >
               <MenuItem onClick={()=>handleDropClose(sorts.project)}>Project</MenuItem>
@@ -271,7 +279,7 @@ function Tickets() {
             <p style={{ paddingTop: '10px' }}>No tickets</p>
           </div>
         ) : (
-          <div className='list componentGlow' style={{ textAlign: 'left' }}>
+          <div className='list componentGlow' style={{ textAlign: 'left', overflowX: 'hidden' }}>
             {tickets?.map((ticket: ticket) => (
               <TicketListItem
                 key={ticket.ticket_id}

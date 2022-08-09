@@ -58,6 +58,7 @@ export default function TeammateProjectButton(props: Props) {
     <div
       onClick={() => handleSelect()}
       className='teammateProjectButton scaleYonHover'
+      style={{color: 'white'}}
     >
       {props.Project}
     </div>

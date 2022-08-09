@@ -21,10 +21,11 @@ export default function TicketsPage({ isTeamSelected }: Props) {
   if (loginState === 1) {
     if (isTeamSelected === true) {
       return (
-        <div className='overflow'>
+        <div className='overflow' >
           <div
             id='pageContentContainer'
             className={`pageContentContainer ticketPageContentContainer ${isFormContainerTransition}`}
+            
           >
             <TicketFormContainer
               isExtended={isExtended}

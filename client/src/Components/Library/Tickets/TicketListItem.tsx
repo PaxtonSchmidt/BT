@@ -37,17 +37,17 @@ export default function ticketListItem(props: Props) {
 
   function getSortedDetail(){
     if(props.sortedBy === sorts.status){
-      return <span className='ticketRowItem' >{status}</span>
+      return <span className='ticketRowItem' style={{paddingLeft: '10px'}}>{status}</span>
     } else if(props.sortedBy === sorts.project){
-      return <span className='ticketRowItem' >
+      return <span className='ticketRowItem' style={{paddingLeft: '10px'}}>
       <p style={{textOverflow: 'ellipsis', overflow: 'hidden', margin: '0px'}}>
         {props.project_name}
       </p>
     </span>
     } else if(props.sortedBy === sorts.priority){
-      return <span className='ticketRowItem' >{priority}</span>
+      return <span className='ticketRowItem' style={{paddingLeft: '10px'}}>{priority}</span>
     } else if(props.sortedBy === sorts.title){
-      return <span className='ticketRowItem' >{priority}</span>
+      return <span className='ticketRowItem' style={{paddingLeft: '10px'}}>{priority}</span>
     } else {
       return <></>
     }
@@ -55,7 +55,7 @@ export default function ticketListItem(props: Props) {
 
   return (
     <div
-      className={`ticketListRow ${chosenTicketClass} ${props.windowWidth < BreakPoints.tablet && 'ticketListRowSM'} hoverGrey scaleYonHover`}
+      className={`ticketListRow ${chosenTicketClass} ${props.windowWidth <= BreakPoints.tablet && 'ticketListRowSM'} hoverGrey scaleYonHover`}
       style={{
         cursor: 'pointer',
         marginTop: '0px',
@@ -66,7 +66,7 @@ export default function ticketListItem(props: Props) {
       }}
       onClick={() => handleTicketSelect(props)}>
 
-      {props.windowWidth >= BreakPoints.tablet 
+      {props.windowWidth > BreakPoints.tablet 
       ? <>
         <span className='ticketRowItem' style={{textAlign: 'left'}}>{props.title}</span>
         <span className='ticketRowItem'>
@@ -75,7 +75,7 @@ export default function ticketListItem(props: Props) {
           </p>
         </span>
         <span className='ticketRowItem'>{status}</span>
-        <span className='ticketRowItem'>{priority}</span>
+        <span className='ticketRowItem' >{priority}</span>
       </>
       :
       <>

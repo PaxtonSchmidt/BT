@@ -67,9 +67,6 @@ export default function ProjectMembersListItem(props: Props) {
             }}>
             #{props.member.discriminator}
           </span>
-          {focusedProjectState.name !== 'All' && (
-            <span className='showDetailsHighlight'>{`Show details`}</span>
-          )}
         </div>
 
         <div

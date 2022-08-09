@@ -33,15 +33,6 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const windowWidth = useSelector((state: State) => state.windowSize) | window.innerWidth //just so it has the inner width for the first render before it loads the redux state
 
-  const [isNormalSidebar, setIsNormalSidebar] = useState(true)
-  useEffect(()=>{
-    if(windowWidth < BreakPoints.tablet){
-      setIsNormalSidebar(false)
-    } else {
-      setIsNormalSidebar(true)
-    }
-}, [windowWidth])
-
   async function getSession() {
     let response: CustomResponse = await getSessionState()
     return response.isOk 
@@ -98,7 +89,7 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
             isSideBarExpanded={isExpanded}
           />
 
-          {isNormalSidebar
+          {windowWidth > BreakPoints.tablet 
           ? <Sidebar teamRole={role} isExpanded={isExpanded} />
           : <SidebarModal teamRole={role} isExpanded={isExpanded} setIsExpanded={setIsExpanded
           

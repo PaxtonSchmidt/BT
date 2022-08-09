@@ -6,6 +6,10 @@ interface updateFocusedTicket {
   payload: Ticket;
 }
 
+interface resetFocusedTicket {
+  type: focusedTicketActionType.RESET;
+}
+
 interface editFocusedTicket {
   type: focusedTicketActionType.EDIT;
   payload: Ticket;
@@ -18,4 +22,5 @@ interface setFocusedTicketToUnassigned {
 export type Action =
   | updateFocusedTicket
   | editFocusedTicket
-  | setFocusedTicketToUnassigned;
+  | setFocusedTicketToUnassigned
+  | resetFocusedTicket;

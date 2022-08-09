@@ -124,11 +124,11 @@ export default function TicketForm(props: Props) {
     priority: '',
     resolution_status: '',
   };
-  let fadeAnimationType: string = props.isEditMode ? 'fadeIn' : 'delayedFadeIn';
   return (
     <>
-    <div className={`loginFormContainer ${fadeAnimationType} ${isFormTransitioned}`} style={{paddingLeft: '0px', paddingRight: '0px', paddingBottom: '0px', borderRadius: '0px', boxShadow: 'none', transition: '.5s'}}>
-    <h4 className='header' style={{textAlign: 'center'}}>New Ticket</h4>
+    <div className={`loginFormContainer ${props.isEditMode ? 'fadeIn' : ''} ${isFormTransitioned}`} style={{paddingLeft: '0px', paddingRight: '0px', paddingBottom: '0px', borderRadius: '0px', boxShadow: 'none', transition: '.5s', opacity: `${!props.isExtended && !props.isEditMode ? '0%' : ''}`}}>
+    {!props.isEditMode && <h4 className='header' style={{textAlign: 'center'}}>New Ticket</h4>} 
+    {props.isEditMode && <h4 className='header' style={{textAlign: 'center', paddingLeft: '5px', paddingRight: '5px'}}>{`${focusedTicketState.title}`}</h4>} 
       <Formik
         innerRef={formRef}
         initialValues={initialData}

@@ -6,4 +6,8 @@ interface updateFocusedTeammate {
   payload: Teammate;
 }
 
-export type Action = updateFocusedTeammate;
+interface resetFocusedTeammate {
+  type: focusedTeammateActionType.RESET_TEAMMATE
+}
+
+export type Action = updateFocusedTeammate | resetFocusedTeammate;

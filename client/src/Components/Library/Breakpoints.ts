@@ -29,7 +29,7 @@ export const BreakPointsNames: BreakPointsNames = {
 }
 
 export function getBreakpointName(n: number): string{
-    if(n === 0 || n <= BreakPoints.mobile){
+    if(n <= BreakPoints.mobile){
       return BreakPointsNames.mobile
     } else if(n > BreakPoints.mobile && n <= BreakPoints.tablet){
       return BreakPointsNames.tablet

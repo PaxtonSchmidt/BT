@@ -41,18 +41,16 @@ body {
   margin-right: auto;
 }
 .pageContentContainer{
-  padding-right: 5px;
   width: 100%;
   height: fit-content;
   margin-top: 50px;
-  margin-left: auto;
   text-align: center;
   display: inline-block;
   flex-direction: column;
   align-items: center;
   flex: 1;
   scroll-behavior: smooth;
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
   transition: $transition;
 }
@@ -69,17 +67,26 @@ body {
   margin-top: 60px;
 }
 .pageBodyContainer5 {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
   width: 100%;
-  padding-bottom: 10px;
-  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-top:5px;
   border-bottom: 1px solid $accentGrey;
+}
+.pageBodyContainer5SM{
+  grid-template-columns: 2fr;
+  border-bottom: none;
+}
+.pageBodyQuadrantSM{
+  display: none !important;
 }
 .pageBodyQuadrant {
   display: flex;
-  width: 50%;
+  width: 100%;
   border-right: 1px solid $accentGrey;
+  border-bottom: 1px solid $accentGrey;
   justify-content: space-between;
 }
 .pageBodyContainer1 {
@@ -91,7 +98,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-bottom: 5px;
   margin-right: 0px !important
 }
 .pageBodyContainer4 {
@@ -99,8 +105,7 @@ body {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  padding-right: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 .pageHeader {
   font-size: 70px;
@@ -115,15 +120,14 @@ body {
 .formAndDetails {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 5px;
   align-items: left;
   justify-content: space-between;
   min-width: 280px;
   border-bottom: 1px solid $accentGrey;
 }
 .formAndDetailsSM{
-  padding-bottom: 10px;
-  margin-left: 5px;
+  padding-bottom: 5px;
   grid-template-columns: 1fr;
 }
 .header {

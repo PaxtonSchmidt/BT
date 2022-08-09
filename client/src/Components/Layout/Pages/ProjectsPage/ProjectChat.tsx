@@ -11,9 +11,14 @@ import getProjectComments from '../../../../API/Requests/Projects/GetProjectComm
 import postProjectComment from '../../../../API/Requests/Projects/PostProjectComment';
 import { AlertActionCreators } from '../../../../Redux';
 import { State } from '../../../../Redux/reducers';
+import { BreakPoints } from '../../../Library/Breakpoints';
 import NoteListItem from '../../../Library/Tickets/NoteListItem';
 
-const ProjectChat: React.FC = () => {
+interface Props {
+  vWidth: number
+}
+
+const ProjectChat: React.FC<Props> = ({ vWidth }) => {
     const dispatch = useDispatch();
     const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch);
     const [ chosenNotes, setChosenNotes ] = useState<ProjectNote[]>([])
@@ -64,8 +69,8 @@ const ProjectChat: React.FC = () => {
             return setChosenNotes([])
         }
         constructVisibleNotes()
-    }, [focusedProject, allNotes])
-
+    }, [focusedProject, allNotes]) 
+    
     if(focusedProject.name === 'All'){
         return (
         <div className='projectNoteListContainer' style={{ transition: '0' }} >

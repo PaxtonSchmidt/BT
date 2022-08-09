@@ -49,7 +49,7 @@ export default function ProjectPotentialMembersListItem(props: Props) {
             {isSelected ? (
               <div
                 className='selectFromListButton scaleY fadeIn'
-                style={{ backgroundColor: 'green' }}>
+                style={{ backgroundColor: 'green', }}>
                 <img style={{ height: 'fit-content' }} src={check} />
                 <p style={{ marginTop: '5px', marginBottom: '5px' }}>Added</p>
               </div>

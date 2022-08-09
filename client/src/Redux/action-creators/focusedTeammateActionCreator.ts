@@ -11,3 +11,10 @@ export const updateFocusedTeammate = (Teammate: Teammate) => {
     });
   };
 };
+export const resetFocusedTeammate = () => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: focusedTeammateActionType.RESET_TEAMMATE
+    });
+  };
+};

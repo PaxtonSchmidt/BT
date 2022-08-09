@@ -7,6 +7,8 @@ const focusedTeammateReducer = (state: any = initialState, action: Action) => {
   switch (action.type) {
     case focusedTeammateActionType.UPDATE:
       return action.payload;
+    case focusedTeammateActionType.RESET_TEAMMATE:
+      return initialState
     default:
       return state;
   }

@@ -1,9 +1,6 @@
-import e from 'express';
-import { userInfo } from 'os';
 import React, {
   useEffect,
-  useState,
-  useCallback
+  useState
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -86,9 +83,9 @@ function ProjectList() {
         projectList!.scrollLeft = deltaX;
       }
   }, [deltaX])
+
   function handleSideScroll(e: React.WheelEvent<HTMLDivElement>) {
     let newX: number = 0
-
     if(deltaX + e.deltaY < 0){
       newX = 0
     } else if(deltaX + e.deltaY > scrollWidth){
@@ -107,8 +104,9 @@ function ProjectList() {
         style={{
           color: '#ffffff',
           marginTop: '5px',
-          marginBottom: '5px',
+          marginBottom: '20px',
           height: '20px',
+          textAlign: 'center'
         }}>
         Looks like you haven't been assigned to any projects yet
       </h4>
@@ -120,12 +118,14 @@ function ProjectList() {
         onWheel={(e) => handleSideScroll(e)}
         id='projectList'
         className='sideScrollList componentGlow'>
+        {projectsList.length > 1 &&
         <div
           id='All'
           onClick={() => updateFocusedProject({ name: 'All' })}
           className='sideScrollListItem scaleYonHover fadeIn'>
           All
         </div>
+        }
         {projectsList!.map((project: any) => (
           <ProjectListItem key={project} name={project} />
         ))}

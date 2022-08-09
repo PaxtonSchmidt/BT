@@ -21,7 +21,7 @@ export default function InviteToTeamForm(props: Props) {
   
   return (
     <>
-    <div className={`loginFormContainer ${props.isExtended ? 'FormTransition' : ''}`}  style={{paddingLeft: '0px', paddingRight: '0px', paddingBottom: '0px', borderRadius: '0px', boxShadow: 'none', transition: '.5s'}}>
+    <div className={`loginFormContainer ${props.isExtended ? 'FormTransition' : ''}`}  style={{paddingLeft: '0px', paddingRight: '0px', paddingBottom: '0px', borderRadius: '0px', boxShadow: 'none', transition: '.5s', opacity: `${!props.isExtended ? '0%' : ''}`}}>
       <Formik
         initialValues={{ invitee: '', discriminator: '' }}
         onSubmit={async (data, { resetForm }) => {

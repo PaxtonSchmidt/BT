@@ -11,6 +11,13 @@ export const updateFocusedTicket = (ticket: Ticket) => {
     });
   };
 };
+export const resetFocusedTicket = () => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: focusedTicketActionType.RESET
+    });
+  };
+};
 export const editFocusedTicket = (ticket: Ticket) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({

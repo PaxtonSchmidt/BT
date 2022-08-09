@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../../Redux/reducers';
 import ProjectMembersListItem from './ProjectMembersListItem';
@@ -10,9 +10,15 @@ import { bindActionCreators } from 'redux';
 import { AlertActionCreators, SessionActionCreators } from '../../../Redux';
 import { addMembersToAProjectInSession } from '../../../Redux/action-creators/sessionActionCreators';
 import alertDispatcher from '../../../API/Requests/AlertDispatcher';
+import { BreakPoints } from '../Breakpoints';
+import arrow from '../../Images/Icons/arrow-up-short.svg';
 let deepClone = require('lodash.clonedeep');
 
-export default function ProjectMembersList() {
+interface Props{
+  setIsProjectChatOpen: React.Dispatch<SetStateAction<boolean>>
+}
+
+export default function ProjectMembersList(props: Props) {
   let dispatch = useDispatch();
   const { fireAlert, hideAlert } = bindActionCreators(
     AlertActionCreators,
@@ -200,6 +206,8 @@ export default function ProjectMembersList() {
     submitMembersList();
   }
 
+  const windowWidth = useSelector((state: State) => state.windowSize) | window.innerWidth
+
   return (
     <>
       {isAddingMembers ? (
@@ -219,19 +227,29 @@ export default function ProjectMembersList() {
               style={{
                 textAlign: 'center',
                 width: 'fit-content',
-                marginBottom: '10px',
+                marginBottom: '10px'
               }}>
-              <span style={{ color: 'rgb(239, 255, 10)' }}>
-                Back to Members List
+              
+              <span style={{position: 'relative', cursor: 'pointer'}}>
+                <span style={{color: 'white', width: '100%', textAlign: 'center', marginTop: '10px', cursor: 'pointer', fontSize: '14px'}}>
+                  Available Teammates:
+                </span>
+                <img
+                  src={arrow}
+                  className={`delayedFadeIn`}
+                  style={{height: '25px',  width: '25px', paddingTop: '-20px', position: 'absolute', left: '-30px', transform: 'rotate(270deg) translateX(4px)'}}
+                />
               </span>
             </div>
           </div>
+          
           <div id='list' className='list membersList componentGlow fadeIn'>
             {isPotentialProjectMembersEmpty ? (
               <p
                 className='delayedFadeIn'
                 style={{
                   color: 'white',
+                  textAlign: 'center',
                 }}>{`Everyone is already on the ${focusedProjectState.name} project...`}</p>
             ) : (
               <></>
@@ -251,7 +269,7 @@ export default function ProjectMembersList() {
             <button
               className='button userDetailsButton fadeIn'
               onClick={handleSubmitAddedMembers}
-              style={{ opacity: '100%', cursor: 'pointer' }}>
+              style={{ opacity: '100%', cursor: 'pointer', width:'fit-content' }}>
               Submit Changes
             </button>
           ) : (
@@ -266,7 +284,11 @@ export default function ProjectMembersList() {
             <div
               className='memberListRowSection fadeIn'
               style={{ textAlign: 'left' }}>
-              <span className='rowItem'>Member</span>
+                {focusedProjectState.name === 'All' 
+                ? <span className='rowItem'>Related Teammates</span>
+                : <span className='rowItem'>Member</span>
+                }
+              
             </div>
             <div
               className='memberListRowSection fadeIn'
@@ -289,26 +311,70 @@ export default function ProjectMembersList() {
             ))}
           </div>
 
+          
           {manageableProjectMembers ? (
-            <div
-              className='addItemButton scaleYonHover'
-              onClick={setIsAddMemberMenuOpen}>
-              <img
-                src={plus}
-                style={{ marginLeft: '10px', marginRight: '10px' }}
-              />
-              <p
-                style={{
-                  margin: '5px 10px 5px 0px',
-                  overflowX: 'hidden',
-                  maxWidth: '200px',
-                  whiteSpace: 'nowrap',
-                }}>{`Add Members`}</p>
+            <div 
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                transition: '0s'
+              }}
+            >
+              <div
+                className=' scaleYonHover hoverGrey'
+                style={{display: 'flex', flexDirection: 'row', borderRadius: '5px', color: 'white', whiteSpace: 'nowrap', paddingLeft: '5px', cursor: 'pointer'}}
+                onClick={setIsAddMemberMenuOpen}>
+                <img
+                  src={plus}
+                  style={{marginTop: '2px', marginRight:'5px', height: '27px', width: '20px', cursor: 'pointer'}}
+                />
+                <div
+                  style={{
+                    margin: '8px 10px 5px 0px',
+                    overflowX: 'hidden',
+                    maxWidth: '200px',
+                    whiteSpace: 'nowrap', 
+                    cursor: 'pointer'
+                  }}>{`Add Members`}</div>
+              </div>
+              
+              {windowWidth <= BreakPoints.mobile && focusedProjectState.name !== 'All'
+              ?<div onClick={()=>props.setIsProjectChatOpen(true)} className='scaleYonHover hoverGrey' style={{borderRadius: '5px', color: 'white', paddingTop: '5px', paddingBottom: '5px', paddingLeft: '10px', paddingRight: '10px', whiteSpace: 'nowrap', display: 'flex', flexDirection:'row'}}>
+                <svg xmlns="http://www.w3.org/2000/svg" style={{marginTop: '2px'}} width="16" height="16" fill="#efff0a" className="bi bi-chat-text" viewBox="0 0 16 16">
+                  <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
+                  <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8zm0 2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+                <p style={{ marginTop: '2px', marginBottom: '0px' }}>
+                  {'\u00a0'}Project Chat
+                </p>
+              </div>
+              :<></>
+              }
+              
             </div>
           ) : (
-            <div
-              className='addItemButton scaleYonHover'
-              style={{ height: '27px' }}></div>
+            <div 
+              
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around'
+              }}
+            >
+              {windowWidth <= BreakPoints.mobile && focusedProjectState.name !== 'All'
+              ?<div onClick={()=>props.setIsProjectChatOpen(true)} className='scaleYonHover hoverGrey' style={{borderRadius: '5px', color: 'white', paddingTop: '5px', paddingBottom: '5px', paddingLeft: '10px', paddingRight: '10px', whiteSpace: 'nowrap', display: 'flex', flexDirection:'row'}}>
+                <svg xmlns="http://www.w3.org/2000/svg" style={{marginTop: '2px'}} width="16" height="16" fill="#efff0a" className="bi bi-chat-text" viewBox="0 0 16 16">
+                  <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
+                  <path d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8zm0 2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
+                </svg>
+                <p style={{ marginTop: '2px', marginBottom: '0px' }}>
+                  {'\u00a0'}Project Chat
+                </p>
+              </div>
+              :<></>
+              }
+            </div>
           )}
         </>
       )}

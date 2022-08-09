@@ -35,11 +35,13 @@
 }
 .userDetailsButton {
   cursor: default;
-  border-bottom: 1px solid $yellow;
+  border-radius: 5px;
+  background-color: $accentGrey;
   color: white;
   opacity: 0%;
   float: right;
-  margin-right: 20px;
+  margin-right: 5px;
+  margin-top: 10px;
 }
 .active {
   cursor: pointer;
@@ -90,19 +92,8 @@
   margin-left: 2px;
   background-color: rgba(255, 0, 0, 0.459);
 }
-.addItemButton {
-  color: white;
-  border-radius: 10px;
-  background-color: $accentGrey;
-  width: fit-content;
-  position: relative;
-  display: flex;
-  bottom: 10px;
-  left: 10px;
-  cursor: pointer;
-  margin-top: 15px;
-  margin-left: auto;
-  margin-right: auto;
+.hoverGreen:hover{
+  background-color: green !important;
 }
 .removeMemberButton {
   position: relative;
@@ -111,6 +102,18 @@
   align-items: center;
   color: $dullRed;
   transition: $transition;
+}
+.ticketSortDropButton{
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: auto;
+  width: 55px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: relative;
 }
 .bi-x-square {
   cursor: pointer;
@@ -136,7 +139,7 @@
   background-color: $accentGrey;
   width: 50px;
   font-size: 12px;
-  border-radius: 10px;
+  border-radius: 5px;
   padding-left: 5px;
   padding-right: 10px;
 }

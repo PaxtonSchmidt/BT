@@ -17,7 +17,7 @@ import alertDispatcher from '../../../API/Requests/AlertDispatcher';
 interface Props {
   isExtended: boolean;
   setIsExtended: Dispatch<SetStateAction<boolean>>;
-}
+} 
 
 export default function ProjectForm(props: Props) {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export default function ProjectForm(props: Props) {
   props.isExtended === true ? 'FormTransition' : '';
   return (
     <>
-    <div className={`loginFormContainer ${isFormTransitioned}`} style={{borderRadius: '0px', boxShadow: 'none', transition: '.5s'}}>
+    <div className={`loginFormContainer ${isFormTransitioned}`} style={{borderRadius: '0px', boxShadow: 'none', transition: '.5s', opacity: `${!props.isExtended ? '0%' : ''}`}}>
       <Formik
         initialValues={{ name: '', description: '' }}
         onSubmit={(data, { resetForm }) => {
@@ -90,8 +90,7 @@ export default function ProjectForm(props: Props) {
         {({ values, handleChange, handleBlur, handleSubmit, resetForm }) => {
           return (
             <form
-              className='delayedFadeIn form'
-              style={{ width: 'fit-content' }}
+              className='fadeIn'
               onSubmit={handleSubmit}
               onBlur={handleBlur}
             >
@@ -102,7 +101,6 @@ export default function ProjectForm(props: Props) {
                   value={values.name}
                   onChange={(e) => handleChange(e)}
                   onBlur={handleBlur}
-                  className='formComponent'
                   name='name'
                   variant='standard'
                   color='info'
@@ -114,7 +112,6 @@ export default function ProjectForm(props: Props) {
                   type='text'
                   value={values.description}
                   label='Description'
-                  className='formComponent'
                   color='info'
                   variant='standard'
                   onChange={(e) => handleChange(e)}

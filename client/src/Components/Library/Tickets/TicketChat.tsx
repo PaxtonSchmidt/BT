@@ -18,7 +18,6 @@ import alertDispatcher from '../../../API/Requests/AlertDispatcher';
 import postGetTicketNotes from '../../../API/Requests/Tickets/PostgetTicketNotes';
 
 interface Props{
-  setIsOpen?: React.Dispatch<SetStateAction<boolean>>,
   isModalChat?: boolean
 }
 
@@ -35,7 +34,7 @@ export default function TicketChat(props: Props) {
   useEffect(() => {
     if (socketState) {
       socketState.on('newTicketNote', (note: TicketNote) => {
-        setAllNotes((previousState) => [note, ...previousState]);
+        setAllNotes((previousState) => [ ...previousState, note]);
       });
     }
   }, [socketState]);
@@ -91,7 +90,8 @@ export default function TicketChat(props: Props) {
 
   let modalChatContainerStyles = !props.isModalChat ? {} : {
     width: '100%',
-    height: '80%'
+    height: '80%',
+    borderBottom: 'none'
   }
   if (focusedTicketState.ticket_id === undefined) {
     return (
@@ -130,7 +130,7 @@ export default function TicketChat(props: Props) {
               style={{
                 color: '#ffffff31',
                 textAlign: 'center',
-                paddingBottom: '10px',
+                paddingBottom: `10px`,
                 transition: '0',
               }}
             >

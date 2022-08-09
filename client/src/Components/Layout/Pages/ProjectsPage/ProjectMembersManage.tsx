@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -11,15 +11,19 @@ import { translateRole } from '../../../../Services/translateRole';
 import ProjectMembersList from '../../../Library/Projects/ProjectMembersList';
 import { Box, Modal } from '@mui/material';
 import { ProjectMember } from '../../../../Redux/interfaces/member';
-import { removeMemberFromProjectInSession } from '../../../../Redux/action-creators/sessionActionCreators';
 import { CustomResponse } from '../../../../API/Requests/Base/baseRequest';
 import getMemberDetails from '../../../../API/Requests/Projects/GetMemberDetails';
 import alertDispatcher from '../../../../API/Requests/AlertDispatcher';
 import updateMembetRole from '../../../../API/Requests/Projects/PutUpdateMembetRole';
 import removeMember from '../../../../API/Requests/Projects/DeleteMember';
+import arrow from '../../../Images/Icons/arrow-up-short.svg';
 let deepClone = require('lodash.clonedeep');
 
-export default function ProjectMembersManage() {
+interface Props {
+  setIsProjectChatOpen: React.Dispatch<SetStateAction<boolean>>
+}
+
+export default function ProjectMembersManage(props: Props) {
   const focusedMemberState = useSelector((state: State) => state.focusedMember);
   const sessionState = useSelector((state: State) => state.session);
   const [isMemberSelected, setIsMemberSelected] = useState(focusedMemberState.username !== '');
@@ -202,7 +206,7 @@ export default function ProjectMembersManage() {
   return (
     <div className='ManageMembersWidget '>
       {isMemberSelected ? (
-        <ProjectMembersList />
+        <ProjectMembersList setIsProjectChatOpen={props.setIsProjectChatOpen} />
       ) : (
         <>
           <div
@@ -216,11 +220,35 @@ export default function ProjectMembersManage() {
           >
             <div
               className='memberListRowSection fadeIn'
-              style={{ textAlign: 'left', width: 'fit-content' }}
+              style={{ textAlign: 'left', width: 'fit-content'}}
             >
-              <span className='rowItem' style={{ color: '#efff0a' }}>
-                Back to Members List
+              {focusedProjectState.name === 'All'
+              ?<span className='rowItem'>
+                {`${focusedMemberState.username} on all projects`}
               </span>
+              :
+              <>
+              <span style={{position:'relative' }}>
+                <img
+                  src={arrow}
+                  className={`adeIn`}
+                  style={{height: '25px',  width: '25px', paddingTop: '-20px', position: 'absolute', left: '-30px', transform: 'rotate(270deg) translateX(4px)'}}
+                />
+                <span className='rowItem'>
+                  {`${focusedMemberState.username}\u00a0`}
+                </span>
+                <span className='rowItem'>
+                  on the 
+                </span>
+                <span className='rowItem'>
+                  {`\u00a0${focusedProjectState.name}\u00a0`}
+                </span>
+                <span className='rowItem'>
+                  project
+                </span>
+              </span>
+              </>
+              }
             </div>
           </div>
           <div
@@ -602,17 +630,6 @@ export default function ProjectMembersManage() {
             </div>
           </div>
         </>
-      )}
-      {isMemberSelected ? (
-        <></>
-      ) : (
-        <button
-          id='manageUsersButton'
-          className='button userDetailsButton'
-          onClick={handleSubmit}
-        >
-          Submit Changes
-        </button>
       )}
     </div>
   );

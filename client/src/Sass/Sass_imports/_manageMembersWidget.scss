@@ -1,8 +1,9 @@
 .ManageMembersWidget {
   color: red;
   background-color: $darkGrey;
-  width: calc(100% - 10px);
+  width: 100%;
   height: 410px;
+  border-right: 1px solid $accentGrey;
 }
 .showDetailsHighlight {
   color: $dimYellow;

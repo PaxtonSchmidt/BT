@@ -32,7 +32,7 @@ function TeamList(setIsTeamSelected: Props) {
       alertDispatcher(fireAlert, response.error, hideAlert)
     }
   }
-
+  
   function handleGoToCreateTeam() {
     navigate('/newTeam');
   }
@@ -40,9 +40,9 @@ function TeamList(setIsTeamSelected: Props) {
   if (teams && teams.length < 1) {
     return (
       <div className='delayedFadeIn'>
-        <h1 style={{ color: 'white' }}>You don't have any teams</h1>
-        <button className='button' onClick={() => handleGoToCreateTeam()}>
-          Create a team
+        <h3 style={{ color: 'white' }}>Reach out to team owner to get invited to their team or</h3>
+        <button className='button' style={{width: '125px'}} onClick={() => handleGoToCreateTeam()}>
+          start your own
         </button>
       </div>
     );

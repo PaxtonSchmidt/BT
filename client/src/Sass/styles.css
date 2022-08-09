@@ -102,7 +102,7 @@
   width: -moz-fit-content;
   width: fit-content;
   margin-top: 50px;
-  margin-right: 10px;
+  margin-right: 5px;
   min-width: 50px;
   height: calc(100% - 50px);
   -webkit-transition: 0.5s;
@@ -251,11 +251,13 @@
 
 .userDetailsButton {
   cursor: default;
-  border-bottom: 1px solid #efff0a;
+  border-radius: 5px;
+  background-color: #ffffff31;
   color: white;
   opacity: 0%;
   float: right;
-  margin-right: 20px;
+  margin-right: 5px;
+  margin-top: 10px;
 }
 
 .active {
@@ -323,23 +325,8 @@
   background-color: rgba(255, 0, 0, 0.459);
 }
 
-.addItemButton {
-  color: white;
-  border-radius: 10px;
-  background-color: #ffffff31;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  bottom: 10px;
-  left: 10px;
-  cursor: pointer;
-  margin-top: 15px;
-  margin-left: auto;
-  margin-right: auto;
+.hoverGreen:hover {
+  background-color: green !important;
 }
 
 .removeMemberButton {
@@ -356,6 +343,19 @@
   color: #ff000075;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+}
+
+.ticketSortDropButton {
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: auto;
+  width: 55px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: relative;
 }
 
 .bi-x-square {
@@ -393,7 +393,7 @@
   background-color: #ffffff31;
   width: 50px;
   font-size: 12px;
-  border-radius: 10px;
+  border-radius: 5px;
   padding-left: 5px;
   padding-right: 10px;
 }
@@ -669,7 +669,7 @@ input[type='number'] {
   width: calc(100%-40px);
   background-color: #222222;
   padding-right: 0px !important;
-  height: 360px;
+  height: 385px;
   padding-bottom: 10px;
   overflow-y: scroll;
   overscroll-behavior: none;
@@ -705,7 +705,6 @@ input[type='number'] {
 
 .listContainer {
   background-color: #222222;
-  margin-right: 5px;
 }
 
 .ticketListItemButton {
@@ -718,7 +717,7 @@ input[type='number'] {
 }
 
 .ticketListItemButtonContainer {
-  color: #efff0a6b;
+  color: white;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -732,7 +731,10 @@ input[type='number'] {
   font-size: 14px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   padding-top: 0px;
-  background-color: transparent;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 5px;
+  background-color: #ffffff31;
   border: none;
   cursor: pointer;
   width: -webkit-fit-content;
@@ -768,6 +770,7 @@ input[type='number'] {
 
 .ticketRowItem {
   width: 100%;
+  position: relative;
   text-align: left;
   padding-top: 10px;
   display: inline-block;
@@ -795,7 +798,7 @@ input[type='number'] {
   position: relative;
   border-bottom: 1px solid white;
   height: 40px;
-  width: calc(100%-40px);
+  width: calc(100%-50px);
   -webkit-transition: 0.5s;
   transition: 0.5s;
   cursor: default;
@@ -803,7 +806,7 @@ input[type='number'] {
 
 .searchTicketsForm {
   width: 50%;
-  min-width: 300px;
+  min-width: 250px;
   max-width: 500px;
   border: 1px solid #ffffff31;
   border-bottom: none;
@@ -890,11 +893,12 @@ input[type='number'] {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   margin-top: 5px;
   min-width: 250px;
   height: 340px;
   padding-bottom: 10px;
+  border-bottom: 1px solid #ffffff31;
 }
 
 .ticketNoteList {
@@ -924,6 +928,7 @@ input[type='number'] {
 
 .projectNoteListContainer {
   width: 100%;
+  background-color: #222222;
 }
 
 .ticketNoteList:hover {
@@ -1237,6 +1242,24 @@ input[type='number'] {
           flex-direction: column;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  border-bottom: 1px solid #ffffff31;
+  border-right: 1px solid #ffffff31;
+}
+
+.DetailsModal {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 15px;
+  height: 94vh;
+}
+
+.closeModalButton {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  color: #efff0a;
+  background-color: #222222;
+  border-radius: 5px;
 }
 
 .openFormDetailsHeight {
@@ -1246,30 +1269,8 @@ input[type='number'] {
 .detailLabel {
   color: #ffffff31;
   margin-right: 5px;
+  margin-top: 2px;
   font-size: 12px;
-}
-
-.ticketDetailItem {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: 18px;
-  padding: 5px;
-  min-width: 150px;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  -webkit-box-pack: left;
-      -ms-flex-pack: left;
-          justify-content: left;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: end;
-  text-align: left;
-  border-bottom: 1px solid #ffffff31;
-  cursor: default;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
 }
 
 .ticketDetailItemContainer {
@@ -1283,6 +1284,33 @@ input[type='number'] {
   margin-bottom: 5px;
 }
 
+.ticketDetailItem {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  height: 18px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  width: 100%;
+  min-width: 150px;
+  text-align: left;
+  border-bottom: 1px solid #ffffff31;
+  cursor: default;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.detailItemSection {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+}
+
 .discriminator {
   font-size: 11px;
   margin-bottom: 2px;
@@ -1291,23 +1319,6 @@ input[type='number'] {
 .roleRow {
   text-align: left;
   width: calc(100% - 10px);
-}
-
-.detailsColumn {
-  width: 100%;
-}
-
-.ticketDetailsRow {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
 }
 
 .detailsDescription {
@@ -1340,7 +1351,7 @@ input[type='number'] {
       -ms-flex-positive: 1;
           flex-grow: 1;
   padding: 10px;
-  margin-top: 10px;
+  margin-top: 0px;
   background-color: #222222;
   height: 100px;
 }
@@ -1472,8 +1483,9 @@ input[type='number'] {
 .ManageMembersWidget {
   color: red;
   background-color: #222222;
-  width: calc(100% - 10px);
+  width: 100%;
   height: 410px;
+  border-right: 1px solid #ffffff31;
 }
 
 .showDetailsHighlight {
@@ -1589,13 +1601,11 @@ body {
 }
 
 .pageContentContainer {
-  padding-right: 5px;
   width: 100%;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
   margin-top: 50px;
-  margin-left: auto;
   text-align: center;
   display: inline-block;
   -webkit-box-orient: vertical;
@@ -1609,7 +1619,7 @@ body {
       -ms-flex: 1;
           flex: 1;
   scroll-behavior: smooth;
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
   -webkit-transition: 0.5s;
   transition: 0.5s;
@@ -1632,25 +1642,34 @@ body {
 }
 
 .pageBodyContainer5 {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  gap: 5px;
   width: 100%;
-  padding-bottom: 10px;
-  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
   border-bottom: 1px solid #ffffff31;
+}
+
+.pageBodyContainer5SM {
+  -ms-grid-columns: 2fr;
+      grid-template-columns: 2fr;
+  border-bottom: none;
+}
+
+.pageBodyQuadrantSM {
+  display: none !important;
 }
 
 .pageBodyQuadrant {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 50%;
+  width: 100%;
   border-right: 1px solid #ffffff31;
+  border-bottom: 1px solid #ffffff31;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -1680,7 +1699,6 @@ body {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  margin-bottom: 5px;
   margin-right: 0px !important;
 }
 
@@ -1697,8 +1715,7 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding-right: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .pageHeader {
@@ -1721,7 +1738,7 @@ body {
   display: grid;
   -ms-grid-columns: 1fr 1fr;
       grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 5px;
   -webkit-box-align: left;
       -ms-flex-align: left;
           align-items: left;
@@ -1733,8 +1750,7 @@ body {
 }
 
 .formAndDetailsSM {
-  padding-bottom: 10px;
-  margin-left: 5px;
+  padding-bottom: 5px;
   -ms-grid-columns: 1fr;
       grid-template-columns: 1fr;
 }

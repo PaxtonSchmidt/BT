@@ -45,7 +45,7 @@ export default function SidebarModal(props: Props) {
         <>
         <Modal open={props.isExpanded} onClose={()=>{setIsOpen(false); props.setIsExpanded(false)}} disableAutoFocus={true} >
             <div
-            className='sideBarModal navComponent fadeIn'
+            className='sideBarModal navComponent'
             style={{ width: `${props.isExpanded ? '180px' : ''}` }}>
             <div>
                 <div className={`navItem scaleYonHover sideBarItem `}  onClick={() => props.setIsExpanded(false)}>
