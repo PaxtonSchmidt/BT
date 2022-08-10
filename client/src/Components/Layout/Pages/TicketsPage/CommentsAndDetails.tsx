@@ -27,8 +27,6 @@ export default function CommentsAndDetails() {
       setIsDetailsModalOpen(false)
     }
   }, [focusedTicketState, []])
-    
-console.log(windowWidth)
   return (
     <Container className='pageBodyContainer2' style={windowWidth <= BreakPoints.tablet ? {marginRight: '5px'} : {}}>
       <div className={`formAndDetails ${conditionalContainerStyles}`} style={{marginLeft: `${windowWidth < BreakPoints.tablet ? '5px' : '' }`, borderBottom: `${windowWidth <= BreakPoints.mobile ? 'none' : ''}`}}>

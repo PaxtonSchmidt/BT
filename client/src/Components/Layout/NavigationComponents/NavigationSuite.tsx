@@ -32,7 +32,7 @@ export default function NavigationSuite({ isTeamSelected }: Props) {
   const socketState = useSelector((state: State) => state.socket);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const windowWidth = useSelector((state: State) => state.windowSize) | window.innerWidth //just so it has the inner width for the first render before it loads the redux state
-
+console.log(sessionState)
   async function getSession() {
     let response: CustomResponse = await getSessionState()
     return response.isOk 

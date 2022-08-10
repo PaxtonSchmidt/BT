@@ -15,7 +15,6 @@ import { State } from '../../../Redux/reducers';
 import { BreakPoints } from '../Breakpoints';
 import bug from '../../Images/Icons/bug.svg'
 import { LoginFormButtons } from './LoginFormButtons';
-import { display } from '@mui/system';
 
 export default function LoginForm() {
     const dispatch = useDispatch();
@@ -38,7 +37,7 @@ export default function LoginForm() {
         <>
         <div style={{marginTop: '10vh', paddingTop: '40px'}} className={`${windowWidth < BreakPoints.tablet ? 'loginFormContainer' : 'loginFormContainerLG'}`}>
             <img src={bug} style={{marginLeft: '5px'}}/>
-            <h4 className='header'>Bug Tracker</h4>
+            <h4 className='header'>BugTracker</h4>
             <Formik
                 initialValues={{ email: '', password: '' }}
                 onSubmit={handleSubmit}>

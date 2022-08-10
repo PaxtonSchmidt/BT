@@ -13,7 +13,7 @@ export const LoginFormButtons: React.FC = () => {
         navigate('../SignUp');
     }
     function handleDemoClick() {
-        navigate('../DemoApp');
+        navigate('../Demo');
     }
     function handleGitHubClick() {
         window.location.href = 'https://github.com/PaxtonSchmidt/BT';
@@ -30,8 +30,8 @@ export const LoginFormButtons: React.FC = () => {
     <button
         onClick={handleGitHubClick}
         className={`button scaleYonHover hoverGrey button-border ${windowWidth < BreakPoints.tablet ? 'button-tb' : ''}`}
-        style={{ margin: '2px 2px 0px 0px' }}>
-        <img src={gitHub} alt='go to code' />
+        style={{ margin: '2px 2px 0px 0px', paddingTop: '3px'}}>
+        <img src={gitHub} style={{transform: 'translateY(3px)', height: '16px'}} alt='go to code' />
     </button>
     <button
         onClick={handleDemoClick}

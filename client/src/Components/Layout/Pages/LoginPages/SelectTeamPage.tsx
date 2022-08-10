@@ -60,7 +60,7 @@ export default function SelectTeamPage({ setIsTeamSelected }: Props) {
 
   if (loginState === 1) {
     return (
-      <div className='teamCardPageBody altBG'>
+      <div className='teamCardPageBody altBG' style={{overflowX: 'hidden'}}>
         <SelectTeamPageButtons />
         <div id='cards'>
           <TeamList setIsTeamSelected={setIsTeamSelected} />

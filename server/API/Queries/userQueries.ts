@@ -91,7 +91,6 @@ function incrementTokenVersion(user_id: string) {
     });
   });
 }
-
 function getIdsForUsernameDiscriminatorList(teammates: Teammate) {
   let sql =
     'SELECT user_id FROM users WHERE user_id IN (SELECT user_id FROM users WHERE username= ? AND discriminator= ?)';

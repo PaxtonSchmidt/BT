@@ -12,11 +12,12 @@ export default async function authenticateRequest(
   if (req.headers.cookie === undefined) {
     return res.status(400).send({ message: 'Please sign in...' });
   }
-
+  
   let tokenInformation = consumeCookie(
     req.headers.cookie,
     consumeCookieFlags.tokenSocketIoFlag
-  );
+    );
+  if(tokenInformation.userID === undefined){return res.status(401).send({message: 'Please login...'})}
   let tokenVersion = tokenInformation.tokenV;
   let userID = tokenInformation.userID;
   let token = tokenInformation.token;

@@ -23,7 +23,7 @@ export default function ManageTeamPage({ isTeamSelected }: Props) {
   const [isExtended, setIsExtended] = useState<boolean>(false);
   const loginState = useSelector((state: State) => state.login);
   const sessionState = useSelector((state: State) => state.session);
-  const windowWidth = useSelector((state: State) => state.windowSize);
+  const windowWidth = useSelector((state: State) => state.windowSize) | window.innerWidth
   const focusedTeammate = useSelector((state: State) => state.focusedTeammate);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState<boolean>(false)
 
@@ -42,8 +42,8 @@ export default function ManageTeamPage({ isTeamSelected }: Props) {
   if (loginState === 1) {
     if (isTeamSelected === true) {
       if (
-        sessionState.currentTeam.team_role === 1 ||
-        sessionState.currentTeam.team_role === 2
+        sessionState.currentTeam.team_role === 1 
+        || sessionState.currentTeam.team_role === 2
       ) {
         return (
           <div className='overflow' style={{paddingLeft: `${windowWidth <= BreakPoints.tablet ? '5px' : ''}`}}>

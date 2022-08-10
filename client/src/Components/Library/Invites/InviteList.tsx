@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -10,53 +10,17 @@ import alertDispatcher from '../../../API/Requests/AlertDispatcher';
 import getInvites from '../../../API/Requests/Invites/getInvites';
 
 function InviteList() {
-  let navigate = useNavigate();
   const dispatch = useDispatch();
-  const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators,dispatch);
-  const { updateInvites } = bindActionCreators(InvitesActionCreators, dispatch);
   const initial: any = [];
   const invitesState = useSelector((state: Invites) => state.invites);
   let invites = Object.assign(initial, invitesState);
 
-  function handleGoToTeamSelect() {
-    navigate('/selectTeam');
-  }
-  function handleGoToCreateATeam() {
-    navigate('/newTeam');
-  }
-
-  async function handleRefresh() {
-    let response = await getInvites()
-    if(response.isOk) {
-      return updateInvites(response.body)
-    } else if(response.error.status === 404){
-      return []
-    } else {
-      alertDispatcher(fireAlert, response.error, hideAlert)
-    }
-  }
-
-  if (invites.length < 1) {
+if (invites.length < 1) {
     return (
       <>
-        <h1 className='delayedFadeIn' style={{ color: 'white' }}>
+         <h1 className={`delayedFadeIn`} style={{ color: 'white', height: '50px' }}>
           Looks like you don't have any invites...
         </h1>
-        <button className='onClick delayedFadeIn' onClick={handleRefresh}>
-          Refresh
-        </button>
-        <button
-          className='onClick delayedFadeIn'
-          onClick={handleGoToTeamSelect}
-        >
-          Choose team
-        </button>
-        <button
-          className='onClick delayedFadeIn'
-          onClick={handleGoToCreateATeam}
-        >
-          Create team
-        </button>
       </>
     );
   } else {

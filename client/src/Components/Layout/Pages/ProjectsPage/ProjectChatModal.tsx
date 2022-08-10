@@ -25,8 +25,10 @@ export const ProjectChatModal: React.FC<Props> = ({ isOpen, setIsOpen, vWidth, p
         position: 'relative'
         }}
       >
-        <h1 style={{color: 'white', textAlign: 'center', fontSize: '18px'}}>{`${projectName}`}</h1>
-        <p style={{color: 'white', textAlign: 'center', fontSize: '14px', marginTop: '5px', marginBottom: '5px'}}>{`Use this chat to discuss the project`}</p>
+        <header style={{marginTop:'20px'}}>
+          <h1 style={{color: 'white', textAlign: 'center', fontSize: '18px'}}>{`${projectName}`}</h1>
+          <p style={{color: 'white', textAlign: 'center', fontSize: '14px', marginTop: '5px', marginBottom: '5px'}}>{`Use this chat to discuss the project`}</p>
+        </header>
         <div style={{position: 'absolute', right: '10px', top: '10px'}}>
           <svg
             onClick={() => setIsOpen(false)}

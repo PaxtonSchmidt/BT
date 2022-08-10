@@ -11,7 +11,7 @@ export interface CustomResponse {
 //Return the default error messages for network issues
 //Return custom defined error messages for server issues
 export default async function baseRequest(url: string, init: RequestInit): Promise<CustomResponse>{
-    let response: CustomResponse = await fetch(url, init)
+    let response: CustomResponse = await fetch(`${url}`, init)
         .then(async (r) =>{
             const isJson = r.headers.get('content-type')?.includes('application/json');
             const data: any = isJson ? await r.json() : null

@@ -18,7 +18,7 @@ import { bindActionCreators } from 'redux';
 import {LoginActionCreators, SocketActionCreators, WindowSizeActionCreators } from './Redux';
 import { io } from 'socket.io-client';
 import { State } from './Redux/reducers';
-import { getBreakpointName } from './Components/Library/Breakpoints';
+import { Demo } from './Components/Layout/Pages/LoginPages/Demo/Demo';
 
 function App() {
   const dispatch = useDispatch();
@@ -76,6 +76,7 @@ function App() {
       <Routes>
         <Route path='signUp' element={<SignUpPage />} />
         <Route path='login' element={<LoginPage />} />
+        <Route path='demo' element={<Demo />} />
 
         <Route
           path='newTeam' //must be logged in
@@ -118,6 +119,7 @@ function App() {
         open={alertState.isOpen}
         autoHideDuration={7000}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        style={{marginLeft: 'auto', width: 'fit-content'}}
       >
         <Alert
           severity='error'
@@ -126,7 +128,7 @@ function App() {
             backgroundColor: '#1a1a1a',
             color: '#efff0a',
             paddingTop: '10px',
-            fill: '#efff0a',
+            fill: '#efff0a'
           }}
         >
           {alertState.message}

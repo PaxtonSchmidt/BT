@@ -207,6 +207,7 @@ export default function TicketForm(props: Props) {
 
                 
               }}>
+                {!props.isEditMode &&
                   <TextField
                     disabled={props.isEditMode}
                     label='Title'
@@ -222,6 +223,8 @@ export default function TicketForm(props: Props) {
                     color='info'
                     required
                   />
+                  }
+                  
                   <TextField
                     select
                     name='priority'

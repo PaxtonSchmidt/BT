@@ -1,5 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { State } from '../../../Redux/reducers';
 import { authService } from '../../../Services/AuthService';
 import { Team } from '../../ComponentInterfaces/team';
 
@@ -11,7 +13,7 @@ export default function TeamCard(props: Team) {
         style={{ color: 'white', fontWeight: 'bold' }}
       >
         <div
-          style={{ fontSize: '18px', whiteSpace: 'nowrap', marginLeft: '10px' }}
+          style={{ whiteSpace: 'nowrap', marginLeft: '10px' }}
         >
           {props.name}
         </div>

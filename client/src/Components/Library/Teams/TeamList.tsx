@@ -40,8 +40,8 @@ function TeamList(setIsTeamSelected: Props) {
   if (teams && teams.length < 1) {
     return (
       <div className='delayedFadeIn'>
-        <h3 style={{ color: 'white' }}>Reach out to team owner to get invited to their team or</h3>
-        <button className='button' style={{width: '125px'}} onClick={() => handleGoToCreateTeam()}>
+        <h3 style={{ color: 'white' }}>Reach out to a team owner and get invited to their team or</h3>
+        <button className='button scaleYonHover hoverGrey' style={{width: '125px', borderRadius: '5px'}} onClick={() => handleGoToCreateTeam()}>
           start your own
         </button>
       </div>

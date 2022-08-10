@@ -7,6 +7,12 @@
   text-align: center;
   overflow-y: auto;
 }
+.demoPageBody{
+  height: 100vh !important;
+  display: flex;
+  width: 100%;
+  overflow-y: auto;
+}
 .selectTeamPageNavbutton {
   color: #ffffff;
   left: 10px;

@@ -46,8 +46,11 @@ export default function SignUpForm() {
   }
   return (
     <>
-    <div style={{marginTop: '10vh'}} className={`${windowWidth < BreakPoints.mobile ? 'loginFormContainer' : 'loginFormContainerLG'}`}>
-      <h4 className='header'>Sign Up</h4>
+    <div style={{marginTop: '10vh', maxWidth: '350px'}} className={`${windowWidth < BreakPoints.mobile ? 'loginFormContainer' : 'loginFormContainerLG'}`}>
+      <header>
+        <h4 className='header'>Sign Up</h4>
+        <p style={{color: 'white', marginTop:'5px', fontSize:'12px', opacity: '70%'}}>and start problem solving</p>
+      </header>
         <Formik
           initialValues={{
             email: '',
@@ -158,10 +161,11 @@ export default function SignUpForm() {
                     <button
                       type='submit'
                       name='login'
-                      className='button scaleYonHover hoverGrey button-border button-tb'
+                      className={`button scaleYonHover button-border button-tb hoverGreen`}
                       style={{
-                        margin: '2px 0px 0px 0px',
-                        justifySelf: 'right',
+                          margin: '2px 0px 0px 0px',
+                          justifySelf: 'right',
+                          backgroundColor: '#ffffff31'
                       }}
                     >
                       Submit

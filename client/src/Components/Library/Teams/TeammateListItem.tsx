@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Teammate } from '../../../API/interfaces/teammate';
-import { FocusedMemberActionCreators } from '../../../Redux';
-import { teammatesActionType } from '../../../Redux/action-types/teammatesActionType';
-import { State } from '../../../Redux/reducers';
 import { translateRole } from '../../../Services/translateRole';
 
 interface Props {

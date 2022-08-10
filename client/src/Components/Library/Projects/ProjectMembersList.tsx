@@ -76,10 +76,10 @@ export default function ProjectMembersList(props: Props) {
         newMembersList.push(member)
       );
 
-      if (
-        project.role_id === 2 ||
+      if (project.role_id !== undefined &&
+        (project.role_id === 2 ||
         project.role_id === 1 ||
-        sessionState.currentTeam.team_role === 1
+        sessionState.currentTeam.team_role === 1)
       ) {
         setCanUserManageMembers(true);
       } else {

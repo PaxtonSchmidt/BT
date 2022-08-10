@@ -1,6 +1,7 @@
 import { ProjectNote } from './API/Interfaces/ProjectNote';
 import { TicketNote } from './API/Interfaces/TicketNote';
 import authenticateRequest from './API/Middleware/authenticateRequest';
+import demoCheckpoint from './API/Middleware/demoCheckpoint';
 import authenticateJWT from './API/Services/authenticateJWT';
 import consumeCookie from './API/Services/consumeCookies/consumeCookie';
 import { consumeCookieFlags } from './API/Services/consumeCookies/consumeCookieFlags';
@@ -17,27 +18,21 @@ app.use(cors());
 const server = http.createServer(app);
 server.listen('4000', () => {});
 app.use(express.json());
-app.use('/', require('./API/Routes/AuthenticationRoutes/authenticationRoute'));
+
 app.use('/signup/', require('./API/Routes/signUpRoute'));
+app.use('/demo/', require('./API/Routes/Demo/demoRoute'))
+app.use('/', require('./API/Routes/AuthenticationRoutes/loginRoute'));
+
+app.use('/logout', demoCheckpoint, require('./API/Routes/AuthenticationRoutes/logoutRoute'));
 
 //Protected routes have Auth middleware
-app.use(
-  '/selectTeam/',
-  authenticateRequest,
-  require('./API/Routes/AuthenticationRoutes/teamSelectRoute')
-);
+app.use('/selectTeam/', authenticateRequest, demoCheckpoint, require('./API/Routes/AuthenticationRoutes/teamSelectRoute'));
+app.use('/teams/', authenticateRequest, demoCheckpoint, require('./API/Routes/teamRoute'));
+app.use('/users/', authenticateRequest, demoCheckpoint, require('./API/Routes/userRoute'));
+app.use('/tickets/', authenticateRequest, demoCheckpoint, require('./API/Routes/ticketRoute'));
+app.use('/projects/', authenticateRequest, demoCheckpoint, require('./API/Routes/projectRoute'));
 
-app.use('/teams/', authenticateRequest, require('./API/Routes/teamRoute'));
 
-app.use('/users/', authenticateRequest, require('./API/Routes/userRoute'));
-
-app.use('/tickets/', authenticateRequest, require('./API/Routes/ticketRoute'));
-
-app.use(
-  '/projects/',
-  authenticateRequest,
-  require('./API/Routes/projectRoute')
-);
 
 //socketIO
 const io = new Server(server, {
