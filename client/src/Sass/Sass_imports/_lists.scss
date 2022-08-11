@@ -1,11 +1,11 @@
 .list {
-  width: calc(100%-40px);
-  background-color: $darkGrey;
-  padding-right: 0px !important;
   height: 385px;
+  width: calc(100%-40px);
   padding-bottom: 10px;
   overflow-y: scroll;
   overscroll-behavior: none;
+  background-color: $darkGrey;
+  padding-right: 0px !important;
 }
 .listHeader {
   margin-top: 0px;
@@ -151,7 +151,15 @@
 }
 .membersList {
   height: 320px;
-  padding-bottom: 0px;
+  background-color: $darkGrey;
+  width: calc(100%-40px);
+  overflow-y: scroll;
+  overscroll-behavior: none;
+  background-color: $darkGrey;
+  padding-right: 0px !important;
+}
+.white:hover{
+  border-color: white !important;
 }
 .memberProjectList {
   margin-top: 10px;

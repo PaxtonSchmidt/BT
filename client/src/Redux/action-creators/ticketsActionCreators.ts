@@ -20,7 +20,7 @@ export const remove = (ticket: Ticket) => {
     });
   };
 };
-export const addTicket = (ticket: Ticket) => {
+export const addTicket = (ticket: any) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ticketsActionType.ADD,

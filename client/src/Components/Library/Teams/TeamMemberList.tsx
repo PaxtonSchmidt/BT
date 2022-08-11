@@ -35,7 +35,7 @@ export default function TeammateList() {
         ></div>
         <div
           id='list'
-          className='list projectMembersList componentGlow fadeIn'
+          className='membersList componentGlow fadeIn'
         ></div>
       </>
     );
@@ -44,18 +44,18 @@ export default function TeammateList() {
       <>
         <div
           className='listRow fadeIn'
-          style={{ marginTop: '0px', backgroundColor: '#222222' }}
+          style={{ marginTop: '0px', backgroundColor: '#222222', justifyContent: 'center' }}
         >
           <div
             className='memberListRowSection fadeIn'
-            style={{ textAlign: 'left', width: '110px' }}
+            style={{ textAlign: 'center', width: '110px' }}
           >
-            <span className='rowItem'>
-              Teammates
+            <span className='rowItem' >
+              Team Roles
             </span>
           </div>
         </div>
-        <div id='list' className='list membersList componentGlow fadeIn'>
+        <div id='list' className='membersList componentGlow fadeIn' style={{transition: '0s', height: '320px'}}>
           {teammates!.map((teammate: any, index: any) => (
             //docs say its not ideal to use the index for the key
             //however here it is necessary

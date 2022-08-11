@@ -48,6 +48,7 @@ const sessionReducer = (state: any = initialState, action: Action) => {
       return { ...newSessionState };
 
     case sessionActionType.UPDATE_PROJECT_MEMBER_ROLE:
+      console.log(action.payload)
       newSessionState = { ...state };
       targetProjectId = action.payload.project_id;
       targetProjectIndex = newSessionState!.currentTeam.projects.findIndex(

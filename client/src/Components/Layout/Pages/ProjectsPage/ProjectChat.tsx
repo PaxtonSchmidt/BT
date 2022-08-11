@@ -201,8 +201,9 @@ const ProjectChat: React.FC<Props> = ({ vWidth }) => {
                     >
                       <div className='ticketNoteForm'>
                         <TextField
-                          label='Message'
+                          label={`${sessionStorage.getItem('isDemo') === 'true' ? 'Chat is disabled in the demo' : 'Message'}`}
                           type='text'
+                          disabled={sessionStorage.getItem('isDemo') === 'true'}
                           value={values.note}
                           onChange={handleChange}
                           onBlur={handleBlur}

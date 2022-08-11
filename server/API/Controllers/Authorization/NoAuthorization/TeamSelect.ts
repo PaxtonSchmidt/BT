@@ -19,7 +19,7 @@ async function getCurrentUserTeams(req: any, res: any) {
   }
 
   if (userTeams.length < 1) {
-    return res.status(404).send({ message: 'You arent on any teams...' });
+    return res.status(200).send({ message: 'You arent on any teams...' });
   } else {
     return res.status(200).send(userTeams);
   }

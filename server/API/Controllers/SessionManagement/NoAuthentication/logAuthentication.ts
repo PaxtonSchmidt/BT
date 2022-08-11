@@ -61,7 +61,7 @@ async function logout(req: any, res: any) {
   } catch (e) {
     return res.status(500).send({ message: 'Server couldnt log you out...' });
   }
-
+  
   if (isInvalidated === true) {
     let nullToken = await jwt.sign(
       { key: 'What do you want?' },

@@ -34,6 +34,12 @@ export default function SidebarModal(props: Props) {
     function handleNavSelect(location: string) {
         setIsOpen(false)
         props.setIsExpanded(false)
+        if(location === '/selectTeam'){
+            let isDemo: boolean = sessionStorage.getItem('isDemo') === 'true'
+            if(isDemo){
+                return navigate('/selectDemoTeam')
+            }
+        }
         navigate(location);
     }
 

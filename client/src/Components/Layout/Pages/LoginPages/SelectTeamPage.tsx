@@ -29,10 +29,7 @@ export default function SelectTeamPage({ setIsTeamSelected }: Props) {
   const { updateTeams } = bindActionCreators(TeamsActionCreators, dispatch);
   const { updateSession } = bindActionCreators(SessionActionCreators, dispatch);
   const { updateTickets } = bindActionCreators(TicketsActionCreators, dispatch);
-  const { updateFocusedTicket } = bindActionCreators(
-    FocusedTicketActionCreators,
-    dispatch
-  );
+  const { updateFocusedTicket } = bindActionCreators(FocusedTicketActionCreators,dispatch);
   const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators, dispatch);
   const loginState = useSelector((state: State) => state.login);
   let [isBusy, setBusy] = useState(true);

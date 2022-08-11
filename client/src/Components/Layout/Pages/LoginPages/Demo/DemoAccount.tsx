@@ -24,14 +24,14 @@ export const DemoAccount: React.FC<Props> = ( { character, windowWidth } ) => {
     const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators,dispatch);
     const { login } = bindActionCreators(LoginActionCreators, dispatch);
     const [elevation, setElevation] = useState<number>(1)
-    
-    let plurality: string = character.teamCount !== 1 ? 's' : ''
 
     async function handleDemoLogin(characterName: string){
         let response: CustomResponse = await postDemoLogin(characterName)
         if(response.isOk){
             login() //update redux login state
-            navigate('/selectTeam');
+            sessionStorage.setItem('isLoggedIn', 'true');
+            sessionStorage.setItem('isDemo', 'true');
+            navigate('/selectDemoTeam');
         } else {
             alertDispatcher(fireAlert, response.error, hideAlert)
         }
@@ -61,7 +61,6 @@ export const DemoAccount: React.FC<Props> = ( { character, windowWidth } ) => {
         <figure style={{margin: `${windowWidth > BreakPoints.tablet ? '' : '20px'}`, display: `${windowWidth > BreakPoints.mobile ? '' : 'flex'}`, marginTop: `${windowWidth > BreakPoints.mobile ? '' : '10px'}`, transition: '0s !important'}}>
             <img src={character.name === DemoCharacters.Jessie.name ? personJessie : (character.name === DemoCharacters.Jamie.name ? personJamie : personJordan)} style={{height: '40px', width: '40px'}} />
             <p style={{marginLeft: `${windowWidth > BreakPoints.mobile ? '' : '10px'}`}}>{character.description}</p>
-            {windowWidth > BreakPoints.mobile && <p>{`Involved in ${character.teamCount} team${plurality}`}</p>}
         </figure>
     </Paper>
     )

@@ -232,7 +232,7 @@ export default function TeammateDetails(props: Props) {
         >
           <div className='ListContainer'>
             <div
-              className='listItem listRow memberRow manageMemberListRow'
+              className='listItem white listRow memberRow manageMemberListRow'
               style={{
                 justifyContent: 'space-between',
                 marginTop: 'auto',

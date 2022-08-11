@@ -7,6 +7,7 @@ let auth = require('../../Queries/AuthQueries/authorizationQueries');
 //Selecting a team now invalidates original JWT and gives the user and updated token
 //this token has a longer expiry and contains the team information of the session
 function selectTeam(req: any, res: any) {
+  console.log(res.locals)
   async function addTeamToJWT() {
     try {
       let user_id = consumeCookie(
@@ -15,7 +16,7 @@ function selectTeam(req: any, res: any) {
       );
       let targetTeam_id = req.body.team;
       let role_id = '';
-      let token_v = '';
+      let token_v: number = 0;
       let isUserOnTeam: any = false;
 
       try {
@@ -32,15 +33,19 @@ function selectTeam(req: any, res: any) {
 
         let IDcombo = [user_id, targetTeam_id];
         role_id = await auth.fetchUserTeamRoleID(req, IDcombo);
-        let response = await users
-          .getValidTokenVersion(user_id)
-          .then(await users.incrementTokenVersion(user_id));
+        if(res.locals.isDemo === true){//dont increment if it is a demo account 
+          token_v = -1; //gets incremented to 0 in the jwt signing function 
+        } else {
+          let response = await users
+            .getValidTokenVersion(user_id)
+            .then(await users.incrementTokenVersion(user_id));
+            token_v = response.token_v;
+        }
 
-        token_v = response.token_v;
       } catch (e) {
         return e;
       }
-
+      
       if (isUserOnTeam === true) {
         let accessToken = await jwt.sign(
           {

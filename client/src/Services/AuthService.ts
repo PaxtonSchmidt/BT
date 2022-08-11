@@ -7,6 +7,7 @@ export const authService = {
   async signIn(data: Claims) {
     let response = await postLogin(data);
     response.isOk && sessionStorage.setItem('isLoggedIn', 'true');
+    response.isOk && sessionStorage.setItem('isDemo', 'false');
     return response
   },
 

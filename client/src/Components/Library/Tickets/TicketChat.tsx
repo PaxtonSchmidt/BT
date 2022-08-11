@@ -63,6 +63,8 @@ export default function TicketChat(props: Props) {
 
   function createChosenNotesArray() {
     let newChosenNotes: TicketNote[] = [];
+    let isDemo: boolean = sessionStorage.getItem('isDemo') === 'true'
+    if(isDemo === true){return newChosenNotes}
     allNotes.forEach((note: TicketNote) => {
       if (note.relevant_ticket_id === focusedTicketState.ticket_id) {
         newChosenNotes.unshift(note);
@@ -206,8 +208,9 @@ export default function TicketChat(props: Props) {
                 >
                   <div className='ticketNoteForm'>
                     <TextField
-                      label='Message'
+                      label={`${sessionStorage.getItem('isDemo') === 'true' ? 'Chat is disabled in the demo' : 'Message'}`}
                       type='text'
+                      disabled={sessionStorage.getItem('isDemo') === 'true'}
                       value={values.note}
                       onChange={handleChange}
                       onBlur={handleBlur}

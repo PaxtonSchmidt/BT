@@ -26,6 +26,12 @@ export default function Sidebar(props: Props) {
     useEffect(()=>setChosenPage(location.pathname), [location.pathname])
     let isTeamOwnerOrLead = props.teamRole === 1 || props.teamRole === 2;
     function handleNavSelect(location: string) {
+        if(location === '/selectTeam'){
+            let isDemo: boolean = sessionStorage.getItem('isDemo') === 'true'
+            if(isDemo){
+                return navigate('/selectDemoTeam')
+            }
+        }
         navigate(location);
     }
 

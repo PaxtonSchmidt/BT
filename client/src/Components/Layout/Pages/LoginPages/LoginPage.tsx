@@ -16,8 +16,10 @@ export default function LoginPage() {
   useEffect(() => {
     //this way you cant spam for new tokens
     let isLoggedIn = window.sessionStorage.getItem('isLoggedIn');
+    let isDemo = window.sessionStorage.getItem('isDemo') === 'true'
     if (isLoggedIn !== undefined && isLoggedIn === 'true') {
       postInvalidateJWT();
+      if(isDemo === true){sessionStorage.setItem('isDemo', 'false')}
       window.location.reload();
     }
     logout();

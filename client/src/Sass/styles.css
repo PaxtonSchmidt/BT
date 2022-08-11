@@ -666,13 +666,13 @@ input[type='number'] {
 }
 
 .list {
-  width: calc(100%-40px);
-  background-color: #222222;
-  padding-right: 0px !important;
   height: 385px;
+  width: calc(100%-40px);
   padding-bottom: 10px;
   overflow-y: scroll;
   overscroll-behavior: none;
+  background-color: #222222;
+  padding-right: 0px !important;
 }
 
 .listHeader {
@@ -872,7 +872,16 @@ input[type='number'] {
 
 .membersList {
   height: 320px;
-  padding-bottom: 0px;
+  background-color: #222222;
+  width: calc(100%-40px);
+  overflow-y: scroll;
+  overscroll-behavior: none;
+  background-color: #222222;
+  padding-right: 0px !important;
+}
+
+.white:hover {
+  border-color: white !important;
 }
 
 .memberProjectList {

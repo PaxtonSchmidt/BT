@@ -243,7 +243,7 @@ export default function ProjectMembersList(props: Props) {
             </div>
           </div>
           
-          <div id='list' className='list membersList componentGlow fadeIn'>
+          <div id='list' className='membersList componentGlow fadeIn'>
             {isPotentialProjectMembersEmpty ? (
               <p
                 className='delayedFadeIn'
@@ -280,31 +280,32 @@ export default function ProjectMembersList(props: Props) {
         <>
           <div
             className='listRow'
-            style={{ marginTop: '5px', width: 'calc(100% - 20px)' }}>
+            style={{justifyContent: `${focusedProjectState.name === 'All' ? 'center' : 'space-between'}`, marginTop: `${focusedProjectState.name === 'All' ? '10px' : '5px'}`, width: 'calc(100% - 20px)', borderBottom: `${focusedProjectState.name === 'All' ? 'none' : ''}`, transition: '0s'}}>
             <div
               className='memberListRowSection fadeIn'
               style={{ textAlign: 'left' }}>
                 {focusedProjectState.name === 'All' 
-                ? <span className='rowItem'>Related Teammates</span>
+                ? <span className='rowItem'>Select a project to see its members</span>
                 : <span className='rowItem'>Member</span>
                 }
-              
             </div>
-            <div
-              className='memberListRowSection fadeIn'
-              style={{ textAlign: 'center', width: '100px' }}>
-              {focusedProjectState.name === 'All' ? (
-                <></>
-              ) : (
-                <span className='rowItem'>Project Role</span>
-              )}
-            </div>
+
+            {focusedProjectState.name === 'All' 
+            ? <></>
+            : <div
+            className='memberListRowSection fadeIn'
+            style={{ textAlign: 'center', width: '100px' }}
+            >
+              <span className='rowItem'>Project Role</span>
+          </div>}
           </div>
+
           <div
             id='list'
             className='list membersList componentGlow fadeIn'
             style={{ paddingRight: '0px' }}>
-            {members.map((member: any, index: any) => (
+            {focusedProjectState.name !== 'All' 
+            && members.map((member: any, index: any) => (
               //docs say its not ideal to use the index for the key
               //however here it is necessary
               <ProjectMembersListItem key={index} member={member} />

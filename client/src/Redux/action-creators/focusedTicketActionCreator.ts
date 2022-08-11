@@ -1,9 +1,10 @@
+import { AnyCnameRecord } from 'dns';
 import { Dispatch } from 'redux';
 import { Ticket } from '../../API/interfaces/ticket';
 import { focusedTicketActionType } from '../action-types/focusedTicketActionType';
 import { Action } from '../actions/focusedTicketAction';
 
-export const updateFocusedTicket = (ticket: Ticket) => {
+export const updateFocusedTicket = (ticket: any) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: focusedTicketActionType.UPDATE,

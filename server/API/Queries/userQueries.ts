@@ -67,8 +67,6 @@ function getValidTokenVersion(user_id: string) {
   });
 }
 
-// function getUserTeamRoleId
-
 function checkUserTeam(userID: any, teamID: any) {
   let values = [userID, teamID];
 
@@ -83,6 +81,7 @@ function checkUserTeam(userID: any, teamID: any) {
 }
 
 function incrementTokenVersion(user_id: string) {
+  
   let sql = 'UPDATE users SET token_v = token_v + 1 WHERE user_id= ?';
 
   return new Promise<any>((resolve, reject) => {

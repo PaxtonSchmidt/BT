@@ -166,6 +166,7 @@ export default function ProjectMembersManage(props: Props) {
       };
       removeMemberFromProjectInSession(memberToRemove);
       setIsModalOpen(false);
+      setIsMemberSelected(true)
     }
   }
 

@@ -1,7 +1,6 @@
 export interface DemoAccountType {
     name: string,
-    description: string,
-    teamCount: number
+    description: string
 }
 
 interface DemoCharacters {
@@ -13,18 +12,15 @@ interface DemoCharacters {
 export const DemoCharacters: DemoCharacters = {
     Jessie: {
         name: 'Jessie',
-        description: 'A senior level professional',
-        teamCount: 4
+        description: 'A senior level professional'
     },
     Jamie: {
         name: 'Jamie',
-        description: 'A junior level professional',
-        teamCount: 2
+        description: 'A junior level professional'
     },
     Jordan: {
         name: 'Jordan',
-        description: 'A hobbyist',
-        teamCount: 1
+        description: 'A hobbyist'
     }
 
 }

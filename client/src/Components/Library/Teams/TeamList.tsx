@@ -9,12 +9,14 @@ import TeamCard from './TeamCard';
 import { bindActionCreators } from 'redux';
 import { AlertActionCreators } from '../../../Redux';
 import alertDispatcher from '../../../API/Requests/AlertDispatcher';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 interface Props {
-  setIsTeamSelected: Dispatch<SetStateAction<boolean>>;
+  setIsTeamSelected: Dispatch<SetStateAction<boolean>>
+  isDemo?: boolean
 }
 
-function TeamList(setIsTeamSelected: Props) {
+function TeamList(props: Props) {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const { fireAlert, hideAlert } = bindActionCreators(AlertActionCreators,dispatch);
@@ -26,7 +28,7 @@ function TeamList(setIsTeamSelected: Props) {
     let response = await postSelectTeam({ team })
     if(response.isOk){
       authService.selectTeam();
-      setIsTeamSelected.setIsTeamSelected(true);
+      props.setIsTeamSelected(true);
       navigate('/tickets');
     }else{
       alertDispatcher(fireAlert, response.error, hideAlert)
@@ -37,7 +39,7 @@ function TeamList(setIsTeamSelected: Props) {
     navigate('/newTeam');
   }
 
-  if (teams && teams.length < 1) {
+  if (teams && teams.length < 1 && !props.isDemo) {
     return (
       <div className='delayedFadeIn'>
         <h3 style={{ color: 'white' }}>Reach out to a team owner and get invited to their team or</h3>

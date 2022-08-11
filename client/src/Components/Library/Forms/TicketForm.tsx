@@ -14,6 +14,7 @@ import {
   TicketsActionCreators,
 } from '../../../Redux';
 import alertDispatcher from '../../../API/Requests/AlertDispatcher'
+import { Ticket } from '../../../API/interfaces/ticket';
 
 interface Props {
   isExtended?: boolean;
@@ -155,15 +156,36 @@ export default function TicketForm(props: Props) {
             if (!props.isEditMode) {
               async function handleSubmitTicket() {
                 let response = await postTicket(data);
-                
                 !response.isOk 
                 ? alertDispatcher(fireAlert, response.error, hideAlert)
                 : (()=>{
                   if (props.setIsExtended) {
                     props.setIsExtended(false);
                   }
-                  updateFocusedTicket(response.body.ticket);
-                  addTicket(response.body.ticket);
+                  let isDemo: boolean = sessionStorage.getItem('isDemo') === 'true'
+                  if(isDemo){
+                    let demoFakeTicket = {
+                    assignee_user_discriminator: data.assignee.discriminator,
+                    assignee_username: data.assignee.username,
+                    author_discriminator: sessionState.currentUser.discriminator,
+                    author_username: sessionState.currentUser.username,
+                    date_created: "2022-99-10T20:52:00.000Z",
+                    date_last_updated: "2022-99-10T20:52:00.000Z",
+                    description: data.description,
+                    priority: data.priority,
+                    project_id: sessionState.currentTeam.projects.find((project: any)=> project.name === data.project).project_id,
+                    project_name: data.project,
+                    resolution_status: data.resolution_status,
+                    ticket_id: Math.floor(Math.random() * -100),
+                    title: data.title
+                    }
+                    updateFocusedTicket(demoFakeTicket);
+                    addTicket(demoFakeTicket);
+                  } else {
+                    updateFocusedTicket(response.body.ticket);
+                    addTicket(response.body.ticket);
+                  }
+                  
                   resetForm();
                 })()
               }
@@ -228,6 +250,7 @@ export default function TicketForm(props: Props) {
                   <TextField
                     select
                     name='priority'
+                    required
                     defaultValue={''}
                     value={values.priority}
                     label='Priority'

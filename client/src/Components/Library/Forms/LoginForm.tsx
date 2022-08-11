@@ -27,12 +27,13 @@ export default function LoginForm() {
     async function handleSubmit(data: Claims) {
         let attemptResult = await authService.signIn(data);
         if(attemptResult.isOk){
-            login();
+            login(); //update login redux state
             navigate('/selectTeam');
         } else {
             alertDispatcher(fireAlert, attemptResult.error, hideAlert)
         }
     }
+    
     return (
         <>
         <div style={{marginTop: '10vh', paddingTop: '40px'}} className={`${windowWidth < BreakPoints.tablet ? 'loginFormContainer' : 'loginFormContainerLG'}`}>

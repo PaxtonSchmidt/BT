@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { State } from '../../../../../Redux/reducers'
@@ -16,6 +16,14 @@ export const Demo: React.FC<Props> = () => {
     const navigate = useNavigate()
     let conditionalBodyPadding: string = windowWidth > BreakPoints.tablet ? '10%' : '10px'
     let cardGridColumns: string = windowWidth > BreakPoints.mobile ? '1fr 1fr 1fr' : '1fr'
+
+    useEffect(() => {
+        let isDemo = window.sessionStorage.getItem('isDemo') === 'true'
+        if(isDemo === true){
+            window.location.reload();
+            sessionStorage.setItem('isDemo', 'false')
+        }
+    }, [])
     return(
     <div className='demoPageBody altBG' style={{display: 'flex', flexDirection: 'column', paddingTop: `${windowWidth > BreakPoints.tablet ? '150px' : '75px'}` , paddingLeft: `${conditionalBodyPadding}`, paddingRight: `${conditionalBodyPadding}`, color: 'white', justifyContent: 'start'}}>
         <img onClick={()=>navigate('/login')} src={bug} style={{height: '20px', width: '20px', position: 'absolute', top: '20px', left: '0', right: '0', margin: '0 auto'}}/> 

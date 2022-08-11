@@ -19,6 +19,7 @@ import {LoginActionCreators, SocketActionCreators, WindowSizeActionCreators } fr
 import { io } from 'socket.io-client';
 import { State } from './Redux/reducers';
 import { Demo } from './Components/Layout/Pages/LoginPages/Demo/Demo';
+import SelectDemoTeam from './Components/Layout/Pages/LoginPages/Demo/SelectDemoTeam';
 
 function App() {
   const dispatch = useDispatch();
@@ -76,7 +77,9 @@ function App() {
       <Routes>
         <Route path='signUp' element={<SignUpPage />} />
         <Route path='login' element={<LoginPage />} />
+
         <Route path='demo' element={<Demo />} />
+        <Route path='selectDemoTeam' element={<SelectDemoTeam setIsTeamSelected={setIsTeamSelected}/>} />
 
         <Route
           path='newTeam' //must be logged in
