@@ -4,6 +4,7 @@
   "description": "Contains the database and API for the Bug Tracker project",
   "main": "app.ts",
   "scripts": {
+    "start": "nodemon App.ts ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
