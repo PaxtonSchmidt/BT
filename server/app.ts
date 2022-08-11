@@ -16,7 +16,7 @@ const { Server } = require('socket.io');
 app.use(cors());
 const PORT: any = process.env.PORT || 4000
 const server = http.createServer(app);
-server.listen(PORT, () => {console.log(`Listening on port ${PORT}g`)});
+server.listen(PORT, () => {console.log(`Listening on port ${PORT}`)});
 app.use(express.json());
 
 app.use('/signup/', require('./API/Routes/signUpRoute'));
