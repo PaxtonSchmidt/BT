@@ -1,9 +1,8 @@
-import e from 'express';
-import consumeCookie from '../../../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../../../Services/consumeCookies/consumeCookieFlags';
-let user = require('../../../Queries/userQueries');
-let team = require('../../../Queries/teamQueries');
-let project = require('../../../Queries/projectQueries');
+import consumeCookie from '../../../Services/consumeCookies/consumeCookie.js';
+import { consumeCookieFlags } from '../../../Services/consumeCookies/consumeCookieFlags.js';
+import * as user from '../../../Queries/userQueries.js'
+import * as team from '../../../Queries/teamQueries.js'
+import * as project from '../../../Queries/projectQueries.js'
 
 interface sessionUser {
   username: string;
@@ -134,4 +133,4 @@ async function getSessionState(req: any, res: any) {
   }
 }
 
-module.exports = { getSessionState };
+export { getSessionState };

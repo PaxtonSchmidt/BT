@@ -1,4 +1,4 @@
-import { Teammate } from '../Interfaces/teammate';
+import { Teammate } from '../Interfaces/teammate.js';
 interface InfoItem {
   username: string;
   discriminator: number;

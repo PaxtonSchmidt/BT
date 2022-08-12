@@ -1,7 +1,9 @@
 import * as express from 'express';
+
+import { selectTeam } from '../../Controllers/SessionManagement/selectTeamAuthentication.js'
+
 let router = express.Router();
-let selectTeamRoute = require('../../Controllers/SessionManagement/selectTeamAuthentication');
 
-router.post('/selectTeam', selectTeamRoute.selectTeam);
+router.post('/selectTeam', selectTeam);
 
-module.exports = router;
+export { router };

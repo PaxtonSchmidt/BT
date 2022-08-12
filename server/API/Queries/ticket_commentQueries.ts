@@ -1,4 +1,4 @@
-import { connectionPool } from '../dbConnectionPool';
+import { connectionPool } from '../dbConnectionPool.js';
 
 function createTicketCommentsTable(req: any, res: any) {
   let sql =
@@ -10,4 +10,4 @@ function createTicketCommentsTable(req: any, res: any) {
   });
 }
 
-module.exports = { createTicketCommentsTable };
+export { createTicketCommentsTable };

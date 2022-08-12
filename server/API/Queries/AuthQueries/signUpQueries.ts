@@ -1,5 +1,4 @@
-import { connectionPool } from '../../dbConnectionPool';
-import { consumeRowDataPacket } from '../../Services/consumeRowDataPacket';
+import { connectionPool } from '../../dbConnectionPool.js';
 
 function isEmailTaken(email: string) {
   return new Promise<any>((resolve, reject) => {
@@ -25,7 +24,7 @@ function isUsernameAndDiscComboTaken(username: string, discriminator: number) {
   });
 }
 
-module.exports = {
+export {
   isEmailTaken,
   isUsernameAndDiscComboTaken,
 };

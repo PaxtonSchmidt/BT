@@ -1,8 +1,8 @@
-import { consumeRowDataPacket } from '../Services/consumeRowDataPacket';
-import getCurrentDate from '../Services/getCurrentDate';
-const validator = require('email-validator');
-let userController = require('../Queries/userQueries');
-let signUpQueries = require('../Queries/AuthQueries/signUpQueries');
+import { consumeRowDataPacket } from '../Services/consumeRowDataPacket.js';
+import getCurrentDate from '../Services/getCurrentDate.js';
+import validator from 'email-validator'
+import * as userController from '../Queries/userQueries.js'
+import * as signUpQueries from '../Queries/AuthQueries/signUpQueries.js'
 
 async function signUp(req: any, res: any) {
   let targetEmail = req.body.email;
@@ -59,6 +59,6 @@ async function signUp(req: any, res: any) {
   }
 }
 
-module.exports = {
-  signUp,
+export {
+  signUp
 };

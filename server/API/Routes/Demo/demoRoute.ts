@@ -1,7 +1,9 @@
 import * as express from 'express';
+
 let router = express.Router();
-let demo = require('../../Controllers/SessionManagement/NoAuthentication/demo')
 
-router.post("/demoLogin", demo.demoLogin);
+import { demoLogin } from '../../Controllers/SessionManagement/NoAuthentication/demo.js'
 
-module.exports = router
+router.post("/demoLogin", demoLogin);
+
+export { router }

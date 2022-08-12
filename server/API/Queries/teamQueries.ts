@@ -1,7 +1,5 @@
-import { connectionPool } from '../dbConnectionPool';
-import consumeCookie from '../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../Services/consumeCookies/consumeCookieFlags';
-import getCurrentDate from '../Services/getCurrentDate';
+import { connectionPool } from '../dbConnectionPool.js';
+import getCurrentDate from '../Services/getCurrentDate.js';
 
 async function addTeamTransaction(
   user_id: number,
@@ -334,7 +332,7 @@ async function transactionRemoveTargetUserFromTeam(
   });
 }
 
-module.exports = {
+export {
   addTeamTransaction,
   isNameTaken,
   addTeamInvite,

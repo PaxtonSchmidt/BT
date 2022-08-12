@@ -4,4 +4,4 @@ const Legend = {
   dev: 3,
 };
 
-module.exports = { Legend };
+export { Legend };

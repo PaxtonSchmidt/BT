@@ -1,6 +1,6 @@
 import * as Express from 'express';
-const jwt = require('jsonwebtoken');
-let users = require('../../../Queries/userQueries');
+import * as users from '../../../Queries/userQueries.js'
+import jwt from 'jsonwebtoken'
 
 interface demoTokenInfo {
     user_id: number,
@@ -37,7 +37,7 @@ async function demoLogin(req: Express.Request, res: Express.Response){
     // dont need to authenticate, just sign and send a demoUsers JWT
     let accessToken = await jwt.sign(
         demoUser, 
-        process.env.ACCESS_TOKEN_SECRET,
+        process.env.ACCESS_TOKEN_SECRET!,
         { expiresIn: '180s' }
         );
     res.cookie('token', 
@@ -46,6 +46,6 @@ async function demoLogin(req: Express.Request, res: Express.Response){
         }).status(200).send({ message: 'Welcome to our application' });
 }
 
-module.exports = {
+export {
     demoLogin
 }

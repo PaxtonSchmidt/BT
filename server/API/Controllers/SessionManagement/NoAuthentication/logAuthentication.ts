@@ -1,10 +1,10 @@
-import { User } from '../../../Interfaces/User';
-import consumeCookie from '../../../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../../../Services/consumeCookies/consumeCookieFlags';
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const authenticationQueries = require('../../../Queries/AuthQueries/authenticationQueries');
-let users = require('../../../Queries/userQueries');
+import { User } from '../../../Interfaces/User.js';
+import consumeCookie from '../../../Services/consumeCookies/consumeCookie.js';
+import { consumeCookieFlags } from '../../../Services/consumeCookies/consumeCookieFlags.js';
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
+import { fetchTargetUser } from '../../../Queries/AuthQueries/authenticationQueries.js'
+import { incrementTokenVersion } from '../../../Queries/userQueries.js'
 
 function login(req: any, res: any) {
   let claimsEmail = req.body.email;
@@ -13,7 +13,7 @@ function login(req: any, res: any) {
 
   async function ifPassIsAuthenticSignAndSendJWT() {
     try {
-      targetUser = await authenticationQueries.fetchTargetUser(claimsEmail);
+      targetUser = await fetchTargetUser(claimsEmail);
     } catch (e) {
       return res.status(500).send({ message: 'Server Error...' });
     }
@@ -30,7 +30,7 @@ function login(req: any, res: any) {
             user_id: targetUser.user_id,
             token_v: targetUser.token_v,
           }, 
-          process.env.ACCESS_TOKEN_SECRET,
+          process.env.ACCESS_TOKEN_SECRET!,
           { expiresIn: '180s' }
         );
         res.cookie('token', accessToken, {
@@ -56,7 +56,7 @@ async function logout(req: any, res: any) {
   let isInvalidated = false;
 
   try {
-    let invalidated = (await users.incrementTokenVersion(userID)) === 'ok';
+    let invalidated = (await incrementTokenVersion(userID)) === 'ok';
     isInvalidated = invalidated === true;
   } catch (e) {
     return res.status(500).send({ message: 'Server couldnt log you out...' });
@@ -65,7 +65,7 @@ async function logout(req: any, res: any) {
   if (isInvalidated === true) {
     let nullToken = await jwt.sign(
       { key: 'What do you want?' },
-      process.env.ACCESS_TOKEN_SECRET,
+      process.env.ACCESS_TOKEN_SECRET!,
       { expiresIn: '1ms' }
     );
 
@@ -80,7 +80,7 @@ async function logout(req: any, res: any) {
   }
 }
 
-module.exports = {
+export {
   login,
   logout,
 };

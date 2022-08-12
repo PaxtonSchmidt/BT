@@ -1,7 +1,5 @@
-import { connectionPool } from '../dbConnectionPool';
-import { Teammate } from '../Interfaces/teammate';
-import getCurrentDate from '../Services/getCurrentDate';
-let mysql = require('mysql');
+import { connectionPool } from '../dbConnectionPool.js';
+import getCurrentDate from '../Services/getCurrentDate.js';
 
 async function addProject(
   creatorId: any,
@@ -331,7 +329,7 @@ function getAllTeamProjectComments(teamId: number){
   });
 }
 
-module.exports = {
+export {
   addProject,
   getSessionProjectRoles,
   getProjectMembers,

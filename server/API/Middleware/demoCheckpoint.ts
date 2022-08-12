@@ -1,7 +1,6 @@
-import e, * as Express from 'express';
-import consumeCookie from '../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../Services/consumeCookies/consumeCookieFlags';
-let demo = require('../Controllers/SessionManagement/NoAuthentication/demo')
+import * as Express from 'express';
+import consumeCookie from '../Services/consumeCookies/consumeCookie.js';
+import { consumeCookieFlags } from '../Services/consumeCookies/consumeCookieFlags.js';
 
 export default async function demoCheckpoint(req: Express.Request, res: Express.Response, next: Express.NextFunction){
     let tokenInformation = consumeCookie( req.headers.cookie, consumeCookieFlags.tokenSocketIoFlag)
@@ -13,6 +12,7 @@ export default async function demoCheckpoint(req: Express.Request, res: Express.
     if(tokenInformation === null && req.url === '/logout'){return next()} 
     
     //anything here will have come through the auth middleware
+    //by checking for userId we prevent people from logging is as those accounts, they can only be used for the demo
     tokenInformation.userID === 34 
     || tokenInformation.userID === 35 
     || tokenInformation.userID === 36

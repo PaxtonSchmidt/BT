@@ -1,11 +1,11 @@
-const mysql = require('mysql');
-require('dotenv').config();
+import mysql from 'mysql'
 
 function createConnectionPool() {
+  let port: any = process.env.port
   return mysql.createPool({
-    connectionLimit: '10',
+    connectionLimit: 10,
     host: process.env.host,
-    port: process.env.port,
+    port: port,
     user: process.env.user,
     password: process.env.password,
     database: process.env.database,

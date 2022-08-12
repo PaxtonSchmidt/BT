@@ -2,19 +2,18 @@ import e from 'express';
 import * as Express from 'express';
 import consumeCookie, {
   userTeamRoleCombo,
-} from '../../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags';
-import { consumeRowDataPacket } from '../../Services/consumeRowDataPacket';
-import { TeammateDetail } from '../../Interfaces/teammate';
+} from '../../Services/consumeCookies/consumeCookie.js';
+import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags.js';
+import { consumeRowDataPacket } from '../../Services/consumeRowDataPacket.js';
 import composeTeammateInfo, {
   TeammatesInformation,
-} from '../../Services/composeTeammateInfo';
-import composeTeamDetails from '../../Services/composeTeamDetails';
-let teamQueries = require('../../Queries/teamQueries');
-let Roles = require('./Roles');
-let users = require('../../Queries/userQueries');
-let teams = require('../../Queries/teamQueries');
-let projects = require('../../Queries/projectQueries');
+} from '../../Services/composeTeammateInfo.js';
+import composeTeamDetails from '../../Services/composeTeamDetails.js';
+import * as teamQueries from '../../Queries/teamQueries.js'
+import * as Roles from './Roles.js'
+import * as users from '../../Queries/userQueries.js'
+import * as teams from '../../Queries/teamQueries.js'
+import * as projects from '../../Queries/projectQueries.js'
 
 async function inviteUserToTeam(req: any, res: any) {
   let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(
@@ -28,8 +27,7 @@ async function inviteUserToTeam(req: any, res: any) {
   try {
     let recipient = await users.getUserByNameDiscriminator(
       req.body.invitee,
-      req.body.discriminator,
-      res
+      req.body.discriminator
     );
     recipientID = recipient.user_id;
     if (recipientID === undefined) {
@@ -42,12 +40,12 @@ async function inviteUserToTeam(req: any, res: any) {
     isInviteExisting = consumeRowDataPacket(
       await teams.getInviteByRecipientIDTeamID(
         recipientID,
-        userTeamRoleCombo.teamID,
+        userTeamRoleCombo.teamID.toString(),
         res
       )
     );
     isAlreadyOnTeam = consumeRowDataPacket(
-      await teams.fetchIsOnTeam(recipientID, userTeamRoleCombo.teamID)
+      await teams.fetchIsOnTeam(recipientID, userTeamRoleCombo.teamID.toString())
     );
   } catch (e) {
     return res
@@ -247,7 +245,7 @@ async function putUpdateTeammateRole(
         await teams.fetchIsOnTeamByUsernameDiscriminatorTeamID(
           targetUsername,
           targetDiscriminator,
-          teamID
+          teamID.toString()
         );
       if (Object.values(responsePacket[0])[0] === 1) {
         return true;
@@ -262,8 +260,7 @@ async function putUpdateTeammateRole(
     try {
       let targetUserIdPacket: any = await users.getUserByNameDiscriminator(
         req.body.username,
-        req.body.discriminator,
-        req
+        req.body.discriminator
       );
       return targetUserIdPacket.user_id;
     } catch (e) {
@@ -392,7 +389,7 @@ async function RemoveTeammateFromTeam(
   }
 }
 
-module.exports = {
+export {
   inviteUserToTeam,
   addProject,
   getTeammatesInformation,

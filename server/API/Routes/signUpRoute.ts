@@ -1,8 +1,7 @@
 import * as express from 'express';
+import { signUp } from '../Controllers/SignUp.js'
+
 let router = express.Router();
+router.post('/signup', signUp);
 
-let signUpRoute = require('../Controllers/SignUp');
-
-router.post('/signup', signUpRoute.signUp);
-
-module.exports = router;
+export { router };

@@ -1,12 +1,12 @@
 import * as Express from 'express';
 import consumeCookie, {
   userTeamRoleCombo,
-} from '../../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags';
-import { consumeRowDataPacket } from '../../Services/consumeRowDataPacket';
-let tickets = require('../../Queries/ticketQueries');
-let projects = require('../../Queries/projectQueries');
-let users = require('../../Queries/userQueries');
+} from '../../Services/consumeCookies/consumeCookie.js';
+import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags.js';
+import { consumeRowDataPacket } from '../../Services/consumeRowDataPacket.js';
+import * as tickets from '../../Queries/ticketQueries.js'
+import * as projects from '../../Queries/projectQueries.js'
+import * as users from '../../Queries/userQueries.js'
 
 async function getTicketNotes(req: Express.Request, res: Express.Response) {
   let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(
@@ -93,8 +93,7 @@ async function putEditTicket(req: Express.Request, res: Express.Response) {
       let targetUserIDPacket = await users
         .getUserByNameDiscriminator(
           req.body.assignee_username,
-          req.body.assignee_discriminator,
-          res
+          req.body.assignee_discriminator
         )
         .catch();
       targetUserID = targetUserIDPacket.user_id;
@@ -136,7 +135,7 @@ async function putEditTicket(req: Express.Request, res: Express.Response) {
       let updateResult = await tickets
         .putEditTicket(
           req.body.target_ticket_id,
-          targetUserID,
+          targetUserID!,
           req.body.description,
           req.body.resolution_status,
           req.body.priority
@@ -155,7 +154,7 @@ async function putEditTicket(req: Express.Request, res: Express.Response) {
   }
 }
 
-module.exports = {
+export {
   submitTicketComment,
   getTicketNotes,
   putEditTicket,

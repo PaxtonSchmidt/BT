@@ -1,25 +1,30 @@
 import * as express from 'express';
+import { addTeam } from '../Controllers/Authorization/NoAuthorization/newTeam.js'
+import { getCurrentUserTeams, getTeamInvites } from '../Controllers/Authorization/NoAuthorization/TeamSelect.js'
+import {
+    getTeammatesInformation,
+    getTeamDetails,
+    inviteUserToTeam,
+    putUpdateTeammateRole,
+    RemoveTeammateFromTeam
+} from '../Controllers/Authorization/teamAuthorization.js'
+import { acceptInvite, deleteInvite } from '../Controllers/Authorization/NoAuthorization/teamInvites.js'
+import { getInvites } from '../Controllers/Authorization/NoAuthorization/teamInvites.js'
+
 let router = express.Router();
+router.get("/getTeams", getCurrentUserTeams);
+router.get('/getTeamInvites', getTeamInvites)
+router.get('/getTeammatesInformation', getTeammatesInformation)
+router.get('/getTeamDetails', getTeamDetails)
+router.get('/getTeamInvites', getInvites)
 
-let newTeamRoute = require('../Controllers/Authorization/NoAuthorization/newTeam')
-let teamSelectRoute = require("../Controllers/Authorization/NoAuthorization/TeamSelect");
-let teamAuthorization = require('../Controllers/Authorization/teamAuthorization');
-let NoAuthorizationInvites = require('../Controllers/Authorization/NoAuthorization/teamInvites')
-let inviteRoute = require('../Controllers/Authorization/NoAuthorization/teamInvites')
+router.post("/addTeam", addTeam);
+router.post("/inviteUserToTeam", inviteUserToTeam);
+router.post('/acceptInvite', acceptInvite);
 
-router.get("/getTeams", teamSelectRoute.getCurrentUserTeams);
-router.get('/getTeamInvites', teamSelectRoute.getTeamInvites)
-router.get('/getTeammatesInformation', teamAuthorization.getTeammatesInformation)
-router.get('/getTeamDetails', teamAuthorization.getTeamDetails)
-router.get('/getTeamInvites', inviteRoute.getInvites)
+router.put('/putUpdateTeammateRole', putUpdateTeammateRole)
 
-router.post("/addTeam", newTeamRoute.addTeam);
-router.post("/inviteUserToTeam", teamAuthorization.inviteUserToTeam);
-router.post('/acceptInvite', NoAuthorizationInvites.acceptInvite);
+router.delete('/removeTeammate', RemoveTeammateFromTeam)
+router.delete("/deleteInvite", deleteInvite)
 
-router.put('/putUpdateTeammateRole', teamAuthorization.putUpdateTeammateRole)
-
-router.delete('/removeTeammate', teamAuthorization.RemoveTeammateFromTeam)
-router.delete("/deleteInvite", NoAuthorizationInvites.deleteInvite)
-
-module.exports = router;
+export { router };

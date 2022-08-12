@@ -1,8 +1,8 @@
 import * as Express from 'express'
-import consumeCookie from '../../../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../../../Services/consumeCookies/consumeCookieFlags';
-import { userTeamRoleCombo } from '../../../Services/consumeCookies/consumeCookie'
-let teams = require('../../../Queries/teamQueries')
+import consumeCookie from '../../../Services/consumeCookies/consumeCookie.js';
+import { consumeCookieFlags } from '../../../Services/consumeCookies/consumeCookieFlags.js';
+import { userTeamRoleCombo } from '../../../Services/consumeCookies/consumeCookie.js'
+import * as teams from '../../../Queries/teamQueries.js'
 
 async function getInvites(req: Express.Request, res: Express.Response){
   let userTeamRoleCombo: userTeamRoleCombo = consumeCookie(req.headers.cookie, consumeCookieFlags.tokenUserTeamRoleIdFlag);
@@ -73,7 +73,7 @@ async function acceptInvite(req: any, res: any) {
           invite.team_id,
           invite.sender_id
         )
-        .then(teams.deleteTeamInvite(res, req.body.inviteID));
+        .then(()=>teams.deleteTeamInvite(res, req.body.inviteID));
 
       return res.status(200).send({ message: 'Accepted invite to team' });
     } catch (e) {
@@ -86,7 +86,7 @@ async function acceptInvite(req: any, res: any) {
   }
 }
 
-module.exports = { 
+export { 
   deleteInvite,
   acceptInvite,
   getInvites

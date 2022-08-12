@@ -1,8 +1,9 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 export default function authenticateJWT(token: any) {
   try {
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    let secret: string = process.env.ACCESS_TOKEN_SECRET!
+    jwt.verify(token, secret);
     let isValidJWT: boolean = true;
     return isValidJWT;
   } catch {

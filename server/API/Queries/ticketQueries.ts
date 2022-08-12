@@ -1,5 +1,5 @@
-import { connectionPool } from '../dbConnectionPool';
-import getCurrentDate from '../Services/getCurrentDate';
+import { connectionPool } from '../dbConnectionPool.js';
+import getCurrentDate from '../Services/getCurrentDate.js';
 
 function createTicketsTable(req: any, res: any) {
   let sql =
@@ -148,7 +148,7 @@ function checkIsTicketForTeam(ticket_id: number, team_id: number){
   });
 }
 
-module.exports = {
+export {
   createTicketsTable,
   addTicket,
   getTeamTickets,

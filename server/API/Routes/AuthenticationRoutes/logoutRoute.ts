@@ -1,8 +1,9 @@
 import * as express from 'express';
+
 let router = express.Router();
 
-let authenticationRoutes = require('../../Controllers/SessionManagement/NoAuthentication/logAuthentication')
+import { logout } from '../../Controllers/SessionManagement/NoAuthentication/logAuthentication.js'
 
-router.post('/logout', authenticationRoutes.logout);
+router.post('/logout', logout);
 
-module.exports = router;
+export { router };

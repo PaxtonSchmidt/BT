@@ -1,8 +1,8 @@
-import consumeCookie from '../../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags';
-const jwt = require('jsonwebtoken');
-let users = require('../../Queries/userQueries');
-let auth = require('../../Queries/AuthQueries/authorizationQueries');
+import consumeCookie from '../../Services/consumeCookies/consumeCookie.js';
+import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags.js';
+import { checkUserTeam, getValidTokenVersion, incrementTokenVersion} from '../../Queries/userQueries.js'
+import jwt from 'jsonwebtoken'
+import { fetchUserTeamRoleID } from '../../Queries/AuthQueries/authorizationQueries.js'
 
 //Selecting a team now invalidates original JWT and gives the user and updated token
 //this token has a longer expiry and contains the team information of the session
@@ -20,7 +20,7 @@ function selectTeam(req: any, res: any) {
       let isUserOnTeam: any = false;
 
       try {
-        let checkTeamResponse = await users.checkUserTeam(
+        let checkTeamResponse = await checkUserTeam(
           user_id,
           targetTeam_id
         );
@@ -32,13 +32,12 @@ function selectTeam(req: any, res: any) {
         }
 
         let IDcombo = [user_id, targetTeam_id];
-        role_id = await auth.fetchUserTeamRoleID(req, IDcombo);
+        role_id = await fetchUserTeamRoleID(req, IDcombo);
         if(res.locals.isDemo === true){//dont increment if it is a demo account 
           token_v = -1; //gets incremented to 0 in the jwt signing function 
         } else {
-          let response = await users
-            .getValidTokenVersion(user_id)
-            .then(await users.incrementTokenVersion(user_id));
+          let response = await getValidTokenVersion(user_id)
+            .then(await incrementTokenVersion(user_id));
             token_v = response.token_v;
         }
 
@@ -47,6 +46,7 @@ function selectTeam(req: any, res: any) {
       }
       
       if (isUserOnTeam === true) {
+        let secret: string = process.env.ACCESS_TOKEN_SECRET!
         let accessToken = await jwt.sign(
           {
             user_id: user_id,
@@ -54,7 +54,7 @@ function selectTeam(req: any, res: any) {
             role_id: role_id,
             token_v: token_v + 1,
           },
-          process.env.ACCESS_TOKEN_SECRET,
+          secret,
           { expiresIn: '600s' }
         );
 
@@ -76,4 +76,4 @@ function selectTeam(req: any, res: any) {
   addTeamToJWT();
 }
 
-module.exports = { selectTeam };
+export { selectTeam };

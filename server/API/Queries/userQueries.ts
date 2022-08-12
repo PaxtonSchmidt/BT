@@ -1,7 +1,6 @@
-import { connectionPool } from '../dbConnectionPool';
-import { Teammate } from '../Interfaces/teammate';
-import getCurrentDate from '../Services/getCurrentDate';
-const bcrypt = require('bcrypt');
+import { connectionPool } from '../dbConnectionPool.js';
+import { Teammate } from '../Interfaces/teammate.js';
+import bcrypt from 'bcrypt'
 
 async function addUser(
   username: string,
@@ -46,8 +45,7 @@ function getUserByID(userID: string) {
 
 function getUserByNameDiscriminator(
   name: string,
-  discriminator: string,
-  res: any
+  discriminator: number
 ) {
   let values = [name, discriminator];
   let sql = 'SELECT user_id FROM users WHERE username= ? AND discriminator= ?';
@@ -101,7 +99,7 @@ function getIdsForUsernameDiscriminatorList(teammates: Teammate) {
   });
 }
 
-module.exports = {
+export {
   addUser,
   getUserByID,
   getUserByNameDiscriminator,

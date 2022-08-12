@@ -1,6 +1,4 @@
-import { connectionPool } from '../../dbConnectionPool';
-import consumeCookie from '../../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags';
+import { connectionPool } from '../../dbConnectionPool.js';
 
 function fetchTargetUser(queryEmail: string) {
   let sql = 'Select user_id, password, token_v FROM users WHERE email = ?';
@@ -11,4 +9,4 @@ function fetchTargetUser(queryEmail: string) {
     });
   });
 }
-module.exports = { fetchTargetUser };
+export { fetchTargetUser };

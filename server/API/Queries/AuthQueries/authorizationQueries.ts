@@ -1,4 +1,4 @@
-import { connectionPool } from '../../dbConnectionPool';
+import { connectionPool } from '../../dbConnectionPool.js';
 
 function fetchUserTeamRoleID(req: any, userTeamIDCombo: any) {
   let sql = 'SELECT role_id FROM user_teams WHERE user_id= ? AND team_id= ?';
@@ -9,4 +9,4 @@ function fetchUserTeamRoleID(req: any, userTeamIDCombo: any) {
   });
 }
 
-module.exports = { fetchUserTeamRoleID };
+export { fetchUserTeamRoleID };

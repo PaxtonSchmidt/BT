@@ -1,13 +1,6 @@
 import * as express from 'express';
+import { getSessionState } from '../Controllers/Authorization/NoAuthorization/sessionState.js'
 let router = express.Router();
-let sessionRoute = require('../Controllers/Authorization/NoAuthorization/sessionState')
-router.get('/getSessionState', sessionRoute.getSessionState)
+router.get('/getSessionState', getSessionState)
 
-
-
-// //userTable queries
-// app.get('/createUserTable', usersTableQueries.createUsersTable);
-// app.get('/addUser', usersTableQueries.addUser);
-// app.get('/getUserByID', usersTableQueries.getUserByID);
-
-module.exports = router;
+export { router };

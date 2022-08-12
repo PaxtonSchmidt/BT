@@ -1,10 +1,11 @@
-import authenticateJWT from '../Services/authenticateJWT';
-import consumeCookie from '../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../Services/consumeCookies/consumeCookieFlags';
-const jwt = require('jsonwebtoken');
-let users = require('../Queries/userQueries');
+import authenticateJWT from '../Services/authenticateJWT.js';
+import consumeCookie from '../Services/consumeCookies/consumeCookie.js';
+import { consumeCookieFlags } from '../Services/consumeCookies/consumeCookieFlags.js';
+import { getValidTokenVersion } from '../Queries/userQueries.js'
 
-export default async function authenticateRequest(
+import jwt from 'jsonwebtoken'
+
+async function authenticateRequest(
   req: any,
   res: any,
   next: any
@@ -24,7 +25,7 @@ export default async function authenticateRequest(
   let validTokenVersion = { token_v: '' };
   
   try {
-    validTokenVersion = await users.getValidTokenVersion(userID);
+    validTokenVersion = await getValidTokenVersion(userID);
   } catch (e) {
     return res.status(500).send({ message: 'Couldnt validate request...' });
   }
@@ -38,6 +39,7 @@ export default async function authenticateRequest(
     return res.status(403).send({message: 'Please authenticate again...'})
   } else {
     //refresh the token expirey, dont manipulate token version
+    let secret: string = process.env.ACCESS_TOKEN_SECRET!
     let refreshedToken = await jwt.sign(
       {
         user_id: userID,
@@ -45,7 +47,8 @@ export default async function authenticateRequest(
         role_id: tokenInformation.roleID,
         token_v: tokenInformation.tokenV,
       },
-      process.env.ACCESS_TOKEN_SECRET,
+      secret
+      ,
       { expiresIn: '600s' }
     );
     res.cookie('token', 
@@ -55,3 +58,5 @@ export default async function authenticateRequest(
     next();
   }
 }
+
+export { authenticateRequest }

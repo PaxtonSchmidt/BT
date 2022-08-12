@@ -1,7 +1,7 @@
-import consumeCookie from '../../../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../../../Services/consumeCookies/consumeCookieFlags';
-const user_teams = require('../../../Queries/user_teamsQueries');
-let teams = require('../../../Queries/teamQueries');
+import consumeCookie from '../../../Services/consumeCookies/consumeCookie.js';
+import { consumeCookieFlags } from '../../../Services/consumeCookies/consumeCookieFlags.js';
+import * as user_teams from '../../../Queries/user_teamsQueries.js'
+import * as teams from '../../../Queries/teamQueries.js'
 
 async function getCurrentUserTeams(req: any, res: any) {
   let userTeams = '';
@@ -47,4 +47,4 @@ async function getTeamInvites(req: any, res: any) {
   }
 }
 
-module.exports = { getCurrentUserTeams, getTeamInvites };
+export { getCurrentUserTeams, getTeamInvites };

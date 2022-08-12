@@ -1,18 +1,18 @@
 import * as Express from 'express';
-import { Teammate } from '../../Interfaces/teammate';
-import composeMemberDetails from '../../Services/composeMemberDetails';
-import composeProjectStatistics from '../../Services/composeProjectStatistics';
+import { Teammate } from '../../Interfaces/teammate.js';
+import composeMemberDetails from '../../Services/composeMemberDetails.js';
+import composeProjectStatistics from '../../Services/composeProjectStatistics.js';
 import consumeCookie, {
     userTeamRoleCombo,
-} from '../../Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags';
-import { consumeRowDataPacket } from '../../Services/consumeRowDataPacket';
-import getCurrentDate from '../../Services/getCurrentDate';
-let Roles = require('./Roles');
-let tickets = require('../../Queries/ticketQueries');
-let projects = require('../../Queries/projectQueries');
-let users = require('../../Queries/userQueries');
-let teams = require('../../Queries/teamQueries');
+} from '../../Services/consumeCookies/consumeCookie.js';
+import { consumeCookieFlags } from '../../Services/consumeCookies/consumeCookieFlags.js';
+import { consumeRowDataPacket } from '../../Services/consumeRowDataPacket.js';
+import getCurrentDate from '../../Services/getCurrentDate.js';
+import * as Roles from './Roles.js'
+import * as tickets from '../../Queries/ticketQueries.js'
+import * as projects from '../../Queries/projectQueries.js'
+import * as users from '../../Queries/userQueries.js'
+import * as teams from '../../Queries/teamQueries.js'
 
 async function submitNewTicket(req: any, res: any) {
     let isUserOnProject = false;
@@ -42,8 +42,7 @@ async function submitNewTicket(req: any, res: any) {
         } else {
             targetUserId = await users.getUserByNameDiscriminator(
                 req.body.assignee.username,
-                req.body.assignee.discriminator,
-                res
+                req.body.assignee.discriminator
             );
             isAssigneeOnProject = consumeRowDataPacket(
                 await projects.isUserOnProject(
@@ -254,14 +253,14 @@ async function addListOfMembersToProject(req: any, res: any) {
         targetProjectId = targetProjectIdPacket.project_id;
         userProjectRoleIdPacket = await projects.getRoleByUserIdProjectId(
             userTeamRoleCombo.userID,
-            targetProjectId
+            targetProjectId!
         );
         if (userProjectRoleIdPacket.length === 0) {
             userProjectRoleIdPacket = [{ role_id: -1 }];
         }
-        allTeammates = await teams.getUsersOnTeam(userTeamRoleCombo.teamID);
+        allTeammates = await teams.getUsersOnTeam(userTeamRoleCombo.teamID.toString());
         currentProjectMembers = await projects.getProjectMembersByProjectId(
-            targetProjectId
+            targetProjectId!
         );
     } catch (e) {
         return res
@@ -342,7 +341,7 @@ async function addListOfMembersToProject(req: any, res: any) {
     try {
         await projects.addListOfUsersToProject(
             newMembersIds,
-            targetProjectId,
+            targetProjectId!,
             userTeamRoleCombo.teamID,
             userTeamRoleCombo.userID
         );
@@ -455,7 +454,7 @@ async function removeMember(req: any, res: any) {
         targetProjectId = targetProjectIdPacket.project_id;
         let userProjectRoleIdPacket = await projects.getRoleByUserIdProjectId(
             userTeamRoleCombo.userID,
-            targetProjectId
+            targetProjectId!
         );
         if (userProjectRoleIdPacket.length > 0) {
             userProjectRoleId = userProjectRoleIdPacket[0].role_id;
@@ -464,7 +463,7 @@ async function removeMember(req: any, res: any) {
             await projects.getRoleByUsernameDiscriminatorProjectId(
                 req.body.username,
                 req.body.discriminator,
-                targetProjectId
+                targetProjectId!
             );
         if (targetUserProjectRoleIdPacket.length > 0) {
             targetUserProjectRoleId = targetUserProjectRoleIdPacket[0].role_id;
@@ -488,8 +487,8 @@ async function removeMember(req: any, res: any) {
     ) {
         try {
             await projects.transactionRemoveTargetUserFromProject(
-                targetUserId,
-                targetProjectId
+                targetUserId!,
+                targetProjectId!
             );
             return res
                 .status(200)
@@ -523,7 +522,7 @@ async function addProjectComment(req: Express.Request, res: Express.Response) {
     return res.status(400).send({message: 'You cannot comment on this project...'})
   } else {
     try{
-      let insertIDPacket = await projects.addProjectComment(req.body.comment, projectId, userTeamRoleCombo.userID, getCurrentDate())
+      let insertIDPacket = await projects.addProjectComment(req.body.comment, projectId!, userTeamRoleCombo.userID, getCurrentDate())
       let insertId = insertIDPacket.insertId
       return res.status(200).send({insertId: insertId})
     }catch(e){
@@ -547,7 +546,7 @@ async function getProjectComments(req: Express.Request, res: Express.Response){
   
 }
 
-module.exports = {
+export {
     submitNewTicket,
     getTickets,
     getProjectsStatistics,

@@ -1,36 +1,50 @@
-import { ProjectNote } from './API/Interfaces/ProjectNote';
-import { TicketNote } from './API/Interfaces/TicketNote';
-import authenticateRequest from './API/Middleware/authenticateRequest';
-import demoCheckpoint from './API/Middleware/demoCheckpoint';
-import authenticateJWT from './API/Services/authenticateJWT';
-import consumeCookie from './API/Services/consumeCookies/consumeCookie';
-import { consumeCookieFlags } from './API/Services/consumeCookies/consumeCookieFlags';
-import { consumeRowDataPacket } from './API/Services/consumeRowDataPacket';
-let users = require('./API/Queries/userQueries');
-let projects = require('./API/Queries/projectQueries');
-const express = require('express');
-const cors = require('cors');
+//server
+import express from 'express'
+import cors from 'cors';
+import http from 'http';
+//socket
+import { Server } from 'socket.io'
+import { ProjectNote } from './API/Interfaces/ProjectNote.js';
+import { TicketNote } from './API/Interfaces/TicketNote.js';
+import { authenticateRequest } from './API/Middleware/authenticateRequest.js';
+import consumeCookie from './API/Services/consumeCookies/consumeCookie.js';
+import { consumeCookieFlags } from './API/Services/consumeCookies/consumeCookieFlags.js';
+import { consumeRowDataPacket } from './API/Services/consumeRowDataPacket.js';
+import { getValidTokenVersion } from './API/Queries/userQueries.js';
+import { isUserOnProject } from './API/Queries/projectQueries.js';
+//middlewares
+import demoCheckpoint from './API/Middleware/demoCheckpoint.js';
+import authenticateJWT from './API/Services/authenticateJWT.js';
+//routes
+import { router as SignUp }  from './API/Routes/signUpRoute.js'
+import { router as DemoRoutes }  from './API/Routes/Demo/demoRoute.js'
+import { router as LoginRoute }  from './API/Routes/AuthenticationRoutes/loginRoute.js'
+import { router as LogoutRoute }  from './API/Routes/AuthenticationRoutes/logoutRoute.js'
+import { router as TeamSelect }  from './API/Routes/AuthenticationRoutes/teamSelectRoute.js'
+import { router as TeamRoutes }  from './API/Routes/teamRoute.js'
+import { router as UserRoutes }  from './API/Routes/userRoute.js'
+import { router as TicketRoutes }  from './API/Routes/ticketRoute.js'
+import { router as ProjectRoutes }  from './API/Routes/projectRoute.js'
+
 const app = express();
-const http = require('http');
-const { Server } = require('socket.io');
 app.use(cors());
 
+const PORT: any =  process.env.PORT || 4000
 const server = http.createServer(app);
-server.listen('4000', () => {});
+server.listen(PORT, () => {console.log(`Listening on port ${PORT}`)});
 app.use(express.json());
 
-app.use('/signup/', require('./API/Routes/signUpRoute'));
-app.use('/demo/', require('./API/Routes/Demo/demoRoute'))
-app.use('/', require('./API/Routes/AuthenticationRoutes/loginRoute'));
-
-app.use('/logout', demoCheckpoint, require('./API/Routes/AuthenticationRoutes/logoutRoute'));
-
+app.use('/signup/', SignUp);
+app.use('/demo/', DemoRoutes)
+app.use('/', LoginRoute);
+//demo routes are protected by demoCheckpoint
+app.use('/logout', demoCheckpoint, LogoutRoute);
 //Protected routes have Auth middleware
-app.use('/selectTeam/', authenticateRequest, demoCheckpoint, require('./API/Routes/AuthenticationRoutes/teamSelectRoute'));
-app.use('/teams/', authenticateRequest, demoCheckpoint, require('./API/Routes/teamRoute'));
-app.use('/users/', authenticateRequest, demoCheckpoint, require('./API/Routes/userRoute'));
-app.use('/tickets/', authenticateRequest, demoCheckpoint, require('./API/Routes/ticketRoute'));
-app.use('/projects/', authenticateRequest, demoCheckpoint, require('./API/Routes/projectRoute'));
+app.use('/selectTeam/', authenticateRequest, demoCheckpoint, TeamSelect);
+app.use('/teams/', authenticateRequest, demoCheckpoint, TeamRoutes);
+app.use('/users/', authenticateRequest, demoCheckpoint, UserRoutes);
+app.use('/tickets/', authenticateRequest, demoCheckpoint, TicketRoutes);
+app.use('/projects/', authenticateRequest, demoCheckpoint, ProjectRoutes);
 
 
 
@@ -52,10 +66,10 @@ io.on('connection', (socket: any) => {
         socket.handshake.headers.cookie,
         consumeCookieFlags.tokenUserTeamRoleIdFlag
       );
-      let isUserOnProject = consumeRowDataPacket(
-        await projects.isUserOnProject(tokenInformation.userID, project_id)
+      let isUserOnProjectBool = consumeRowDataPacket(
+        await isUserOnProject(tokenInformation.userID, project_id)
       );
-      if (isUserOnProject) {
+      if (isUserOnProjectBool) {
         socket.join(ticket_id);
       } else {
         new Error('Cant connect to chat for lack of perms...');
@@ -69,10 +83,10 @@ io.on('connection', (socket: any) => {
         socket.handshake.headers.cookie,
         consumeCookieFlags.tokenUserTeamRoleIdFlag
       );
-      let isUserOnProject = consumeRowDataPacket(
-        await projects.isUserOnProject(tokenInformation.userID, project_id)
+      let isUserOnProjectBool = consumeRowDataPacket(
+        await isUserOnProject(tokenInformation.userID, project_id)
       );
-      if (isUserOnProject || tokenInformation.roleID === 1) {
+      if (isUserOnProjectBool || tokenInformation.roleID === 1) {
         socket.join(`project:${project_id}`);
       } else {
         new Error('Cant connect to chat for lack of perms...');
@@ -98,7 +112,7 @@ io.use(async (socket: any, next: any) => {
     let token = tokenInformation.token;
     let validTokenVersion = { token_v: '' };
     try {
-      validTokenVersion = await users.getValidTokenVersion(userId);
+      validTokenVersion = await getValidTokenVersion(userId);
     } catch (e) {
       next(new Error('Couldnt validate user...'));
     }

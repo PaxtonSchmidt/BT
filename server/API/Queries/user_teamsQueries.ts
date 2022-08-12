@@ -1,4 +1,4 @@
-import { connectionPool } from '../dbConnectionPool';
+import { connectionPool } from '../dbConnectionPool.js';
 
 function createUserTeamsTable(req: any, res: any) {
   let sql =
@@ -21,4 +21,4 @@ function getUserTeams(current_user_id: number) {
   });
 }
 
-module.exports = { createUserTeamsTable, getUserTeams };
+export { createUserTeamsTable, getUserTeams };

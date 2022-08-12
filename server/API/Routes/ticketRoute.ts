@@ -1,15 +1,15 @@
 import * as express from 'express';
 let router = express.Router();
 
-let projectAuth = require("../Controllers/Authorization/projectAuthorization");
-let ticketAuth = require("../Controllers/Authorization/ticketAuthorization");
+import { getTickets, submitNewTicket } from '../Controllers/Authorization/projectAuthorization.js'
+import { getTicketNotes, submitTicketComment, putEditTicket } from '../Controllers/Authorization/ticketAuthorization.js'
 
-router.get("/getTickets", projectAuth.getTickets);
-router.post("/getTicketNotes", ticketAuth.getTicketNotes);
+router.get("/getTickets", getTickets);
+router.post("/getTicketNotes", getTicketNotes);
 
-router.post("/addTicket", projectAuth.submitNewTicket);
-router.post("/addTicketComment", ticketAuth.submitTicketComment);
+router.post("/addTicket", submitNewTicket);
+router.post("/addTicketComment", submitTicketComment);
 
-router.put("/putEditTicket", ticketAuth.putEditTicket)
+router.put("/putEditTicket", putEditTicket)
 
-module.exports = router;
+export { router };
