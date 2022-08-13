@@ -26,7 +26,9 @@ async function demoLogin(req: Express.Request, res: Express.Response){
     }
 
     try{
+        console.log('a')
         let demoUserPacket = await users.getUserByNameDiscriminator(req.body.characterName, discriminator)
+        console.log('b')
         demoUser = {
             user_id: demoUserPacket.user_id,
             token_v: 0

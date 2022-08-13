@@ -1,7 +1,8 @@
 import mysql from 'mysql'
 
 function createConnectionPool() {
-  let port: any = process.env.port
+  // process.env.port
+  let port: any = 3306
   return mysql.createPool({
     connectionLimit: 10,
     host: process.env.host,

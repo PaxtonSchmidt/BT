@@ -28,8 +28,8 @@ import { router as ProjectRoutes }  from './API/Routes/projectRoute.js'
 
 const app = express();
 app.use(cors());
-
-const PORT: any =  process.env.PORT || 4000
+// process.env.PORT || 
+const PORT: any =  4000
 const server = http.createServer(app);
 server.listen(PORT, () => {console.log(`Listening on port ${PORT}`)});
 app.use(express.json());
