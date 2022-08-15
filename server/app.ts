@@ -2,6 +2,7 @@
 import express from 'express'
 import cors from 'cors';
 import http from 'http';
+import path from 'path';
 //socket
 import { Server } from 'socket.io'
 import { ProjectNote } from './API/Interfaces/ProjectNote.js';
@@ -26,13 +27,21 @@ import { router as UserRoutes }  from './API/Routes/userRoute.js'
 import { router as TicketRoutes }  from './API/Routes/ticketRoute.js'
 import { router as ProjectRoutes }  from './API/Routes/projectRoute.js'
 
+
 const app = express();
 app.use(cors());
 
-const PORT: any =  process.env.PORT
+const PORT: any =  process.env.PORT || 4000
 const server = http.createServer(app);
 server.listen(PORT, () => {console.log(`Listening on port ${PORT}`)});
 app.use(express.json());
+
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static(path.join(__dirname, 'client/build')))
+  app.get('*', function(req: any, res: any){
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  })
+}
 
 app.use('/signup/', SignUp);
 app.use('/demo/', DemoRoutes)
@@ -45,8 +54,6 @@ app.use('/teams/', authenticateRequest, demoCheckpoint, TeamRoutes);
 app.use('/users/', authenticateRequest, demoCheckpoint, UserRoutes);
 app.use('/tickets/', authenticateRequest, demoCheckpoint, TicketRoutes);
 app.use('/projects/', authenticateRequest, demoCheckpoint, ProjectRoutes);
-
-
 
 //socketIO
 const io = new Server(server, {
@@ -129,3 +136,4 @@ io.use(async (socket: any, next: any) => {
     next(new Error('Please send token...'));
   }
 });
+
