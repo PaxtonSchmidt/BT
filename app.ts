@@ -37,14 +37,6 @@ const server = http.createServer(app);
 server.listen(PORT, () => {console.log(`Listening on port ${PORT}`)});
 app.use(express.json());
 
-if(process.env.NODE_ENV === 'production'){
-  const __fileName = fileURLToPath(import.meta.url)
-  const __dirname = path.dirname(__fileName)
-  app.use(express.static(path.join(__dirname, 'client/build')))
-  app.get('*', function(req: any, res: any){
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  })
-}
 
 app.use('/signup/', SignUp);
 app.use('/demo/', DemoRoutes)
@@ -75,68 +67,76 @@ io.on('connection', (socket: any) => {
       let tokenInformation = consumeCookie(
         socket.handshake.headers.cookie,
         consumeCookieFlags.tokenUserTeamRoleIdFlag
-      );
-      let isUserOnProjectBool = consumeRowDataPacket(
-        await isUserOnProject(tokenInformation.userID, project_id)
-      );
-      if (isUserOnProjectBool) {
-        socket.join(ticket_id);
-      } else {
-        new Error('Cant connect to chat for lack of perms...');
-      }
-    }
-  );
-  socket.on(
-    'joinProject',
-    async function (project_id: number) {
-      let tokenInformation = consumeCookie(
-        socket.handshake.headers.cookie,
-        consumeCookieFlags.tokenUserTeamRoleIdFlag
-      );
-      let isUserOnProjectBool = consumeRowDataPacket(
-        await isUserOnProject(tokenInformation.userID, project_id)
-      );
-      if (isUserOnProjectBool || tokenInformation.roleID === 1) {
-        socket.join(`project:${project_id}`);
-      } else {
-        new Error('Cant connect to chat for lack of perms...');
-      }
-    }
-  );
-  socket.on('newTicketNote', (ticketNote: TicketNote) => {
-    socket.to(ticketNote.relevant_ticket_id).emit('newTicketNote', ticketNote);
-  });
-  socket.on('newProjectNote', (projectNote: ProjectNote) => {
-    socket.to(`project:${projectNote.project_id}`).emit('newProjectNote', projectNote);
-  });
-});
+        );
+        let isUserOnProjectBool = consumeRowDataPacket(
+          await isUserOnProject(tokenInformation.userID, project_id)
+          );
+          if (isUserOnProjectBool) {
+            socket.join(ticket_id);
+          } else {
+            new Error('Cant connect to chat for lack of perms...');
+          }
+        }
+        );
+        socket.on(
+          'joinProject',
+          async function (project_id: number) {
+            let tokenInformation = consumeCookie(
+              socket.handshake.headers.cookie,
+              consumeCookieFlags.tokenUserTeamRoleIdFlag
+              );
+              let isUserOnProjectBool = consumeRowDataPacket(
+                await isUserOnProject(tokenInformation.userID, project_id)
+                );
+                if (isUserOnProjectBool || tokenInformation.roleID === 1) {
+                  socket.join(`project:${project_id}`);
+                } else {
+                  new Error('Cant connect to chat for lack of perms...');
+                }
+              }
+              );
+              socket.on('newTicketNote', (ticketNote: TicketNote) => {
+                socket.to(ticketNote.relevant_ticket_id).emit('newTicketNote', ticketNote);
+              });
+              socket.on('newProjectNote', (projectNote: ProjectNote) => {
+                socket.to(`project:${projectNote.project_id}`).emit('newProjectNote', projectNote);
+              });
+            });
+            
+            io.use(async (socket: any, next: any) => {
+              if (socket.handshake.headers.cookie) {
+                let tokenInformation = consumeCookie(
+                  socket.handshake.headers.cookie,
+                  consumeCookieFlags.tokenSocketIoFlag
+                  );
+                  let tokenVersion = tokenInformation.tokenV;
+                  let userId = tokenInformation.userID;
+                  let token = tokenInformation.token;
+                  let validTokenVersion = { token_v: '' };
+                  try {
+                    validTokenVersion = await getValidTokenVersion(userId);
+                  } catch (e) {
+                    next(new Error('Couldnt validate user...'));
+                  }
 
-io.use(async (socket: any, next: any) => {
-  if (socket.handshake.headers.cookie) {
-    let tokenInformation = consumeCookie(
-      socket.handshake.headers.cookie,
-      consumeCookieFlags.tokenSocketIoFlag
-    );
-    let tokenVersion = tokenInformation.tokenV;
-    let userId = tokenInformation.userID;
-    let token = tokenInformation.token;
-    let validTokenVersion = { token_v: '' };
-    try {
-      validTokenVersion = await getValidTokenVersion(userId);
-    } catch (e) {
-      next(new Error('Couldnt validate user...'));
-    }
-
-    if (
-      tokenVersion !== validTokenVersion.token_v ||
-      authenticateJWT(token) !== true
-    ) {
-      next(new Error('Invalid connection request...'));
-    } else {
-      next();
-    }
-  } else {
-    next(new Error('Please send token...'));
+                  if (
+                    tokenVersion !== validTokenVersion.token_v ||
+                    authenticateJWT(token) !== true
+                    ) {
+                      next(new Error('Invalid connection request...'));
+                    } else {
+                      next();
+                    }
+                  } else {
+                    next(new Error('Please send token...'));
+                  }
+                });
+                
+  if(process.env.NODE_ENV === 'production'){
+    const __fileName = fileURLToPath(import.meta.url)
+    const __dirname = path.dirname(__fileName)
+    app.use(express.static(path.join(__dirname, 'client/build')))
+    app.get('*', function(req: any, res: any){
+      res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    })
   }
-});
-
