@@ -3,7 +3,7 @@ import express from 'express'
 import cors from 'cors';
 import http from 'http';
 import path from 'path';
-//socket
+// 
 import { Server } from 'socket.io'
 import { ProjectNote } from './API/Interfaces/ProjectNote.js';
 import { TicketNote } from './API/Interfaces/TicketNote.js';
