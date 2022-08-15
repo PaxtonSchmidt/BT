@@ -697,7 +697,7 @@ input[type='number'] {
       -ms-flex-align: center;
           align-items: center;
   min-height: 40px;
-  width: calc(100%-40px);
+  width: 100%;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   cursor: default;
@@ -798,7 +798,7 @@ input[type='number'] {
   position: relative;
   border-bottom: 1px solid white;
   height: 40px;
-  width: calc(100%-50px);
+  width: 100%;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   cursor: default;
