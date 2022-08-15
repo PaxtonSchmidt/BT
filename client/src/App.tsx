@@ -33,7 +33,7 @@ function App() {
   const windowWidth = useSelector((state: State) => state.windowSize);
   let isSessionState = typeof sessionState.currentTeam?.name !== 'undefined';
 
-  
+  //adasd
   const onResize = () => {
     // let oldBreakpoint = getBreakpointName(windowWidth)
     // let newBreakpoint = getBreakpointName(window.innerWidth)

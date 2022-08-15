@@ -667,7 +667,7 @@ input[type='number'] {
 
 .list {
   height: 385px;
-  width: calc(100%-40px);
+  width: 100%;
   padding-bottom: 10px;
   overflow-y: scroll;
   overscroll-behavior: none;
@@ -873,7 +873,7 @@ input[type='number'] {
 .membersList {
   height: 320px;
   background-color: #222222;
-  width: calc(100%-40px);
+  width: 100%;
   overflow-y: scroll;
   overscroll-behavior: none;
   background-color: #222222;
@@ -1464,10 +1464,11 @@ input[type='number'] {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  height: 20px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   margin: 0px 10px;
   padding: 10px;
-  padding-top: auto;
   border: 1px solid #ffffff31;
   border-radius: 15px;
   -webkit-transition: 0.5s;
