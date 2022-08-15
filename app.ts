@@ -4,7 +4,8 @@ import cors from 'cors';
 import http from 'http';
 import path from 'path';
 import {fileURLToPath} from 'url';
-// 
+import dotenv from 'dotenv'
+//SocketIO to be moved 
 import { Server } from 'socket.io'
 import { ProjectNote } from './API/Interfaces/ProjectNote.js';
 import { TicketNote } from './API/Interfaces/TicketNote.js';
@@ -30,16 +31,18 @@ import { router as ProjectRoutes }  from './API/Routes/projectRoute.js'
 
 
 const app = express();
+dotenv.config()
 app.use(cors());
 
-const PORT: any =  process.env.PORT 
+const PORT: any =  process.env.PORT
+
 const server = http.createServer(app);
 server.listen(PORT, () => {console.log(`Listening on port ${PORT}`)});
 app.use(express.json());
 
 
 app.use('/signup/', SignUp);
-app.use('/demo/', DemoRoutes)
+app.use('/demo/', DemoRoutes)//demo landing 
 app.use('/', LoginRoute);
 //demo routes are protected by demoCheckpoint
 app.use('/logout', demoCheckpoint, LogoutRoute);
@@ -124,13 +127,15 @@ io.on('connection', (socket: any) => {
                     authenticateJWT(token) !== true
                     ) {
                       next(new Error('Invalid connection request...'));
-                    } else {
+                    } 
+                    else {
                       next();
                     }
                   } else {
-                    next(new Error('Please send token...'));
+                  next(new Error('Please send token...'));
                   }
-                });
+                }
+              );
                 
   if(process.env.NODE_ENV === 'production'){
     const __fileName = fileURLToPath(import.meta.url)

@@ -37,13 +37,13 @@ async function demoLogin(req: Express.Request, res: Express.Response){
         return res.status(500).send({message: 'Server couldnt get demo app...'})
     }
     // dont need to authenticate, just sign and send a demoUsers JWT
-    let accessToken = await jwt.sign(
+    let accessToken = jwt.sign(
         demoUser, 
         process.env.ACCESS_TOKEN_SECRET!,
         { expiresIn: '180s' }
         );
     res.cookie('token', 
-        accessToken, {
+        await accessToken, {
         httpOnly: true,
         }).status(200).send({ message: 'Welcome to our application' });
 }
