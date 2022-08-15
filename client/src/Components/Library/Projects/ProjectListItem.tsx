@@ -7,7 +7,7 @@ import { State } from '../../../Redux/reducers';
 interface Props{
     name: string;
 }
-
+//a
 export default function ProjectListItem(props: Props) {
     const dispatch = useDispatch();
     const { updateFocusedProject } = bindActionCreators(FocusedProjectActionCreators, dispatch)
