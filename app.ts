@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors';
 import http from 'http';
 import path from 'path';
+import {fileURLToPath} from 'url';
 // 
 import { Server } from 'socket.io'
 import { ProjectNote } from './API/Interfaces/ProjectNote.js';
@@ -37,6 +38,8 @@ server.listen(PORT, () => {console.log(`Listening on port ${PORT}`)});
 app.use(express.json());
 
 if(process.env.NODE_ENV === 'production'){
+  const __fileName = fileURLToPath(import.meta.url)
+  const __dirname = path.dirname(__fileName)
   app.use(express.static(path.join(__dirname, 'client/build')))
   app.get('*', function(req: any, res: any){
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
