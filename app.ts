@@ -33,7 +33,7 @@ import { router as ProjectRoutes }  from './API/Routes/projectRoute.js'
 const app = express();
 dotenv.config()
 app.use(cors());
-//a
+
 const PORT: any =  process.env.PORT
 
 const server = http.createServer(app);
