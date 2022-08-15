@@ -10,7 +10,6 @@ function login(req: any, res: any) {
   let claimsEmail = req.body.email;
   let claimsPassword = req.body.password;
   let targetUser: User;
-
   async function ifPassIsAuthenticSignAndSendJWT() {
     try {
       targetUser = await fetchTargetUser(claimsEmail);

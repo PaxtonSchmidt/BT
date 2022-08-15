@@ -5,6 +5,7 @@ function fetchTargetUser(queryEmail: string) {
 
   return new Promise<any>((resolve, reject) => {
     connectionPool.query(sql, queryEmail, (err: any, result: any) => {
+      console.log(err)
       return err ? reject(err) : resolve(result[0]);
     });
   });
