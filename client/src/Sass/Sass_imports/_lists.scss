@@ -87,7 +87,6 @@
   align-items: flex-end;
   text-align: end;
   padding-left: 10px;
-  padding-right: 10px;
   justify-content: space-between;
   white-space: nowrap;
   background-color: transparent;
@@ -95,7 +94,7 @@
   position: relative;
   border-bottom: 1px solid white;
   height: 40px;
-  width: calc(100%-10px);
+  width: 100%;
   transition: $transition;
   cursor: default;
 }
