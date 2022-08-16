@@ -72,7 +72,7 @@ export default function ManageTeamPage({ isTeamSelected }: Props) {
               <div className={`pageBodyContainer5 ${windowWidth <= BreakPoints.mobile ? 'pageBodyContainer5SM' : ''}`} style={{ color: 'white' }}>
                 <div
                   className='pageBodyQuadrant'
-                  style={{ flexDirection: 'column'}}
+                  style={{ flexDirection: 'column', overflowX: 'hidden'}}
                 >
                   <TeammateList />
                 </div>
