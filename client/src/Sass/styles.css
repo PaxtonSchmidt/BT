@@ -587,6 +587,10 @@ input[type='number'] {
   color: #ffffff !important;
 }
 
+.MuiInputLabel-shrink {
+  color: #efff0a !important;
+}
+
 .MuiInput-underline {
   border-color: #ffffff !important;
 }
