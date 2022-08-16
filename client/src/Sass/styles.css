@@ -591,6 +591,14 @@ input[type='number'] {
   border-color: #ffffff !important;
 }
 
+.MuiSelect-icon {
+  color: #ffffff31 !important;
+}
+
+.Mui-disabled {
+  color: #ffffff31 !important;
+}
+
 .list {
   height: 385px;
   width: 100%;

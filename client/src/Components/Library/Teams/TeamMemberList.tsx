@@ -44,7 +44,7 @@ export default function TeammateList() {
       <>
         <div
           className='fadeIn'
-          style={{display: 'flex', backgroundColor: '#222222', justifyContent: 'center' ,  width: '100% !important', height: '40px', borderBottom:'1px solid white',}}
+          style={{display: 'flex', backgroundColor: '#222222', justifyContent: 'center' ,  width: '100% !important', height: '40px', borderBottom:'1px solid white', overflowX: 'hidden'}}
         >
           <div
             className='memberListRowSection fadeIn'
