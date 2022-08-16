@@ -43,7 +43,7 @@ export default function TeammateList() {
     return (
       <>
         <div
-          className='listRow fadeIn'
+          className='fadeIn'
           style={{ marginTop: '0px', backgroundColor: '#222222', justifyContent: 'center' , padding: '0px', paddingLeft: '0px !important', paddingRight: '0px !important', width: '100% !important'}}
         >
           <div
