@@ -44,7 +44,7 @@ export default function TeammateList() {
       <>
         <div
           className='fadeIn'
-          style={{ marginTop: 'auto', marginBottom:'auto', backgroundColor: '#222222', justifyContent: 'center' , padding: '0px', paddingLeft: '0px !important', paddingRight: '0px !important', width: '100% !important', height: '40px', borderBottom:'1px solid white',}}
+          style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '15px', marginBottom:'auto', backgroundColor: '#222222', justifyContent: 'center' , padding: '0px', paddingLeft: '0px !important', paddingRight: '0px !important', width: '100% !important', height: '40px', borderBottom:'1px solid white',}}
         >
           <div
             className='memberListRowSection fadeIn'
