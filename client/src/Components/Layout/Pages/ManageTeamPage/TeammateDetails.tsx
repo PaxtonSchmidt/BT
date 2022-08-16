@@ -277,7 +277,7 @@ export default function TeammateDetails(props: Props) {
             </div>
             <div
               className='listItem listRow memberRow manageMemberListRow'
-              style={{ justifyContent: 'space-between' }}
+              style={{ justifyContent: 'space-between', width: '100%', paddingRight: '5px' }}
             >
               <div className='memberListRowSection roleRow'>
                 <div

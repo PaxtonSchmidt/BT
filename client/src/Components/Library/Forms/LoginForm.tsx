@@ -69,7 +69,7 @@ export default function LoginForm() {
                         
                                 <TextField
                                     name='password'
-                                    // type='password'
+                                    type='password'
                                     value={values.password}
                                     label='Password'
                                     color='info'

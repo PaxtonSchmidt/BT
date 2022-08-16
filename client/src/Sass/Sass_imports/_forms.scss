@@ -79,71 +79,6 @@
 .ticketNoteInput {
   width: 100%;
 }
-.Mui-focused {
-  color: $yellow !important;
-}
-.css-1gmxcjm-MuiFormLabel-root-MuiInputLabel-root {
-  color: $yellow !important;
-}
-.css-1x51dt5-MuiInputBase-input-MuiInput-input {
-  color: white !important;
-  transition: 0 !important;
-}
-.css-66dh3a-MuiInputBase-input-MuiInput-input {
-  color: white !important;
-  transition: $transition !important;
-}
-.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input {
-  color: white !important;
-  transition: $transition !important;
-}
-.css-wgizgc-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled)::before {
-  border-bottom: 1px solid $dimYellow !important;
-  transition: $transition !important;
-}
-.css-1bck7qi-MuiInputBase-root-MuiInput-root:hover:not(.Mui-disabled):before {
-  border-bottom: 1px solid $dimYellow !important;
-  transition: $transition !important;
-}
-.css-1u7je4m-MuiFormLabel-root-MuiInputLabel-root {
-  color: white !important;
-}
-.css-6hp17o-MuiList-root-MuiMenu-list {
-  border: 1px solid $accentGrey;
-  background-color: $darkGrey;
-  color: white;
-}
-.css-1bck7qi-MuiInputBase-root-MuiInput-root:before {
-  border-bottom: 1px solid $accentGrey !important;
-}
-.css-wgizgc-MuiInputBase-root-MuiInput-root:before {
-  border-bottom: 1px solid $accentGrey !important;
-}
-.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon {
-  color: $accentGrey !important;
-}
-.css-1mf6u8l-MuiSvgIcon-root-MuiSelect-icon {
-  color: $yellow !important;
-}
-.css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input.Mui-disabled {
-  -webkit-text-fill-color: rgba(255, 240, 240, 0.61) !important;
-}
-.Mui-disabled {
-  color: rgb(122, 122, 122) !important;
-}
-.css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled {
-  -webkit-text-fill-color: rgba(255, 240, 240, 0.61) !important;
-}
-.css-fmq57k-MuiButtonBase-root-MuiMenuItem-root:hover{
-  background-color: $hoverGrey !important;
-  transition: $transition;
-}
-.css-1cwe2u8-MuiInputBase-root-MuiInput-root:before{
-  border-bottom: 1px solid $accentGrey !important;
-}
-.css-96jr5n-MuiInputBase-root-MuiInput-root:before{
-  border-bottom: 1px solid $accentGrey !important;
-}
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -158,4 +93,17 @@ input[type='number']::-webkit-outer-spin-button {
 }
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+.MuiInputBase-root::before {
+  border-bottom: 1px solid $accentGrey !important;
+}
+.MuiInput-root{
+  color: white !important;
+}
+.MuiInputLabel-root{
+  color: #ffffff !important;
+}
+.MuiInput-underline{
+  border-color: #ffffff !important;
 }
