@@ -215,7 +215,7 @@ export default function ProjectMembersManage(props: Props) {
             onClick={handleCloseUserDetailsForm}
             style={{
               marginTop: '5px',
-              width: 'calc(100% - 20px)',
+              width: 'calc(100% - 10px)',
               justifyContent: 'center',
             }}
           >
