@@ -280,7 +280,7 @@ export default function ProjectMembersList(props: Props) {
         <>
           <div
             className='listRow'
-            style={{justifyContent: `${focusedProjectState.name === 'All' ? 'center' : 'space-between'}`, marginTop: `${focusedProjectState.name === 'All' ? '10px' : '5px'}`, width: 'calc(100% - 20px)', borderBottom: `${focusedProjectState.name === 'All' ? 'none' : ''}`, transition: '0s'}}>
+            style={{justifyContent: `${focusedProjectState.name === 'All' ? 'center' : 'space-between'}`, marginTop: `${focusedProjectState.name === 'All' ? '10px' : '5px'}`, width: 'calc(100% - 10px)', borderBottom: `${focusedProjectState.name === 'All' ? 'none' : ''}`, transition: '0s'}}>
             <div
               className='memberListRowSection fadeIn'
               style={{ textAlign: 'left' }}>
