@@ -604,7 +604,7 @@ input[type='number'] {
   -webkit-text-fill-color-: #ffffff31 !important;
 }
 
-.css-1cccqvr.Mui-disabled {
+input:disabled {
   color: #ffffff31 !important;
   -webkit-text-fill-color-: #ffffff31 !important;
 }
