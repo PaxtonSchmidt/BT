@@ -1,6 +1,6 @@
 .list {
   height: 385px;
-  width: calc(100%-40px);
+  width: 100%;
   padding-bottom: 10px;
   overflow-y: scroll;
   overscroll-behavior: none;
@@ -22,7 +22,7 @@
   text-align: center;
   align-items: center;
   min-height: 40px;
-  width: calc(100%-40px);
+  width: 100%;
   transition: $transition;
   cursor: default;
 }
@@ -87,7 +87,6 @@
   align-items: flex-end;
   text-align: end;
   padding-left: 10px;
-  padding-right: 10px;
   justify-content: space-between;
   white-space: nowrap;
   background-color: transparent;
@@ -95,7 +94,7 @@
   position: relative;
   border-bottom: 1px solid white;
   height: 40px;
-  width: calc(100%-50px);
+  width: calc(100%-5px);
   transition: $transition;
   cursor: default;
 }
@@ -152,7 +151,7 @@
 .membersList {
   height: 320px;
   background-color: $darkGrey;
-  width: calc(100%-40px);
+  width: 100%;
   overflow-y: scroll;
   overscroll-behavior: none;
   background-color: $darkGrey;
@@ -190,7 +189,7 @@
   padding-right: 5px;
   overflow-y: scroll;
   overscroll-behavior: none;
-  width: calc(100%-20px);
+  width: calc(100%-10px);
 }
 .projectNoteListContainer{
   width: 100%;

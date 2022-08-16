@@ -117,7 +117,8 @@ function ProjectList() {
       <div
         onWheel={(e) => handleSideScroll(e)}
         id='projectList'
-        className='sideScrollList componentGlow'>
+        className='sideScrollList componentGlow'
+        style={{paddingBottom:'3px'}}>
         {projectsList.length > 1 &&
         <div
           id='All'

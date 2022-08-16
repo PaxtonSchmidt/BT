@@ -279,7 +279,7 @@ function Tickets() {
             <p style={{ paddingTop: '10px' }}>No tickets</p>
           </div>
         ) : (
-          <div className='list componentGlow' style={{ textAlign: 'left', overflowX: 'hidden' }}>
+          <div className='list componentGlow' style={{ textAlign: 'left', overflowX: 'hidden', width: '100%' }}>
             {tickets?.map((ticket: ticket) => (
               <TicketListItem
                 key={ticket.ticket_id}

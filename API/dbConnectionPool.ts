@@ -4,10 +4,8 @@ function createConnectionPool() {
   
   let port: any = process.env.port || 3306
   return mysql.createPool({
-    host: process.env.host,
-    user: process.env.user,
-    password: process.env.password,
-    database: process.env.database  });
+    //secrets
+  });
 }
 
 export const connectionPool = createConnectionPool();

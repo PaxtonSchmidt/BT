@@ -7,7 +7,7 @@ import { State } from '../../../Redux/reducers';
 interface Props{
     name: string;
 }
-
+//a
 export default function ProjectListItem(props: Props) {
     const dispatch = useDispatch();
     const { updateFocusedProject } = bindActionCreators(FocusedProjectActionCreators, dispatch)
@@ -27,7 +27,7 @@ export default function ProjectListItem(props: Props) {
     }
 
     return (
-        <div onClick={() => handleSelect(name)} className='sideScrollListItem scaleYonHover fadeIn' style={{whiteSpace: 'nowrap'}} id={name}>
+        <div onClick={() => handleSelect(name)} className='sideScrollListItem scaleYonHover fadeIn' style={{whiteSpace: 'nowrap', height: '19px', padding: '10px'}} id={name}>
             {name}
         </div>
     )

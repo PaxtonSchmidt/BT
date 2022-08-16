@@ -227,7 +227,8 @@ export default function TeammateDetails(props: Props) {
             height: '350px',
             overscrollBehavior: 'auto',
             overflowY: 'hidden',
-            transition: '0s'
+            transition: '0s',
+            overflowX: 'hidden'
           }}
         >
           <div className='ListContainer'>
@@ -237,6 +238,8 @@ export default function TeammateDetails(props: Props) {
                 justifyContent: 'space-between',
                 marginTop: 'auto',
                 borderColor: 'white',
+                paddingLeft: '0px',
+                width: '100%'
               }}
             >
               <div
@@ -277,7 +280,7 @@ export default function TeammateDetails(props: Props) {
             </div>
             <div
               className='listItem listRow memberRow manageMemberListRow'
-              style={{ justifyContent: 'space-between' }}
+              style={{ justifyContent: 'space-between', paddingRight: '5px' }}
             >
               <div className='memberListRowSection roleRow'>
                 <div
@@ -321,7 +324,7 @@ export default function TeammateDetails(props: Props) {
             </div>
             <div
               className='listItem listRow memberRow manageMemberListRow'
-              style={{ justifyContent: 'space-between' }}
+              style={{ justifyContent: 'space-between', width: '100%' }}
             >
               <div
                 className='memberListRowSection'
@@ -358,7 +361,7 @@ export default function TeammateDetails(props: Props) {
             </div>
             <div
               className='listItem listRow memberRow manageMemberListRow '
-              style={{ justifyContent: 'space-between' }}
+              style={{ justifyContent: 'space-between', width: '100%' }}
             >
               <div
                 className='memberListRowSection'
@@ -368,7 +371,7 @@ export default function TeammateDetails(props: Props) {
                   className='rowItem'
                   style={{
                     display: 'inline-block',
-                    width: 'fit-content',
+                    width: 'calc(100%-5px)',
                     marginLeft: '5px',
                   }}
                 >

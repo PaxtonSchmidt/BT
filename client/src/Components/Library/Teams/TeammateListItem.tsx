@@ -29,7 +29,7 @@ export default function TeammateListItem(props: Props) {
     <div
       onClick={() => handleSelect()}
       className={`listItem listRow memberRow ${chosenTeammateClass} scaleYonHover hoverGrey`}
-      style={{ justifyContent: 'space-between', marginLeft: '0px' }}
+      style={{ justifyContent: 'space-between', marginLeft: '0px', width: 'calc(100%-20px)', paddingRight: '10px', overflowX: 'hidden' }}
     >
       <div
         className='memberListRowSection'

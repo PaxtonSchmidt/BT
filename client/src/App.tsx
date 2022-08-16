@@ -33,7 +33,7 @@ function App() {
   const windowWidth = useSelector((state: State) => state.windowSize);
   let isSessionState = typeof sessionState.currentTeam?.name !== 'undefined';
 
-  
+  //adasd
   const onResize = () => {
     // let oldBreakpoint = getBreakpointName(windowWidth)
     // let newBreakpoint = getBreakpointName(window.innerWidth)
@@ -57,7 +57,7 @@ function App() {
   //connect socket.io only if the user is logged in AND theyve selected a team, still need server side security of course
   useEffect(() => {
     if (loginState === 1 && isSessionState === true) {
-      const socket = io('http://localhost:4000', { withCredentials: true });
+      const socket = io('https://www.bugtrackerapp.net', { withCredentials: true });
       socket.on('connect', () => {});
       updateSocket(socket);
   
