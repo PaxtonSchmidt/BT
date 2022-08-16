@@ -723,7 +723,7 @@ input[type='number'] {
   position: relative;
   border-bottom: 1px solid white;
   height: 40px;
-  width: calc(100%-10px);
+  width: calc(100%);
   -webkit-transition: 0.5s;
   transition: 0.5s;
   cursor: default;
