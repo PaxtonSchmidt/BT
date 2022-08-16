@@ -114,5 +114,6 @@ input[type='number'] {
   color: $accentGrey !important
 }
 .Mui-disabled{
-  color: $accentGrey !important
+  color: $accentGrey !important;
+  -webkit-text-fill-color-: $accentGrey !important;
 }

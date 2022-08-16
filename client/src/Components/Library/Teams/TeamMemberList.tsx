@@ -55,7 +55,7 @@ export default function TeammateList() {
             </span>
           </div>
         </div>
-        <div id='list' className='membersList componentGlow fadeIn' style={{transition: '0s', height: '320px'}}>
+        <div id='list' className='membersList componentGlow fadeIn' style={{transition: '0s', height: '320px', overflowX: 'hidden'}}>
           {teammates!.map((teammate: any, index: any) => (
             //docs say its not ideal to use the index for the key
             //however here it is necessary
