@@ -57,7 +57,7 @@ function App() {
   //connect socket.io only if the user is logged in AND theyve selected a team, still need server side security of course
   useEffect(() => {
     if (loginState === 1 && isSessionState === true) {
-      const socket = io('bug-tracker-ps.herokuapp.com', { withCredentials: true });
+      const socket = io('https://www.bugtrackerapp.net', { withCredentials: true });
       socket.on('connect', () => {});
       updateSocket(socket);
   
