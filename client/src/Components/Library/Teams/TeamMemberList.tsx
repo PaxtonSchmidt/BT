@@ -44,11 +44,11 @@ export default function TeammateList() {
       <>
         <div
           className='fadeIn'
-          style={{ paddingLeft: 'auto', paddingRight: 'auto', paddingTop: '15px', paddingBottom:'auto', backgroundColor: '#222222', justifyContent: 'center' ,  width: '100% !important', height: '40px', borderBottom:'1px solid white',}}
+          style={{display: 'flex', backgroundColor: '#222222', justifyContent: 'center' ,  width: '100% !important', height: '40px', borderBottom:'1px solid white',}}
         >
           <div
             className='memberListRowSection fadeIn'
-            style={{ textAlign: 'center', width: '110px' }}
+            style={{ textAlign: 'center', width: '110px', marginTop: '15px' }}
           >
             <span className='rowItem' >
               Team Roles
