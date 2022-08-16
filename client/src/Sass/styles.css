@@ -609,6 +609,11 @@ input:disabled {
   -webkit-text-fill-color-: #ffffff31 !important;
 }
 
+.css-1cccqvr.Mui-disabled {
+  color: #ffffff31 !important;
+  -webkit-text-fill-color-: #ffffff31 !important;
+}
+
 .list {
   height: 385px;
   width: 100%;
