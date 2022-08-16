@@ -227,7 +227,8 @@ export default function TeammateDetails(props: Props) {
             height: '350px',
             overscrollBehavior: 'auto',
             overflowY: 'hidden',
-            transition: '0s'
+            transition: '0s',
+            overflowX: 'hidden'
           }}
         >
           <div className='ListContainer'>
@@ -323,7 +324,7 @@ export default function TeammateDetails(props: Props) {
             </div>
             <div
               className='listItem listRow memberRow manageMemberListRow'
-              style={{ justifyContent: 'space-between', width: 'calc(100%-5px)' }}
+              style={{ justifyContent: 'space-between', width: '100%' }}
             >
               <div
                 className='memberListRowSection'
@@ -360,7 +361,7 @@ export default function TeammateDetails(props: Props) {
             </div>
             <div
               className='listItem listRow memberRow manageMemberListRow '
-              style={{ justifyContent: 'space-between' }}
+              style={{ justifyContent: 'space-between', width: '100%' }}
             >
               <div
                 className='memberListRowSection'
